@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(npm run test:run:*)",
+      "Bash(curl:*)",
+      "Bash(npm run build:*)",
+      "Bash(taskkill:*)",
+      "Bash(pkill:*)",
+      "Bash(claude plugin menu)",
+      "Bash(claude plugin install:*)"
+    ]
+  }
+}
