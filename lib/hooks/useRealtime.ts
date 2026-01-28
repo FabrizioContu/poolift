@@ -6,9 +6,9 @@ import { supabase } from '@/lib/supabase'
 export function useRealtime(
   table: string,
   filter: { column: string; value: string },
-  onInsert?: (payload: any) => void,
-  onUpdate?: (payload: any) => void,
-  onDelete?: (payload: any) => void
+  onInsert?: (payload: unknown) => void,
+  onUpdate?: (payload: unknown) => void,
+  onDelete?: (payload: unknown) => void
 ) {
   useEffect(() => {
     const channel = supabase
