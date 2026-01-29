@@ -43,7 +43,7 @@ export function formatCelebrants(names: string[]): string {
 /**
  * Obtiene el estado de una fiesta
  */
-export function getPartyStatus(party: any): 'ideas' | 'votacion' | 'decidido' | 'comprado' {
+export function getPartyStatus(_party: unknown): 'ideas' | 'votacion' | 'decidido' | 'comprado' {
   // TODO: Implementar lógica según propuestas y regalo
   return 'ideas'
 }

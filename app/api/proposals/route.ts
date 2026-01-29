@@ -33,7 +33,7 @@ export async function POST(request: NextRequest) {
     if (proposalError) throw proposalError
     
     // Crear items de la propuesta
-    const proposalItems = items.map((item: any) => ({
+    const proposalItems = items.map((item: { itemName: string; itemPrice: number; productLink?: string }) => ({
       proposal_id: proposal.id,
       item_name: item.itemName,
       item_price: item.itemPrice,
