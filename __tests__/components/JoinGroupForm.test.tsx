@@ -14,6 +14,7 @@ vi.mock('next/navigation', () => ({
 const defaultProps = {
   groupId: 'group-123',
   groupName: 'Clase 2B',
+  inviteCode: 'ABC123XYZ456',
 }
 
 describe('JoinGroupForm', () => {
@@ -197,7 +198,7 @@ describe('JoinGroupForm', () => {
   })
 
   it('muestra el nombre del grupo en el título', () => {
-    render(<JoinGroupForm groupId="g-1" groupName="Los Tigres" />)
+    render(<JoinGroupForm groupId="g-1" groupName="Los Tigres" inviteCode="TIGERS123" />)
 
     expect(screen.getByText('Únete a Los Tigres')).toBeInTheDocument()
   })

@@ -2,6 +2,21 @@
 
 > Web platform for organizing shared birthday gifts among families in a simple and transparent way.
 
+## 📖 For AI Assistants (Claude Code)
+
+**Working on this project? Start here:**
+
+- 📄 **`.claude/instructions.md`** - Core instructions & quick reference
+- 🤖 **`.ai/agents/`** - Specialized agent configurations
+- 📐 **`.ai-specs/`** - Coding standards and quality gates
+- 📚 **`docs/`** - Full project documentation
+
+**Quick Start for Development:**
+
+1. Read `.claude/instructions.md` for project overview
+2. Check `.ai/agents/frontend-dev.md` or `.ai/agents/backend-dev.md` based on your task
+3. Follow standards in `.ai-specs/coding-standards/`
+
 [![Next.js](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
 [![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-green)](https://supabase.com/)
@@ -26,24 +41,28 @@ Poolift facilitates the organization of shared gifts for children's birthdays in
 ## Main Features
 
 ### Group Management
+
 - Create groups for classes/teams
 - Invitation system by code
 - Multiple families per group
 - No complex authentication needed
 
 ### Birthdays and Parties
+
 - Register children's birthdays
 - Create parties (one or multiple celebrants)
 - Automatic rotating coordinator assignment
 - Upcoming parties visualization
 
 ### Ideas and Proposals
+
 - Add gift ideas for each child
 - Create formal proposals with items and prices
 - Family voting system
 - Winning proposal selection
 
 ### Complete Gift Flow
+
 1. **Create Gift**: Generates shareable code
 2. **Participation**: Families sign up for the gift
 3. **Close**: Calculates price per family
@@ -51,6 +70,7 @@ Poolift facilitates the organization of shared gifts for children's birthdays in
 5. **Share**: Notification to participants
 
 ### Transparency
+
 - Automatically calculated price per family
 - Coordinator comments
 - Visible purchase receipts
@@ -61,35 +81,39 @@ Poolift facilitates the organization of shared gifts for children's birthdays in
 ## Tech Stack
 
 ### Frontend
-| Technology | Version | Purpose |
-|------------|---------|---------|
-| Next.js | 16 | Framework (App Router) |
-| TypeScript | 5.0 | Language |
-| Tailwind CSS | 3.4 | Styling |
-| Lucide React | - | Icons |
-| React Hook Form | - | Form handling |
-| Zod | - | Validation |
+
+| Technology      | Version | Purpose                |
+| --------------- | ------- | ---------------------- |
+| Next.js         | 16      | Framework (App Router) |
+| TypeScript      | 5.0     | Language               |
+| Tailwind CSS    | 3.4     | Styling                |
+| Lucide React    | -       | Icons                  |
+| React Hook Form | -       | Form handling          |
+| Zod             | -       | Validation             |
 
 ### Backend
-| Technology | Purpose |
-|------------|---------|
-| Supabase | Database (PostgreSQL) |
-| Next.js API Routes | REST API |
-| Supabase Subscriptions | Real-time (optional) |
-| Supabase Storage | Receipt storage |
+
+| Technology             | Purpose               |
+| ---------------------- | --------------------- |
+| Supabase               | Database (PostgreSQL) |
+| Next.js API Routes     | REST API              |
+| Supabase Subscriptions | Real-time (optional)  |
+| Supabase Storage       | Receipt storage       |
 
 ### Testing
-| Technology | Purpose |
-|------------|---------|
-| Vitest | Test framework |
-| @testing-library/react | UI testing |
-| 77+ tests | Coverage |
+
+| Technology             | Purpose        |
+| ---------------------- | -------------- |
+| Vitest                 | Test framework |
+| @testing-library/react | UI testing     |
+| 77+ tests              | Coverage       |
 
 ---
 
 ## Installation and Setup
 
 ### Prerequisites
+
 ```bash
 Node.js 18+
 npm or yarn
@@ -97,22 +121,26 @@ Supabase account
 ```
 
 ### 1. Clone Repository
+
 ```bash
 git clone <repository-url>
 cd poolift
 ```
 
 ### 2. Install Dependencies
+
 ```bash
 npm install
 ```
 
 ### 3. Configure Environment Variables
+
 ```bash
 cp .env.example .env.local
 ```
 
 Edit `.env.local`:
+
 ```env
 NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
@@ -121,6 +149,7 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 ### 4. Database Setup
 
 Run the SQL schema in Supabase. Required tables:
+
 - `groups`
 - `families`
 - `birthdays`
@@ -134,6 +163,7 @@ Run the SQL schema in Supabase. Required tables:
 - `participants`
 
 ### 5. Run in Development
+
 ```bash
 npm run dev
 ```
@@ -212,51 +242,57 @@ npm run coverage      # Run with coverage report
 ## API Endpoints
 
 ### Groups & Families
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/groups` | Create group |
-| GET | `/api/groups/[id]` | Get group details |
-| GET | `/api/families` | List families |
+
+| Method | Endpoint           | Description       |
+| ------ | ------------------ | ----------------- |
+| POST   | `/api/groups`      | Create group      |
+| GET    | `/api/groups/[id]` | Get group details |
+| GET    | `/api/families`    | List families     |
 
 ### Birthdays
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/birthdays` | Add birthday |
-| GET | `/api/birthdays` | List birthdays |
+
+| Method | Endpoint              | Description     |
+| ------ | --------------------- | --------------- |
+| POST   | `/api/birthdays`      | Add birthday    |
+| GET    | `/api/birthdays`      | List birthdays  |
 | DELETE | `/api/birthdays/[id]` | Delete birthday |
 
 ### Parties
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/parties` | Create party |
-| GET | `/api/parties` | List parties |
-| GET | `/api/parties/[id]` | Get party details |
-| GET | `/api/parties/celebrants` | Get available celebrants |
+
+| Method | Endpoint                  | Description              |
+| ------ | ------------------------- | ------------------------ |
+| POST   | `/api/parties`            | Create party             |
+| GET    | `/api/parties`            | List parties             |
+| GET    | `/api/parties/[id]`       | Get party details        |
+| GET    | `/api/parties/celebrants` | Get available celebrants |
 
 ### Ideas
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/ideas` | Add gift idea |
-| GET | `/api/ideas` | List ideas |
-| DELETE | `/api/ideas/[id]` | Delete idea |
+
+| Method | Endpoint          | Description   |
+| ------ | ----------------- | ------------- |
+| POST   | `/api/ideas`      | Add gift idea |
+| GET    | `/api/ideas`      | List ideas    |
+| DELETE | `/api/ideas/[id]` | Delete idea   |
 
 ### Proposals
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/proposals` | Create proposal |
-| GET | `/api/proposals` | List proposals |
-| GET | `/api/proposals/[id]` | Get proposal details |
-| POST | `/api/proposals/[id]/vote` | Vote on proposal |
-| PUT | `/api/proposals/[id]/select` | Select winning proposal |
+
+| Method | Endpoint                     | Description             |
+| ------ | ---------------------------- | ----------------------- |
+| POST   | `/api/proposals`             | Create proposal         |
+| GET    | `/api/proposals`             | List proposals          |
+| GET    | `/api/proposals/[id]`        | Get proposal details    |
+| POST   | `/api/proposals/[id]/vote`   | Vote on proposal        |
+| PUT    | `/api/proposals/[id]/select` | Select winning proposal |
 
 ### Gifts
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/gifts` | Create gift |
-| GET | `/api/gifts/[id]` | Get gift by share code |
-| POST | `/api/gifts/[id]/participate` | Join gift |
-| PUT | `/api/gifts/[id]/close` | Close participation |
-| PUT | `/api/gifts/[id]/finalize` | Finalize with receipt |
+
+| Method | Endpoint                      | Description            |
+| ------ | ----------------------------- | ---------------------- |
+| POST   | `/api/gifts`                  | Create gift            |
+| GET    | `/api/gifts/[id]`             | Get gift by share code |
+| POST   | `/api/gifts/[id]/participate` | Join gift              |
+| PUT    | `/api/gifts/[id]/close`       | Close participation    |
+| PUT    | `/api/gifts/[id]/finalize`    | Finalize with receipt  |
 
 ---
 
@@ -282,17 +318,20 @@ Parties (events with party_date)
 ## Key Concepts
 
 ### Party Model
+
 - Parties are **separate entities** from Birthdays
 - A party can celebrate **multiple children** (joint parties)
 - Birthdays only store: `child_name`, `birth_date`
 - Parties store: `party_date`, `coordinator_id`
 
 ### Coordinator Assignment
+
 - Auto-assigned on rotation (family with fewest coordinations)
 - Can be manually selected when creating party
 - Tracked to ensure fair distribution
 
 ### Invite System
+
 - Groups have unique `invite_code` (12 chars)
 - Share via WhatsApp link: `/join/[inviteCode]`
 - Family-based access (no authentication required)
@@ -302,6 +341,7 @@ Parties (events with party_date)
 ## Testing
 
 ### Running Tests
+
 ```bash
 npm test              # Watch mode with hot reload
 npm run test:ui       # Visual UI (recommended)
@@ -310,21 +350,23 @@ npm run coverage      # With coverage report
 ```
 
 ### Test Coverage
-| Category | Tests | Status |
-|----------|-------|--------|
-| AddBirthdayModal | 16 | Passing |
-| CreatePartyModal | 16 | Passing |
-| AddIdeaModal | 14 | Passing |
-| AddProposalModal | 8 | Passing |
-| Utilities | 6+ | Passing |
-| Other components | 17+ | Passing |
-| **Total** | **77+** | **Passing** |
+
+| Category         | Tests   | Status      |
+| ---------------- | ------- | ----------- |
+| AddBirthdayModal | 16      | Passing     |
+| CreatePartyModal | 16      | Passing     |
+| AddIdeaModal     | 14      | Passing     |
+| AddProposalModal | 8       | Passing     |
+| Utilities        | 6+      | Passing     |
+| Other components | 17+     | Passing     |
+| **Total**        | **77+** | **Passing** |
 
 ---
 
 ## Deployment
 
 ### Vercel (Recommended)
+
 ```bash
 npm i -g vercel
 vercel
@@ -332,6 +374,7 @@ vercel --prod
 ```
 
 ### Environment Variables (Production)
+
 ```env
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
@@ -349,6 +392,7 @@ NEXT_PUBLIC_APP_URL=https://your-domain.com
 5. Open a Pull Request
 
 ### Commit Conventions
+
 ```
 feat: Add new feature
 fix: Bug fix
@@ -369,6 +413,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Support
 
 For questions or issues:
+
 - Open an issue on GitHub
 - Check the [CLAUDE.md](CLAUDE.md) for detailed development documentation
 

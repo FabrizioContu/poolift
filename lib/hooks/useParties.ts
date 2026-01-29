@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import type { Party } from '@/lib/types'
 
 export function useParties(groupId: string) {
-  const [parties, setParties] = useState<any[]>([])
+  const [parties, setParties] = useState<Party[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   

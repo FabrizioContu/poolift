@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useSyncExternalStore, useCallback } from 'react'
 import { Button } from '@/components/ui/Button'
 import { CloseParticipationButton } from '@/components/gifts/CloseParticipationButton'
 import { ShoppingCart, Settings } from 'lucide-react'
@@ -19,6 +19,36 @@ interface CoordinatorActionsProps {
   totalPrice: number
 }
 
+function checkIsCoordinator(giftId: string, coordinatorId: string | null): boolean {
+  if (typeof window === 'undefined') return false
+
+  const savedCoordinatorId = localStorage.getItem(`coordinator_${giftId}`)
+  const savedFamilyId = localStorage.getItem('current_family_id')
+  const urlParams = new URLSearchParams(window.location.search)
+
+  return (
+    savedCoordinatorId === 'true' ||
+    savedFamilyId === coordinatorId ||
+    urlParams.get('coordinator') === 'true'
+  )
+}
+
+function useIsCoordinator(giftId: string, coordinatorId: string | null): boolean {
+  const getSnapshot = useCallback(
+    () => checkIsCoordinator(giftId, coordinatorId),
+    [giftId, coordinatorId]
+  )
+
+  const getServerSnapshot = useCallback(() => false, [])
+
+  const subscribe = useCallback((callback: () => void) => {
+    window.addEventListener('storage', callback)
+    return () => window.removeEventListener('storage', callback)
+  }, [])
+
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
+}
+
 export function CoordinatorActions({
   giftId,
   shareCode,
@@ -31,26 +61,7 @@ export function CoordinatorActions({
   participantNames,
   totalPrice
 }: CoordinatorActionsProps) {
-  const [isCoordinator, setIsCoordinator] = useState(false)
-  const [showActions, setShowActions] = useState(false)
-
-  // Check if current user is coordinator
-  useEffect(() => {
-    // Check localStorage for coordinator status
-    // This is set when a family joins as coordinator
-    const savedCoordinatorId = localStorage.getItem(`coordinator_${giftId}`)
-    const savedFamilyId = localStorage.getItem('current_family_id')
-
-    if (savedCoordinatorId === 'true' || savedFamilyId === coordinatorId) {
-      setIsCoordinator(true)
-    }
-
-    // Also check URL param for testing
-    const urlParams = new URLSearchParams(window.location.search)
-    if (urlParams.get('coordinator') === 'true') {
-      setIsCoordinator(true)
-    }
-  }, [giftId, coordinatorId])
+  const isCoordinator = useIsCoordinator(giftId, coordinatorId)
 
   if (!isCoordinator) {
     return null
