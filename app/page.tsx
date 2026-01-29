@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { Gift, FolderOpen } from "lucide-react";
+import { Button } from "@/components/ui";
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-linear-to-b from-blue-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
       <div className="container mx-auto px-4 py-16">
         <div className="text-center max-w-3xl mx-auto">
           <Gift className="w-20 h-20 mx-auto mb-6 text-blue-500" />
@@ -19,24 +20,20 @@ export default function LandingPage() {
 
           <div className="flex flex-col items-center gap-4">
             <div className="flex gap-4 justify-center">
-              <Link
-                href="/create-group"
-                className="bg-blue-500 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-600 transition"
-              >
-                Crear Grupo
+              <Link href="/create-group">
+                <Button className="px-8 py-3">Crear Grupo</Button>
               </Link>
 
-              <Link
-                href="/join"
-                className="bg-gray-200 text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-gray-300 transition"
-              >
-                Unirse a Grupo
+              <Link href="/join">
+                <Button variant="secondary" className="px-8 py-3">
+                  Unirse a Grupo
+                </Button>
               </Link>
             </div>
 
             <Link
               href="/groups"
-              className="flex items-center gap-2 bg-lime-100 rounded-md p-3 text-gray-600 hover:text-blue-600 transition font-medium"
+              className="flex items-center gap-2 bg-green-100 rounded-lg p-3 text-gray-600 hover:text-blue-600 transition font-medium"
             >
               <FolderOpen size={20} />
               Ver Grupos Activos
