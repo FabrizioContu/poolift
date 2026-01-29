@@ -8,7 +8,8 @@
       "Bash(taskkill:*)",
       "Bash(pkill:*)",
       "Bash(claude plugin menu)",
-      "Bash(claude plugin install:*)"
+      "Bash(claude plugin install:*)",
+      "Bash(npx next lint)"
     ]
   }
 }
