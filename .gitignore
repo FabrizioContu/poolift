@@ -84,4 +84,3 @@ yarn-error.log*
 *.pem
 .eslintcache
 ```
-.claude/
