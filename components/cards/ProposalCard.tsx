@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ThumbsUp, ExternalLink, Check, Trash2 } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { Button, Badge, IconButton } from "@/components/ui";
 import { formatPrice } from "@/lib/utils";
 import dynamic from "next/dynamic";
 import { SelectProposalButton } from "@/components/proposals/SelectProposalButton";
@@ -122,10 +122,10 @@ export function ProposalCard({
             <h3 className="font-semibold text-lg flex items-center gap-2">
               {proposal.name}
               {proposal.is_selected && (
-                <span className="bg-green-500 text-white text-xs px-2 py-0.5 rounded-full flex items-center gap-1">
-                  <Check size={12} />
+                <Badge variant="green" size="sm" className="bg-green-500 text-white">
+                  <Check size={12} className="mr-1" />
                   Seleccionada
-                </span>
+                </Badge>
               )}
             </h3>
             <p className="text-blue-600 font-medium">
@@ -140,16 +140,15 @@ export function ProposalCard({
               </span>
             </div>
             {canDelete && (
-              <button
+              <IconButton
+                icon={Trash2}
+                variant="danger"
+                label="Eliminar propuesta"
                 onClick={() => {
                   setDeleteError(null);
                   setShowDeleteModal(true);
                 }}
-                className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded transition"
-                title="Eliminar propuesta"
-              >
-                <Trash2 size={16} />
-              </button>
+              />
             )}
           </div>
         </div>
@@ -192,12 +191,9 @@ export function ProposalCard({
             <p className="text-xs text-gray-500 mb-1">Votos:</p>
             <div className="flex flex-wrap gap-1">
               {proposal.votes.map((vote) => (
-                <span
-                  key={vote.id}
-                  className="bg-gray-100 text-gray-700 text-xs px-2 py-0.5 rounded-full"
-                >
+                <Badge key={vote.id} variant="gray" size="sm">
                   {vote.voter_name}
-                </span>
+                </Badge>
               ))}
             </div>
           </div>
@@ -229,7 +225,7 @@ export function ProposalCard({
                       setShowVoteForm(false);
                       setError(null);
                     }}
-                    className="text-sm hover:bg-red-100 "
+                    className="text-sm"
                   >
                     Cancelar
                   </Button>

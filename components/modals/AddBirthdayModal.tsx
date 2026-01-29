@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Modal } from "@/components/ui/Modal";
-import { Button } from "@/components/ui/Button";
+import { Modal, Button, Alert } from "@/components/ui";
 import { Cake } from "lucide-react";
 
 interface AddBirthdayModalProps {
@@ -157,16 +156,11 @@ export function AddBirthdayModal({
         </div>
 
         {showSuccess && (
-          <div className="p-3 bg-green-50 border border-green-200 rounded-lg text-green-600 text-sm flex items-center gap-2">
-            <Cake size={16} />
-            ¡Cumpleaños añadido!
-          </div>
+          <Alert variant="success">¡Cumpleaños añadido!</Alert>
         )}
 
         {error && (
-          <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
-            {error}
-          </div>
+          <Alert variant="error">{error}</Alert>
         )}
 
         <div className="flex gap-3 pt-2">

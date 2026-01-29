@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ExternalLink, Gift, User, Trash2 } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
+import { EmptyState, IconButton, Card } from "@/components/ui";
 import dynamic from "next/dynamic";
 
 const ConfirmDeleteModal = dynamic(
@@ -73,13 +74,11 @@ export function IdeasByChild({ ideas, celebrants }: IdeasByChildProps) {
 
   if (ideas.length === 0) {
     return (
-      <div className="text-center py-8 text-gray-500">
-        <Gift size={48} className="mx-auto mb-3 opacity-50" />
-        <p>No hay ideas registradas todavía.</p>
-        <p className="text-sm mt-1">
-          Las familias pueden sugerir regalos para los celebrantes.
-        </p>
-      </div>
+      <EmptyState
+        icon={Gift}
+        title="No hay ideas registradas todavía."
+        description="Las familias pueden sugerir regalos para los celebrantes."
+      />
     );
   }
 
@@ -102,10 +101,7 @@ export function IdeasByChild({ ideas, celebrants }: IdeasByChildProps) {
             ) : (
               <div className="space-y-2 pl-7">
                 {childIdeas.map((idea) => (
-                  <div
-                    key={idea.id}
-                    className="border border-gray-200 rounded-lg p-3 bg-white"
-                  >
+                  <Card key={idea.id} size="sm">
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <div className="flex items-center gap-2">
@@ -137,16 +133,16 @@ export function IdeasByChild({ ideas, celebrants }: IdeasByChildProps) {
                             {formatPrice(idea.price)}
                           </span>
                         )}
-                        <button
+                        <IconButton
+                          icon={Trash2}
+                          variant="danger"
+                          size="sm"
+                          label="Eliminar idea"
                           onClick={() => handleDeleteClick(idea)}
-                          className="p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded transition"
-                          title="Eliminar idea"
-                        >
-                          <Trash2 size={14} />
-                        </button>
+                        />
                       </div>
                     </div>
-                  </div>
+                  </Card>
                 ))}
               </div>
             )}
