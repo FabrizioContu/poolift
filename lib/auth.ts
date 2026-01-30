@@ -1,69 +1,180 @@
-// Pseudo-auth for family-based system (no real authentication)
-// Stores group memberships in localStorage
+// lib/auth.ts
+'use client'
 
-export interface GroupSession {
-  groupId: string;
-  groupName: string;
-  familyId: string;
-  familyName: string;
-  isCreator: boolean;
-  inviteCode: string;
-  joinedAt: string;
+import { createClient } from '@/lib/supabase/client'
+import { useState, useEffect, useCallback } from 'react'
+import type { User } from '@supabase/supabase-js'
+
+// ============================================
+// SUPABASE AUTH (NEW)
+// ============================================
+
+/**
+ * Hook para obtener el usuario actual autenticado
+ * Retorna { user, loading }
+ */
+export function useUser() {
+  const [user, setUser] = useState<User | null>(null)
+  const [loading, setLoading] = useState(true)
+  const supabase = createClient()
+
+  useEffect(() => {
+    // Obtener sesión inicial
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      setUser(user ?? null)
+      setLoading(false)
+    })
+
+    // Escuchar cambios de autenticación
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null)
+    })
+
+    return () => subscription.unsubscribe()
+  }, [supabase.auth])
+
+  return { user, loading }
 }
 
-const STORAGE_KEY = "poolift_groups";
+/**
+ * Registrar nuevo usuario
+ */
+export async function signUp(email: string, password: string, name?: string) {
+  const supabase = createClient()
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+      emailRedirectTo: `${window.location.origin}/auth/callback`,
+      data: name ? { name } : undefined,
+    },
+  })
+  return { data, error }
+}
 
-export function getGroupSessions(): GroupSession[] {
-  if (typeof window === "undefined") return [];
+/**
+ * Iniciar sesión con email/password
+ */
+export async function signIn(email: string, password: string) {
+  const supabase = createClient()
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email,
+    password,
+  })
+  return { data, error }
+}
 
-  try {
-    const data = localStorage.getItem(STORAGE_KEY);
-    return data ? JSON.parse(data) : [];
-  } catch {
-    return [];
+/**
+ * Cerrar sesión
+ */
+export async function signOut() {
+  const supabase = createClient()
+  const { error } = await supabase.auth.signOut()
+  return { error }
+}
+
+/**
+ * Hook completo de autenticación
+ * Retorna { user, loading, isAuthenticated, isAnonymous, signUp, signIn, signOut }
+ */
+export function useAuth() {
+  const { user, loading } = useUser()
+
+  const handleSignUp = useCallback(
+    async (email: string, password: string, name?: string) => {
+      return signUp(email, password, name)
+    },
+    []
+  )
+
+  const handleSignIn = useCallback(async (email: string, password: string) => {
+    return signIn(email, password)
+  }, [])
+
+  const handleSignOut = useCallback(async () => {
+    return signOut()
+  }, [])
+
+  return {
+    user,
+    loading,
+    isAuthenticated: !!user,
+    isAnonymous: !user,
+    signUp: handleSignUp,
+    signIn: handleSignIn,
+    signOut: handleSignOut,
   }
 }
 
-export function addGroupToSession(session: Omit<GroupSession, "joinedAt">): void {
-  if (typeof window === "undefined") return;
+// ============================================
+// GROUP SESSIONS (EXISTING - for family-based system)
+// ============================================
 
-  const sessions = getGroupSessions();
+export interface GroupSession {
+  groupId: string
+  groupName: string
+  familyId: string
+  familyName: string
+  isCreator: boolean
+  inviteCode: string
+  joinedAt: string
+}
+
+const STORAGE_KEY = 'poolift_groups'
+
+export function getGroupSessions(): GroupSession[] {
+  if (typeof window === 'undefined') return []
+
+  try {
+    const data = localStorage.getItem(STORAGE_KEY)
+    return data ? JSON.parse(data) : []
+  } catch {
+    return []
+  }
+}
+
+export function addGroupToSession(
+  session: Omit<GroupSession, 'joinedAt'>
+): void {
+  if (typeof window === 'undefined') return
+
+  const sessions = getGroupSessions()
 
   // Check if already exists
-  const exists = sessions.some((s) => s.groupId === session.groupId);
+  const exists = sessions.some((s) => s.groupId === session.groupId)
   if (exists) {
     // Update existing
     const updated = sessions.map((s) =>
-      s.groupId === session.groupId
-        ? { ...session, joinedAt: s.joinedAt }
-        : s
-    );
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-    return;
+      s.groupId === session.groupId ? { ...session, joinedAt: s.joinedAt } : s
+    )
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(updated))
+    return
   }
 
   // Add new
   sessions.push({
     ...session,
     joinedAt: new Date().toISOString(),
-  });
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(sessions));
+  })
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(sessions))
 }
 
 export function removeGroupSession(groupId: string): void {
-  if (typeof window === "undefined") return;
+  if (typeof window === 'undefined') return
 
-  const sessions = getGroupSessions();
-  const filtered = sessions.filter((s) => s.groupId !== groupId);
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered));
+  const sessions = getGroupSessions()
+  const filtered = sessions.filter((s) => s.groupId !== groupId)
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered))
 }
 
 export function getGroupSession(groupId: string): GroupSession | null {
-  const sessions = getGroupSessions();
-  return sessions.find((s) => s.groupId === groupId) || null;
+  const sessions = getGroupSessions()
+  return sessions.find((s) => s.groupId === groupId) || null
 }
 
 export function clearAllSessions(): void {
-  if (typeof window === "undefined") return;
-  localStorage.removeItem(STORAGE_KEY);
+  if (typeof window === 'undefined') return
+  localStorage.removeItem(STORAGE_KEY)
 }

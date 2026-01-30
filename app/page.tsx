@@ -4,7 +4,7 @@ import { Button } from "@/components/ui";
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+    <div className="min-h-screen bg-linear-to-b from-blue-50 to-white">
       <div className="container mx-auto px-4 py-16">
         <div className="text-center max-w-3xl mx-auto">
           <Gift className="w-20 h-20 mx-auto mb-6 text-blue-500" />

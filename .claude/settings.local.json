@@ -9,7 +9,8 @@
       "Bash(pkill:*)",
       "Bash(claude plugin menu)",
       "Bash(claude plugin install:*)",
-      "Bash(npx next lint)"
+      "Bash(npx next lint)",
+      "mcp__context7__query-docs"
     ]
   }
 }
