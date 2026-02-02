@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Users, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { addGroupToSession } from "@/lib/auth";
+import { anonymousStorage } from "@/lib/storage";
 import dynamic from "next/dynamic";
 
 const InviteCodeModal = dynamic(
@@ -96,6 +97,9 @@ export default function CreateGroupPage() {
         isCreator: true,
         inviteCode: data.group.invite_code,
       });
+
+      // Track grupo para usuario anónimo
+      anonymousStorage.addGroup(data.group.id);
 
       setCreatedGroup(data);
       setShowInviteModal(true);
