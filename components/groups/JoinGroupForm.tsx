@@ -8,6 +8,7 @@ import { z } from 'zod'
 import { Users, CheckCircle } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { addGroupToSession } from '@/lib/auth'
+import { anonymousStorage } from '@/lib/storage'
 
 const schema = z.object({
   familyName: z
@@ -68,6 +69,9 @@ export function JoinGroupForm({ groupId, groupName, inviteCode }: JoinGroupFormP
         isCreator: false,
         inviteCode,
       })
+
+      // Track grupo para usuario anónimo
+      anonymousStorage.addGroup(groupId)
 
       setSuccess(true)
       setTimeout(() => {
