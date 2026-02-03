@@ -1,6 +1,54 @@
+// Group Types for multi-use support
+export type GroupType = 'class' | 'friends' | 'family' | 'work' | 'other'
+
+export const GROUP_TYPE_LABELS: Record<GroupType, string> = {
+  class: 'Clase',
+  friends: 'Amigos',
+  family: 'Familia',
+  work: 'Trabajo',
+  other: 'Otro'
+}
+
+export const GROUP_TYPE_ICONS: Record<GroupType, string> = {
+  class: '🎒',
+  friends: '👥',
+  family: '👨‍👩‍👧‍👦',
+  work: '💼',
+  other: '✨'
+}
+
+export const GROUP_TYPE_DESCRIPTIONS: Record<GroupType, string> = {
+  class: 'Colegio, guardería, instituto',
+  friends: 'Grupo de amigos, comunidad',
+  family: 'Primos, tíos, abuelos...',
+  work: 'Compañeros, departamento',
+  other: 'Club, equipo, vecinos...'
+}
+
+export const GROUP_TYPE_EXAMPLES: Record<GroupType, string[]> = {
+  class: ['2°B Primaria', 'Girasoles guardería', '5° Instituto'],
+  friends: ['Los inseparables', 'Grupo running', 'Amigos uni'],
+  family: ['Familia Martínez', 'Primos Madrid', 'Tíos paternos'],
+  work: ['Equipo Marketing', 'Oficina Barcelona', 'Departamento IT'],
+  other: ['Club de lectura', 'Vecinos bloque 5', 'Equipo fútbol']
+}
+
+// Direct Gift Types
+export type OccasionType = 'birthday' | 'farewell' | 'wedding' | 'birth' | 'graduation' | 'other'
+
+export const OCCASION_LABELS: Record<OccasionType, string> = {
+  birthday: '🎂 Cumpleaños',
+  farewell: '👋 Despedida',
+  wedding: '💒 Boda',
+  birth: '👶 Nacimiento',
+  graduation: '🎓 Graduación',
+  other: '✨ Otro'
+}
+
 export interface Group {
   id: string
   name: string
+  type: GroupType
   description: string | null
   invite_code: string
   created_by: string | null
