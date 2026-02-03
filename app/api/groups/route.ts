@@ -12,23 +12,28 @@ function generateUniqueCode(length: number = 12): string {
 
 export async function POST(request: NextRequest) {
   try {
-    const { name, description, familyName } = await request.json()
-    
+    const { name, description, familyName, type } = await request.json()
+
     if (!name || !familyName) {
       return NextResponse.json(
         { error: 'Nombre de grupo y familia son requeridos' },
         { status: 400 }
       )
     }
-    
+
+    // Validate group type if provided
+    const validTypes = ['class', 'friends', 'family', 'work', 'other']
+    const groupType = type && validTypes.includes(type) ? type : 'other'
+
     const inviteCode = generateUniqueCode(12)
-    
+
     // Crear grupo
     const { data: group, error: groupError } = await supabase
       .from('groups')
       .insert({
         name,
         description,
+        type: groupType,
         invite_code: inviteCode,
       })
       .select()
