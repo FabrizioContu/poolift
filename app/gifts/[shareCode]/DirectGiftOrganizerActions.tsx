@@ -1,22 +1,31 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { Button } from '@/components/ui/Button'
-import { Modal } from '@/components/ui/Modal'
-import { Settings, Lock, ShoppingCart, AlertTriangle, Users, Check, Copy, Share2 } from 'lucide-react'
-import { formatPrice, calculatePricePerFamily } from '@/lib/utils'
-import Link from 'next/link'
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/Button";
+import { Modal } from "@/components/ui/Modal";
+import {
+  Settings,
+  Lock,
+  ShoppingCart,
+  AlertTriangle,
+  Users,
+  Check,
+  Copy,
+  Share2,
+} from "lucide-react";
+import { formatPrice, calculatePricePerFamily } from "@/lib/utils";
+import Link from "next/link";
 
 interface DirectGiftOrganizerActionsProps {
-  giftId: string
-  shareCode: string
-  recipientName: string
-  organizerName: string
-  giftIdea: string | null
-  status: string
-  participantCount: number
-  participantNames: string[]
-  estimatedPrice: number | null
+  giftId: string;
+  shareCode: string;
+  recipientName: string;
+  organizerName: string;
+  giftIdea: string | null;
+  status: string;
+  participantCount: number;
+  participantNames: string[];
+  estimatedPrice: number | null;
 }
 
 export function DirectGiftOrganizerActions({
@@ -28,112 +37,123 @@ export function DirectGiftOrganizerActions({
   status,
   participantCount,
   participantNames,
-  estimatedPrice
+  estimatedPrice,
 }: DirectGiftOrganizerActionsProps) {
-  const [isOrganizer, setIsOrganizer] = useState(false)
-  const [showConfirmModal, setShowConfirmModal] = useState(false)
-  const [showSuccessModal, setShowSuccessModal] = useState(false)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [copied, setCopied] = useState(false)
-  const [finalPricePerPerson, setFinalPricePerPerson] = useState<string | null>(null)
+  const [isOrganizer, setIsOrganizer] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+  const [finalPricePerPerson, setFinalPricePerPerson] = useState<string | null>(
+    null,
+  );
 
-  const totalPrice = estimatedPrice || 0
-  const estimatedPricePerPerson = calculatePricePerFamily(totalPrice, participantCount)
-  const appUrl = typeof window !== 'undefined' ? window.location.origin : 'https://poolift.vercel.app'
-  const giftUrl = `${appUrl}/gifts/${shareCode}`
+  const totalPrice = estimatedPrice || 0;
+  const estimatedPricePerPerson = calculatePricePerFamily(
+    totalPrice,
+    participantCount,
+  );
+  const appUrl =
+    typeof window !== "undefined"
+      ? window.location.origin
+      : "https://poolift.vercel.app";
+  const giftUrl = `${appUrl}/gifts/${shareCode}`;
 
   // Check if current user is organizer (stored in localStorage when creating)
   useEffect(() => {
-    const savedOrganizer = localStorage.getItem(`direct_gift_${giftId}_organizer`)
-    const urlParams = new URLSearchParams(window.location.search)
+    const savedOrganizer = localStorage.getItem(
+      `direct_gift_${giftId}_organizer`,
+    );
+    const urlParams = new URLSearchParams(window.location.search);
 
     setIsOrganizer(
-      savedOrganizer === 'true' ||
-      urlParams.get('organizer') === 'true'
-    )
+      savedOrganizer === "true" || urlParams.get("organizer") === "true",
+    );
 
     // Auto-mark as organizer if they created this gift
-    const directGifts = localStorage.getItem('poolift_direct_gifts')
+    const directGifts = localStorage.getItem("poolift_direct_gifts");
     if (directGifts) {
-      const gifts = JSON.parse(directGifts)
-      const isCreator = gifts.some((g: { shareCode: string }) => g.shareCode === shareCode)
+      const gifts = JSON.parse(directGifts);
+      const isCreator = gifts.some(
+        (g: { shareCode: string }) => g.shareCode === shareCode,
+      );
       if (isCreator) {
-        setIsOrganizer(true)
-        localStorage.setItem(`direct_gift_${giftId}_organizer`, 'true')
+        setIsOrganizer(true);
+        localStorage.setItem(`direct_gift_${giftId}_organizer`, "true");
       }
     }
-  }, [giftId, shareCode])
+  }, [giftId, shareCode]);
 
   const handleClose = async () => {
-    setLoading(true)
-    setError(null)
+    setLoading(true);
+    setError(null);
 
     try {
       const response = await fetch(`/api/gifts/direct/${giftId}/close`, {
-        method: 'PUT'
-      })
+        method: "PUT",
+      });
 
-      const data = await response.json()
+      const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Error al cerrar participación')
+        throw new Error(data.error || "Error al cerrar participación");
       }
 
       const pricePerPerson = data.pricePerParticipant
         ? data.pricePerParticipant.toFixed(2)
-        : estimatedPricePerPerson
+        : estimatedPricePerPerson;
 
-      setFinalPricePerPerson(pricePerPerson)
-      setShowConfirmModal(false)
-      setShowSuccessModal(true)
+      setFinalPricePerPerson(pricePerPerson);
+      setShowConfirmModal(false);
+      setShowSuccessModal(true);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Error al cerrar')
+      setError(err instanceof Error ? err.message : "Error al cerrar");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const handleCopyLink = async () => {
     try {
-      await navigator.clipboard.writeText(giftUrl)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
+      await navigator.clipboard.writeText(giftUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
     } catch {
-      const textArea = document.createElement('textarea')
-      textArea.value = giftUrl
-      document.body.appendChild(textArea)
-      textArea.select()
-      document.execCommand('copy')
-      document.body.removeChild(textArea)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
+      const textArea = document.createElement("textarea");
+      textArea.value = giftUrl;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand("copy");
+      document.body.removeChild(textArea);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
     }
-  }
+  };
 
   const handleShareWhatsApp = () => {
     const message = `Hola! El regalo para ${recipientName} ya tiene ${participantCount} participantes.
 
-${giftIdea ? `Regalo: ${giftIdea}` : ''}
+${giftIdea ? `Regalo: ${giftIdea}` : ""}
 Precio por persona: ${finalPricePerPerson || estimatedPricePerPerson}€
 
-La participación está cerrada. Mas info: ${giftUrl}`
+La participación está cerrada. Mas info: ${giftUrl}`;
 
-    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`
-    window.open(whatsappUrl, '_blank')
-  }
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, "_blank");
+  };
 
   const handleCloseSuccess = () => {
-    setShowSuccessModal(false)
-    window.location.reload()
-  }
+    setShowSuccessModal(false);
+    window.location.reload();
+  };
 
   if (!isOrganizer) {
-    return null
+    return null;
   }
 
-  const isOpen = status === 'open'
-  const isPurchased = status === 'purchased'
+  const isOpen = status === "open";
+  const isPurchased = status === "purchased";
 
   if (isPurchased) {
     return (
@@ -146,7 +166,7 @@ La participación está cerrada. Mas info: ${giftUrl}`
           El regalo ha sido comprado y finalizado.
         </p>
       </div>
-    )
+    );
   }
 
   return (
@@ -200,11 +220,12 @@ La participación está cerrada. Mas info: ${giftUrl}`
         >
           <div className="space-y-4">
             <div className="flex items-start gap-3 p-4 bg-yellow-50 rounded-lg">
-              <AlertTriangle className="text-yellow-600 flex-shrink-0 mt-0.5" size={20} />
+              <AlertTriangle
+                className="text-yellow-600 flex-shrink-0 mt-0.5"
+                size={20}
+              />
               <div>
-                <p className="font-medium text-yellow-800">
-                  ¿Estás seguro?
-                </p>
+                <p className="font-medium text-yellow-800">¿Estás seguro?</p>
                 <p className="text-sm text-yellow-700 mt-1">
                   Una vez cerrada, nadie más podrá apuntarse al regalo.
                 </p>
@@ -236,9 +257,7 @@ La participación está cerrada. Mas info: ${giftUrl}`
               )}
             </div>
 
-            {error && (
-              <p className="text-red-500 text-sm">{error}</p>
-            )}
+            {error && <p className="text-red-500 text-sm">{error}</p>}
 
             <div className="flex gap-3 pt-2">
               <Button
@@ -254,7 +273,7 @@ La participación está cerrada. Mas info: ${giftUrl}`
                 disabled={loading}
                 className="flex-1 bg-green-600 hover:bg-green-700"
               >
-                {loading ? 'Cerrando...' : 'Cerrar Participación'}
+                {loading ? "Cerrando..." : "Cerrar Participación"}
               </Button>
             </div>
           </div>
@@ -285,13 +304,13 @@ La participación está cerrada. Mas info: ${giftUrl}`
             <div className="p-4 bg-gray-50 rounded-lg space-y-3">
               <div>
                 <p className="text-xs text-gray-700 mb-1">Regalo para:</p>
-                <p className="font-medium">{recipientName}</p>
+                <p className="font-medium text-gray-700">{recipientName}</p>
               </div>
 
               {giftIdea && (
                 <div>
                   <p className="text-xs text-gray-700 mb-1">Regalo:</p>
-                  <p className="font-medium">{giftIdea}</p>
+                  <p className="font-medium text-gray-700">{giftIdea}</p>
                 </div>
               )}
 
@@ -304,7 +323,9 @@ La participación está cerrada. Mas info: ${giftUrl}`
                 <>
                   <div className="flex justify-between items-center">
                     <span className="text-gray-700">Total:</span>
-                    <span className="font-bold">{formatPrice(totalPrice)}</span>
+                    <span className="font-bold text-gray-700">
+                      {formatPrice(totalPrice)}
+                    </span>
                   </div>
 
                   <div className="flex justify-between items-center pt-2 border-t border-gray-200">
@@ -378,5 +399,5 @@ La participación está cerrada. Mas info: ${giftUrl}`
         </Modal>
       )}
     </>
-  )
+  );
 }

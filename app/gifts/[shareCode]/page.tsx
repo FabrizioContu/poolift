@@ -1,61 +1,74 @@
-import { supabase } from '@/lib/supabase'
-import { GiftParticipation } from './GiftParticipation'
-import { DirectGiftParticipation } from './DirectGiftParticipation'
-import { DirectGiftOrganizerActions } from './DirectGiftOrganizerActions'
-import { CoordinatorActions } from './CoordinatorActions'
-import { formatDate, formatPrice, formatCelebrants, calculatePricePerFamily } from '@/lib/utils'
-import { Gift, Calendar, Users, CheckCircle, Lock, ArrowLeft } from 'lucide-react'
-import { OCCASION_LABELS, type OccasionType } from '@/lib/types'
-import Link from 'next/link'
+import { supabase } from "@/lib/supabase";
+import { GiftParticipation } from "./GiftParticipation";
+import { DirectGiftParticipation } from "./DirectGiftParticipation";
+import { DirectGiftOrganizerActions } from "./DirectGiftOrganizerActions";
+import { CoordinatorActions } from "./CoordinatorActions";
+import {
+  formatDate,
+  formatPrice,
+  formatCelebrants,
+  calculatePricePerFamily,
+} from "@/lib/utils";
+import {
+  Gift,
+  Calendar,
+  Users,
+  CheckCircle,
+  Lock,
+  ArrowLeft,
+} from "lucide-react";
+import { OCCASION_LABELS, type OccasionType } from "@/lib/types";
+import Link from "next/link";
 
 interface DirectGiftParticipant {
-  id: string
-  participant_name: string
-  joined_at: string
+  id: string;
+  participant_name: string;
+  joined_at: string;
 }
 
 interface DirectGift {
-  id: string
-  recipient_name: string
-  occasion: OccasionType
-  gift_idea: string | null
-  estimated_price: number | null
-  organizer_name: string
-  organizer_comment: string | null
-  share_code: string
-  status: string
-  created_at: string
-  participants: DirectGiftParticipant[]
+  id: string;
+  recipient_name: string;
+  occasion: OccasionType;
+  gift_idea: string | null;
+  estimated_price: number | null;
+  organizer_name: string;
+  organizer_comment: string | null;
+  share_code: string;
+  status: string;
+  created_at: string;
+  participants: DirectGiftParticipant[];
 }
 
 async function getDirectGift(shareCode: string): Promise<DirectGift | null> {
   const { data: gift, error } = await supabase
-    .from('direct_gifts')
-    .select('*')
-    .eq('share_code', shareCode)
-    .single()
+    .from("direct_gifts")
+    .select("*")
+    .eq("share_code", shareCode)
+    .single();
 
   if (error || !gift) {
-    return null
+    return null;
   }
 
   // Fetch participants separately
   const { data: participants } = await supabase
-    .from('direct_gift_participants')
-    .select('*')
-    .eq('direct_gift_id', gift.id)
-    .order('joined_at', { ascending: true })
+    .from("direct_gift_participants")
+    .select("*")
+    .eq("direct_gift_id", gift.id)
+    .order("joined_at", { ascending: true });
 
   return {
     ...gift,
-    participants: participants || []
-  }
+    participants: participants || [],
+  };
 }
 
 async function getGift(shareCode: string) {
   const { data: gift, error } = await supabase
-    .from('gifts')
-    .select(`
+    .from("gifts")
+    .select(
+      `
       *,
       party:parties(
         id,
@@ -81,39 +94,41 @@ async function getGift(shareCode: string) {
         family_name,
         joined_at
       )
-    `)
-    .eq('share_code', shareCode)
-    .single()
+    `,
+    )
+    .eq("share_code", shareCode)
+    .single();
 
   if (error) {
-    console.error('Error fetching gift:', error)
-    return null
+    console.error("Error fetching gift:", error);
+    return null;
   }
 
-  return gift
+  return gift;
 }
 
 export default async function GiftPage({
-  params
+  params,
 }: {
-  params: Promise<{ shareCode: string }>
+  params: Promise<{ shareCode: string }>;
 }) {
-  const { shareCode } = await params
+  const { shareCode } = await params;
 
   // First try direct gift, then party gift
-  const directGift = await getDirectGift(shareCode)
+  const directGift = await getDirectGift(shareCode);
 
   if (directGift) {
-    const isClosed = directGift.status === 'closed'
-    const isPurchased = directGift.status === 'purchased'
-    const participantCount = directGift.participants.length
-    const pricePerPerson = participantCount > 0 && directGift.estimated_price
-      ? calculatePricePerFamily(directGift.estimated_price, participantCount)
-      : null
+    const isClosed = directGift.status === "closed";
+    const isPurchased = directGift.status === "purchased";
+    const participantCount = directGift.participants.length;
+    const pricePerPerson =
+      participantCount > 0 && directGift.estimated_price
+        ? calculatePricePerFamily(directGift.estimated_price, participantCount)
+        : null;
 
     // Render Direct Gift page
     return (
-      <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-50 py-8 px-4">
+      <div className="min-h-screen bg-linear-to-br from-green-50 to-emerald-50 py-8 px-4">
         <div className="container mx-auto max-w-2xl">
           {/* Navigation */}
           <Link
@@ -167,7 +182,9 @@ export default async function GiftPage({
             {/* Gift Idea */}
             {directGift.gift_idea && (
               <div className="mt-6 p-4 bg-green-50 rounded-lg">
-                <h3 className="font-semibold text-lg mb-2 text-gray-900">Regalo propuesto</h3>
+                <h3 className="font-semibold text-lg mb-2 text-gray-900">
+                  Regalo propuesto
+                </h3>
                 <p className="text-gray-700">{directGift.gift_idea}</p>
                 {directGift.estimated_price && (
                   <p className="mt-2 text-2xl font-bold text-green-600">
@@ -189,7 +206,7 @@ export default async function GiftPage({
 
             {/* Price Per Person - when closed or purchased */}
             {(isClosed || isPurchased) && pricePerPerson && (
-              <div className="mt-4 p-4 bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl text-center">
+              <div className="mt-4 p-4 bg-linear-to-br from-green-50 to-emerald-50 rounded-xl text-center">
                 <p className="text-sm text-gray-700 mb-1">Precio por persona</p>
                 <p className="text-3xl font-bold text-green-600">
                   {pricePerPerson}€
@@ -222,7 +239,9 @@ export default async function GiftPage({
             giftIdea={directGift.gift_idea}
             status={directGift.status}
             participantCount={participantCount}
-            participantNames={directGift.participants.map(p => p.participant_name)}
+            participantNames={directGift.participants.map(
+              (p) => p.participant_name,
+            )}
             estimatedPrice={directGift.estimated_price}
           />
 
@@ -251,7 +270,7 @@ export default async function GiftPage({
                   >
                     <span className="font-medium">{p.participant_name}</span>
                     <span className="text-sm text-gray-700">
-                      {new Date(p.joined_at).toLocaleDateString('es-ES')}
+                      {new Date(p.joined_at).toLocaleDateString("es-ES")}
                     </span>
                   </li>
                 ))}
@@ -267,10 +286,10 @@ export default async function GiftPage({
           />
         </div>
       </div>
-    )
+    );
   }
 
-  const gift = await getGift(shareCode)
+  const gift = await getGift(shareCode);
 
   if (!gift) {
     return (
@@ -292,25 +311,30 @@ export default async function GiftPage({
           </Link>
         </div>
       </div>
-    )
+    );
   }
 
-  const celebrantNames = gift.party?.party_celebrants?.map(
-    (pc: { birthdays: { child_name: string } }) => pc.birthdays.child_name
-  ) || []
+  const celebrantNames =
+    gift.party?.party_celebrants?.map(
+      (pc: { birthdays: { child_name: string } }) => pc.birthdays.child_name,
+    ) || [];
 
-  const isClosed = !gift.participation_open
-  const isPurchased = !!gift.purchased_at
-  const participantCount = gift.participants?.length || 0
-  const totalPrice = gift.proposal?.total_price || 0
+  const isClosed = !gift.participation_open;
+  const isPurchased = !!gift.purchased_at;
+  const participantCount = gift.participants?.length || 0;
+  const totalPrice = gift.proposal?.total_price || 0;
 
   // Calculate price per family
-  const pricePerFamily = participantCount > 0
-    ? calculatePricePerFamily(gift.final_price || totalPrice, participantCount)
-    : null
+  const pricePerFamily =
+    participantCount > 0
+      ? calculatePricePerFamily(
+          gift.final_price || totalPrice,
+          participantCount,
+        )
+      : null;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 py-8 px-4">
+    <div className="min-h-screen bg-linear-to-br from-blue-50 to-purple-50 py-8 px-4">
       <div className="container mx-auto max-w-2xl">
         {/* Navigation */}
         <Link
@@ -369,34 +393,39 @@ export default async function GiftPage({
               </h3>
               {gift.proposal.proposal_items?.length > 0 && (
                 <ul className="space-y-2 mb-3">
-                  {gift.proposal.proposal_items.map((item: {
-                    id: string
-                    item_name: string
-                    item_price: number | null
-                    product_link: string | null
-                  }) => (
-                    <li key={item.id} className="flex justify-between text-sm">
-                      <span className="flex items-center gap-2">
-                        <span className="text-gray-700">•</span>
-                        {item.item_name}
-                        {item.product_link && (
-                          <a
-                            href={item.product_link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-blue-500 hover:text-blue-700 text-xs"
-                          >
-                            Ver
-                          </a>
-                        )}
-                      </span>
-                      {item.item_price && (
-                        <span className="font-medium text-gray-700">
-                          {formatPrice(item.item_price)}
+                  {gift.proposal.proposal_items.map(
+                    (item: {
+                      id: string;
+                      item_name: string;
+                      item_price: number | null;
+                      product_link: string | null;
+                    }) => (
+                      <li
+                        key={item.id}
+                        className="flex justify-between text-sm"
+                      >
+                        <span className="flex items-center gap-2">
+                          <span className="text-gray-700">•</span>
+                          {item.item_name}
+                          {item.product_link && (
+                            <a
+                              href={item.product_link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-blue-500 hover:text-blue-700 text-xs"
+                            >
+                              Ver
+                            </a>
+                          )}
                         </span>
-                      )}
-                    </li>
-                  ))}
+                        {item.item_price && (
+                          <span className="font-medium text-gray-700">
+                            {formatPrice(item.item_price)}
+                          </span>
+                        )}
+                      </li>
+                    ),
+                  )}
                 </ul>
               )}
               <div className="pt-3 border-t border-blue-200 flex justify-between items-center">
@@ -410,13 +439,15 @@ export default async function GiftPage({
 
           {/* Price Per Family - Finalized (with real price) */}
           {isPurchased && (
-            <div className="mt-4 p-4 bg-gradient-to-br from-green-50 to-blue-50 rounded-xl text-center">
+            <div className="mt-4 p-4 bg-linear-to-br from-green-50 to-blue-50 rounded-xl text-center">
               <p className="text-sm text-gray-700 mb-1">Precio final pagado:</p>
               <p className="text-3xl font-bold text-green-600 mb-3">
                 {formatPrice(gift.final_price || totalPrice)}
               </p>
               <div className="pt-3 border-t border-green-200">
-                <p className="text-xs text-gray-700 mb-1">Precio por familia:</p>
+                <p className="text-xs text-gray-700 mb-1">
+                  Precio por familia:
+                </p>
                 <p className="text-2xl font-bold text-blue-600">
                   {pricePerFamily}€
                 </p>
@@ -488,21 +519,19 @@ export default async function GiftPage({
             </p>
           ) : (
             <ul className="space-y-2">
-              {gift.participants?.map((p: {
-                id: string
-                family_name: string
-                joined_at: string
-              }) => (
-                <li
-                  key={p.id}
-                  className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
-                >
-                  <span className="font-medium">{p.family_name}</span>
-                  <span className="text-sm text-gray-700">
-                    {new Date(p.joined_at).toLocaleDateString('es-ES')}
-                  </span>
-                </li>
-              ))}
+              {gift.participants?.map(
+                (p: { id: string; family_name: string; joined_at: string }) => (
+                  <li
+                    key={p.id}
+                    className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                  >
+                    <span className="font-medium">{p.family_name}</span>
+                    <span className="text-sm text-gray-700">
+                      {new Date(p.joined_at).toLocaleDateString("es-ES")}
+                    </span>
+                  </li>
+                ),
+              )}
             </ul>
           )}
         </div>
@@ -511,13 +540,17 @@ export default async function GiftPage({
         <CoordinatorActions
           giftId={gift.id}
           shareCode={shareCode}
-          giftName={gift.proposal?.name || 'Regalo'}
+          giftName={gift.proposal?.name || "Regalo"}
           celebrantNames={celebrantNames}
           coordinatorId={gift.party?.coordinator_id || null}
           participationOpen={gift.participation_open}
           isPurchased={isPurchased}
           participantCount={participantCount}
-          participantNames={gift.participants?.map((p: { family_name: string }) => p.family_name) || []}
+          participantNames={
+            gift.participants?.map(
+              (p: { family_name: string }) => p.family_name,
+            ) || []
+          }
           totalPrice={totalPrice}
         />
 
@@ -530,5 +563,5 @@ export default async function GiftPage({
         />
       </div>
     </div>
-  )
+  );
 }

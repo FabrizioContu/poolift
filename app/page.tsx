@@ -61,7 +61,7 @@ export default function LandingPage() {
           </div>
 
           <Link
-            href="#comparacion"
+            href="#como-funciona"
             className="text-sm text-gray-700 hover:text-gray-700 underline"
           >
             No sabes cual elegir?
@@ -201,7 +201,7 @@ export default function LandingPage() {
 
               <ol className="space-y-4">
                 <li className="flex gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 bg-green-600 text-white rounded-full flex items-center justify-center text-sm font-medium">
+                  <span className="shrink-0 w-6 h-6 bg-green-600 text-white rounded-full flex items-center justify-center text-sm font-medium">
                     1
                   </span>
                   <span className="text-gray-700">Crea el regalo</span>

@@ -1,101 +1,104 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { Button } from '@/components/ui/Button'
-import { UserPlus, UserMinus, CheckCircle } from 'lucide-react'
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/Button";
+import { UserPlus, UserMinus, CheckCircle } from "lucide-react";
 
 interface DirectGiftParticipationProps {
-  giftId: string
-  shareCode: string
-  status: string
+  giftId: string;
+  shareCode: string;
+  status: string;
 }
 
 export function DirectGiftParticipation({
   giftId,
   shareCode,
-  status
+  status,
 }: DirectGiftParticipationProps) {
-  const [participantName, setParticipantName] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [joined, setJoined] = useState(false)
-  const [error, setError] = useState('')
+  const [participantName, setParticipantName] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [joined, setJoined] = useState(false);
+  const [error, setError] = useState("");
 
-  const isOpen = status === 'open'
+  const isOpen = status === "open";
 
   // Check localStorage on mount
   useEffect(() => {
-    const saved = localStorage.getItem(`direct_gift_${giftId}_participant`)
+    const saved = localStorage.getItem(`direct_gift_${giftId}_participant`);
     if (saved) {
-      setParticipantName(saved)
-      setJoined(true)
+      setParticipantName(saved);
+      setJoined(true);
     }
-  }, [giftId])
+  }, [giftId]);
 
   const handleJoin = async () => {
     if (!participantName.trim()) {
-      setError('Ingresa tu nombre')
-      return
+      setError("Ingresa tu nombre");
+      return;
     }
 
     if (participantName.trim().length < 2) {
-      setError('El nombre debe tener al menos 2 caracteres')
-      return
+      setError("El nombre debe tener al menos 2 caracteres");
+      return;
     }
 
-    setLoading(true)
-    setError('')
+    setLoading(true);
+    setError("");
 
     try {
       const response = await fetch(`/api/gifts/direct/${giftId}/participate`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ participantName: participantName.trim() })
-      })
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ participantName: participantName.trim() }),
+      });
 
-      const data = await response.json()
+      const data = await response.json();
 
       if (!response.ok) {
-        setError(data.error || 'Error al apuntarse')
-        return
+        setError(data.error || "Error al apuntarse");
+        return;
       }
 
-      setJoined(true)
-      localStorage.setItem(`direct_gift_${giftId}_participant`, participantName.trim())
-      window.location.reload()
+      setJoined(true);
+      localStorage.setItem(
+        `direct_gift_${giftId}_participant`,
+        participantName.trim(),
+      );
+      window.location.reload();
     } catch {
-      setError('Error al apuntarse')
+      setError("Error al apuntarse");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   const handleLeave = async () => {
-    setLoading(true)
-    setError('')
+    setLoading(true);
+    setError("");
 
     try {
       const response = await fetch(`/api/gifts/direct/${giftId}/participate`, {
-        method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ participantName })
-      })
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ participantName }),
+      });
 
       if (!response.ok) {
-        const data = await response.json()
-        setError(data.error || 'Error al salirse')
-        return
+        const data = await response.json();
+        setError(data.error || "Error al salirse");
+        return;
       }
 
-      setJoined(false)
-      setParticipantName('')
-      localStorage.removeItem(`direct_gift_${giftId}_participant`)
-      window.location.reload()
+      setJoined(false);
+      setParticipantName("");
+      localStorage.removeItem(`direct_gift_${giftId}_participant`);
+      window.location.reload();
     } catch {
-      setError('Error al salirse')
+      setError("Error al salirse");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   // Show closed message if participation is closed
   if (!isOpen) {
@@ -106,7 +109,9 @@ export function DirectGiftParticipation({
             <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
               <CheckCircle className="text-green-600" size={32} />
             </div>
-            <h3 className="text-xl font-bold mb-2">Estás participando</h3>
+            <h3 className="text-xl font-bold mb-2 text-gray-900">
+              Estás participando
+            </h3>
             <p className="text-gray-700">
               Como: <strong>{participantName}</strong>
             </p>
@@ -115,16 +120,14 @@ export function DirectGiftParticipation({
             </p>
           </div>
         </div>
-      )
+      );
     }
 
     return (
       <div className="bg-gray-100 rounded-2xl p-6 text-center">
-        <p className="text-gray-700">
-          La participación está cerrada
-        </p>
+        <p className="text-gray-700">La participación está cerrada</p>
       </div>
-    )
+    );
   }
 
   // Show joined state
@@ -135,14 +138,14 @@ export function DirectGiftParticipation({
           <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
             <CheckCircle className="text-green-600" size={32} />
           </div>
-          <h3 className="text-xl font-bold mb-2">Estás apuntado!</h3>
+          <h3 className="text-xl font-bold mb-2 text-gray-900">
+            Estás apuntado!
+          </h3>
           <p className="text-gray-700 mb-6">
             Como: <strong>{participantName}</strong>
           </p>
 
-          {error && (
-            <p className="text-red-500 text-sm mb-4">{error}</p>
-          )}
+          {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
 
           <Button
             onClick={handleLeave}
@@ -151,17 +154,17 @@ export function DirectGiftParticipation({
             className="text-red-600 hover:bg-red-50"
           >
             <UserMinus size={18} className="mr-2" />
-            {loading ? 'Saliendo...' : 'Salirme del regalo'}
+            {loading ? "Saliendo..." : "Salirme del regalo"}
           </Button>
         </div>
       </div>
-    )
+    );
   }
 
   // Show join form
   return (
     <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
-      <h3 className="text-xl font-bold mb-4 text-center">
+      <h3 className="text-xl font-bold mb-4 text-center text-gray-900">
         Apúntate al Regalo
       </h3>
 
@@ -178,17 +181,15 @@ export function DirectGiftParticipation({
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
             disabled={loading}
             onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                e.preventDefault()
-                handleJoin()
+              if (e.key === "Enter") {
+                e.preventDefault();
+                handleJoin();
               }
             }}
           />
         </div>
 
-        {error && (
-          <p className="text-red-500 text-sm">{error}</p>
-        )}
+        {error && <p className="text-red-500 text-sm">{error}</p>}
 
         <Button
           onClick={handleJoin}
@@ -196,9 +197,9 @@ export function DirectGiftParticipation({
           className="w-full py-3 bg-green-600 hover:bg-green-700"
         >
           <UserPlus size={20} className="mr-2" />
-          {loading ? 'Apuntando...' : 'Apuntarme'}
+          {loading ? "Apuntando..." : "Apuntarme"}
         </Button>
       </div>
     </div>
-  )
+  );
 }
