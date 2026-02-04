@@ -168,7 +168,7 @@ export function CreatePartyModal({
             <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
               <Users size={18} />
               Coordinador
-              <span className="text-xs text-gray-400 font-normal">(opcional)</span>
+              <span className="text-xs text-gray-500 font-normal">(opcional)</span>
             </label>
             <select
               value={coordinatorId}

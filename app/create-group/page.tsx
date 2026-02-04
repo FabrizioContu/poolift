@@ -274,7 +274,7 @@ export default function CreateGroupPage() {
                   disabled={isSubmitting}
                   autoFocus
                 />
-                <p className="text-xs text-gray-400 mt-1">
+                <p className="text-xs text-gray-500 mt-1">
                   {groupName.length}/50 caracteres
                 </p>
               </div>
@@ -293,7 +293,7 @@ export default function CreateGroupPage() {
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   disabled={isSubmitting}
                 />
-                <p className="text-xs text-gray-400 mt-1">
+                <p className="text-xs text-gray-500 mt-1">
                   {familyName.length}/50 caracteres
                 </p>
               </div>

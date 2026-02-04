@@ -281,7 +281,7 @@ export default function LandingPage() {
                     <td className="px-4 md:px-6 py-4 text-sm text-green-600">
                       Si
                     </td>
-                    <td className="px-4 md:px-6 py-4 text-sm text-gray-400">
+                    <td className="px-4 md:px-6 py-4 text-sm text-gray-500">
                       No
                     </td>
                   </tr>
@@ -343,7 +343,7 @@ export default function LandingPage() {
             <Gift size={24} />
             <span className="text-xl font-bold">Poolift</span>
           </div>
-          <p className="text-gray-400">Organiza regalos en grupo</p>
+          <p className="text-gray-300">Organiza regalos en grupo</p>
         </div>
       </footer>
     </div>

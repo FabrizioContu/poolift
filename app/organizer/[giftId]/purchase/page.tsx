@@ -174,7 +174,7 @@ export default function DirectGiftPurchasePage({
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center px-4">
-          <ShoppingCart className="mx-auto text-gray-400 mb-4" size={64} />
+          <ShoppingCart className="mx-auto text-gray-500 mb-4" size={64} />
           <h1 className="text-2xl font-bold text-gray-900 mb-2">{error}</h1>
           <Link href="/groups">
             <Button variant="secondary" className="mt-4">

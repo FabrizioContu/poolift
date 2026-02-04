@@ -178,7 +178,7 @@ La participación está cerrada. Mas info: ${giftUrl}`
           )}
 
           {participantCount === 0 && isOpen && (
-            <p className="text-sm text-gray-500 text-center">
+            <p className="text-sm text-gray-600 text-center">
               Espera a que haya participantes para cerrar
             </p>
           )}
@@ -284,13 +284,13 @@ La participación está cerrada. Mas info: ${giftUrl}`
             {/* Summary */}
             <div className="p-4 bg-gray-50 rounded-lg space-y-3">
               <div>
-                <p className="text-xs text-gray-500 mb-1">Regalo para:</p>
+                <p className="text-xs text-gray-600 mb-1">Regalo para:</p>
                 <p className="font-medium">{recipientName}</p>
               </div>
 
               {giftIdea && (
                 <div>
-                  <p className="text-xs text-gray-500 mb-1">Regalo:</p>
+                  <p className="text-xs text-gray-600 mb-1">Regalo:</p>
                   <p className="font-medium">{giftIdea}</p>
                 </div>
               )}
@@ -320,7 +320,7 @@ La participación está cerrada. Mas info: ${giftUrl}`
             {/* Participants List */}
             {participantNames.length > 0 && (
               <div>
-                <p className="text-xs text-gray-500 mb-2">Participantes:</p>
+                <p className="text-xs text-gray-600 mb-2">Participantes:</p>
                 <div className="flex flex-wrap gap-1">
                   {participantNames.map((name, index) => (
                     <span
