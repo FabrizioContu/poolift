@@ -212,9 +212,10 @@ export default async function PartyDetailPage({
   );
   const status = getPartyStatus(party, proposals);
 
-  // TODO: Get current family ID from session/auth
-  // For now, assume coordinator for demo purposes
-  const isCoordinator = true;
+  // coordinatorId and groupId will be passed to client components
+  // to check if current user (from localStorage) is the coordinator
+  const coordinatorId = party.coordinator_id;
+  const coordinatorName = party.coordinator?.name || null;
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -263,7 +264,11 @@ export default async function PartyDetailPage({
 
       {/* Action Buttons */}
       <div className="flex gap-3 mb-6">
-        <AddProposalButton partyId={partyId} isCoordinator={isCoordinator} />
+        <AddProposalButton
+          partyId={partyId}
+          coordinatorId={coordinatorId}
+          groupId={groupId}
+        />
         <AddIdeaButton partyId={partyId} />
       </div>
 
@@ -289,7 +294,8 @@ export default async function PartyDetailPage({
         ideas={ideas}
         celebrants={party.party_celebrants}
         partyId={partyId}
-        isCoordinator={isCoordinator}
+        coordinatorId={coordinatorId}
+        groupId={groupId}
       />
     </div>
   );

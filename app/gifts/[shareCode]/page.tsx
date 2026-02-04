@@ -570,6 +570,7 @@ export default async function GiftPage({
           giftName={gift.proposal?.name || "Regalo"}
           celebrantNames={celebrantNames}
           coordinatorId={gift.party?.coordinator_id || null}
+          groupId={gift.party?.group_id || null}
           participationOpen={gift.participation_open}
           isPurchased={isPurchased}
           participantCount={participantCount}

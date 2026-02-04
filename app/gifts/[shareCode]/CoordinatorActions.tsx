@@ -12,6 +12,7 @@ interface CoordinatorActionsProps {
   giftName: string
   celebrantNames: string[]
   coordinatorId: string | null
+  groupId: string | null
   participationOpen: boolean
   isPurchased: boolean
   participantCount: number
@@ -19,24 +20,29 @@ interface CoordinatorActionsProps {
   totalPrice: number
 }
 
-function checkIsCoordinator(giftId: string, coordinatorId: string | null): boolean {
+function checkIsCoordinator(giftId: string, coordinatorId: string | null, groupId: string | null): boolean {
   if (typeof window === 'undefined') return false
+  if (!coordinatorId || !groupId) return false
 
-  const savedCoordinatorId = localStorage.getItem(`coordinator_${giftId}`)
-  const savedFamilyId = localStorage.getItem('current_family_id')
-  const urlParams = new URLSearchParams(window.location.search)
+  // Check if user's family in the group matches the coordinator
+  const sessions = localStorage.getItem('poolift_groups')
+  if (sessions) {
+    const groupSessions = JSON.parse(sessions)
+    const session = groupSessions.find(
+      (s: { groupId: string; familyId: string }) => s.groupId === groupId
+    )
+    if (session && session.familyId === coordinatorId) {
+      return true
+    }
+  }
 
-  return (
-    savedCoordinatorId === 'true' ||
-    savedFamilyId === coordinatorId ||
-    urlParams.get('coordinator') === 'true'
-  )
+  return false
 }
 
-function useIsCoordinator(giftId: string, coordinatorId: string | null): boolean {
+function useIsCoordinator(giftId: string, coordinatorId: string | null, groupId: string | null): boolean {
   const getSnapshot = useCallback(
-    () => checkIsCoordinator(giftId, coordinatorId),
-    [giftId, coordinatorId]
+    () => checkIsCoordinator(giftId, coordinatorId, groupId),
+    [giftId, coordinatorId, groupId]
   )
 
   const getServerSnapshot = useCallback(() => false, [])
@@ -55,13 +61,14 @@ export function CoordinatorActions({
   giftName,
   celebrantNames,
   coordinatorId,
+  groupId,
   participationOpen,
   isPurchased,
   participantCount,
   participantNames,
   totalPrice
 }: CoordinatorActionsProps) {
-  const isCoordinator = useIsCoordinator(giftId, coordinatorId)
+  const isCoordinator = useIsCoordinator(giftId, coordinatorId, groupId)
 
   if (!isCoordinator) {
     return null

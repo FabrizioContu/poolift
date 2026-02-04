@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { Tabs } from "@/components/ui/Tabs";
 import { ProposalCard } from "@/components/cards/ProposalCard";
 import { IdeasByChild } from "@/components/cards/IdeasByChild";
@@ -45,7 +46,8 @@ interface PartyDetailTabsProps {
   ideas: Idea[];
   celebrants: Celebrant[];
   partyId: string;
-  isCoordinator: boolean;
+  coordinatorId: string | null;
+  groupId: string;
 }
 
 const tabs = [
@@ -58,9 +60,30 @@ export function PartyDetailTabs({
   ideas,
   celebrants,
   partyId,
-  isCoordinator,
+  coordinatorId,
+  groupId,
 }: PartyDetailTabsProps) {
+  const [isCoordinator, setIsCoordinator] = useState(false);
   const hasAnySelected = proposals.some((p) => p.is_selected);
+
+  // Check if current user is the coordinator
+  useEffect(() => {
+    if (!coordinatorId || !groupId) {
+      setIsCoordinator(false);
+      return;
+    }
+
+    const sessions = localStorage.getItem("poolift_groups");
+    if (sessions) {
+      const groupSessions = JSON.parse(sessions);
+      const session = groupSessions.find(
+        (s: { groupId: string; familyId: string }) => s.groupId === groupId
+      );
+      if (session && session.familyId === coordinatorId) {
+        setIsCoordinator(true);
+      }
+    }
+  }, [coordinatorId, groupId]);
 
   return (
     <Tabs tabs={tabs} defaultTab="proposals">
