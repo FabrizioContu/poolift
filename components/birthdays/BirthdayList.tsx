@@ -27,8 +27,8 @@ export function BirthdayList({ birthdays, groupId }: BirthdayListProps) {
   if (birthdays.length === 0) {
     return (
       <div className="text-center py-12">
-        <Cake className="mx-auto text-gray-400 mb-4" size={48} />
-        <p className="text-gray-600 mb-4">
+        <Cake className="mx-auto text-gray-700 mb-4" size={48} />
+        <p className="text-gray-700 mb-4">
           No hay cumpleanos registrados todavia
         </p>
         <Button onClick={() => setShowAddModal(true)}>

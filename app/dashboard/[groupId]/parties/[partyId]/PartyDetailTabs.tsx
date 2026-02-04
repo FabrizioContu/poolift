@@ -69,7 +69,7 @@ export function PartyDetailTabs({
           {activeTab === "proposals" && (
             <div>
               {proposals.length === 0 ? (
-                <div className="text-center py-8 text-gray-500">
+                <div className="text-center py-8 text-gray-700">
                   <FileText size={48} className="mx-auto mb-3 opacity-50" />
                   <p>No hay propuestas todavía.</p>
                   <p className="text-sm mt-1">

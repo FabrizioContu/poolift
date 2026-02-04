@@ -136,7 +136,7 @@ export function AddProposalModal({
             {items.map((item, index) => (
               <div key={index} className="border border-gray-200 rounded-lg p-3">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs text-gray-500">Item {index + 1}</span>
+                  <span className="text-xs text-gray-700">Item {index + 1}</span>
                   {items.length > 1 && (
                     <button
                       type="button"
@@ -195,7 +195,7 @@ export function AddProposalModal({
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
             Fecha límite de votación
-            <span className="text-gray-500 font-normal"> (opcional)</span>
+            <span className="text-gray-700 font-normal"> (opcional)</span>
           </label>
           <input
             type="date"
@@ -208,7 +208,7 @@ export function AddProposalModal({
 
         <div className="bg-gray-50 p-3 rounded-lg">
           <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-600">Total:</span>
+            <span className="text-sm text-gray-700">Total:</span>
             <span className="text-lg font-bold text-blue-600">
               {calculateTotal().toFixed(2)}€
             </span>

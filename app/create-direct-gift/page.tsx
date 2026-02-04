@@ -20,7 +20,7 @@ export default function CreateDirectGiftPage() {
       <div className="container mx-auto px-4 py-6">
         <Link
           href="/"
-          className="inline-flex items-center gap-1 text-gray-600 hover:text-gray-900"
+          className="inline-flex items-center gap-1 text-gray-700 hover:text-gray-900"
         >
           <ArrowLeft size={18} />
           <span>Volver al inicio</span>

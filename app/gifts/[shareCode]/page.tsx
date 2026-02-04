@@ -118,7 +118,7 @@ export default async function GiftPage({
           {/* Navigation */}
           <Link
             href="/groups"
-            className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4 transition-colors"
+            className="inline-flex items-center gap-2 text-gray-700 hover:text-gray-900 mb-4 transition-colors"
           >
             <ArrowLeft size={20} />
             <span className="text-sm font-medium">Mis Grupos</span>
@@ -159,7 +159,7 @@ export default async function GiftPage({
                 </span>
               )}
 
-              <p className="text-gray-600 text-sm">
+              <p className="text-gray-700 text-sm">
                 Organizado por {directGift.organizer_name}
               </p>
             </div>
@@ -180,7 +180,7 @@ export default async function GiftPage({
             {/* Only price if no idea */}
             {!directGift.gift_idea && directGift.estimated_price && (
               <div className="mt-6 p-4 bg-green-50 rounded-lg text-center">
-                <p className="text-sm text-gray-600 mb-1">Precio estimado</p>
+                <p className="text-sm text-gray-700 mb-1">Precio estimado</p>
                 <p className="text-3xl font-bold text-green-600">
                   {formatPrice(directGift.estimated_price)}
                 </p>
@@ -190,11 +190,11 @@ export default async function GiftPage({
             {/* Price Per Person - when closed or purchased */}
             {(isClosed || isPurchased) && pricePerPerson && (
               <div className="mt-4 p-4 bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl text-center">
-                <p className="text-sm text-gray-600 mb-1">Precio por persona</p>
+                <p className="text-sm text-gray-700 mb-1">Precio por persona</p>
                 <p className="text-3xl font-bold text-green-600">
                   {pricePerPerson}€
                 </p>
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-gray-700 mt-1">
                   ({participantCount} participantes)
                 </p>
               </div>
@@ -239,7 +239,7 @@ export default async function GiftPage({
             </div>
 
             {participantCount === 0 ? (
-              <p className="text-gray-500 text-center py-6">
+              <p className="text-gray-700 text-center py-6">
                 Sé el primero en apuntarte
               </p>
             ) : (
@@ -250,7 +250,7 @@ export default async function GiftPage({
                     className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
                   >
                     <span className="font-medium">{p.participant_name}</span>
-                    <span className="text-sm text-gray-500">
+                    <span className="text-sm text-gray-700">
                       {new Date(p.joined_at).toLocaleDateString('es-ES')}
                     </span>
                   </li>
@@ -276,11 +276,11 @@ export default async function GiftPage({
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center px-4">
-          <Gift className="mx-auto text-gray-500 mb-4" size={64} />
+          <Gift className="mx-auto text-gray-700 mb-4" size={64} />
           <h1 className="text-2xl font-bold text-gray-900 mb-2">
             Regalo no encontrado
           </h1>
-          <p className="text-gray-600 mb-4">
+          <p className="text-gray-700 mb-4">
             Verifica el enlace e intenta nuevamente
           </p>
           <Link
@@ -315,7 +315,7 @@ export default async function GiftPage({
         {/* Navigation */}
         <Link
           href="/groups"
-          className="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 mb-4 transition-colors"
+          className="inline-flex items-center gap-2 text-gray-700 hover:text-gray-900 mb-4 transition-colors"
         >
           <ArrowLeft size={20} />
           <span className="text-sm font-medium">Mis Grupos</span>
@@ -354,7 +354,7 @@ export default async function GiftPage({
 
             {/* Party Date */}
             {gift.party?.party_date && (
-              <div className="flex items-center justify-center gap-2 text-gray-600 mt-4">
+              <div className="flex items-center justify-center gap-2 text-gray-700 mt-4">
                 <Calendar size={18} />
                 <span>{formatDate(gift.party.party_date)}</span>
               </div>
@@ -377,7 +377,7 @@ export default async function GiftPage({
                   }) => (
                     <li key={item.id} className="flex justify-between text-sm">
                       <span className="flex items-center gap-2">
-                        <span className="text-gray-500">•</span>
+                        <span className="text-gray-700">•</span>
                         {item.item_name}
                         {item.product_link && (
                           <a
@@ -391,7 +391,7 @@ export default async function GiftPage({
                         )}
                       </span>
                       {item.item_price && (
-                        <span className="font-medium text-gray-600">
+                        <span className="font-medium text-gray-700">
                           {formatPrice(item.item_price)}
                         </span>
                       )}
@@ -411,16 +411,16 @@ export default async function GiftPage({
           {/* Price Per Family - Finalized (with real price) */}
           {isPurchased && (
             <div className="mt-4 p-4 bg-gradient-to-br from-green-50 to-blue-50 rounded-xl text-center">
-              <p className="text-sm text-gray-600 mb-1">Precio final pagado:</p>
+              <p className="text-sm text-gray-700 mb-1">Precio final pagado:</p>
               <p className="text-3xl font-bold text-green-600 mb-3">
                 {formatPrice(gift.final_price || totalPrice)}
               </p>
               <div className="pt-3 border-t border-green-200">
-                <p className="text-xs text-gray-600 mb-1">Precio por familia:</p>
+                <p className="text-xs text-gray-700 mb-1">Precio por familia:</p>
                 <p className="text-2xl font-bold text-blue-600">
                   {pricePerFamily}€
                 </p>
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-gray-700 mt-1">
                   ({participantCount} familias participantes)
                 </p>
               </div>
@@ -430,11 +430,11 @@ export default async function GiftPage({
           {/* Price Per Family - Closed but not purchased (estimated) */}
           {isClosed && !isPurchased && pricePerFamily && (
             <div className="mt-4 p-4 bg-green-50 rounded-lg text-center">
-              <p className="text-sm text-gray-600 mb-1">Precio por familia:</p>
+              <p className="text-sm text-gray-700 mb-1">Precio por familia:</p>
               <p className="text-3xl font-bold text-green-600">
                 {pricePerFamily}€
               </p>
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-gray-700 mt-1">
                 ({participantCount} familias participantes)
               </p>
               <p className="text-xs text-orange-600 mt-2">
@@ -483,7 +483,7 @@ export default async function GiftPage({
           </div>
 
           {participantCount === 0 ? (
-            <p className="text-gray-500 text-center py-6">
+            <p className="text-gray-700 text-center py-6">
               Sé la primera familia en apuntarte
             </p>
           ) : (
@@ -498,7 +498,7 @@ export default async function GiftPage({
                   className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
                 >
                   <span className="font-medium">{p.family_name}</span>
-                  <span className="text-sm text-gray-500">
+                  <span className="text-sm text-gray-700">
                     {new Date(p.joined_at).toLocaleDateString('es-ES')}
                   </span>
                 </li>

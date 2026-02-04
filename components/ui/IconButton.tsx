@@ -17,8 +17,8 @@ export function IconButton({
   ...props
 }: IconButtonProps) {
   const variantStyles = {
-    default: "text-gray-400 hover:text-gray-600 hover:bg-gray-100",
-    danger: "text-gray-400 hover:text-red-500 hover:bg-red-50",
+    default: "text-gray-700 hover:text-gray-700 hover:bg-gray-100",
+    danger: "text-gray-700 hover:text-red-500 hover:bg-red-50",
   };
 
   const sizeStyles = {

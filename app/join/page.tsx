@@ -40,7 +40,7 @@ export default function JoinPage() {
       <div className="max-w-md mx-auto">
         <Link
           href="/"
-          className="inline-flex items-center gap-1 text-gray-600 hover:text-gray-900 mb-6"
+          className="inline-flex items-center gap-1 text-gray-700 hover:text-gray-900 mb-6"
         >
           <ArrowLeft size={18} />
           <span>Volver al inicio</span>
@@ -52,7 +52,7 @@ export default function JoinPage() {
               <UserPlus className="w-8 h-8 text-purple-600" />
             </div>
             <h1 className="text-2xl font-bold text-gray-900">Unirse a Grupo</h1>
-            <p className="text-gray-600 mt-2">
+            <p className="text-gray-700 mt-2">
               Introduce el código que te han compartido
             </p>
           </div>
@@ -84,7 +84,7 @@ export default function JoinPage() {
             </Button>
           </form>
 
-          <p className="text-center text-sm text-gray-500 mt-6">
+          <p className="text-center text-sm text-gray-700 mt-6">
             ¿No tienes código?{' '}
             <Link href="/create-group" className="text-blue-500 hover:underline">
               Crear un grupo nuevo

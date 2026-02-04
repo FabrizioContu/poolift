@@ -62,7 +62,7 @@ export function PartyCard({ party }: PartyCardProps) {
       >
         <div className="flex items-start justify-between">
           <div className="flex-1">
-            <div className="flex items-center gap-2 text-gray-500 text-sm mb-2">
+            <div className="flex items-center gap-2 text-gray-700 text-sm mb-2">
               <Calendar size={16} />
               <span>{formatDate(party.party_date)}</span>
             </div>
@@ -71,7 +71,7 @@ export function PartyCard({ party }: PartyCardProps) {
               Fiesta de {formatCelebrants(celebrantNames)}
             </h3>
 
-            <div className="flex items-center gap-2 text-gray-600">
+            <div className="flex items-center gap-2 text-gray-700">
               <Users size={16} />
               <span>
                 {celebrantNames.length}{" "}
@@ -80,7 +80,7 @@ export function PartyCard({ party }: PartyCardProps) {
             </div>
 
             {party.coordinator && (
-              <div className="flex items-center gap-2 text-gray-600 mt-2">
+              <div className="flex items-center gap-2 text-gray-700 mt-2">
                 <User size={16} />
                 <span>Coordinador: {party.coordinator.name}</span>
               </div>
@@ -93,7 +93,7 @@ export function PartyCard({ party }: PartyCardProps) {
             </div>
             <button
               onClick={handleDeleteClick}
-              className="p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition"
+              className="p-2 text-gray-700 hover:text-red-500 hover:bg-red-50 rounded-lg transition"
               title="Eliminar fiesta"
             >
               <Trash2 size={18} />

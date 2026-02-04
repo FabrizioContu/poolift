@@ -124,7 +124,7 @@ Apuntate aqui: ${getGiftLink()}`;
           <div className="text-center">
             <CheckCircle className="mx-auto text-green-500 mb-3" size={40} />
             <h2 className="text-xl font-bold mb-1">Regalo Creado!</h2>
-            <p className="text-gray-600 text-sm mb-4">
+            <p className="text-gray-700 text-sm mb-4">
               Comparte el enlace para que otros participen
             </p>
 
@@ -166,7 +166,7 @@ Apuntate aqui: ${getGiftLink()}`;
 
               <button
                 onClick={handleViewGift}
-                className="text-sm text-gray-500 hover:text-gray-700 mt-1"
+                className="text-sm text-gray-700 hover:text-gray-900 mt-1"
               >
                 Cerrar
               </button>
@@ -191,13 +191,13 @@ Apuntate aqui: ${getGiftLink()}`;
           </div>
           <button
             onClick={onClose}
-            className="text-gray-500 hover:text-gray-600"
+            className="text-gray-700 hover:text-gray-900"
           >
             <X size={24} />
           </button>
         </div>
 
-        <p className="text-gray-600 mb-6">
+        <p className="text-gray-700 mb-6">
           Organiza un regalo puntual sin necesidad de crear un grupo
         </p>
 
@@ -256,7 +256,7 @@ Apuntate aqui: ${getGiftLink()}`;
               Precio estimado (opcional)
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-2.5 text-gray-500">€</span>
+              <span className="absolute left-3 top-2.5 text-gray-700">€</span>
               <input
                 type="number"
                 step="0.01"
@@ -282,7 +282,7 @@ Apuntate aqui: ${getGiftLink()}`;
               placeholder="ej: Maria"
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
             />
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-xs text-gray-700 mt-1">
               Para que te identifiquen como organizador
             </p>
           </div>

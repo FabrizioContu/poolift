@@ -95,7 +95,7 @@ export function IdeasByChild({ ideas, celebrants }: IdeasByChildProps) {
             </h3>
 
             {childIdeas.length === 0 ? (
-              <p className="text-gray-500 text-sm pl-7">
+              <p className="text-gray-700 text-sm pl-7">
                 Sin ideas por el momento
               </p>
             ) : (
@@ -118,11 +118,11 @@ export function IdeasByChild({ ideas, celebrants }: IdeasByChildProps) {
                           )}
                         </div>
                         {idea.comment && (
-                          <p className="text-gray-600 text-sm mt-1">
+                          <p className="text-gray-700 text-sm mt-1">
                             {idea.comment}
                           </p>
                         )}
-                        <div className="flex items-center gap-1 text-gray-500 text-xs mt-2">
+                        <div className="flex items-center gap-1 text-gray-700 text-xs mt-2">
                           <User size={12} />
                           <span>Sugerido por {idea.suggested_by}</span>
                         </div>

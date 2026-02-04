@@ -157,13 +157,13 @@ export function CloseParticipationButton({
                 </span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-gray-600">Total del regalo:</span>
+                <span className="text-gray-700">Total del regalo:</span>
                 <span className="font-bold text-blue-600">
                   {formatPrice(totalPrice)}
                 </span>
               </div>
               <div className="flex justify-between items-center mt-2 pt-2 border-t border-blue-200">
-                <span className="text-gray-600">Precio por familia:</span>
+                <span className="text-gray-700">Precio por familia:</span>
                 <span className="font-bold text-green-600 text-lg">
                   {estimatedPricePerFamily}€
                 </span>
@@ -218,22 +218,22 @@ export function CloseParticipationButton({
             {/* Summary */}
             <div className="p-4 bg-gray-50 rounded-lg space-y-3">
               <div>
-                <p className="text-xs text-gray-500 mb-1">Regalo:</p>
+                <p className="text-xs text-gray-700 mb-1">Regalo:</p>
                 <p className="font-medium">{giftName}</p>
               </div>
 
               <div className="flex justify-between items-center pt-2 border-t border-gray-200">
-                <span className="text-gray-600">Familias participantes:</span>
+                <span className="text-gray-700">Familias participantes:</span>
                 <span className="font-bold">{participantCount}</span>
               </div>
 
               <div className="flex justify-between items-center">
-                <span className="text-gray-600">Total:</span>
+                <span className="text-gray-700">Total:</span>
                 <span className="font-bold">{formatPrice(totalPrice)}</span>
               </div>
 
               <div className="flex justify-between items-center pt-2 border-t border-gray-200">
-                <span className="text-gray-600">Precio por familia:</span>
+                <span className="text-gray-700">Precio por familia:</span>
                 <span className="font-bold text-green-600 text-xl">
                   {finalPricePerFamily || estimatedPricePerFamily}€
                 </span>
@@ -243,7 +243,7 @@ export function CloseParticipationButton({
             {/* Participants List */}
             {participantNames.length > 0 && (
               <div>
-                <p className="text-xs text-gray-500 mb-2">Participantes:</p>
+                <p className="text-xs text-gray-700 mb-2">Participantes:</p>
                 <div className="flex flex-wrap gap-1">
                   {participantNames.map((name, index) => (
                     <span

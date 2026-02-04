@@ -66,13 +66,13 @@ export function InviteCodeModal({
           <PartyPopper className="w-8 h-8 text-green-600" />
         </div>
 
-        <p className="text-gray-600 mb-6">
+        <p className="text-gray-700 mb-6">
           Tu grupo <span className="font-semibold">{groupName}</span> ha sido creado.
           Comparte el código con las familias del grupo.
         </p>
 
         <div className="bg-gray-50 rounded-lg p-4 mb-6">
-          <p className="text-sm text-gray-500 mb-2">Código de invitación</p>
+          <p className="text-sm text-gray-700 mb-2">Código de invitación</p>
           <p className="text-3xl font-mono font-bold text-blue-600 tracking-wider">
             {inviteCode}
           </p>
@@ -90,7 +90,7 @@ export function InviteCodeModal({
               </>
             ) : (
               <>
-                <Copy size={20} className="text-gray-600" />
+                <Copy size={20} className="text-gray-700" />
                 <span className="text-gray-700">Copiar Código</span>
               </>
             )}
@@ -107,7 +107,7 @@ export function InviteCodeModal({
               </>
             ) : (
               <>
-                <LinkIcon size={20} className="text-gray-600" />
+                <LinkIcon size={20} className="text-gray-700" />
                 <span className="text-gray-700">Copiar Link</span>
               </>
             )}

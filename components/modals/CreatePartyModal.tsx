@@ -123,12 +123,12 @@ export function CreatePartyModal({
             <PartyPopper size={18} />
             Celebrantes
           </label>
-          <p className="text-xs text-gray-500 mb-3">
+          <p className="text-xs text-gray-700 mb-3">
             Selecciona los niños que celebrarán en esta fiesta
           </p>
 
           {birthdays.length === 0 ? (
-            <p className="text-sm text-gray-500 italic">
+            <p className="text-sm text-gray-700 italic">
               No hay cumpleaños registrados en este grupo
             </p>
           ) : (
@@ -152,7 +152,7 @@ export function CreatePartyModal({
                     <p className="font-medium text-gray-800">
                       {birthday.child_name}
                     </p>
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-gray-700">
                       Cumple el {formatBirthDate(birthday.birth_date)}
                     </p>
                   </div>
@@ -168,7 +168,7 @@ export function CreatePartyModal({
             <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
               <Users size={18} />
               Coordinador
-              <span className="text-xs text-gray-500 font-normal">(opcional)</span>
+              <span className="text-xs text-gray-700 font-normal">(opcional)</span>
             </label>
             <select
               value={coordinatorId}
@@ -182,7 +182,7 @@ export function CreatePartyModal({
                 </option>
               ))}
             </select>
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-xs text-gray-700 mt-1">
               Si no seleccionas, se asignará a la familia que menos fiestas haya coordinado
             </p>
           </div>

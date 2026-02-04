@@ -138,7 +138,7 @@ export function SpoilerGuard({ celebrantNames, children }: SpoilerGuardProps) {
           </p>
 
           <div className="bg-yellow-50 p-4 rounded-lg mb-6">
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-700">
               Detectamos que eres <strong>{userName}</strong>.
               <br />
               Espera al dia de tu fiesta para ver el regalo
@@ -152,7 +152,7 @@ export function SpoilerGuard({ celebrantNames, children }: SpoilerGuardProps) {
             Volver al Inicio
           </button>
 
-          <button onClick={handleNotMe} className="text-sm text-gray-500 hover:text-gray-700">
+          <button onClick={handleNotMe} className="text-sm text-gray-700 hover:text-gray-700">
             No soy {userName}
           </button>
         </div>

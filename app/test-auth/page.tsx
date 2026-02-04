@@ -78,7 +78,7 @@ export default function TestAuthPage() {
               <p className="text-sm">
                 <span className="font-medium">Email:</span> {user.email}
               </p>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-gray-700">
                 <span className="font-medium">ID:</span> {user.id}
               </p>
             </div>

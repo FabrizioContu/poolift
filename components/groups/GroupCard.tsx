@@ -91,7 +91,7 @@ export function GroupCard({
           <h3 className="text-lg font-semibold text-gray-900 mb-1">
             Grupo eliminado
           </h3>
-          <p className="text-gray-600 text-sm mb-4">
+          <p className="text-gray-700 text-sm mb-4">
             &quot;{group.name}&quot; ha sido eliminado correctamente
           </p>
           <a
@@ -119,7 +119,7 @@ export function GroupCard({
               }`}
             >
               <Users
-                className={isCreator ? "text-blue-600" : "text-gray-600"}
+                className={isCreator ? "text-blue-600" : "text-gray-700"}
                 size={28}
               />
             </div>
@@ -143,7 +143,7 @@ export function GroupCard({
                     className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
                       isCreator
                         ? "bg-blue-100 text-blue-800"
-                        : "bg-gray-100 text-gray-600"
+                        : "bg-gray-100 text-gray-700"
                     }`}
                   >
                     {isCreator ? "Creador" : "Miembro"}
@@ -155,7 +155,7 @@ export function GroupCard({
         </div>
 
         <div className="mt-4 flex items-center justify-between">
-          <code className="text-sm text-gray-500 font-mono">
+          <code className="text-sm text-gray-700 font-mono">
             {group.invite_code}
           </code>
 
@@ -163,7 +163,7 @@ export function GroupCard({
             <div className="flex items-center gap-2">
               <button
                 onClick={handleCopyCode}
-                className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition"
+                className="p-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition"
                 title="Copiar código"
               >
                 {copied ? (
@@ -174,7 +174,7 @@ export function GroupCard({
               </button>
               <button
                 onClick={handleShareWhatsApp}
-                className="p-2 text-gray-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition"
+                className="p-2 text-gray-700 hover:text-green-600 hover:bg-green-50 rounded-lg transition"
                 title="Compartir por WhatsApp"
               >
                 <MessageCircle size={18} />
@@ -182,7 +182,7 @@ export function GroupCard({
               {isCreator && (
                 <button
                   onClick={handleDeleteClick}
-                  className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition"
+                  className="p-2 text-gray-700 hover:text-red-600 hover:bg-red-50 rounded-lg transition"
                   title="Eliminar grupo"
                 >
                   <Trash2 size={18} />

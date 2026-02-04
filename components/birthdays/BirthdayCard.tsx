@@ -40,10 +40,10 @@ export function BirthdayCard({ birthday, groupId }: BirthdayCardProps) {
           <div className="flex items-center gap-2 mb-2">
             <Cake className="text-pink-500" size={24} />
             <h3 className="text-lg font-bold">{birthday.child_name}</h3>
-            <span className="text-sm text-gray-500">({age} anos)</span>
+            <span className="text-sm text-gray-700">({age} anos)</span>
           </div>
 
-          <div className="flex items-center gap-4 text-sm text-gray-600 mb-3">
+          <div className="flex items-center gap-4 text-sm text-gray-700 mb-3">
             <div className="flex items-center gap-1">
               <Calendar size={16} />
               {formatDate(birthday.birth_date)}
@@ -64,7 +64,7 @@ export function BirthdayCard({ birthday, groupId }: BirthdayCardProps) {
               Proxima fiesta: {formatDate(birthday.nextPartyDate)}
             </p>
           ) : (
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-gray-700">
               Sin fiesta programada
             </p>
           )}

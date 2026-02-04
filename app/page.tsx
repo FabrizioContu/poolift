@@ -15,7 +15,7 @@ export default function LandingPage() {
           <div className="flex items-center gap-4">
             <Link
               href="#como-funciona"
-              className="text-gray-600 hover:text-gray-900 hidden sm:block"
+              className="text-gray-700 hover:text-gray-900 hidden sm:block"
             >
               Como funciona
             </Link>
@@ -37,7 +37,7 @@ export default function LandingPage() {
             sin complicaciones
           </h1>
 
-          <p className="text-lg md:text-xl text-gray-600 mb-8">
+          <p className="text-lg md:text-xl text-gray-700 mb-8">
             Coordina contribuciones, vota propuestas y compra juntos.
             <br />
             Para cualquier ocasion.
@@ -62,12 +62,12 @@ export default function LandingPage() {
 
           <Link
             href="#comparacion"
-            className="text-sm text-gray-500 hover:text-gray-700 underline"
+            className="text-sm text-gray-700 hover:text-gray-700 underline"
           >
             No sabes cual elegir?
           </Link>
 
-          <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 mt-8 text-sm text-gray-600">
+          <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 mt-8 text-sm text-gray-700">
             <div className="flex items-center gap-2">
               <CheckCircle size={20} className="text-green-500" />
               <span>Gratis</span>
@@ -99,8 +99,8 @@ export default function LandingPage() {
             <h3 className="text-lg md:text-xl font-semibold mb-2">
               Grupos permanentes
             </h3>
-            <p className="text-gray-600 mb-4">Para regalos recurrentes</p>
-            <ul className="text-sm text-gray-500 space-y-2">
+            <p className="text-gray-700 mb-4">Para regalos recurrentes</p>
+            <ul className="text-sm text-gray-700 space-y-2">
               <li>Clase del cole</li>
               <li>Equipo de trabajo</li>
               <li>Familia extensa</li>
@@ -115,8 +115,8 @@ export default function LandingPage() {
             <h3 className="text-lg md:text-xl font-semibold mb-2">
               Grupos de amigos
             </h3>
-            <p className="text-gray-600 mb-4">Coordina cumpleanos</p>
-            <ul className="text-sm text-gray-500 space-y-2">
+            <p className="text-gray-700 mb-4">Coordina cumpleanos</p>
+            <ul className="text-sm text-gray-700 space-y-2">
               <li>Grupo de amigos</li>
               <li>Comunidad</li>
               <li>Club deportivo</li>
@@ -131,8 +131,8 @@ export default function LandingPage() {
             <h3 className="text-lg md:text-xl font-semibold mb-2">
               Ocasiones puntuales
             </h3>
-            <p className="text-gray-600 mb-4">Solo esta vez</p>
-            <ul className="text-sm text-gray-500 space-y-2">
+            <p className="text-gray-700 mb-4">Solo esta vez</p>
+            <ul className="text-sm text-gray-700 space-y-2">
               <li>Regalo puntual</li>
               <li>Despedida</li>
               <li>Boda / Nacimiento</li>
@@ -154,7 +154,7 @@ export default function LandingPage() {
               <h3 className="text-xl md:text-2xl font-semibold mb-4 text-blue-700">
                 Grupo Permanente
               </h3>
-              <p className="text-gray-600 mb-6">
+              <p className="text-gray-700 mb-6">
                 Para regalos recurrentes durante todo el ano
               </p>
 
@@ -195,7 +195,7 @@ export default function LandingPage() {
               <h3 className="text-xl md:text-2xl font-semibold mb-4 text-green-700">
                 Regalo Directo
               </h3>
-              <p className="text-gray-600 mb-6">
+              <p className="text-gray-700 mb-6">
                 Para ocasiones unicas y rapidas
               </p>
 
@@ -236,73 +236,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Comparacion Section */}
-      <section id="comparacion" className="container mx-auto px-4 py-16">
-        <h2 className="text-2xl md:text-3xl font-bold text-center mb-8">
-          Grupo o regalo directo?
-        </h2>
-
-        <div className="max-w-3xl mx-auto">
-          <div className="bg-white rounded-xl shadow-sm overflow-hidden">
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-4 md:px-6 py-4 text-left text-sm font-semibold text-gray-700">
-                      Aspecto
-                    </th>
-                    <th className="px-4 md:px-6 py-4 text-left text-sm font-semibold text-blue-700">
-                      Grupo
-                    </th>
-                    <th className="px-4 md:px-6 py-4 text-left text-sm font-semibold text-green-700">
-                      Directo
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-100">
-                  <tr>
-                    <td className="px-4 md:px-6 py-4 text-sm text-gray-600">
-                      Para
-                    </td>
-                    <td className="px-4 md:px-6 py-4 text-sm">Recurrente</td>
-                    <td className="px-4 md:px-6 py-4 text-sm">Puntual</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 md:px-6 py-4 text-sm text-gray-600">
-                      Pasos
-                    </td>
-                    <td className="px-4 md:px-6 py-4 text-sm">4</td>
-                    <td className="px-4 md:px-6 py-4 text-sm">1</td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 md:px-6 py-4 text-sm text-gray-600">
-                      Votacion
-                    </td>
-                    <td className="px-4 md:px-6 py-4 text-sm text-green-600">
-                      Si
-                    </td>
-                    <td className="px-4 md:px-6 py-4 text-sm text-gray-500">
-                      No
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="px-4 md:px-6 py-4 text-sm text-gray-600">
-                      Ideal para
-                    </td>
-                    <td className="px-4 md:px-6 py-4 text-sm">
-                      Clases, amigos, familia
-                    </td>
-                    <td className="px-4 md:px-6 py-4 text-sm">
-                      Despedida, boda
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Final CTA */}
       <section className="container mx-auto px-4 py-16">
         <div className="max-w-2xl mx-auto text-center">
@@ -327,7 +260,7 @@ export default function LandingPage() {
             </Link>
           </div>
 
-          <p className="mt-6 text-gray-500">
+          <p className="mt-6 text-gray-700">
             Ya tienes un codigo?{" "}
             <Link href="/join" className="text-blue-600 hover:underline">
               Unirse a grupo

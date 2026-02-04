@@ -42,7 +42,7 @@ export function DashboardTabs({ parties, birthdays, groupId }: DashboardTabsProp
             className={`flex items-center gap-2 py-3 px-1 border-b-2 font-medium text-sm transition ${
               activeTab === 'parties'
                 ? 'border-blue-500 text-blue-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                : 'border-transparent text-gray-700 hover:text-gray-700 hover:border-gray-300'
             }`}
           >
             <Calendar size={18} />
@@ -54,7 +54,7 @@ export function DashboardTabs({ parties, birthdays, groupId }: DashboardTabsProp
             className={`flex items-center gap-2 py-3 px-1 border-b-2 font-medium text-sm transition ${
               activeTab === 'birthdays'
                 ? 'border-blue-500 text-blue-600'
-                : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                : 'border-transparent text-gray-700 hover:text-gray-700 hover:border-gray-300'
             }`}
           >
             <Cake size={18} />
@@ -67,7 +67,7 @@ export function DashboardTabs({ parties, birthdays, groupId }: DashboardTabsProp
       {activeTab === 'parties' && (
         <div className="grid gap-4">
           {parties.length === 0 ? (
-            <p className="text-gray-500 text-center py-8">
+            <p className="text-gray-700 text-center py-8">
               No hay fiestas programadas. Crea la primera fiesta del grupo.
             </p>
           ) : (

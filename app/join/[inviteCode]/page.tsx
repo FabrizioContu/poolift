@@ -22,7 +22,7 @@ export default async function JoinGroupPage({ params }: JoinGroupPageProps) {
         <div className="max-w-md mx-auto">
           <Link
             href="/join"
-            className="inline-flex items-center gap-1 text-gray-600 hover:text-gray-900 mb-6"
+            className="inline-flex items-center gap-1 text-gray-700 hover:text-gray-900 mb-6"
           >
             <ArrowLeft size={18} />
             <span>Volver</span>
@@ -35,10 +35,10 @@ export default async function JoinGroupPage({ params }: JoinGroupPageProps) {
             <h1 className="text-2xl font-bold text-gray-900 mb-2">
               Código inválido
             </h1>
-            <p className="text-gray-600 mb-6">
+            <p className="text-gray-700 mb-6">
               El código <span className="font-mono font-bold">{inviteCode}</span> no corresponde a ningún grupo.
             </p>
-            <p className="text-sm text-gray-500 mb-6">
+            <p className="text-sm text-gray-700 mb-6">
               Verifica que el código esté bien escrito o pide a quien te lo envió que lo comparta de nuevo.
             </p>
             <Link
@@ -58,7 +58,7 @@ export default async function JoinGroupPage({ params }: JoinGroupPageProps) {
       <div className="max-w-md mx-auto">
         <Link
           href="/join"
-          className="inline-flex items-center gap-1 text-gray-600 hover:text-gray-900 mb-6"
+          className="inline-flex items-center gap-1 text-gray-700 hover:text-gray-900 mb-6"
         >
           <ArrowLeft size={18} />
           <span>Volver</span>

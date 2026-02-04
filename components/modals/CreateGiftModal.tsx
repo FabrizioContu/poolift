@@ -114,13 +114,13 @@ Apúntate aquí: ${getGiftLink()}`;
         <div className="text-center">
           <CheckCircle className="mx-auto text-green-500 mb-4" size={48} />
           <h3 className="text-xl font-bold mb-2">¡Regalo Creado!</h3>
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-700 mb-6">
             Comparte este enlace para que las familias se apunten
           </p>
 
           {/* Share Code */}
           <div className="bg-linear-to-r from-blue-50 to-purple-50 p-6 rounded-xl mb-4">
-            <p className="text-sm text-gray-600 mb-2">Código del regalo:</p>
+            <p className="text-sm text-gray-700 mb-2">Código del regalo:</p>
             <code className="text-3xl font-mono font-bold text-blue-600">
               {shareCode}
             </code>
@@ -128,7 +128,7 @@ Apúntate aquí: ${getGiftLink()}`;
 
           {/* Full Link */}
           <div className="p-3 bg-gray-50 rounded-lg mb-6">
-            <p className="text-xs text-gray-500 mb-1">Link directo:</p>
+            <p className="text-xs text-gray-700 mb-1">Link directo:</p>
             <code className="text-sm text-gray-700 break-all">
               {getGiftLink()}
             </code>
@@ -172,7 +172,7 @@ Apúntate aquí: ${getGiftLink()}`;
       <div className="text-center">
         <Gift className="mx-auto text-blue-500 mb-4" size={48} />
         <h3 className="text-xl font-bold mb-2">Crear Regalo</h3>
-        <p className="text-gray-600 mb-4">Se creará un regalo basado en:</p>
+        <p className="text-gray-700 mb-4">Se creará un regalo basado en:</p>
 
         <div className="bg-blue-50 p-4 rounded-lg mb-4">
           <p className="font-semibold">{proposalName}</p>
@@ -181,7 +181,7 @@ Apúntate aquí: ${getGiftLink()}`;
           </p>
         </div>
 
-        <p className="text-sm text-gray-500 mb-6">
+        <p className="text-sm text-gray-700 mb-6">
           Podrás compartir el link para que las familias se apunten
         </p>
 

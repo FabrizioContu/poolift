@@ -133,7 +133,7 @@ export function ProposalCard({
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1 text-gray-500">
+            <div className="flex items-center gap-1 text-gray-700">
               <ThumbsUp size={16} />
               <span className="text-sm font-medium">
                 {proposal.votes.length}
@@ -155,7 +155,7 @@ export function ProposalCard({
 
         {proposal.proposal_items.length > 0 && (
           <div className="mb-4">
-            <p className="text-xs text-gray-500 mb-2">Items:</p>
+            <p className="text-xs text-gray-700 mb-2">Items:</p>
             <ul className="space-y-1">
               {proposal.proposal_items.map((item) => (
                 <li
@@ -176,7 +176,7 @@ export function ProposalCard({
                     )}
                   </span>
                   {item.item_price && (
-                    <span className="text-gray-500">
+                    <span className="text-gray-700">
                       {formatPrice(item.item_price)}
                     </span>
                   )}
@@ -188,7 +188,7 @@ export function ProposalCard({
 
         {proposal.votes.length > 0 && (
           <div className="mb-4">
-            <p className="text-xs text-gray-500 mb-1">Votos:</p>
+            <p className="text-xs text-gray-700 mb-1">Votos:</p>
             <div className="flex flex-wrap gap-1">
               {proposal.votes.map((vote) => (
                 <Badge key={vote.id} variant="gray" size="sm">

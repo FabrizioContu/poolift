@@ -61,7 +61,7 @@ export function ConfirmDeleteModal({
           />
         </div>
 
-        <p className="text-gray-600 mb-4">{message}</p>
+        <p className="text-gray-700 mb-4">{message}</p>
 
         {displayError && (
           <div className="bg-red-50 border border-red-200 rounded-lg p-3 mb-4">

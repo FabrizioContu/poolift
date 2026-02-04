@@ -176,7 +176,7 @@ export default function CreateGroupPage() {
       <div className="max-w-md mx-auto">
         <Link
           href="/"
-          className="inline-flex items-center gap-1 text-gray-600 hover:text-gray-900 mb-6"
+          className="inline-flex items-center gap-1 text-gray-700 hover:text-gray-900 mb-6"
         >
           <ArrowLeft size={18} />
           <span>Volver al inicio</span>
@@ -189,7 +189,7 @@ export default function CreateGroupPage() {
               <Users className="w-8 h-8 text-blue-600" />
             </div>
             <h1 className="text-2xl font-bold text-gray-900">Crear Grupo</h1>
-            <p className="text-gray-600 mt-2">
+            <p className="text-gray-700 mt-2">
               {step === 1
                 ? "Que tipo de grupo es?"
                 : `Configura tu grupo de ${GROUP_TYPE_LABELS[groupType].toLowerCase()}`}
@@ -225,14 +225,14 @@ export default function CreateGroupPage() {
                   <span className="text-2xl">{GROUP_TYPE_ICONS[type]}</span>
                   <div>
                     <div className="font-medium">{GROUP_TYPE_LABELS[type]}</div>
-                    <div className="text-sm text-gray-500">
+                    <div className="text-sm text-gray-700">
                       {GROUP_TYPE_DESCRIPTIONS[type]}
                     </div>
                   </div>
                 </button>
               ))}
 
-              <p className="text-center text-sm text-gray-500 mt-6">
+              <p className="text-center text-sm text-gray-700 mt-6">
                 Solo necesitas un regalo puntual?{" "}
                 <Link
                   href="/create-direct-gift"
@@ -274,7 +274,7 @@ export default function CreateGroupPage() {
                   disabled={isSubmitting}
                   autoFocus
                 />
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-gray-700 mt-1">
                   {groupName.length}/50 caracteres
                 </p>
               </div>
@@ -293,7 +293,7 @@ export default function CreateGroupPage() {
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   disabled={isSubmitting}
                 />
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-gray-700 mt-1">
                   {familyName.length}/50 caracteres
                 </p>
               </div>
@@ -326,7 +326,7 @@ export default function CreateGroupPage() {
           )}
 
           {step === 2 && (
-            <p className="text-center text-sm text-gray-500 mt-6">
+            <p className="text-center text-sm text-gray-700 mt-6">
               Ya tienes un codigo de invitacion?{" "}
               <Link href="/join" className="text-blue-500 hover:underline">
                 Unirse a grupo

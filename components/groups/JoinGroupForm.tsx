@@ -93,7 +93,7 @@ export function JoinGroupForm({ groupId, groupName, inviteCode }: JoinGroupFormP
         <h2 className="text-2xl font-bold text-gray-900 mb-2">
           ¡Te has unido al grupo!
         </h2>
-        <p className="text-gray-600">
+        <p className="text-gray-700">
           Redirigiendo al dashboard...
         </p>
       </div>
@@ -109,7 +109,7 @@ export function JoinGroupForm({ groupId, groupName, inviteCode }: JoinGroupFormP
         <h1 className="text-2xl font-bold text-gray-900">
           Únete a {groupName}
         </h1>
-        <p className="text-gray-600 mt-2">
+        <p className="text-gray-700 mt-2">
           Introduce el nombre de tu familia para unirte
         </p>
       </div>

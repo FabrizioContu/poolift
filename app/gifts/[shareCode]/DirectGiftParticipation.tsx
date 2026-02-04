@@ -107,10 +107,10 @@ export function DirectGiftParticipation({
               <CheckCircle className="text-green-600" size={32} />
             </div>
             <h3 className="text-xl font-bold mb-2">Estás participando</h3>
-            <p className="text-gray-600">
+            <p className="text-gray-700">
               Como: <strong>{participantName}</strong>
             </p>
-            <p className="text-sm text-gray-500 mt-4">
+            <p className="text-sm text-gray-700 mt-4">
               La participación está cerrada
             </p>
           </div>
@@ -120,7 +120,7 @@ export function DirectGiftParticipation({
 
     return (
       <div className="bg-gray-100 rounded-2xl p-6 text-center">
-        <p className="text-gray-600">
+        <p className="text-gray-700">
           La participación está cerrada
         </p>
       </div>
@@ -136,7 +136,7 @@ export function DirectGiftParticipation({
             <CheckCircle className="text-green-600" size={32} />
           </div>
           <h3 className="text-xl font-bold mb-2">Estás apuntado!</h3>
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-700 mb-6">
             Como: <strong>{participantName}</strong>
           </p>
 

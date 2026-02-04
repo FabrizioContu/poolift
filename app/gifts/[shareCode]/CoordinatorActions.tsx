@@ -109,7 +109,7 @@ export function CoordinatorActions({
         )}
 
         {!participationOpen && (
-          <p className="text-sm text-gray-600 text-center">
+          <p className="text-sm text-gray-700 text-center">
             Participación cerrada. Procede a finalizar la compra.
           </p>
         )}

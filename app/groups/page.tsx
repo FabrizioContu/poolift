@@ -173,7 +173,7 @@ export default function GroupsPage() {
             <h1 className="text-3xl font-bold text-gray-900">
               {showAll ? "Todos los Grupos" : "Mis Grupos"}
             </h1>
-            <p className="text-gray-600 mt-1">
+            <p className="text-gray-700 mt-1">
               {showAll
                 ? "Explora grupos disponibles"
                 : "Grupos donde participas"}
@@ -199,7 +199,7 @@ export default function GroupsPage() {
         <div className="flex flex-col sm:flex-row gap-4 mb-6">
           <div className="relative flex-1">
             <Search
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-700"
               size={20}
             />
             <input
@@ -226,44 +226,44 @@ export default function GroupsPage() {
         {loading ? (
           <div className="text-center py-12">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
-            <p className="text-gray-500 mt-4">Cargando grupos...</p>
+            <p className="text-gray-700 mt-4">Cargando grupos...</p>
           </div>
         ) : filteredGroups.length === 0 ? (
           <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
             <Users size={48} className="mx-auto text-gray-300 mb-4" />
             {searchTerm ? (
               <>
-                <p className="text-gray-600 font-medium">
+                <p className="text-gray-700 font-medium">
                   No se encontraron grupos
                 </p>
-                <p className="text-gray-500 text-sm mt-1">
+                <p className="text-gray-700 text-sm mt-1">
                   Intenta con otro término de búsqueda
                 </p>
               </>
             ) : showAll ? (
               <>
-                <p className="text-gray-600 font-medium">
+                <p className="text-gray-700 font-medium">
                   No hay grupos disponibles
                 </p>
-                <p className="text-gray-500 text-sm mt-1">
+                <p className="text-gray-700 text-sm mt-1">
                   ¡Sé el primero en crear uno!
                 </p>
               </>
             ) : directGifts.length > 0 ? (
               <>
-                <p className="text-gray-600 font-medium">
+                <p className="text-gray-700 font-medium">
                   No tienes grupos aún
                 </p>
-                <p className="text-gray-500 text-sm mt-1">
+                <p className="text-gray-700 text-sm mt-1">
                   Pero tienes regalos directos abajo
                 </p>
               </>
             ) : (
               <>
-                <p className="text-gray-600 font-medium">
+                <p className="text-gray-700 font-medium">
                   No tienes grupos aún
                 </p>
-                <p className="text-gray-500 text-sm mt-1">
+                <p className="text-gray-700 text-sm mt-1">
                   Crea un grupo nuevo o únete a uno existente
                 </p>
                 <div className="flex gap-3 justify-center mt-4">
@@ -317,14 +317,14 @@ export default function GroupsPage() {
                         Regalo para {gift.recipientName}
                       </h3>
                       {gift.giftIdea && (
-                        <p className="text-sm text-gray-600 mt-1 line-clamp-1">
+                        <p className="text-sm text-gray-700 mt-1 line-clamp-1">
                           {gift.giftIdea}
                         </p>
                       )}
                     </div>
                     <Gift size={20} className="text-green-500 flex-shrink-0" />
                   </div>
-                  <p className="text-xs text-gray-500 mt-2">
+                  <p className="text-xs text-gray-700 mt-2">
                     Organizado por {gift.organizerName}
                   </p>
                 </Link>
@@ -336,7 +336,7 @@ export default function GroupsPage() {
         {/* Join link */}
         {!showAll && sessions.length > 0 && (
           <div className="mt-8 text-center">
-            <p className="text-gray-500 text-sm">
+            <p className="text-gray-700 text-sm">
               ¿Tienes un código de invitación?{" "}
               <Link
                 href="/join"

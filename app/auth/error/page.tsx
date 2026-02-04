@@ -9,7 +9,7 @@ export default function AuthErrorPage() {
         <h1 className="text-2xl font-bold text-gray-900 mb-2">
           Error de autenticación
         </h1>
-        <p className="text-gray-600 mb-6">
+        <p className="text-gray-700 mb-6">
           Ha ocurrido un error durante el proceso de autenticación. Por favor,
           intenta de nuevo.
         </p>

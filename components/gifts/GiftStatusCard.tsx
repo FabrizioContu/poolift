@@ -87,7 +87,7 @@ export function GiftStatusCard({ gift, proposalName, totalPrice }: GiftStatusCar
             <h3 className="text-xl font-bold text-gray-900">
               {statusInfo.title}
             </h3>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-700">
               {proposalName}
             </p>
           </div>
@@ -102,8 +102,8 @@ export function GiftStatusCard({ gift, proposalName, totalPrice }: GiftStatusCar
       <div className="grid grid-cols-2 gap-4 mb-4">
         <div className="bg-white rounded-lg p-3">
           <div className="flex items-center gap-2 mb-1">
-            <Users size={16} className="text-gray-500" />
-            <span className="text-xs text-gray-600">Participantes</span>
+            <Users size={16} className="text-gray-700" />
+            <span className="text-xs text-gray-700">Participantes</span>
           </div>
           <p className="text-lg font-bold text-gray-900">
             {gift.participantCount} {gift.participantCount === 1 ? 'familia' : 'familias'}
@@ -112,8 +112,8 @@ export function GiftStatusCard({ gift, proposalName, totalPrice }: GiftStatusCar
 
         <div className="bg-white rounded-lg p-3">
           <div className="flex items-center gap-2 mb-1">
-            <Gift size={16} className="text-gray-500" />
-            <span className="text-xs text-gray-600">
+            <Gift size={16} className="text-gray-700" />
+            <span className="text-xs text-gray-700">
               {gift.purchased_at ? 'Por familia' : 'Precio est.'}
             </span>
           </div>
@@ -125,7 +125,7 @@ export function GiftStatusCard({ gift, proposalName, totalPrice }: GiftStatusCar
 
       {/* Description */}
       {statusInfo.description && (
-        <p className="text-sm text-gray-600 mb-4">
+        <p className="text-sm text-gray-700 mb-4">
           {statusInfo.description}
         </p>
       )}
@@ -162,7 +162,7 @@ export function GiftStatusCard({ gift, proposalName, totalPrice }: GiftStatusCar
 
       {/* Share Code */}
       <div className="mt-4 p-2 bg-white rounded-lg">
-        <p className="text-xs text-gray-500 text-center">
+        <p className="text-xs text-gray-700 text-center">
           Codigo: <code className="font-mono text-gray-700">{gift.share_code}</code>
         </p>
       </div>

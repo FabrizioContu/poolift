@@ -49,7 +49,7 @@ export function GroupHeader({
       {/* Back navigation */}
       <Link
         href="/groups"
-        className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-blue-600 mb-4 transition"
+        className="inline-flex items-center gap-1 text-sm text-gray-700 hover:text-blue-600 mb-4 transition"
       >
         <ArrowLeft size={16} />
         Volver a Grupos
@@ -66,10 +66,10 @@ export function GroupHeader({
               <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700">
                 {familyCount} {familyCount === 1 ? "familia" : "familias"}
               </span>
-              <span className="text-gray-400">·</span>
+              <span className="text-gray-700">·</span>
               <button
                 onClick={handleCopyCode}
-                className="inline-flex items-center gap-1 text-sm text-gray-600 hover:text-blue-600 transition"
+                className="inline-flex items-center gap-1 text-sm text-gray-700 hover:text-blue-600 transition"
                 title="Copiar código"
               >
                 <span className="font-mono font-medium">{inviteCode}</span>

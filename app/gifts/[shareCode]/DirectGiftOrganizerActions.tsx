@@ -178,13 +178,13 @@ La participación está cerrada. Mas info: ${giftUrl}`
           )}
 
           {participantCount === 0 && isOpen && (
-            <p className="text-sm text-gray-600 text-center">
+            <p className="text-sm text-gray-700 text-center">
               Espera a que haya participantes para cerrar
             </p>
           )}
 
           {!isOpen && (
-            <p className="text-sm text-gray-600 text-center">
+            <p className="text-sm text-gray-700 text-center">
               Participación cerrada. Procede a finalizar la compra.
             </p>
           )}
@@ -221,13 +221,13 @@ La participación está cerrada. Mas info: ${giftUrl}`
               {estimatedPrice && (
                 <>
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Total estimado:</span>
+                    <span className="text-gray-700">Total estimado:</span>
                     <span className="font-bold text-green-600">
                       {formatPrice(totalPrice)}
                     </span>
                   </div>
                   <div className="flex justify-between items-center mt-2 pt-2 border-t border-green-200">
-                    <span className="text-gray-600">Precio por persona:</span>
+                    <span className="text-gray-700">Precio por persona:</span>
                     <span className="font-bold text-green-600 text-lg">
                       {estimatedPricePerPerson}€
                     </span>
@@ -284,31 +284,31 @@ La participación está cerrada. Mas info: ${giftUrl}`
             {/* Summary */}
             <div className="p-4 bg-gray-50 rounded-lg space-y-3">
               <div>
-                <p className="text-xs text-gray-600 mb-1">Regalo para:</p>
+                <p className="text-xs text-gray-700 mb-1">Regalo para:</p>
                 <p className="font-medium">{recipientName}</p>
               </div>
 
               {giftIdea && (
                 <div>
-                  <p className="text-xs text-gray-600 mb-1">Regalo:</p>
+                  <p className="text-xs text-gray-700 mb-1">Regalo:</p>
                   <p className="font-medium">{giftIdea}</p>
                 </div>
               )}
 
               <div className="flex justify-between items-center pt-2 border-t border-gray-200">
-                <span className="text-gray-600">Participantes:</span>
+                <span className="text-gray-700">Participantes:</span>
                 <span className="font-bold">{participantCount}</span>
               </div>
 
               {estimatedPrice && (
                 <>
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-600">Total:</span>
+                    <span className="text-gray-700">Total:</span>
                     <span className="font-bold">{formatPrice(totalPrice)}</span>
                   </div>
 
                   <div className="flex justify-between items-center pt-2 border-t border-gray-200">
-                    <span className="text-gray-600">Precio por persona:</span>
+                    <span className="text-gray-700">Precio por persona:</span>
                     <span className="font-bold text-green-600 text-xl">
                       {finalPricePerPerson || estimatedPricePerPerson}€
                     </span>
@@ -320,7 +320,7 @@ La participación está cerrada. Mas info: ${giftUrl}`
             {/* Participants List */}
             {participantNames.length > 0 && (
               <div>
-                <p className="text-xs text-gray-600 mb-2">Participantes:</p>
+                <p className="text-xs text-gray-700 mb-2">Participantes:</p>
                 <div className="flex flex-wrap gap-1">
                   {participantNames.map((name, index) => (
                     <span

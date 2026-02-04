@@ -86,7 +86,7 @@ export function SelectProposalButton({
   if (hasOtherSelected) {
     return (
       <div className="mt-4 pt-4 border-t border-gray-200">
-        <p className="text-sm text-gray-500 italic">
+        <p className="text-sm text-gray-700 italic">
           Otra propuesta ya ha sido seleccionada
         </p>
       </div>
