@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
+import type { NextRequest } from 'next/server'
 
 // Mock Supabase
 const mockSupabase = {
@@ -16,19 +17,16 @@ vi.mock('@/lib/supabase', () => ({
   supabase: mockSupabase,
 }))
 
-// Mock NextRequest and NextResponse
-class MockNextRequest {
-  private body: unknown
-  nextUrl: { searchParams: URLSearchParams }
-
-  constructor(url: string, options?: { method?: string; body?: string }) {
-    this.body = options?.body ? JSON.parse(options.body) : null
-    this.nextUrl = { searchParams: new URLSearchParams(url.split('?')[1] || '') }
-  }
-
-  async json() {
-    return this.body
-  }
+// Mock NextRequest with required properties
+function createMockRequest(url: string, options?: { method?: string; body?: string }): NextRequest {
+  const body = options?.body ? JSON.parse(options.body) : null
+  return {
+    nextUrl: { searchParams: new URLSearchParams(url.split('?')[1] || '') },
+    json: async () => body,
+    cookies: { get: vi.fn(), getAll: vi.fn(), set: vi.fn(), delete: vi.fn(), has: vi.fn() },
+    headers: new Headers(),
+    url,
+  } as unknown as NextRequest
 }
 
 describe('Direct Gifts API', () => {
@@ -51,7 +49,7 @@ describe('Direct Gifts API', () => {
 
       const { POST } = await import('@/app/api/gifts/direct/route')
 
-      const request = new MockNextRequest('http://localhost/api/gifts/direct', {
+      const request = createMockRequest('http://localhost/api/gifts/direct', {
         method: 'POST',
         body: JSON.stringify({
           recipientName: 'Laura',
@@ -60,7 +58,7 @@ describe('Direct Gifts API', () => {
         }),
       })
 
-      const response = await POST(request as unknown as Request)
+      const response = await POST(request )
       const data = await response.json()
 
       expect(response.status).toBe(201)
@@ -70,7 +68,7 @@ describe('Direct Gifts API', () => {
     it('retorna error 400 sin campos requeridos', async () => {
       const { POST } = await import('@/app/api/gifts/direct/route')
 
-      const request = new MockNextRequest('http://localhost/api/gifts/direct', {
+      const request = createMockRequest('http://localhost/api/gifts/direct', {
         method: 'POST',
         body: JSON.stringify({
           recipientName: 'Laura',
@@ -78,7 +76,7 @@ describe('Direct Gifts API', () => {
         }),
       })
 
-      const response = await POST(request as unknown as Request)
+      const response = await POST(request )
 
       expect(response.status).toBe(400)
     })
@@ -86,7 +84,7 @@ describe('Direct Gifts API', () => {
     it('retorna error 400 con ocasión inválida', async () => {
       const { POST } = await import('@/app/api/gifts/direct/route')
 
-      const request = new MockNextRequest('http://localhost/api/gifts/direct', {
+      const request = createMockRequest('http://localhost/api/gifts/direct', {
         method: 'POST',
         body: JSON.stringify({
           recipientName: 'Laura',
@@ -95,7 +93,7 @@ describe('Direct Gifts API', () => {
         }),
       })
 
-      const response = await POST(request as unknown as Request)
+      const response = await POST(request )
 
       expect(response.status).toBe(400)
     })
@@ -111,7 +109,7 @@ describe('Direct Gifts API', () => {
 
         const { POST } = await import('@/app/api/gifts/direct/route')
 
-        const request = new MockNextRequest('http://localhost/api/gifts/direct', {
+        const request = createMockRequest('http://localhost/api/gifts/direct', {
           method: 'POST',
           body: JSON.stringify({
             recipientName: 'Laura',
@@ -120,7 +118,7 @@ describe('Direct Gifts API', () => {
           }),
         })
 
-        const response = await POST(request as unknown as Request)
+        const response = await POST(request )
         expect(response.status).toBe(201)
       }
     })
@@ -138,7 +136,7 @@ describe('Direct Gifts API', () => {
 
       const { POST } = await import('@/app/api/gifts/direct/route')
 
-      const request = new MockNextRequest('http://localhost/api/gifts/direct', {
+      const request = createMockRequest('http://localhost/api/gifts/direct', {
         method: 'POST',
         body: JSON.stringify({
           recipientName: 'Laura',
@@ -149,7 +147,7 @@ describe('Direct Gifts API', () => {
         }),
       })
 
-      const response = await POST(request as unknown as Request)
+      const response = await POST(request )
       expect(response.status).toBe(201)
 
       expect(mockSupabase.insert).toHaveBeenCalledWith(
@@ -168,7 +166,7 @@ describe('Direct Gifts API', () => {
 
       const { POST } = await import('@/app/api/gifts/direct/route')
 
-      const request = new MockNextRequest('http://localhost/api/gifts/direct', {
+      const request = createMockRequest('http://localhost/api/gifts/direct', {
         method: 'POST',
         body: JSON.stringify({
           recipientName: '  Laura  ',
@@ -178,7 +176,7 @@ describe('Direct Gifts API', () => {
         }),
       })
 
-      await POST(request as unknown as Request)
+      await POST(request )
 
       expect(mockSupabase.insert).toHaveBeenCalledWith(
         expect.objectContaining({
@@ -205,12 +203,12 @@ describe('Direct Gifts API', () => {
 
       const { POST } = await import('@/app/api/gifts/direct/[id]/participate/route')
 
-      const request = new MockNextRequest('http://localhost/api/gifts/direct/gift-123/participate', {
+      const request = createMockRequest('http://localhost/api/gifts/direct/gift-123/participate', {
         method: 'POST',
         body: JSON.stringify({ participantName: 'Juan' }),
       })
 
-      const response = await POST(request as unknown as Request, {
+      const response = await POST(request, {
         params: Promise.resolve({ id: 'gift-123' }),
       })
 
@@ -220,12 +218,12 @@ describe('Direct Gifts API', () => {
     it('retorna error 400 sin nombre', async () => {
       const { POST } = await import('@/app/api/gifts/direct/[id]/participate/route')
 
-      const request = new MockNextRequest('http://localhost/api/gifts/direct/gift-123/participate', {
+      const request = createMockRequest('http://localhost/api/gifts/direct/gift-123/participate', {
         method: 'POST',
         body: JSON.stringify({}),
       })
 
-      const response = await POST(request as unknown as Request, {
+      const response = await POST(request, {
         params: Promise.resolve({ id: 'gift-123' }),
       })
 
@@ -235,12 +233,12 @@ describe('Direct Gifts API', () => {
     it('retorna error 400 con nombre menor a 2 caracteres', async () => {
       const { POST } = await import('@/app/api/gifts/direct/[id]/participate/route')
 
-      const request = new MockNextRequest('http://localhost/api/gifts/direct/gift-123/participate', {
+      const request = createMockRequest('http://localhost/api/gifts/direct/gift-123/participate', {
         method: 'POST',
         body: JSON.stringify({ participantName: 'J' }),
       })
 
-      const response = await POST(request as unknown as Request, {
+      const response = await POST(request, {
         params: Promise.resolve({ id: 'gift-123' }),
       })
 
@@ -255,12 +253,12 @@ describe('Direct Gifts API', () => {
 
       const { POST } = await import('@/app/api/gifts/direct/[id]/participate/route')
 
-      const request = new MockNextRequest('http://localhost/api/gifts/direct/nonexistent/participate', {
+      const request = createMockRequest('http://localhost/api/gifts/direct/nonexistent/participate', {
         method: 'POST',
         body: JSON.stringify({ participantName: 'Juan' }),
       })
 
-      const response = await POST(request as unknown as Request, {
+      const response = await POST(request, {
         params: Promise.resolve({ id: 'nonexistent' }),
       })
 
@@ -275,12 +273,12 @@ describe('Direct Gifts API', () => {
 
       const { POST } = await import('@/app/api/gifts/direct/[id]/participate/route')
 
-      const request = new MockNextRequest('http://localhost/api/gifts/direct/gift-123/participate', {
+      const request = createMockRequest('http://localhost/api/gifts/direct/gift-123/participate', {
         method: 'POST',
         body: JSON.stringify({ participantName: 'Juan' }),
       })
 
-      const response = await POST(request as unknown as Request, {
+      const response = await POST(request, {
         params: Promise.resolve({ id: 'gift-123' }),
       })
 
@@ -300,12 +298,12 @@ describe('Direct Gifts API', () => {
 
       const { POST } = await import('@/app/api/gifts/direct/[id]/participate/route')
 
-      const request = new MockNextRequest('http://localhost/api/gifts/direct/gift-123/participate', {
+      const request = createMockRequest('http://localhost/api/gifts/direct/gift-123/participate', {
         method: 'POST',
         body: JSON.stringify({ participantName: 'Juan' }),
       })
 
-      const response = await POST(request as unknown as Request, {
+      const response = await POST(request, {
         params: Promise.resolve({ id: 'gift-123' }),
       })
 
@@ -317,12 +315,12 @@ describe('Direct Gifts API', () => {
     it('retorna error 400 sin nombre', async () => {
       const { DELETE } = await import('@/app/api/gifts/direct/[id]/participate/route')
 
-      const request = new MockNextRequest('http://localhost/api/gifts/direct/gift-123/participate', {
+      const request = createMockRequest('http://localhost/api/gifts/direct/gift-123/participate', {
         method: 'DELETE',
         body: JSON.stringify({}),
       })
 
-      const response = await DELETE(request as unknown as Request, {
+      const response = await DELETE(request, {
         params: Promise.resolve({ id: 'gift-123' }),
       })
 
@@ -339,11 +337,11 @@ describe('Direct Gifts API', () => {
 
       const { PUT } = await import('@/app/api/gifts/direct/[id]/close/route')
 
-      const request = new MockNextRequest('http://localhost/api/gifts/direct/nonexistent/close', {
+      const request = createMockRequest('http://localhost/api/gifts/direct/nonexistent/close', {
         method: 'PUT',
       })
 
-      const response = await PUT(request as unknown as Request, {
+      const response = await PUT(request, {
         params: Promise.resolve({ id: 'nonexistent' }),
       })
 
@@ -358,11 +356,11 @@ describe('Direct Gifts API', () => {
 
       const { PUT } = await import('@/app/api/gifts/direct/[id]/close/route')
 
-      const request = new MockNextRequest('http://localhost/api/gifts/direct/gift-123/close', {
+      const request = createMockRequest('http://localhost/api/gifts/direct/gift-123/close', {
         method: 'PUT',
       })
 
-      const response = await PUT(request as unknown as Request, {
+      const response = await PUT(request, {
         params: Promise.resolve({ id: 'gift-123' }),
       })
 
@@ -374,12 +372,12 @@ describe('Direct Gifts API', () => {
     it('retorna error sin precio final', async () => {
       const { PUT } = await import('@/app/api/gifts/direct/[id]/finalize/route')
 
-      const request = new MockNextRequest('http://localhost/api/gifts/direct/gift-123/finalize', {
+      const request = createMockRequest('http://localhost/api/gifts/direct/gift-123/finalize', {
         method: 'PUT',
         body: JSON.stringify({}),
       })
 
-      const response = await PUT(request as unknown as Request, {
+      const response = await PUT(request, {
         params: Promise.resolve({ id: 'gift-123' }),
       })
 
@@ -394,12 +392,12 @@ describe('Direct Gifts API', () => {
 
       const { PUT } = await import('@/app/api/gifts/direct/[id]/finalize/route')
 
-      const request = new MockNextRequest('http://localhost/api/gifts/direct/gift-123/finalize', {
+      const request = createMockRequest('http://localhost/api/gifts/direct/gift-123/finalize', {
         method: 'PUT',
         body: JSON.stringify({ finalPrice: 50 }),
       })
 
-      const response = await PUT(request as unknown as Request, {
+      const response = await PUT(request, {
         params: Promise.resolve({ id: 'gift-123' }),
       })
 
@@ -409,12 +407,12 @@ describe('Direct Gifts API', () => {
     it('retorna error con precio negativo', async () => {
       const { PUT } = await import('@/app/api/gifts/direct/[id]/finalize/route')
 
-      const request = new MockNextRequest('http://localhost/api/gifts/direct/gift-123/finalize', {
+      const request = createMockRequest('http://localhost/api/gifts/direct/gift-123/finalize', {
         method: 'PUT',
         body: JSON.stringify({ finalPrice: -10 }),
       })
 
-      const response = await PUT(request as unknown as Request, {
+      const response = await PUT(request, {
         params: Promise.resolve({ id: 'gift-123' }),
       })
 
@@ -424,12 +422,12 @@ describe('Direct Gifts API', () => {
     it('retorna error con precio cero', async () => {
       const { PUT } = await import('@/app/api/gifts/direct/[id]/finalize/route')
 
-      const request = new MockNextRequest('http://localhost/api/gifts/direct/gift-123/finalize', {
+      const request = createMockRequest('http://localhost/api/gifts/direct/gift-123/finalize', {
         method: 'PUT',
         body: JSON.stringify({ finalPrice: 0 }),
       })
 
-      const response = await PUT(request as unknown as Request, {
+      const response = await PUT(request, {
         params: Promise.resolve({ id: 'gift-123' }),
       })
 
@@ -444,12 +442,12 @@ describe('Direct Gifts API', () => {
 
       const { PUT } = await import('@/app/api/gifts/direct/[id]/finalize/route')
 
-      const request = new MockNextRequest('http://localhost/api/gifts/direct/nonexistent/finalize', {
+      const request = createMockRequest('http://localhost/api/gifts/direct/nonexistent/finalize', {
         method: 'PUT',
         body: JSON.stringify({ finalPrice: 50 }),
       })
 
-      const response = await PUT(request as unknown as Request, {
+      const response = await PUT(request, {
         params: Promise.resolve({ id: 'nonexistent' }),
       })
 
@@ -469,7 +467,7 @@ describe('Direct Gifts API', () => {
 
         const { POST } = await import('@/app/api/gifts/direct/route')
 
-        const request = new MockNextRequest('http://localhost/api/gifts/direct', {
+        const request = createMockRequest('http://localhost/api/gifts/direct', {
           method: 'POST',
           body: JSON.stringify({
             recipientName: 'Laura',
@@ -478,7 +476,7 @@ describe('Direct Gifts API', () => {
           }),
         })
 
-        const response = await POST(request as unknown as Request)
+        const response = await POST(request )
         const data = await response.json()
 
         if (data.share_code) {
@@ -498,7 +496,7 @@ describe('Direct Gifts API', () => {
 
       const { POST } = await import('@/app/api/gifts/direct/route')
 
-      const request = new MockNextRequest('http://localhost/api/gifts/direct', {
+      const request = createMockRequest('http://localhost/api/gifts/direct', {
         method: 'POST',
         body: JSON.stringify({
           recipientName: "José María O'Brien-Müller",
@@ -507,7 +505,7 @@ describe('Direct Gifts API', () => {
         }),
       })
 
-      const response = await POST(request as unknown as Request)
+      const response = await POST(request )
       expect(response.status).toBe(201)
     })
 
@@ -521,7 +519,7 @@ describe('Direct Gifts API', () => {
 
       const longName = 'A'.repeat(500)
 
-      const request = new MockNextRequest('http://localhost/api/gifts/direct', {
+      const request = createMockRequest('http://localhost/api/gifts/direct', {
         method: 'POST',
         body: JSON.stringify({
           recipientName: longName,
@@ -530,7 +528,7 @@ describe('Direct Gifts API', () => {
         }),
       })
 
-      const response = await POST(request as unknown as Request)
+      const response = await POST(request )
       // Should handle gracefully (either succeed or return appropriate error)
       expect([201, 400]).toContain(response.status)
     })
