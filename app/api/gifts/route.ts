@@ -32,9 +32,38 @@ export async function POST(request: NextRequest) {
       })
       .select()
       .single()
-    
+
     if (error) throw error
-    
+
+    // Auto-add coordinator as first participant
+    const { data: party } = await supabase
+      .from('parties')
+      .select('coordinator_id')
+      .eq('id', partyId)
+      .single()
+
+    if (party?.coordinator_id) {
+      const { data: coordinator } = await supabase
+        .from('families')
+        .select('name')
+        .eq('id', party.coordinator_id)
+        .single()
+
+      if (coordinator?.name) {
+        const { error: participantError } = await supabase
+          .from('participants')
+          .insert({
+            gift_id: gift.id,
+            family_name: coordinator.name,
+          })
+
+        if (participantError) {
+          console.error('Error adding coordinator as participant:', participantError)
+          // Don't fail - gift was created successfully
+        }
+      }
+    }
+
     return NextResponse.json({ gift })
   } catch (error) {
     console.error('Error creating gift:', error)

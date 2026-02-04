@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Plus, Home, Users, Search, Gift } from "lucide-react";
 import { supabase } from "@/lib/supabase";
-import { getGroupSessions, GroupSession, getDirectGiftSessions, DirectGiftSession } from "@/lib/auth";
+import { getGroupSessions, GroupSession, getDirectGiftSessions, DirectGiftSession, removeDirectGiftSession } from "@/lib/auth";
 import { GroupCard } from "@/components/groups/GroupCard";
 import { Button } from "@/components/ui/Button";
 import { OCCASION_LABELS, type OccasionType } from "@/lib/types";
@@ -72,7 +72,30 @@ export default function GroupsPage() {
 
     async function loadGroups() {
       const savedSessions = getGroupSessions();
-      const savedDirectGifts = getDirectGiftSessions();
+      let savedDirectGifts = getDirectGiftSessions();
+
+      // Validate direct gifts against Supabase - remove cancelled/deleted ones
+      if (savedDirectGifts.length > 0) {
+        const shareCodes = savedDirectGifts.map((g) => g.shareCode);
+        const { data: validGifts } = await supabase
+          .from("direct_gifts")
+          .select("share_code, status")
+          .in("share_code", shareCodes)
+          .neq("status", "cancelled");
+
+        const validShareCodes = new Set(validGifts?.map((g) => g.share_code) || []);
+
+        // Remove invalid gifts from localStorage
+        savedDirectGifts.forEach((gift) => {
+          if (!validShareCodes.has(gift.shareCode)) {
+            removeDirectGiftSession(gift.shareCode);
+          }
+        });
+
+        // Filter to only valid gifts
+        savedDirectGifts = savedDirectGifts.filter((g) => validShareCodes.has(g.shareCode));
+      }
+
       if (isMounted) {
         setSessions(savedSessions);
         setDirectGifts(savedDirectGifts);

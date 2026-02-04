@@ -12,9 +12,13 @@ import {
   Check,
   Copy,
   Share2,
+  Trash2,
+  XCircle,
 } from "lucide-react";
 import { formatPrice, calculatePricePerFamily } from "@/lib/utils";
+import { removeDirectGiftSession } from "@/lib/auth";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface DirectGiftOrganizerActionsProps {
   giftId: string;
@@ -39,11 +43,15 @@ export function DirectGiftOrganizerActions({
   participantNames,
   estimatedPrice,
 }: DirectGiftOrganizerActionsProps) {
+  const router = useRouter();
   const [isOrganizer, setIsOrganizer] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  const [showCancelModal, setShowCancelModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [cancelLoading, setCancelLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [cancelError, setCancelError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
   const [finalPricePerPerson, setFinalPricePerPerson] = useState<string | null>(
     null,
@@ -148,6 +156,32 @@ La participación está cerrada. Mas info: ${giftUrl}`;
     window.location.reload();
   };
 
+  const handleCancel = async () => {
+    setCancelLoading(true);
+    setCancelError(null);
+
+    try {
+      const response = await fetch(`/api/gifts/direct/${giftId}/cancel`, {
+        method: "PUT",
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Error al cancelar el regalo");
+      }
+
+      // Remove from localStorage
+      removeDirectGiftSession(shareCode);
+
+      // Redirect to groups page
+      router.push("/groups");
+    } catch (err) {
+      setCancelError(err instanceof Error ? err.message : "Error al cancelar");
+      setCancelLoading(false);
+    }
+  };
+
   if (!isOrganizer) {
     return null;
   }
@@ -208,6 +242,18 @@ La participación está cerrada. Mas info: ${giftUrl}`;
               Participación cerrada. Procede a finalizar la compra.
             </p>
           )}
+
+          {/* Cancel Button - only show if not purchased */}
+          <div className="pt-3 border-t border-green-200">
+            <Button
+              onClick={() => setShowCancelModal(true)}
+              variant="secondary"
+              className="w-full text-red-600 hover:bg-red-50 border-red-200"
+            >
+              <Trash2 size={18} className="mr-2" />
+              Cancelar Regalo
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -393,6 +439,64 @@ La participación está cerrada. Mas info: ${giftUrl}`;
                 className="w-full"
               >
                 Cerrar
+              </Button>
+            </div>
+          </div>
+        </Modal>
+      )}
+
+      {/* Cancel Gift Modal */}
+      {showCancelModal && (
+        <Modal
+          isOpen={showCancelModal}
+          onClose={() => setShowCancelModal(false)}
+          title="Cancelar Regalo"
+        >
+          <div className="space-y-4">
+            <div className="flex items-start gap-3 p-4 bg-red-50 rounded-lg">
+              <XCircle
+                className="text-red-600 flex-shrink-0 mt-0.5"
+                size={20}
+              />
+              <div>
+                <p className="font-medium text-red-800">¿Estás seguro?</p>
+                <p className="text-sm text-red-700 mt-1">
+                  Esta acción no se puede deshacer. El regalo será cancelado y
+                  los participantes ya no podrán verlo.
+                </p>
+              </div>
+            </div>
+
+            <div className="p-4 bg-gray-50 rounded-lg">
+              <p className="text-sm text-gray-700 mb-2">
+                <span className="font-medium">Regalo para:</span> {recipientName}
+              </p>
+              {participantCount > 0 && (
+                <p className="text-sm text-orange-600">
+                  Hay {participantCount} participante{participantCount > 1 ? "s" : ""} apuntado{participantCount > 1 ? "s" : ""}.
+                </p>
+              )}
+            </div>
+
+            {cancelError && (
+              <p className="text-red-500 text-sm">{cancelError}</p>
+            )}
+
+            <div className="flex gap-3 pt-2">
+              <Button
+                onClick={() => setShowCancelModal(false)}
+                variant="secondary"
+                className="flex-1"
+                disabled={cancelLoading}
+              >
+                Volver
+              </Button>
+              <Button
+                onClick={handleCancel}
+                disabled={cancelLoading}
+                className="flex-1 bg-red-600 hover:bg-red-700"
+              >
+                {cancelLoading ? "Cancelando..." : "Sí, Cancelar Regalo"}
               </Button>
             </div>
           </div>

@@ -113,6 +113,19 @@ CREATE INDEX idx_direct_gifts_share_code ON direct_gifts(share_code);
       throw error;
     }
 
+    // Auto-add organizer as first participant
+    const { error: participantError } = await supabase
+      .from("direct_gift_participants")
+      .insert({
+        direct_gift_id: data.id,
+        participant_name: organizerName.trim(),
+      });
+
+    if (participantError) {
+      console.error("Error adding organizer as participant:", participantError);
+      // Don't fail the whole request - gift was created successfully
+    }
+
     return NextResponse.json(data, { status: 201 });
   } catch (error) {
     console.error("Error creating direct gift:", error);

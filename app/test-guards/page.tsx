@@ -43,7 +43,7 @@ export default function TestGuardsPage() {
 
       {/* AccessGuard Test */}
       <div className="mb-8 p-6 border rounded-lg">
-        <h2 className="text-2xl font-bold mb-4">1. AccessGuard Test</h2>
+        <h2 className="text-2xl font-bold mb-4 text-gray-900">1. AccessGuard Test</h2>
 
         <div className="space-y-3 mb-4">
           <button
@@ -89,7 +89,7 @@ export default function TestGuardsPage() {
 
       {/* SpoilerGuard Test */}
       <div className="mb-8 p-6 border rounded-lg">
-        <h2 className="text-2xl font-bold mb-4">2. SpoilerGuard Test</h2>
+        <h2 className="text-2xl font-bold mb-4 text-gray-900">2. SpoilerGuard Test</h2>
 
         <div className="space-y-3 mb-4">
           <button
@@ -146,7 +146,7 @@ export default function TestGuardsPage() {
 
       {/* Estado Actual */}
       <div className="p-6 bg-gray-50 border rounded-lg">
-        <h3 className="font-bold mb-2">Estado Actual:</h3>
+        <h3 className="font-bold mb-2 text-gray-900">Estado Actual:</h3>
         <pre className="text-sm bg-white p-3 rounded overflow-auto">
 {JSON.stringify({
   myGroups: anonymousStorage.getMyGroups(),

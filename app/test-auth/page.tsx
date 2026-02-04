@@ -55,7 +55,7 @@ export default function TestAuthPage() {
 
       {/* Status */}
       <div className="mb-8 p-4 bg-gray-50 rounded-lg border">
-        <h2 className="font-bold mb-2 text-lg">Status:</h2>
+        <h2 className="font-bold mb-2 text-lg text-gray-900">Status:</h2>
         <div className="space-y-1">
           <p>
             <span className="font-medium">Authenticated:</span>{' '}
@@ -89,7 +89,7 @@ export default function TestAuthPage() {
       {/* Auth Forms */}
       {isAnonymous ? (
         <div className="space-y-4 mb-8 p-4 bg-white rounded-lg border">
-          <h2 className="text-xl font-bold">Sign In / Sign Up</h2>
+          <h2 className="text-xl font-bold text-gray-900">Sign In / Sign Up</h2>
 
           <div>
             <label className="block text-sm font-medium mb-1">Email</label>
@@ -133,7 +133,7 @@ export default function TestAuthPage() {
         </div>
       ) : (
         <div className="mb-8 p-4 bg-white rounded-lg border">
-          <h2 className="text-xl font-bold mb-4">Authenticated</h2>
+          <h2 className="text-xl font-bold mb-4 text-gray-900">Authenticated</h2>
           <button
             onClick={handleSignOut}
             className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
@@ -145,7 +145,7 @@ export default function TestAuthPage() {
 
       {/* Anonymous Storage Test */}
       <div className="mb-8 p-4 bg-white rounded-lg border">
-        <h2 className="text-xl font-bold mb-4">Anonymous Storage Test</h2>
+        <h2 className="text-xl font-bold mb-4 text-gray-900">Anonymous Storage Test</h2>
         <div className="flex gap-2">
           <button
             onClick={testAnonymousStorage}
@@ -171,7 +171,7 @@ export default function TestAuthPage() {
 
       {/* Instructions */}
       <div className="p-4 bg-yellow-50 border border-yellow-200 rounded">
-        <h3 className="font-bold mb-2">Testing Instructions:</h3>
+        <h3 className="font-bold mb-2 text-gray-900">Testing Instructions:</h3>
         <ol className="list-decimal list-inside space-y-1 text-sm">
           <li>Try signing up with a test email</li>
           <li>Check Supabase dashboard for new user</li>

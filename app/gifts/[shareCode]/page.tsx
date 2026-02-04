@@ -74,6 +74,8 @@ async function getGift(shareCode: string) {
         id,
         party_date,
         coordinator_id,
+        group_id,
+        coordinator:families!parties_coordinator_id_fkey(id, name),
         party_celebrants(
           birthdays(child_name)
         )
@@ -118,6 +120,30 @@ export default async function GiftPage({
   const directGift = await getDirectGift(shareCode);
 
   if (directGift) {
+    // Handle cancelled direct gifts
+    if (directGift.status === "cancelled") {
+      return (
+        <div className="min-h-screen flex items-center justify-center bg-gray-50">
+          <div className="text-center px-4">
+            <Gift className="mx-auto text-gray-400 mb-4" size={64} />
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">
+              Regalo Cancelado
+            </h1>
+            <p className="text-gray-700 mb-4">
+              Este regalo ha sido cancelado por el organizador
+            </p>
+            <Link
+              href="/groups"
+              className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium"
+            >
+              <ArrowLeft size={18} />
+              Ir a Mis Grupos
+            </Link>
+          </div>
+        </div>
+      );
+    }
+
     const isClosed = directGift.status === "closed";
     const isPurchased = directGift.status === "purchased";
     const participantCount = directGift.participants.length;
@@ -283,6 +309,7 @@ export default async function GiftPage({
             giftId={directGift.id}
             shareCode={shareCode}
             status={directGift.status}
+            organizerName={directGift.organizer_name}
           />
         </div>
       </div>
@@ -388,7 +415,7 @@ export default async function GiftPage({
           {/* Selected Proposal */}
           {gift.proposal && (
             <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-              <h3 className="font-semibold text-lg mb-3">
+              <h3 className="font-semibold text-lg mb-3 text-gray-900">
                 {gift.proposal.name}
               </h3>
               {gift.proposal.proposal_items?.length > 0 && (
@@ -504,7 +531,7 @@ export default async function GiftPage({
         {/* Participants Card */}
         <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold flex items-center gap-2">
+            <h2 className="text-xl font-bold flex items-center gap-2 text-gray-900">
               <Users size={24} />
               Familias Participantes
             </h2>
@@ -560,6 +587,8 @@ export default async function GiftPage({
           shareCode={shareCode}
           participationOpen={gift.participation_open}
           isPurchased={isPurchased}
+          coordinatorName={gift.party?.coordinator?.name || null}
+          groupId={gift.party?.group_id || null}
         />
       </div>
     </div>

@@ -44,6 +44,21 @@ export async function POST(
       )
     }
 
+    // Check for existing participant (case-insensitive)
+    const { data: existing } = await supabase
+      .from('participants')
+      .select('id')
+      .eq('gift_id', id)
+      .ilike('family_name', familyName.trim())
+      .single()
+
+    if (existing) {
+      return NextResponse.json(
+        { error: 'Ya estás participando en este regalo' },
+        { status: 409 }
+      )
+    }
+
     const { data: participant, error } = await supabase
       .from('participants')
       .insert({
@@ -52,7 +67,7 @@ export async function POST(
       })
       .select()
       .single()
-    
+
     if (error) {
       if (error.code === '23505') {
         return NextResponse.json(

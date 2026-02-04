@@ -58,7 +58,7 @@ export function AddBirthdayModal({
       return "El nombre no puede tener más de 50 caracteres";
     }
     if (!birthDate) {
-      return "La fecha de cumpleaños es requerida";
+      return "La fecha de nacimiento es requerida";
     }
 
     const selectedDate = new Date(birthDate);
@@ -66,7 +66,7 @@ export function AddBirthdayModal({
     today.setHours(0, 0, 0, 0);
 
     if (selectedDate > today) {
-      return "La fecha de cumpleaños no puede ser futura";
+      return "La fecha de nacimiento no puede ser futura";
     }
 
     return null;
@@ -108,7 +108,9 @@ export function AddBirthdayModal({
         onClose();
       }, 1500);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Error al crear cumpleaños");
+      setError(
+        err instanceof Error ? err.message : "Error al crear cumpleaños",
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -119,7 +121,9 @@ export function AddBirthdayModal({
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex items-center gap-2 text-pink-600 mb-4">
           <Cake size={20} />
-          <span className="text-sm">Registra un nuevo cumpleaños en el grupo</span>
+          <span className="text-sm">
+            Registra un nuevo cumpleaños en el grupo
+          </span>
         </div>
 
         <div>
@@ -141,8 +145,11 @@ export function AddBirthdayModal({
         </div>
 
         <div>
-          <label htmlFor="birthDate" className="block text-sm font-medium text-gray-700 mb-1">
-            Fecha de cumpleaños <span className="text-red-500">*</span>
+          <label
+            htmlFor="birthDate"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Fecha de nacimiento <span className="text-red-500">*</span>
           </label>
           <input
             id="birthDate"
@@ -155,13 +162,9 @@ export function AddBirthdayModal({
           />
         </div>
 
-        {showSuccess && (
-          <Alert variant="success">¡Cumpleaños añadido!</Alert>
-        )}
+        {showSuccess && <Alert variant="success">¡Cumpleaños añadido!</Alert>}
 
-        {error && (
-          <Alert variant="error">{error}</Alert>
-        )}
+        {error && <Alert variant="error">{error}</Alert>}
 
         <div className="flex gap-3 pt-2">
           <Button

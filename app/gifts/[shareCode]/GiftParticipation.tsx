@@ -9,6 +9,8 @@ interface GiftParticipationProps {
   shareCode: string;
   participationOpen: boolean;
   isPurchased: boolean;
+  coordinatorName: string | null;
+  groupId: string | null;
 }
 
 export function GiftParticipation({
@@ -16,20 +18,41 @@ export function GiftParticipation({
   shareCode,
   participationOpen,
   isPurchased,
+  coordinatorName,
+  groupId,
 }: GiftParticipationProps) {
   const [familyName, setFamilyName] = useState("");
   const [loading, setLoading] = useState(false);
   const [joined, setJoined] = useState(false);
+  const [isCoordinator, setIsCoordinator] = useState(false);
   const [error, setError] = useState("");
 
   // Check localStorage on mount
   useEffect(() => {
+    // Check if user is the coordinator (from group sessions)
+    if (groupId && coordinatorName) {
+      const sessions = localStorage.getItem("poolift_groups");
+      if (sessions) {
+        const groupSessions = JSON.parse(sessions);
+        const session = groupSessions.find(
+          (s: { groupId: string; familyName: string }) => s.groupId === groupId
+        );
+        if (session && session.familyName.toLowerCase() === coordinatorName.toLowerCase()) {
+          setIsCoordinator(true);
+          setJoined(true);
+          setFamilyName(session.familyName);
+          return;
+        }
+      }
+    }
+
+    // Check if already participating (from localStorage)
     const saved = localStorage.getItem(`gift_${giftId}_family`);
     if (saved) {
       setFamilyName(saved);
       setJoined(true);
     }
-  }, [giftId]);
+  }, [giftId, groupId, coordinatorName]);
 
   const handleJoin = async () => {
     if (!familyName.trim()) {
@@ -136,7 +159,7 @@ export function GiftParticipation({
             <CheckCircle className="text-green-600" size={32} />
           </div>
           <h3 className="text-xl font-bold mb-2 text-gray-900">
-            ¡Estás apuntado!
+            {isCoordinator ? "Eres el coordinador" : "¡Estás apuntado!"}
           </h3>
           <p className="text-gray-700 mb-6">
             Familia: <strong>{familyName}</strong>
@@ -144,15 +167,17 @@ export function GiftParticipation({
 
           {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
 
-          <Button
-            onClick={handleLeave}
-            disabled={loading}
-            variant="secondary"
-            className="text-red-600 hover:bg-red-50"
-          >
-            <UserMinus size={18} className="mr-2" />
-            {loading ? "Saliendo..." : "Salirme del regalo"}
-          </Button>
+          {!isCoordinator && (
+            <Button
+              onClick={handleLeave}
+              disabled={loading}
+              variant="secondary"
+              className="text-red-600 hover:bg-red-50"
+            >
+              <UserMinus size={18} className="mr-2" />
+              {loading ? "Saliendo..." : "Salirme del regalo"}
+            </Button>
+          )}
         </div>
       </div>
     );
