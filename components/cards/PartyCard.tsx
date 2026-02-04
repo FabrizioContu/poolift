@@ -24,7 +24,6 @@ interface PartyCardProps {
 
 export function PartyCard({ party }: PartyCardProps) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [deleteError, setDeleteError] = useState<string | null>(null);
 
   const celebrantNames = party.party_celebrants.map(
     (pc) => pc.birthdays.child_name
@@ -33,13 +32,10 @@ export function PartyCard({ party }: PartyCardProps) {
   const handleDeleteClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    setDeleteError(null);
     setShowDeleteModal(true);
   };
 
-  const handleConfirmDelete = async () => {
-    setDeleteError(null);
-
+  const handleConfirmDelete = async (): Promise<{ error?: string } | void> => {
     try {
       const response = await fetch(`/api/parties/${party.id}`, {
         method: "DELETE",
@@ -48,15 +44,13 @@ export function PartyCard({ party }: PartyCardProps) {
       const data = await response.json();
 
       if (!response.ok) {
-        const errorMsg = data.error || "Error al eliminar la fiesta";
-        setDeleteError(errorMsg);
-        return; // Keep modal open with error
+        return { error: data.error || "Error al eliminar la fiesta" };
       }
 
       setShowDeleteModal(false);
       window.location.reload();
     } catch {
-      setDeleteError("Error de conexión al eliminar la fiesta");
+      return { error: "Error de conexión al eliminar la fiesta" };
     }
   };
 
@@ -115,7 +109,6 @@ export function PartyCard({ party }: PartyCardProps) {
           onConfirm={handleConfirmDelete}
           title="¿Eliminar fiesta?"
           message={`Se eliminará la fiesta de ${formatCelebrants(celebrantNames)}.`}
-          warningText={deleteError || undefined}
           confirmText="Eliminar Fiesta"
         />
       )}
