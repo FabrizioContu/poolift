@@ -15,7 +15,7 @@ export default function CreateDirectGiftPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-white">
+    <div className="min-h-screen bg-linear-to-b from-green-50 to-white">
       {/* Background with back button */}
       <div className="container mx-auto px-4 py-6">
         <Link

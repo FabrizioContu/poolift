@@ -6,6 +6,7 @@ import { X, Gift, Copy, MessageCircle, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import type { OccasionType } from "@/lib/types";
 import { OCCASION_LABELS } from "@/lib/types";
+import { addDirectGiftSession } from "@/lib/auth";
 
 interface CreateDirectGiftModalProps {
   isOpen: boolean;
@@ -58,10 +59,17 @@ export function CreateDirectGiftModal({
       const data = await response.json();
       setShareCode(data.share_code);
       setCreated(true);
+
+      // Save to localStorage for "Mis Regalos" section
+      addDirectGiftSession({
+        shareCode: data.share_code,
+        recipientName: recipientName.trim(),
+        occasion,
+        giftIdea: giftIdea.trim() || undefined,
+        organizerName: organizerName.trim(),
+      });
     } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "Error al crear el regalo"
-      );
+      setError(err instanceof Error ? err.message : "Error al crear el regalo");
     } finally {
       setLoading(false);
     }
@@ -112,72 +120,53 @@ Apuntate aqui: ${getGiftLink()}`;
   if (created && shareCode) {
     return (
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-        <div className="bg-white rounded-xl max-w-md w-full p-6">
+        <div className="bg-white rounded-xl max-w-md w-full p-5 max-h-[85vh] overflow-y-auto">
           <div className="text-center">
-            <CheckCircle className="mx-auto text-green-500 mb-4" size={48} />
-            <h2 className="text-2xl font-bold mb-2">Regalo Creado!</h2>
-            <p className="text-gray-600 mb-6">
-              Comparte este enlace para que otros participen
+            <CheckCircle className="mx-auto text-green-500 mb-3" size={40} />
+            <h2 className="text-xl font-bold mb-1">Regalo Creado!</h2>
+            <p className="text-gray-600 text-sm mb-4">
+              Comparte el enlace para que otros participen
             </p>
 
-            {/* Share Code */}
-            <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-6 rounded-xl mb-4">
-              <p className="text-sm text-gray-600 mb-2">Codigo del regalo:</p>
-              <code className="text-2xl font-mono font-bold text-green-600">
-                {shareCode}
-              </code>
-            </div>
-
-            {/* Full Link */}
-            <div className="p-3 bg-gray-50 rounded-lg mb-6">
-              <p className="text-xs text-gray-500 mb-1">Link directo:</p>
+            {/* Link to copy */}
+            <div className="p-3 bg-gray-50 rounded-lg mb-4">
               <code className="text-sm text-gray-700 break-all">
                 {getGiftLink()}
               </code>
             </div>
 
-            {/* Info */}
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6 text-left">
-              <p className="text-sm font-medium text-green-900 mb-2">
-                Quienes reciban el enlace podran:
-              </p>
-              <ul className="text-sm text-green-700 space-y-1">
-                <li>Ver el regalo propuesto</li>
-                <li>Confirmar su participacion</li>
-                <li>Ver quien mas participa</li>
-              </ul>
-            </div>
-
             {/* Action Buttons */}
             <div className="flex flex-col gap-2">
               <Button
-                onClick={handleCopyLink}
-                className="w-full flex justify-center items-center gap-2"
-              >
-                <Copy size={18} />
-                {copied ? "Copiado!" : "Copiar Link"}
-              </Button>
-
-              <Button
-                onClick={handleShareWhatsApp}
-                variant="secondary"
-                className="w-full flex justify-center items-center gap-2 hover:bg-green-600 hover:text-white"
-              >
-                <MessageCircle size={18} />
-                Compartir por WhatsApp
-              </Button>
-
-              <Button
                 onClick={handleViewGift}
-                variant="secondary"
-                className="w-full"
+                className="w-full bg-green-600 hover:bg-green-700"
               >
-                Ver mi regalo
+                Ir al regalo
               </Button>
+
+              <div className="flex gap-2">
+                <Button
+                  onClick={handleCopyLink}
+                  variant="secondary"
+                  className="flex-1 flex justify-center items-center gap-2"
+                >
+                  <Copy size={16} />
+                  {copied ? "Copiado!" : "Copiar"}
+                </Button>
+
+                <Button
+                  onClick={handleShareWhatsApp}
+                  variant="secondary"
+                  className="flex-1 flex justify-center items-center gap-2"
+                >
+                  <MessageCircle size={16} />
+                  WhatsApp
+                </Button>
+              </div>
 
               <button
-                onClick={onClose}
-                className="text-sm text-gray-500 hover:text-gray-700 mt-2"
+                onClick={handleViewGift}
+                className="text-sm text-gray-500 hover:text-gray-700 mt-1"
               >
                 Cerrar
               </button>

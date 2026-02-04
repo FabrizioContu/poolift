@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Plus, Home, Users, Search } from "lucide-react";
+import { Plus, Home, Users, Search, Gift } from "lucide-react";
 import { supabase } from "@/lib/supabase";
-import { getGroupSessions, GroupSession } from "@/lib/auth";
+import { getGroupSessions, GroupSession, getDirectGiftSessions, DirectGiftSession } from "@/lib/auth";
 import { GroupCard } from "@/components/groups/GroupCard";
 import { Button } from "@/components/ui/Button";
+import { OCCASION_LABELS, type OccasionType } from "@/lib/types";
 
 interface GroupWithCounts {
   id: string;
@@ -22,6 +23,12 @@ function getInitialSessions(): GroupSession[] {
   return getGroupSessions();
 }
 
+// Initialize direct gifts synchronously from localStorage
+function getInitialDirectGifts(): DirectGiftSession[] {
+  if (typeof window === "undefined") return [];
+  return getDirectGiftSessions();
+}
+
 export default function GroupsPage() {
   const [loading, setLoading] = useState(true);
   const [myGroups, setMyGroups] = useState<
@@ -31,6 +38,7 @@ export default function GroupsPage() {
   const [showAll, setShowAll] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [sessions, setSessions] = useState<GroupSession[]>(getInitialSessions);
+  const [directGifts, setDirectGifts] = useState<DirectGiftSession[]>(getInitialDirectGifts);
 
   useEffect(() => {
     let isMounted = true;
@@ -64,8 +72,10 @@ export default function GroupsPage() {
 
     async function loadGroups() {
       const savedSessions = getGroupSessions();
+      const savedDirectGifts = getDirectGiftSessions();
       if (isMounted) {
         setSessions(savedSessions);
+        setDirectGifts(savedDirectGifts);
       }
 
       if (savedSessions.length > 0) {
@@ -98,7 +108,8 @@ export default function GroupsPage() {
           });
           setMyGroups(groupsWithCounts);
         }
-      } else {
+      } else if (savedDirectGifts.length === 0) {
+        // Only show all groups if user has no groups AND no direct gifts
         if (isMounted) {
           setShowAll(true);
         }
@@ -238,6 +249,15 @@ export default function GroupsPage() {
                   ¡Sé el primero en crear uno!
                 </p>
               </>
+            ) : directGifts.length > 0 ? (
+              <>
+                <p className="text-gray-600 font-medium">
+                  No tienes grupos aún
+                </p>
+                <p className="text-gray-500 text-sm mt-1">
+                  Pero tienes regalos directos abajo
+                </p>
+              </>
             ) : (
               <>
                 <p className="text-gray-600 font-medium">
@@ -271,6 +291,45 @@ export default function GroupsPage() {
                 }
               />
             ))}
+          </div>
+        )}
+
+        {/* Direct Gifts Section */}
+        {directGifts.length > 0 && !showAll && (
+          <div className="mt-10">
+            <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+              <Gift size={24} className="text-green-600" />
+              Mis Regalos Directos
+            </h2>
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {directGifts.map((gift) => (
+                <Link
+                  key={gift.shareCode}
+                  href={`/gifts/${gift.shareCode}`}
+                  className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow"
+                >
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <span className="inline-block bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded-full mb-2">
+                        {OCCASION_LABELS[gift.occasion as OccasionType]}
+                      </span>
+                      <h3 className="font-semibold text-gray-900">
+                        Regalo para {gift.recipientName}
+                      </h3>
+                      {gift.giftIdea && (
+                        <p className="text-sm text-gray-600 mt-1 line-clamp-1">
+                          {gift.giftIdea}
+                        </p>
+                      )}
+                    </div>
+                    <Gift size={20} className="text-green-500 flex-shrink-0" />
+                  </div>
+                  <p className="text-xs text-gray-400 mt-2">
+                    Organizado por {gift.organizerName}
+                  </p>
+                </Link>
+              ))}
+            </div>
           </div>
         )}
 

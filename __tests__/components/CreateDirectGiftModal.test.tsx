@@ -154,10 +154,10 @@ describe('CreateDirectGiftModal', () => {
       expect(screen.getByText('Regalo Creado!')).toBeInTheDocument()
     })
 
-    // Check share code is displayed
-    expect(screen.getByText('abc123xyz456')).toBeInTheDocument()
-    expect(screen.getByText('Copiar Link')).toBeInTheDocument()
-    expect(screen.getByText('Compartir por WhatsApp')).toBeInTheDocument()
+    // Check share code is displayed in the link
+    expect(screen.getByText(/abc123xyz456/)).toBeInTheDocument()
+    expect(screen.getByText('Copiar')).toBeInTheDocument()
+    expect(screen.getByText('WhatsApp')).toBeInTheDocument()
   })
 
   it('maneja errores del servidor correctamente', async () => {

@@ -178,3 +178,56 @@ export function clearAllSessions(): void {
   if (typeof window === 'undefined') return
   localStorage.removeItem(STORAGE_KEY)
 }
+
+// ============================================
+// DIRECT GIFT SESSIONS
+// ============================================
+
+export interface DirectGiftSession {
+  shareCode: string
+  recipientName: string
+  occasion: string
+  giftIdea?: string
+  organizerName: string
+  createdAt: string
+}
+
+const DIRECT_GIFTS_KEY = 'poolift_direct_gifts'
+
+export function getDirectGiftSessions(): DirectGiftSession[] {
+  if (typeof window === 'undefined') return []
+
+  try {
+    const data = localStorage.getItem(DIRECT_GIFTS_KEY)
+    return data ? JSON.parse(data) : []
+  } catch {
+    return []
+  }
+}
+
+export function addDirectGiftSession(
+  session: Omit<DirectGiftSession, 'createdAt'>
+): void {
+  if (typeof window === 'undefined') return
+
+  const sessions = getDirectGiftSessions()
+
+  // Check if already exists
+  const exists = sessions.some((s) => s.shareCode === session.shareCode)
+  if (exists) return
+
+  // Add new
+  sessions.push({
+    ...session,
+    createdAt: new Date().toISOString(),
+  })
+  localStorage.setItem(DIRECT_GIFTS_KEY, JSON.stringify(sessions))
+}
+
+export function removeDirectGiftSession(shareCode: string): void {
+  if (typeof window === 'undefined') return
+
+  const sessions = getDirectGiftSessions()
+  const filtered = sessions.filter((s) => s.shareCode !== shareCode)
+  localStorage.setItem(DIRECT_GIFTS_KEY, JSON.stringify(filtered))
+}
