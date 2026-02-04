@@ -24,3 +24,14 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+/* Improve placeholder visibility on mobile */
+::placeholder {
+  color: #6b7280; /* gray-500 instead of default lighter gray */
+  opacity: 1;
+}
+
+/* Ensure input text is readable */
+input, textarea, select {
+  color: #111827; /* gray-900 */
+}

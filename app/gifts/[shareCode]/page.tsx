@@ -276,7 +276,7 @@ export default async function GiftPage({
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center px-4">
-          <Gift className="mx-auto text-gray-400 mb-4" size={64} />
+          <Gift className="mx-auto text-gray-500 mb-4" size={64} />
           <h1 className="text-2xl font-bold text-gray-900 mb-2">
             Regalo no encontrado
           </h1>
@@ -377,7 +377,7 @@ export default async function GiftPage({
                   }) => (
                     <li key={item.id} className="flex justify-between text-sm">
                       <span className="flex items-center gap-2">
-                        <span className="text-gray-400">•</span>
+                        <span className="text-gray-500">•</span>
                         {item.item_name}
                         {item.product_link && (
                           <a

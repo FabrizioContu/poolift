@@ -199,7 +199,7 @@ export default function GroupsPage() {
         <div className="flex flex-col sm:flex-row gap-4 mb-6">
           <div className="relative flex-1">
             <Search
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500"
               size={20}
             />
             <input
@@ -324,7 +324,7 @@ export default function GroupsPage() {
                     </div>
                     <Gift size={20} className="text-green-500 flex-shrink-0" />
                   </div>
-                  <p className="text-xs text-gray-400 mt-2">
+                  <p className="text-xs text-gray-500 mt-2">
                     Organizado por {gift.organizerName}
                   </p>
                 </Link>
