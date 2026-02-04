@@ -87,7 +87,7 @@ export function IdeasByChild({ ideas, celebrants }: IdeasByChildProps) {
       <div className="space-y-6">
         {ideasByBirthday.map(({ childName, birthdayId, ideas: childIdeas }) => (
           <div key={birthdayId}>
-            <h3 className="font-semibold text-lg mb-3 flex items-center gap-2">
+            <h3 className="font-semibold text-lg mb-3 flex items-center gap-2 text-gray-900">
               <span className="bg-yellow-100 text-yellow-800 p-1 rounded">
                 <Gift size={16} />
               </span>

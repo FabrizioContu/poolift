@@ -67,7 +67,7 @@ export function BirthdayList({ birthdays, groupId }: BirthdayListProps) {
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-xl font-bold">
+        <h2 className="text-xl font-bold text-gray-900">
           Cumpleanos del Grupo ({birthdays.length})
         </h2>
         <Button onClick={() => setShowAddModal(true)}>

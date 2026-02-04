@@ -119,7 +119,7 @@ export function ProposalCard({
       >
         <div className="flex items-start justify-between mb-3">
           <div className="flex-1">
-            <h3 className="font-semibold text-lg flex items-center gap-2">
+            <h3 className="font-semibold text-lg flex items-center gap-2 text-gray-900">
               {proposal.name}
               {proposal.is_selected && (
                 <Badge variant="green" size="sm" className="bg-green-500 text-white">

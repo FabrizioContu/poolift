@@ -86,7 +86,7 @@ export default function LandingPage() {
 
       {/* Use Cases Section */}
       <section className="container mx-auto px-4 py-16">
-        <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
+        <h2 className="text-2xl md:text-3xl font-bold text-center mb-12 text-gray-900">
           Para que puedes usar Poolift?
         </h2>
 
@@ -96,7 +96,7 @@ export default function LandingPage() {
             <div className="w-14 h-14 md:w-16 md:h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
               <Users className="text-blue-600" size={28} />
             </div>
-            <h3 className="text-lg md:text-xl font-semibold mb-2">
+            <h3 className="text-lg md:text-xl font-semibold mb-2 text-gray-900">
               Grupos permanentes
             </h3>
             <p className="text-gray-700 mb-4">Para regalos recurrentes</p>
@@ -112,7 +112,7 @@ export default function LandingPage() {
             <div className="w-14 h-14 md:w-16 md:h-16 bg-purple-100 rounded-full flex items-center justify-center mb-4">
               <Calendar className="text-purple-600" size={28} />
             </div>
-            <h3 className="text-lg md:text-xl font-semibold mb-2">
+            <h3 className="text-lg md:text-xl font-semibold mb-2 text-gray-900">
               Grupos de amigos
             </h3>
             <p className="text-gray-700 mb-4">Coordina cumpleanos</p>
@@ -128,7 +128,7 @@ export default function LandingPage() {
             <div className="w-14 h-14 md:w-16 md:h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
               <Gift className="text-green-600" size={28} />
             </div>
-            <h3 className="text-lg md:text-xl font-semibold mb-2">
+            <h3 className="text-lg md:text-xl font-semibold mb-2 text-gray-900">
               Ocasiones puntuales
             </h3>
             <p className="text-gray-700 mb-4">Solo esta vez</p>
@@ -144,7 +144,7 @@ export default function LandingPage() {
       {/* Como Funciona Section */}
       <section id="como-funciona" className="bg-gray-50 py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12 text-gray-900">
             Como funciona
           </h2>
 
@@ -239,7 +239,7 @@ export default function LandingPage() {
       {/* Final CTA */}
       <section className="container mx-auto px-4 py-16">
         <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-2xl md:text-3xl font-bold mb-6">
+          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900">
             Listo para empezar?
           </h2>
 

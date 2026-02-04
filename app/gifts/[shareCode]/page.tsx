@@ -167,7 +167,7 @@ export default async function GiftPage({
             {/* Gift Idea */}
             {directGift.gift_idea && (
               <div className="mt-6 p-4 bg-green-50 rounded-lg">
-                <h3 className="font-semibold text-lg mb-2">Regalo propuesto</h3>
+                <h3 className="font-semibold text-lg mb-2 text-gray-900">Regalo propuesto</h3>
                 <p className="text-gray-700">{directGift.gift_idea}</p>
                 {directGift.estimated_price && (
                   <p className="mt-2 text-2xl font-bold text-green-600">
@@ -229,7 +229,7 @@ export default async function GiftPage({
           {/* Participants Card */}
           <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold flex items-center gap-2">
+              <h2 className="text-xl font-bold flex items-center gap-2 text-gray-900">
                 <Users size={24} />
                 Participantes
               </h2>

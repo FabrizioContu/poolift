@@ -113,7 +113,9 @@ Apúntate aquí: ${getGiftLink()}`;
       <Modal isOpen={isOpen} onClose={handleClose} title="Regalo Creado">
         <div className="text-center">
           <CheckCircle className="mx-auto text-green-500 mb-4" size={48} />
-          <h3 className="text-xl font-bold mb-2">¡Regalo Creado!</h3>
+          <h3 className="text-xl font-bold mb-2 text-gray-900">
+            ¡Regalo Creado!
+          </h3>
           <p className="text-gray-700 mb-6">
             Comparte este enlace para que las familias se apunten
           </p>
@@ -171,7 +173,7 @@ Apúntate aquí: ${getGiftLink()}`;
     <Modal isOpen={isOpen} onClose={onClose} title="Crear Regalo">
       <div className="text-center">
         <Gift className="mx-auto text-blue-500 mb-4" size={48} />
-        <h3 className="text-xl font-bold mb-2">Crear Regalo</h3>
+        <h3 className="text-xl font-bold mb-2 text-gray-900">Crear Regalo</h3>
         <p className="text-gray-700 mb-4">Se creará un regalo basado en:</p>
 
         <div className="bg-blue-50 p-4 rounded-lg mb-4">

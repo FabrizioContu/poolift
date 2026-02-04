@@ -123,8 +123,10 @@ Apuntate aqui: ${getGiftLink()}`;
         <div className="bg-white rounded-xl max-w-md w-full p-5 max-h-[85vh] overflow-y-auto">
           <div className="text-center">
             <CheckCircle className="mx-auto text-green-500 mb-3" size={40} />
-            <h2 className="text-xl font-bold mb-1">Regalo Creado!</h2>
-            <p className="text-gray-700 text-sm mb-4">
+            <h2 className="text-xl font-bold mb-1 text-gray-900">
+              Regalo Creado!
+            </h2>
+            <p className="text-gray-900 text-sm mb-4">
               Comparte el enlace para que otros participen
             </p>
 
@@ -187,7 +189,7 @@ Apuntate aqui: ${getGiftLink()}`;
             <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
               <Gift className="text-green-600" size={20} />
             </div>
-            <h2 className="text-xl font-bold">Regalo Directo</h2>
+            <h2 className="text-xl font-bold text-gray-900">Regalo Directo</h2>
           </div>
           <button
             onClick={onClose}

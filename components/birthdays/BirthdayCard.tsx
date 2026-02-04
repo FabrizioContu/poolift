@@ -39,7 +39,7 @@ export function BirthdayCard({ birthday, groupId }: BirthdayCardProps) {
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-2">
             <Cake className="text-pink-500" size={24} />
-            <h3 className="text-lg font-bold">{birthday.child_name}</h3>
+            <h3 className="text-lg font-bold text-gray-900">{birthday.child_name}</h3>
             <span className="text-sm text-gray-700">({age} anos)</span>
           </div>
 

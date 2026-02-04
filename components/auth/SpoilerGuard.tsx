@@ -129,7 +129,7 @@ export function SpoilerGuard({ celebrantNames, children }: SpoilerGuardProps) {
         <div className="text-center p-8 bg-white rounded-2xl shadow-xl max-w-md">
           <Gift className="mx-auto text-yellow-500 mb-4" size={64} />
 
-          <h2 className="text-3xl font-bold mb-3">Sorpresa!</h2>
+          <h2 className="text-3xl font-bold mb-3 text-gray-900">Sorpresa!</h2>
 
           <p className="text-lg text-gray-700 mb-4">
             Este es tu regalo de cumpleanos.
