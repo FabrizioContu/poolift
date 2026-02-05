@@ -23,7 +23,6 @@ const defaultProps = {
   giftId: 'gift-123',
   shareCode: 'abc123xyz',
   recipientName: 'Laura',
-  organizerName: 'María',
   giftIdea: 'Vale Amazon 50€',
   status: 'open',
   participantCount: 3,

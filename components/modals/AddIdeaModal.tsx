@@ -43,6 +43,22 @@ export function AddIdeaModal({
   const [showSuccess, setShowSuccess] = useState(false);
 
   useEffect(() => {
+    const fetchCelebrants = async () => {
+      setIsLoadingCelebrants(true);
+      try {
+        const response = await fetch(`/api/parties/celebrants?partyId=${partyId}`);
+        if (!response.ok) {
+          throw new Error("Error al obtener celebrantes");
+        }
+        const data = await response.json();
+        setCelebrants(data.celebrants || []);
+      } catch {
+        setError("Error al cargar celebrantes");
+      } finally {
+        setIsLoadingCelebrants(false);
+      }
+    };
+
     if (isOpen && partyId && !preSelectedBirthdayId) {
       fetchCelebrants();
     }
@@ -51,22 +67,6 @@ export function AddIdeaModal({
       setSelectedCelebrant(preSelectedBirthdayId);
     }
   }, [isOpen, partyId, preSelectedBirthdayId]);
-
-  const fetchCelebrants = async () => {
-    setIsLoadingCelebrants(true);
-    try {
-      const response = await fetch(`/api/parties/celebrants?partyId=${partyId}`);
-      if (!response.ok) {
-        throw new Error("Error al obtener celebrantes");
-      }
-      const data = await response.json();
-      setCelebrants(data.celebrants || []);
-    } catch (err) {
-      setError("Error al cargar celebrantes");
-    } finally {
-      setIsLoadingCelebrants(false);
-    }
-  };
 
   const resetForm = () => {
     setSelectedCelebrant("");

@@ -6,7 +6,6 @@ import { UserPlus, UserMinus, CheckCircle } from "lucide-react";
 
 interface GiftParticipationProps {
   giftId: string;
-  shareCode: string;
   participationOpen: boolean;
   isPurchased: boolean;
   coordinatorName: string | null;
@@ -15,7 +14,6 @@ interface GiftParticipationProps {
 
 export function GiftParticipation({
   giftId,
-  shareCode,
   participationOpen,
   isPurchased,
   coordinatorName,

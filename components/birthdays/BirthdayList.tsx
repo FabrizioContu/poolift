@@ -81,7 +81,6 @@ export function BirthdayList({ birthdays, groupId }: BirthdayListProps) {
           <BirthdayCard
             key={birthday.id}
             birthday={birthday}
-            groupId={groupId}
           />
         ))}
       </div>

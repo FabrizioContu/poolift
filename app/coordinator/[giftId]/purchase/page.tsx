@@ -329,6 +329,7 @@ export default function PurchasePage({
 
               {preview && (
                 <div className="mt-4">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={preview}
                     alt="Vista previa"
