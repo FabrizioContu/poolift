@@ -23,7 +23,7 @@ export async function DELETE(
     }
 
     // Hard delete party
-    const { error, count } = await supabase
+    const { error } = await supabase
       .from("parties")
       .delete()
       .eq("id", id)

@@ -14,6 +14,7 @@ const defaultProps = {
   giftId: 'gift-123',
   shareCode: 'abc123xyz',
   status: 'open',
+  organizerName: 'María',
 }
 
 describe('DirectGiftParticipation', () => {

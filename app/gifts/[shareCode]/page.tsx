@@ -261,7 +261,6 @@ export default async function GiftPage({
             giftId={directGift.id}
             shareCode={shareCode}
             recipientName={directGift.recipient_name}
-            organizerName={directGift.organizer_name}
             giftIdea={directGift.gift_idea}
             status={directGift.status}
             participantCount={participantCount}
@@ -585,7 +584,6 @@ export default async function GiftPage({
         {/* Participation Component */}
         <GiftParticipation
           giftId={gift.id}
-          shareCode={shareCode}
           participationOpen={gift.participation_open}
           isPurchased={isPurchased}
           coordinatorName={gift.party?.coordinator?.name || null}

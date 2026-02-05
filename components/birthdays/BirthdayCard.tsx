@@ -16,10 +16,9 @@ interface BirthdayCardProps {
     ideaCount: number
     nextPartyDate: string | null
   }
-  groupId: string
 }
 
-export function BirthdayCard({ birthday, groupId }: BirthdayCardProps) {
+export function BirthdayCard({ birthday }: BirthdayCardProps) {
   const [showAddIdea, setShowAddIdea] = useState(false)
 
   const birthDate = new Date(birthday.birth_date)

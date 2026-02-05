@@ -25,7 +25,7 @@ describe('AddBirthdayModal', () => {
 
     expect(screen.getByRole('heading', { name: 'Añadir Cumpleaños' })).toBeInTheDocument()
     expect(screen.getByText(/Nombre del niño/)).toBeInTheDocument()
-    expect(screen.getByText(/Fecha de cumpleaños/)).toBeInTheDocument()
+    expect(screen.getByText(/Fecha de nacimiento/)).toBeInTheDocument()
     expect(screen.getByPlaceholderText('ej: Juan')).toBeInTheDocument()
     expect(getDateInput(container)).toBeInTheDocument()
   })
@@ -82,7 +82,7 @@ describe('AddBirthdayModal', () => {
     const submitButton = screen.getByRole('button', { name: /añadir cumpleaños/i })
     await user.click(submitButton)
 
-    expect(screen.getByText('La fecha de cumpleaños es requerida')).toBeInTheDocument()
+    expect(screen.getByText('La fecha de nacimiento es requerida')).toBeInTheDocument()
   })
 
   it('tiene atributo max para prevenir fechas futuras', () => {

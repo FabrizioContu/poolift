@@ -24,7 +24,6 @@ interface DirectGiftOrganizerActionsProps {
   giftId: string;
   shareCode: string;
   recipientName: string;
-  organizerName: string;
   giftIdea: string | null;
   status: string;
   participantCount: number;
@@ -36,7 +35,6 @@ export function DirectGiftOrganizerActions({
   giftId,
   shareCode,
   recipientName,
-  organizerName,
   giftIdea,
   status,
   participantCount,

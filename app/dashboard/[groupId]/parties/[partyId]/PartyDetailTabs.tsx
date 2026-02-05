@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useSyncExternalStore, useCallback } from "react";
 import { Tabs } from "@/components/ui/Tabs";
 import { ProposalCard } from "@/components/cards/ProposalCard";
 import { IdeasByChild } from "@/components/cards/IdeasByChild";
@@ -55,6 +55,36 @@ const tabs = [
   { id: "ideas", label: "Ideas" },
 ];
 
+// Hook to check if current user is the coordinator using localStorage
+function useIsCoordinator(coordinatorId: string | null, groupId: string): boolean {
+  const getSnapshot = useCallback(() => {
+    if (!coordinatorId || !groupId) return false;
+
+    const sessions = localStorage.getItem("poolift_groups");
+    if (sessions) {
+      try {
+        const groupSessions = JSON.parse(sessions);
+        const session = groupSessions.find(
+          (s: { groupId: string; familyId: string }) => s.groupId === groupId
+        );
+        return session?.familyId === coordinatorId;
+      } catch {
+        return false;
+      }
+    }
+    return false;
+  }, [coordinatorId, groupId]);
+
+  const subscribe = useCallback((callback: () => void) => {
+    window.addEventListener("storage", callback);
+    return () => window.removeEventListener("storage", callback);
+  }, []);
+
+  const getServerSnapshot = useCallback(() => false, []);
+
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+}
+
 export function PartyDetailTabs({
   proposals,
   ideas,
@@ -63,27 +93,8 @@ export function PartyDetailTabs({
   coordinatorId,
   groupId,
 }: PartyDetailTabsProps) {
-  const [isCoordinator, setIsCoordinator] = useState(false);
+  const isCoordinator = useIsCoordinator(coordinatorId, groupId);
   const hasAnySelected = proposals.some((p) => p.is_selected);
-
-  // Check if current user is the coordinator
-  useEffect(() => {
-    if (!coordinatorId || !groupId) {
-      setIsCoordinator(false);
-      return;
-    }
-
-    const sessions = localStorage.getItem("poolift_groups");
-    if (sessions) {
-      const groupSessions = JSON.parse(sessions);
-      const session = groupSessions.find(
-        (s: { groupId: string; familyId: string }) => s.groupId === groupId
-      );
-      if (session && session.familyId === coordinatorId) {
-        setIsCoordinator(true);
-      }
-    }
-  }, [coordinatorId, groupId]);
 
   return (
     <Tabs tabs={tabs} defaultTab="proposals">

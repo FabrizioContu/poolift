@@ -7,7 +7,7 @@ export async function PUT(
 ) {
   try {
     const { id } = await params
-    const { finalPrice, organizerComment, receiptImageUrl } = await request.json()
+    const { finalPrice, organizerComment } = await request.json()
 
     if (!finalPrice || finalPrice <= 0) {
       return NextResponse.json(

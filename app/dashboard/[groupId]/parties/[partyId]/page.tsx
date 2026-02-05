@@ -215,7 +215,6 @@ export default async function PartyDetailPage({
   // coordinatorId and groupId will be passed to client components
   // to check if current user (from localStorage) is the coordinator
   const coordinatorId = party.coordinator_id;
-  const coordinatorName = party.coordinator?.name || null;
 
   return (
     <div className="container mx-auto px-4 py-8">

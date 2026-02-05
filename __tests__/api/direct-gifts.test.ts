@@ -9,8 +9,10 @@ const mockSupabase = {
   update: vi.fn(() => mockSupabase),
   delete: vi.fn(() => mockSupabase),
   eq: vi.fn(() => mockSupabase),
+  ilike: vi.fn(() => mockSupabase),
   single: vi.fn(),
   order: vi.fn(() => mockSupabase),
+  maybeSingle: vi.fn(),
 }
 
 vi.mock('@/lib/supabase', () => ({
@@ -32,6 +34,7 @@ function createMockRequest(url: string, options?: { method?: string; body?: stri
 describe('Direct Gifts API', () => {
   beforeEach(() => {
     vi.clearAllMocks()
+    vi.resetModules()
   })
 
   describe('POST /api/gifts/direct', () => {
@@ -196,6 +199,12 @@ describe('Direct Gifts API', () => {
           data: { id: 'gift-123', status: 'open' },
           error: null,
         })
+        // Mock ilike check - no existing participant found
+        .mockResolvedValueOnce({
+          data: null,
+          error: { code: 'PGRST116' }, // Not found is expected
+        })
+        // Mock insert returns new participant
         .mockResolvedValueOnce({
           data: { id: 'participant-1', participant_name: 'Juan' },
           error: null,
@@ -291,9 +300,10 @@ describe('Direct Gifts API', () => {
           data: { id: 'gift-123', status: 'open' },
           error: null,
         })
+        // Mock ilike check - participant already exists
         .mockResolvedValueOnce({
-          data: null,
-          error: { code: '23505' }, // Unique violation
+          data: { id: 'existing-participant' },
+          error: null,
         })
 
       const { POST } = await import('@/app/api/gifts/direct/[id]/participate/route')
@@ -329,6 +339,10 @@ describe('Direct Gifts API', () => {
   })
 
   describe('PUT /api/gifts/direct/[id]/close', () => {
+    beforeEach(() => {
+      vi.resetModules()
+    })
+
     it('retorna error 404 si regalo no existe', async () => {
       mockSupabase.single.mockResolvedValueOnce({
         data: null,
@@ -350,7 +364,7 @@ describe('Direct Gifts API', () => {
 
     it('retorna error si ya está cerrado', async () => {
       mockSupabase.single.mockResolvedValueOnce({
-        data: { id: 'gift-123', status: 'closed' },
+        data: { id: 'gift-123', status: 'closed', estimated_price: 50 },
         error: null,
       })
 
@@ -369,6 +383,10 @@ describe('Direct Gifts API', () => {
   })
 
   describe('PUT /api/gifts/direct/[id]/finalize', () => {
+    beforeEach(() => {
+      vi.resetModules()
+    })
+
     it('retorna error sin precio final', async () => {
       const { PUT } = await import('@/app/api/gifts/direct/[id]/finalize/route')
 
