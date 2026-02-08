@@ -1,29 +1,31 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/Button'
 import { getGroupSessions, getDirectGiftSessions } from '@/lib/auth'
 
-export function MisGruposButton() {
-  const [count, setCount] = useState(0)
+function getInitialCount(): number {
+  if (typeof window === 'undefined') return 0
+  const groups = getGroupSessions()
+  const directGifts = getDirectGiftSessions()
+  return groups.length + directGifts.length
+}
 
-  useEffect(() => {
-    // Get initial count
+export function MisGruposButton() {
+  const [count, setCount] = useState(getInitialCount)
+
+  const updateCount = useCallback(() => {
     const groups = getGroupSessions()
     const directGifts = getDirectGiftSessions()
     setCount(groups.length + directGifts.length)
-
-    // Listen for storage changes (in case user opens multiple tabs)
-    const handleStorage = () => {
-      const groups = getGroupSessions()
-      const directGifts = getDirectGiftSessions()
-      setCount(groups.length + directGifts.length)
-    }
-
-    window.addEventListener('storage', handleStorage)
-    return () => window.removeEventListener('storage', handleStorage)
   }, [])
+
+  useEffect(() => {
+    // Listen for storage changes (in case user opens multiple tabs)
+    window.addEventListener('storage', updateCount)
+    return () => window.removeEventListener('storage', updateCount)
+  }, [updateCount])
 
   return (
     <Link href="/groups">
