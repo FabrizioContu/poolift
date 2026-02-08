@@ -19,7 +19,6 @@ interface Birthday {
   id: string
   child_name: string
   birth_date: string
-  ideaCount: number
   nextPartyDate: string | null
 }
 

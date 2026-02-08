@@ -80,7 +80,6 @@ async function getBirthdays(groupId: string) {
       id,
       child_name,
       birth_date,
-      ideas(id),
       party_celebrants(
         parties(id, party_date)
       )
@@ -96,7 +95,7 @@ async function getBirthdays(groupId: string) {
 
   if (!data) return [];
 
-  // Transform data to include idea count and next party date
+  // Transform data to include next party date
   const today = new Date();
   return data.map((b) => {
     // Extract all parties from party_celebrants (Supabase join returns nested structure)
@@ -114,7 +113,6 @@ async function getBirthdays(groupId: string) {
       id: b.id,
       child_name: b.child_name,
       birth_date: b.birth_date,
-      ideaCount: b.ideas?.length || 0,
       nextPartyDate: allParties[0]?.party_date || null,
     };
   });
