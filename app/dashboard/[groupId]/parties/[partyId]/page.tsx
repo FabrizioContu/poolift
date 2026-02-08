@@ -4,7 +4,6 @@ import { Calendar, Users, User, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { PartyDetailTabs } from "./PartyDetailTabs";
 import { AddProposalButton } from "@/components/parties/AddProposalButton";
-import { AddIdeaButton } from "@/components/parties/AddIdeaButton";
 import { GiftStatusCard } from "@/components/gifts/GiftStatusCard";
 
 interface PartyWithRelations {
@@ -36,16 +35,6 @@ interface Proposal {
     id: string;
     voter_name: string;
   }>;
-}
-
-interface Idea {
-  id: string;
-  birthday_id: string;
-  product_name: string;
-  product_link: string | null;
-  price: number | null;
-  comment: string | null;
-  suggested_by: string;
 }
 
 async function getParty(partyId: string): Promise<PartyWithRelations | null> {
@@ -91,30 +80,6 @@ async function getProposals(partyId: string): Promise<Proposal[]> {
   }
 
   return data as Proposal[];
-}
-
-async function getIdeas(partyId: string): Promise<Idea[]> {
-  const { data: celebrants } = await supabase
-    .from("party_celebrants")
-    .select("birthday_id")
-    .eq("party_id", partyId);
-
-  if (!celebrants || celebrants.length === 0) return [];
-
-  const birthdayIds = celebrants.map((c) => c.birthday_id);
-
-  const { data, error } = await supabase
-    .from("ideas")
-    .select("*")
-    .in("birthday_id", birthdayIds)
-    .order("created_at", { ascending: false });
-
-  if (error) {
-    console.error("Error fetching ideas:", error);
-    return [];
-  }
-
-  return data as Idea[];
 }
 
 interface GiftWithParticipants {
@@ -166,7 +131,6 @@ async function getGiftForParty(partyId: string): Promise<GiftWithParticipants | 
 }
 
 function getPartyStatus(
-  party: PartyWithRelations,
   proposals: Proposal[]
 ): { label: string; color: string } {
   const hasSelectedProposal = proposals.some((p) => p.is_selected);
@@ -174,9 +138,9 @@ function getPartyStatus(
     return { label: "Decidido", color: "bg-green-100 text-green-800" };
   }
   if (proposals.length > 0) {
-    return { label: "Votación", color: "bg-yellow-100 text-yellow-800" };
+    return { label: "Votacion", color: "bg-yellow-100 text-yellow-800" };
   }
-  return { label: "Ideas", color: "bg-blue-100 text-blue-800" };
+  return { label: "Pendiente", color: "bg-blue-100 text-blue-800" };
 }
 
 export default async function PartyDetailPage({
@@ -186,10 +150,9 @@ export default async function PartyDetailPage({
 }) {
   const { groupId, partyId } = await params;
 
-  const [party, proposals, ideas, gift] = await Promise.all([
+  const [party, proposals, gift] = await Promise.all([
     getParty(partyId),
     getProposals(partyId),
-    getIdeas(partyId),
     getGiftForParty(partyId),
   ]);
 
@@ -210,7 +173,7 @@ export default async function PartyDetailPage({
   const celebrantNames = party.party_celebrants.map(
     (pc) => pc.birthdays.child_name
   );
-  const status = getPartyStatus(party, proposals);
+  const status = getPartyStatus(proposals);
 
   // coordinatorId and groupId will be passed to client components
   // to check if current user (from localStorage) is the coordinator
@@ -268,7 +231,6 @@ export default async function PartyDetailPage({
           coordinatorId={coordinatorId}
           groupId={groupId}
         />
-        <AddIdeaButton partyId={partyId} />
       </div>
 
       {/* Gift Status Card */}
@@ -287,11 +249,9 @@ export default async function PartyDetailPage({
         />
       )}
 
-      {/* Tabs */}
+      {/* Proposals */}
       <PartyDetailTabs
         proposals={proposals}
-        ideas={ideas}
-        celebrants={party.party_celebrants}
         partyId={partyId}
         coordinatorId={coordinatorId}
         groupId={groupId}

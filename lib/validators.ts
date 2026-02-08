@@ -20,26 +20,11 @@ export async function validateBirthdayDelete(
 
   if (parties && parties.length > 0) {
     throw new Error(
-      `No se puede eliminar. Este niño está en ${parties.length} fiesta(s) activa(s).`
+      `No se puede eliminar. Este nino esta en ${parties.length} fiesta(s) activa(s).`
     );
   }
 
-  // Check ideas (warning, not blocker)
-  const { data: ideas, error: ideasError } = await supabase
-    .from("ideas")
-    .select("id")
-    .eq("birthday_id", birthdayId);
-
-  if (ideasError) {
-    throw new Error("Error al verificar ideas asociadas");
-  }
-
-  const warnings: string[] = [];
-  if (ideas && ideas.length > 0) {
-    warnings.push(`Se eliminarán ${ideas.length} idea(s) asociada(s).`);
-  }
-
-  return { canDelete: true, warnings };
+  return { canDelete: true, warnings: [] };
 }
 
 export async function validatePartyDelete(
@@ -143,24 +128,6 @@ export async function validateProposalDelete(
     throw new Error(
       "No se puede eliminar. Esta es la propuesta seleccionada para el regalo."
     );
-  }
-
-  return { canDelete: true, warnings: [] };
-}
-
-export async function validateIdeaDelete(
-  ideaId: string
-): Promise<ValidationResult> {
-  // Ideas can be deleted freely - they're not linked to proposal_items
-  // Just verify the idea exists
-  const { error } = await supabase
-    .from("ideas")
-    .select("id")
-    .eq("id", ideaId)
-    .single();
-
-  if (error) {
-    throw new Error("Idea no encontrada");
   }
 
   return { canDelete: true, warnings: [] };

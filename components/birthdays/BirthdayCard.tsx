@@ -1,26 +1,16 @@
-'use client'
-
-import { useState } from 'react'
-import { Cake, Calendar, Lightbulb } from 'lucide-react'
-import { Button } from '@/components/ui/Button'
+import { Cake, Calendar } from 'lucide-react'
 import { formatDate } from '@/lib/utils'
-import dynamic from 'next/dynamic'
-
-const AddIdeaModal = dynamic(() => import('@/components/modals/AddIdeaModal'))
 
 interface BirthdayCardProps {
   birthday: {
     id: string
     child_name: string
     birth_date: string
-    ideaCount: number
     nextPartyDate: string | null
   }
 }
 
 export function BirthdayCard({ birthday }: BirthdayCardProps) {
-  const [showAddIdea, setShowAddIdea] = useState(false)
-
   const birthDate = new Date(birthday.birth_date)
   const today = new Date()
   const age = today.getFullYear() - birthDate.getFullYear()
@@ -47,11 +37,6 @@ export function BirthdayCard({ birthday }: BirthdayCardProps) {
               <Calendar size={16} />
               {formatDate(birthday.birth_date)}
             </div>
-
-            <div className="flex items-center gap-1">
-              <Lightbulb size={16} />
-              {birthday.ideaCount} {birthday.ideaCount === 1 ? 'idea' : 'ideas'}
-            </div>
           </div>
 
           {daysUntil <= 30 ? (
@@ -68,29 +53,7 @@ export function BirthdayCard({ birthday }: BirthdayCardProps) {
             </p>
           )}
         </div>
-
-        <div className="flex flex-col gap-2">
-          <Button
-            onClick={() => setShowAddIdea(true)}
-            variant="primary"
-            className="text-sm px-3 py-1.5"
-          >
-            <Lightbulb size={16} className="mr-1" />
-            Anadir Idea
-          </Button>
-        </div>
       </div>
-
-      {showAddIdea && (
-        <AddIdeaModal
-          isOpen={showAddIdea}
-          onClose={() => setShowAddIdea(false)}
-          partyId=""
-          preSelectedBirthdayId={birthday.id}
-          preSelectedBirthdayName={birthday.child_name}
-          onSuccess={() => window.location.reload()}
-        />
-      )}
     </div>
   )
 }

@@ -88,17 +88,6 @@ export interface PartyCelebrant {
   birthday_id: string
 }
 
-export interface Idea {
-  id: string
-  birthday_id: string
-  product_name: string
-  product_link: string | null
-  price: number | null
-  comment: string | null
-  suggested_by: string
-  created_at: string
-}
-
 export interface Proposal {
   id: string
   party_id: string

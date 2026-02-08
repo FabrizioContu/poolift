@@ -50,29 +50,8 @@ describe("validators", () => {
       mockSupabase.from.mockReturnValue({ select: mockSelect });
 
       await expect(validateBirthdayDelete("birthday-123")).rejects.toThrow(
-        "No se puede eliminar. Este niño está en 2 fiesta(s) activa(s)."
+        "No se puede eliminar. Este nino esta en 2 fiesta(s) activa(s)."
       );
-    });
-
-    it("devuelve warning si hay ideas asociadas", async () => {
-      const mockSelect = vi.fn();
-      const mockEq = vi.fn();
-
-      // First call for party_celebrants - no parties
-      mockEq.mockResolvedValueOnce({ data: [], error: null });
-      // Second call for ideas - has ideas
-      mockEq.mockResolvedValueOnce({
-        data: [{ id: "i1" }, { id: "i2" }, { id: "i3" }],
-        error: null,
-      });
-
-      mockSelect.mockReturnValue({ eq: mockEq });
-      mockSupabase.from.mockReturnValue({ select: mockSelect });
-
-      const result = await validateBirthdayDelete("birthday-123");
-
-      expect(result.canDelete).toBe(true);
-      expect(result.warnings).toContain("Se eliminarán 3 idea(s) asociada(s).");
     });
   });
 

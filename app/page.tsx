@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { Gift, Users, Calendar, CheckCircle } from "lucide-react";
+import { Gift, Zap, Users, Share2, CheckCircle, Sparkles, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui";
+import { MisGruposButton } from "@/components/nav/MisGruposButton";
 
 export default function LandingPage() {
   return (
@@ -19,11 +20,7 @@ export default function LandingPage() {
             >
               Como funciona
             </Link>
-            <Link href="/groups">
-              <Button variant="secondary" className="px-4 py-2">
-                Mis Grupos
-              </Button>
-            </Link>
+            <MisGruposButton />
           </div>
         </nav>
       </header>
@@ -32,39 +29,20 @@ export default function LandingPage() {
       <section className="container mx-auto px-4 py-12 md:py-20">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6">
-            Organiza regalos en grupo,
+            Regalos en grupo,
             <br />
-            sin complicaciones
+            facil y al instante
           </h1>
 
-          <p className="text-lg md:text-xl text-gray-700 mb-8">
-            Coordina contribuciones, vota propuestas y compra juntos.
-            <br />
-            Para cualquier ocasion.
+          <p className="text-lg md:text-xl text-gray-700 mb-8 max-w-2xl mx-auto">
+            Comparte tu idea, coordina con quien quieras y organiza el regalo perfecto en minutos.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-6">
-            <Link href="/create-group">
-              <Button className="px-8 py-4 text-lg w-full sm:w-auto">
-                Crear Grupo
-              </Button>
-            </Link>
-
-            <Link href="/create-direct-gift">
-              <Button
-                variant="secondary"
-                className="px-8 py-4 text-lg w-full sm:w-auto border-2 border-green-600 text-green-600 hover:bg-green-50"
-              >
-                Regalo Directo
-              </Button>
-            </Link>
-          </div>
-
-          <Link
-            href="#como-funciona"
-            className="text-sm text-gray-700 hover:text-gray-700 underline"
-          >
-            No sabes cual elegir?
+          <Link href="/start">
+            <Button className="px-10 py-4 text-lg">
+              Organiza tu regalo
+              <ArrowRight className="ml-2 inline" size={20} />
+            </Button>
           </Link>
 
           <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 mt-8 text-sm text-gray-700">
@@ -74,69 +52,63 @@ export default function LandingPage() {
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle size={20} className="text-green-500" />
-              <span>Sin registro obligatorio</span>
+              <span>Sin registro</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle size={20} className="text-green-500" />
-              <span>Facil de usar</span>
+              <span>Listo en 2 minutos</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Use Cases Section */}
+      {/* Benefits Section */}
       <section className="container mx-auto px-4 py-16">
-        <h2 className="text-2xl md:text-3xl font-bold text-center mb-12 text-gray-900">
-          Para que puedes usar Poolift?
+        <h2 className="text-2xl md:text-3xl font-bold text-center mb-4 text-gray-900">
+          Por que usar Poolift?
         </h2>
+        <p className="text-center text-gray-700 mb-12 max-w-xl mx-auto">
+          Olvida los grupos de WhatsApp interminables y las hojas de calculo.
+        </p>
 
         <div className="grid md:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto">
-          {/* Grupos permanentes */}
+          {/* Rapidez */}
+          <div className="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition">
+            <div className="w-14 h-14 md:w-16 md:h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-4">
+              <Zap className="text-yellow-600" size={28} />
+            </div>
+            <h3 className="text-lg md:text-xl font-semibold mb-2 text-gray-900">
+              Rapido
+            </h3>
+            <p className="text-gray-700">
+              Crea un regalo y comparte el link en segundos. Sin registros, sin esperas.
+            </p>
+          </div>
+
+          {/* Coordinacion */}
           <div className="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition">
             <div className="w-14 h-14 md:w-16 md:h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
               <Users className="text-blue-600" size={28} />
             </div>
             <h3 className="text-lg md:text-xl font-semibold mb-2 text-gray-900">
-              Grupos permanentes
+              Coordinado
             </h3>
-            <p className="text-gray-700 mb-4">Para regalos recurrentes</p>
-            <ul className="text-sm text-gray-700 space-y-2">
-              <li>Clase del cole</li>
-              <li>Equipo de trabajo</li>
-              <li>Familia extensa</li>
-            </ul>
+            <p className="text-gray-700">
+              Todos ven quien participa y cuanto falta. Nada de preguntar uno por uno.
+            </p>
           </div>
 
-          {/* Grupos de amigos */}
-          <div className="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition">
-            <div className="w-14 h-14 md:w-16 md:h-16 bg-purple-100 rounded-full flex items-center justify-center mb-4">
-              <Calendar className="text-purple-600" size={28} />
-            </div>
-            <h3 className="text-lg md:text-xl font-semibold mb-2 text-gray-900">
-              Grupos de amigos
-            </h3>
-            <p className="text-gray-700 mb-4">Coordina cumpleanos</p>
-            <ul className="text-sm text-gray-700 space-y-2">
-              <li>Grupo de amigos</li>
-              <li>Comunidad</li>
-              <li>Club deportivo</li>
-            </ul>
-          </div>
-
-          {/* Ocasiones puntuales */}
+          {/* Compartir */}
           <div className="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition">
             <div className="w-14 h-14 md:w-16 md:h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
-              <Gift className="text-green-600" size={28} />
+              <Share2 className="text-green-600" size={28} />
             </div>
             <h3 className="text-lg md:text-xl font-semibold mb-2 text-gray-900">
-              Ocasiones puntuales
+              Facil de compartir
             </h3>
-            <p className="text-gray-700 mb-4">Solo esta vez</p>
-            <ul className="text-sm text-gray-700 space-y-2">
-              <li>Regalo puntual</li>
-              <li>Despedida</li>
-              <li>Boda / Nacimiento</li>
-            </ul>
+            <p className="text-gray-700">
+              Un solo link por WhatsApp y listo. Quien quiera participar, se apunta.
+            </p>
           </div>
         </div>
       </section>
@@ -144,93 +116,93 @@ export default function LandingPage() {
       {/* Como Funciona Section */}
       <section id="como-funciona" className="bg-gray-50 py-16">
         <div className="container mx-auto px-4">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12 text-gray-900">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-4 text-gray-900">
             Como funciona
           </h2>
+          <p className="text-center text-gray-700 mb-12 max-w-xl mx-auto">
+            Tienes una idea de regalo? Compartela en 3 pasos.
+          </p>
 
-          <div className="grid md:grid-cols-2 gap-6 md:gap-8 max-w-5xl mx-auto">
-            {/* Grupo Permanente */}
-            <div className="bg-white p-6 md:p-8 rounded-xl shadow-sm">
-              <h3 className="text-xl md:text-2xl font-semibold mb-4 text-blue-700">
-                Grupo Permanente
-              </h3>
-              <p className="text-gray-700 mb-6">
-                Para regalos recurrentes durante todo el ano
-              </p>
+          <div className="max-w-3xl mx-auto">
+            {/* Steps */}
+            <div className="space-y-6">
+              <div className="flex gap-4 items-start bg-white p-6 rounded-xl shadow-sm">
+                <span className="flex-shrink-0 w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center text-lg font-bold">
+                  1
+                </span>
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                    Describe el regalo
+                  </h3>
+                  <p className="text-gray-700">
+                    Para quien es, que ocasion, y si ya tienes una idea en mente.
+                  </p>
+                </div>
+              </div>
 
-              <ol className="space-y-4">
-                <li className="flex gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-medium">
-                    1
-                  </span>
-                  <span className="text-gray-700">Crea el grupo</span>
-                </li>
-                <li className="flex gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-medium">
-                    2
-                  </span>
-                  <span className="text-gray-700">Invita miembros</span>
-                </li>
-                <li className="flex gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-medium">
-                    3
-                  </span>
-                  <span className="text-gray-700">Anade personas</span>
-                </li>
-                <li className="flex gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm font-medium">
-                    4
-                  </span>
-                  <span className="text-gray-700">Propon y vota regalos</span>
-                </li>
-              </ol>
+              <div className="flex gap-4 items-start bg-white p-6 rounded-xl shadow-sm">
+                <span className="flex-shrink-0 w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center text-lg font-bold">
+                  2
+                </span>
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                    Comparte el link
+                  </h3>
+                  <p className="text-gray-700">
+                    Envia el enlace por WhatsApp al grupo. Quien quiera participar, se apunta.
+                  </p>
+                </div>
+              </div>
 
-              <Link href="/create-group" className="block mt-6">
-                <Button className="w-full">Crear Grupo</Button>
-              </Link>
+              <div className="flex gap-4 items-start bg-white p-6 rounded-xl shadow-sm">
+                <span className="flex-shrink-0 w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center text-lg font-bold">
+                  3
+                </span>
+                <div>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-1">
+                    Coordina y compra
+                  </h3>
+                  <p className="text-gray-700">
+                    Ve quien participa en tiempo real. Cuando estes listo, compra y cierra el regalo.
+                  </p>
+                </div>
+              </div>
             </div>
 
-            {/* Regalo Directo */}
-            <div className="bg-white p-6 md:p-8 rounded-xl shadow-sm">
-              <h3 className="text-xl md:text-2xl font-semibold mb-4 text-green-700">
-                Regalo Directo
-              </h3>
-              <p className="text-gray-700 mb-6">
-                Para ocasiones unicas y rapidas
-              </p>
+            {/* Fork: two options */}
+            <div className="mt-12 p-6 bg-white rounded-xl border-2 border-blue-100">
+              <div className="flex items-center gap-2 mb-4">
+                <Sparkles className="text-blue-600" size={24} />
+                <h3 className="text-lg font-semibold text-gray-900">
+                  Desde donde quieres empezar?
+                </h3>
+              </div>
 
-              <ol className="space-y-4">
-                <li className="flex gap-3">
-                  <span className="shrink-0 w-6 h-6 bg-green-600 text-white rounded-full flex items-center justify-center text-sm font-medium">
-                    1
-                  </span>
-                  <span className="text-gray-700">Crea el regalo</span>
-                </li>
-                <li className="flex gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 bg-green-600 text-white rounded-full flex items-center justify-center text-sm font-medium">
-                    2
-                  </span>
-                  <span className="text-gray-700">Comparte el link</span>
-                </li>
-                <li className="flex gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 bg-green-600 text-white rounded-full flex items-center justify-center text-sm font-medium">
-                    3
-                  </span>
-                  <span className="text-gray-700">Recoge confirmaciones</span>
-                </li>
-                <li className="flex gap-3">
-                  <span className="flex-shrink-0 w-6 h-6 bg-green-600 text-white rounded-full flex items-center justify-center text-sm font-medium">
-                    4
-                  </span>
-                  <span className="text-gray-700">Compra y cierra</span>
-                </li>
-              </ol>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <Link href="/create-direct-gift" className="block">
+                  <div className="p-4 border border-gray-200 rounded-lg hover:border-green-400 hover:bg-green-50 transition group">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Gift className="text-green-600" size={20} />
+                      <span className="font-medium text-gray-900">Tengo una idea</span>
+                    </div>
+                    <p className="text-sm text-gray-700">
+                      Ya se que regalar. Quiero organizar este regalo ahora.
+                    </p>
+                  </div>
+                </Link>
 
-              <Link href="/create-direct-gift" className="block mt-6">
-                <Button className="w-full bg-green-600 hover:bg-green-700">
-                  Regalo Directo
-                </Button>
-              </Link>
+                <Link href="/create-group" className="block">
+                  <div className="p-4 border border-gray-200 rounded-lg hover:border-blue-400 hover:bg-blue-50 transition group">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Users className="text-blue-600" size={20} />
+                      <span className="font-medium text-gray-900">Crear un grupo</span>
+                    </div>
+                    <p className="text-sm text-gray-700">
+                      Para coordinar multiples regalos con el mismo grupo de personas.
+                    </p>
+                  </div>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -239,26 +211,19 @@ export default function LandingPage() {
       {/* Final CTA */}
       <section className="container mx-auto px-4 py-16">
         <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-gray-900">
-            Listo para empezar?
+          <h2 className="text-2xl md:text-3xl font-bold mb-4 text-gray-900">
+            Listo para organizar tu regalo?
           </h2>
+          <p className="text-gray-700 mb-6">
+            Empieza ahora, es gratis y sin registro.
+          </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/create-group">
-              <Button className="px-8 py-4 text-lg w-full sm:w-auto">
-                Crear Grupo
-              </Button>
-            </Link>
-
-            <Link href="/create-direct-gift">
-              <Button
-                variant="secondary"
-                className="px-8 py-4 text-lg w-full sm:w-auto border-2 border-green-600 text-green-600 hover:bg-green-50"
-              >
-                Regalo Directo
-              </Button>
-            </Link>
-          </div>
+          <Link href="/start">
+            <Button className="px-10 py-4 text-lg">
+              Empezar
+              <ArrowRight className="ml-2 inline" size={20} />
+            </Button>
+          </Link>
 
           <p className="mt-6 text-gray-700">
             Ya tienes un codigo?{" "}
