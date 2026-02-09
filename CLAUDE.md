@@ -519,7 +519,7 @@ refactor: Extract price calculation to utils
 ```env
 NEXT_PUBLIC_SUPABASE_URL=
 NEXT_PUBLIC_SUPABASE_ANON_KEY=
-NEXT_PUBLIC_APP_URL=https://poolift.com
+NEXT_PUBLIC_APP_URL=https://poolift.vercel.app
 ```
 
 ### Vercel Deployment

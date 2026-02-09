@@ -36,7 +36,7 @@ export function CloseParticipationButton({
   const [finalPricePerFamily, setFinalPricePerFamily] = useState<string | null>(null)
 
   const estimatedPricePerFamily = calculatePricePerFamily(totalPrice, participantCount)
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://poolift.com'
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://poolift.vercel.app'
   const giftUrl = `${appUrl}/gifts/${shareCode}`
 
   const handleClose = async () => {
