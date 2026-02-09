@@ -154,7 +154,7 @@ Use components from `@/components/ui`:
 - `EmptyState` - icon, title, description
 - `Tabs` - tab navigation
 
-See `.interface-design/system.md` for full documentation.
+See `.ai/design/system.md` for full documentation.
 
 ## File Structure
 ```
@@ -170,6 +170,6 @@ components/
 ```
 
 ## References
-- [Design System](../../.interface-design/system.md)
-- [React Standards](../../.ai-specs/coding-standards/react.md)
+- [Design System](../design/system.md)
+- [React Standards](../specs/coding-standards/react.md)
 - [API Docs](../../docs/architecture/api-design.md)

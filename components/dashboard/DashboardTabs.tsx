@@ -1,9 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import { Calendar, Cake } from 'lucide-react'
+import { Calendar, Cake, PartyPopper } from 'lucide-react'
 import { PartyCard } from '@/components/cards/PartyCard'
 import { BirthdayList } from '@/components/birthdays/BirthdayList'
+import { EmptyState } from '@/components/ui/EmptyState'
 
 interface Party {
   id: string
@@ -66,9 +67,11 @@ export function DashboardTabs({ parties, birthdays, groupId }: DashboardTabsProp
       {activeTab === 'parties' && (
         <div className="grid gap-4">
           {parties.length === 0 ? (
-            <p className="text-gray-700 text-center py-8">
-              No hay fiestas programadas. Crea la primera fiesta del grupo.
-            </p>
+            <EmptyState
+              icon={PartyPopper}
+              title="No hay fiestas programadas"
+              description="Usa el botón «Crear Fiesta» para organizar la primera celebración."
+            />
           ) : (
             parties.map((party) => (
               <PartyCard key={party.id} party={party} />
