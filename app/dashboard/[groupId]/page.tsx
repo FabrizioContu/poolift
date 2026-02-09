@@ -3,6 +3,7 @@ import { CreatePartyButton } from "@/components/CreatePartyButton";
 import { AddBirthdayButton } from "@/components/AddBirthdayButton";
 import { GroupHeader } from "@/components/groups/GroupHeader";
 import { DashboardTabs } from "@/components/dashboard/DashboardTabs";
+import { OnboardingGuide } from "@/components/dashboard/OnboardingGuide";
 
 interface Party {
   id: string;
@@ -141,6 +142,8 @@ export default async function DashboardPage({
     );
   }
 
+  const needsOnboarding = birthdays.length === 0;
+
   return (
     <div className="container mx-auto px-4 py-8">
       <GroupHeader
@@ -149,21 +152,31 @@ export default async function DashboardPage({
         familyCount={group.familyCount}
       />
 
-      <header className="mb-8">
-        <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold">Calendario de Fiestas</h1>
-        </div>
-        <div className="flex gap-3 py-3">
-          <AddBirthdayButton groupId={groupId} />
-          <CreatePartyButton groupId={groupId} />
-        </div>
-      </header>
+      {needsOnboarding ? (
+        <OnboardingGuide
+          groupId={groupId}
+          birthdayCount={birthdays.length}
+          partyCount={parties.length}
+        />
+      ) : (
+        <>
+          <header className="mb-8">
+            <div className="flex items-center justify-between">
+              <h1 className="text-3xl font-bold">Calendario de Fiestas</h1>
+            </div>
+            <div className="flex gap-3 py-3">
+              <AddBirthdayButton groupId={groupId} />
+              <CreatePartyButton groupId={groupId} />
+            </div>
+          </header>
 
-      <DashboardTabs
-        parties={parties}
-        birthdays={birthdays}
-        groupId={groupId}
-      />
+          <DashboardTabs
+            parties={parties}
+            birthdays={birthdays}
+            groupId={groupId}
+          />
+        </>
+      )}
     </div>
   );
 }
