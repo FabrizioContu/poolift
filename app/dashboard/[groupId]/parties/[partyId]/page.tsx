@@ -1,5 +1,5 @@
 import { supabase } from "@/lib/supabase";
-import { formatDate, formatCelebrants } from "@/lib/utils";
+import { formatDate, formatCelebrants, getPartyStatus } from "@/lib/utils";
 import { Calendar, Users, User, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { PartyDetailTabs } from "./PartyDetailTabs";
@@ -130,19 +130,6 @@ async function getGiftForParty(partyId: string): Promise<GiftWithParticipants | 
   } as GiftWithParticipants;
 }
 
-function getPartyStatus(
-  proposals: Proposal[]
-): { label: string; color: string } {
-  const hasSelectedProposal = proposals.some((p) => p.is_selected);
-  if (hasSelectedProposal) {
-    return { label: "Decidido", color: "bg-green-100 text-green-800" };
-  }
-  if (proposals.length > 0) {
-    return { label: "Votacion", color: "bg-yellow-100 text-yellow-800" };
-  }
-  return { label: "Pendiente", color: "bg-blue-100 text-blue-800" };
-}
-
 export default async function PartyDetailPage({
   params,
 }: {
@@ -173,7 +160,7 @@ export default async function PartyDetailPage({
   const celebrantNames = party.party_celebrants.map(
     (pc) => pc.birthdays.child_name
   );
-  const status = getPartyStatus(proposals);
+  const status = getPartyStatus(proposals, gift);
 
   // coordinatorId and groupId will be passed to client components
   // to check if current user (from localStorage) is the coordinator
