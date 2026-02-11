@@ -72,6 +72,10 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
+# AI instructions (local only)
+CLAUDE.md
+.ai/
+
 # IDE
 .vscode/
 .idea/
@@ -83,4 +87,3 @@ yarn-error.log*
 # Misc
 *.pem
 .eslintcache
-```
