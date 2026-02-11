@@ -2,19 +2,9 @@
 
 > Web platform for organizing shared birthday gifts among families in a simple and transparent way.
 
-## 📖 For AI Assistants (Claude Code)
 
-**Working on this project? Start here:**
-
-- 📄 **`CLAUDE.md`** - Core instructions & quick reference
-- 🤖 **`.ai/agents/`** - Specialized agent configurations
-- 📐 **`.ai/specs/`** - Coding standards and quality gates
 
 **Quick Start for Development:**
-
-1. Read `CLAUDE.md` for project overview
-2. Check `.ai/agents/frontend-dev.md` or `.ai/agents/backend-dev.md` based on your task
-3. Follow standards in `.ai/specs/coding-standards/`
 
 [![Next.js](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
