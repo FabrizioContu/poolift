@@ -17,8 +17,11 @@ export async function GET(request: NextRequest) {
     const { error } = await supabase.auth.exchangeCodeForSession(code)
 
     if (!error) {
-      // Redirect to the next URL or home
-      return NextResponse.redirect(new URL(next, requestUrl.origin))
+      // Redirect to /auth/complete for client-side migration,
+      // then it will redirect to the final destination
+      const completeUrl = new URL('/auth/complete', requestUrl.origin)
+      completeUrl.searchParams.set('next', next)
+      return NextResponse.redirect(completeUrl)
     }
   }
 
