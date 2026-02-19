@@ -75,7 +75,7 @@ Poolift facilitates the organization of shared gifts for children's birthdays in
 | --------------- | ------- | ---------------------- |
 | Next.js         | 16      | Framework (App Router) |
 | TypeScript      | 5.0     | Language               |
-| Tailwind CSS    | 3.4     | Styling                |
+| Tailwind CSS    | 4       | Styling                |
 | Lucide React    | -       | Icons                  |
 | React Hook Form | -       | Form handling          |
 | Zod             | -       | Validation             |

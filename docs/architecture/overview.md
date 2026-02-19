@@ -8,18 +8,18 @@ Poolift is a collaborative gift coordination platform that helps groups of famil
 
 ## Tech Stack
 
-| Layer | Technology | Version |
-|-------|------------|---------|
-| Frontend | Next.js (App Router) | 16 |
-| UI | React | 19 |
-| Language | TypeScript | 5 (strict mode) |
-| Styling | Tailwind CSS | 3.4 |
-| Database | Supabase (PostgreSQL) | - |
-| Real-time | Supabase Subscriptions | - |
-| Forms | react-hook-form + zod | - |
-| Icons | lucide-react | - |
-| Testing | Vitest + RTL | - |
-| Hosting | Vercel | - |
+| Layer     | Technology             | Version         |
+| --------- | ---------------------- | --------------- |
+| Frontend  | Next.js (App Router)   | 16              |
+| UI        | React                  | 19              |
+| Language  | TypeScript             | 5 (strict mode) |
+| Styling   | Tailwind CSS           | 4               |
+| Database  | Supabase (PostgreSQL)  | -               |
+| Real-time | Supabase Subscriptions | -               |
+| Forms     | react-hook-form + zod  | -               |
+| Icons     | lucide-react           | -               |
+| Testing   | Vitest + RTL           | -               |
+| Hosting   | Vercel                 | -               |
 
 ## High-Level Architecture
 
@@ -45,22 +45,26 @@ Poolift is a collaborative gift coordination platform that helps groups of famil
 ## Key Design Decisions
 
 ### Party Model (v2.0)
+
 - Parties are **separate entities** from Birthdays
 - A party can celebrate **multiple children** (joint parties)
 - Birthdays only store: `child_name`, `birth_date`
 - Parties store: `party_date`, `coordinator_id`
 
 ### Coordinator Assignment
+
 - Auto-assigned on rotation (family with fewest coordinations)
 - Can be manually selected when creating party
 - Tracked to ensure fair distribution
 
 ### Invite System
+
 - Groups have unique `invite_code` (12 chars)
 - Share via WhatsApp link: `/join/[inviteCode]`
 - No authentication required (family-based trust model)
 
 ### Security Model
+
 - API-layer validation (no Supabase RLS for MVP)
 - Family-based trust model
 - Planned: Hybrid auth approach (v1.1)
@@ -83,6 +87,7 @@ Poolift is a collaborative gift coordination platform that helps groups of famil
 ## Project Status
 
 ### Completed (100%)
+
 - Database: 11 tables in Supabase
 - Backend: 19+ API endpoints
 - Frontend: All core screens
@@ -90,10 +95,12 @@ Poolift is a collaborative gift coordination platform that helps groups of famil
 - Design System: 9 UI components
 
 ### Current Focus
+
 - SDD documentation structure
 - Git workflow implementation
 
 ### Planned
+
 - Authentication (hybrid approach)
 - Email notifications
 - Analytics dashboard
