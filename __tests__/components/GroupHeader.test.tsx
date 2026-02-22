@@ -1,6 +1,15 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+
+vi.mock('@/lib/auth', () => ({
+  useAuth: vi.fn(() => ({ isAnonymous: true, user: null, loading: false, isAuthenticated: false })),
+}))
+
+vi.mock('@/components/auth/AuthModal', () => ({
+  AuthModal: () => null,
+}))
+
 import { GroupHeader } from '@/components/groups/GroupHeader'
 
 const defaultProps = {

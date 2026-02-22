@@ -1,9 +1,15 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import Link from "next/link";
-import { Users, Copy, Check, UserPlus, ArrowLeft } from "lucide-react";
+import { Users, Copy, Check, UserPlus, ArrowLeft, LogIn } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { useAuth } from "@/lib/auth";
+
+const AuthModal = dynamic(() =>
+  import("@/components/auth/AuthModal").then((m) => ({ default: m.AuthModal }))
+);
 
 interface GroupHeaderProps {
   groupName: string;
@@ -18,6 +24,8 @@ export function GroupHeader({
 }: GroupHeaderProps) {
   const [copiedCode, setCopiedCode] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
+  const { isAnonymous } = useAuth();
 
   const inviteLink =
     typeof window !== "undefined"
@@ -45,6 +53,7 @@ export function GroupHeader({
   };
 
   return (
+    <>
     <div className="border-b border-gray-200 pb-6 mb-6">
       {/* Back navigation */}
       <Link
@@ -86,25 +95,43 @@ export function GroupHeader({
           </div>
         </div>
 
-        <Button
-          onClick={handleCopyLink}
-          variant={copiedLink ? "secondary" : "primary"}
-          className="flex items-center gap-2"
-        >
-          {copiedLink ? (
-            <>
-              <Check className="w-4 h-4" />
-              ¡Link copiado!
-            </>
-          ) : (
-            <>
-              <UserPlus className="w-4 h-4" />
-              Invitar Familias
-            </>
+        <div className="flex items-center gap-2">
+          {isAnonymous && (
+            <Button
+              onClick={() => setShowAuthModal(true)}
+              variant="secondary"
+              className="flex items-center gap-2"
+            >
+              <LogIn className="w-4 h-4" />
+              Crear cuenta
+            </Button>
           )}
-        </Button>
+          <Button
+            onClick={handleCopyLink}
+            variant={copiedLink ? "secondary" : "primary"}
+            className="flex items-center gap-2"
+          >
+            {copiedLink ? (
+              <>
+                <Check className="w-4 h-4" />
+                ¡Link copiado!
+              </>
+            ) : (
+              <>
+                <UserPlus className="w-4 h-4" />
+                Invitar Familias
+              </>
+            )}
+          </Button>
+        </div>
       </div>
     </div>
+
+    <AuthModal
+      isOpen={showAuthModal}
+      onClose={() => setShowAuthModal(false)}
+    />
+    </>
   );
 }
 
