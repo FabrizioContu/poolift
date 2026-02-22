@@ -14,24 +14,24 @@ interface AddProposalButtonProps {
   groupId: string;
 }
 
-// Hook to check if current user is the coordinator using localStorage
+function checkIsCoordinator(coordinatorId: string | null, groupId: string): boolean {
+  if (typeof window === "undefined" || !coordinatorId || !groupId) return false;
+  try {
+    const sessions = localStorage.getItem("poolift_groups");
+    if (!sessions) return false;
+    const groupSessions: Array<{ groupId: string; familyId: string }> = JSON.parse(sessions);
+    const session = groupSessions.find((s) => s.groupId === groupId);
+    return session?.familyId === coordinatorId;
+  } catch {
+    return false;
+  }
+}
+
 function useIsCoordinator(coordinatorId: string | null, groupId: string): boolean {
   const [isCoordinator, setIsCoordinator] = useState(false);
 
   useEffect(() => {
-    if (!coordinatorId || !groupId) return;
-
-    try {
-      const sessions = localStorage.getItem("poolift_groups");
-      if (!sessions) return;
-      const groupSessions = JSON.parse(sessions);
-      const session = groupSessions.find(
-        (s: { groupId: string; familyId: string }) => s.groupId === groupId
-      );
-      setIsCoordinator(session?.familyId === coordinatorId);
-    } catch {
-      setIsCoordinator(false);
-    }
+    setIsCoordinator(checkIsCoordinator(coordinatorId, groupId));
   }, [coordinatorId, groupId]);
 
   return isCoordinator;
