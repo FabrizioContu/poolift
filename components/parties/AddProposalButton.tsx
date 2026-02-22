@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useSyncExternalStore, useCallback } from "react";
+import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/Button";
 
@@ -16,32 +16,25 @@ interface AddProposalButtonProps {
 
 // Hook to check if current user is the coordinator using localStorage
 function useIsCoordinator(coordinatorId: string | null, groupId: string): boolean {
-  const getSnapshot = useCallback(() => {
-    if (!coordinatorId || !groupId) return false;
+  const [isCoordinator, setIsCoordinator] = useState(false);
 
-    const sessions = localStorage.getItem("poolift_groups");
-    if (sessions) {
-      try {
-        const groupSessions = JSON.parse(sessions);
-        const session = groupSessions.find(
-          (s: { groupId: string; familyId: string }) => s.groupId === groupId
-        );
-        return session?.familyId === coordinatorId;
-      } catch {
-        return false;
-      }
+  useEffect(() => {
+    if (!coordinatorId || !groupId) return;
+
+    try {
+      const sessions = localStorage.getItem("poolift_groups");
+      if (!sessions) return;
+      const groupSessions = JSON.parse(sessions);
+      const session = groupSessions.find(
+        (s: { groupId: string; familyId: string }) => s.groupId === groupId
+      );
+      setIsCoordinator(session?.familyId === coordinatorId);
+    } catch {
+      setIsCoordinator(false);
     }
-    return false;
   }, [coordinatorId, groupId]);
 
-  const subscribe = useCallback((callback: () => void) => {
-    window.addEventListener("storage", callback);
-    return () => window.removeEventListener("storage", callback);
-  }, []);
-
-  const getServerSnapshot = useCallback(() => false, []);
-
-  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  return isCoordinator;
 }
 
 export function AddProposalButton({

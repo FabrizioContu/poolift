@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react'
 import dynamic from 'next/dynamic'
+import { useRouter } from 'next/navigation'
 import { LogIn, LogOut, ChevronDown, User } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { useAuth } from '@/lib/auth'
@@ -18,6 +19,7 @@ const AuthModal = dynamic(() =>
  */
 export function UserMenu() {
   const { user, loading, isAnonymous, signOut } = useAuth()
+  const router = useRouter()
   const [showAuthModal, setShowAuthModal] = useState(false)
   const [showDropdown, setShowDropdown] = useState(false)
   const [signingOut, setSigningOut] = useState(false)
@@ -38,6 +40,7 @@ export function UserMenu() {
     setSigningOut(true)
     setShowDropdown(false)
     await signOut()
+    router.push('/')
     setSigningOut(false)
   }
 

@@ -212,7 +212,10 @@ describe('migrateAnonData', () => {
     expect(mockUpdateUser).not.toHaveBeenCalled()
   })
 
-  it('clears all anonymous storage after migration', async () => {
+  it('does not clear localStorage (deferred to Phase 4)', async () => {
+    // localStorage is NOT cleared on login because AccessGuard and useIsCoordinator
+    // rely on it. Clearing now would break access after logout.
+    // Phase 4 will clear it once families are linked to user_id in the DB.
     mockGetMigrationData.mockReturnValue({
       groups: ['g1'],
       userName: null,
@@ -221,18 +224,13 @@ describe('migrateAnonData', () => {
     mockGetGroupSessionsFn.mockReturnValue([])
     mockGetDirectGiftSessionsFn.mockReturnValue([])
 
-    const removeItemSpy = vi.spyOn(Storage.prototype, 'removeItem')
-
     await migrateAnonData()
 
-    expect(mockClear).toHaveBeenCalled()
-    expect(mockClearAllSessionsFn).toHaveBeenCalled()
-    expect(removeItemSpy).toHaveBeenCalledWith('poolift_direct_gifts')
-
-    removeItemSpy.mockRestore()
+    expect(mockClear).not.toHaveBeenCalled()
+    expect(mockClearAllSessionsFn).not.toHaveBeenCalled()
   })
 
-  it('still clears storage even if user_metadata update fails', async () => {
+  it('still migrates name even if user_metadata update fails', async () => {
     mockGetMigrationData.mockReturnValue({
       groups: ['g1'],
       userName: 'Maria',
@@ -244,10 +242,8 @@ describe('migrateAnonData', () => {
 
     const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
 
-    await migrateAnonData()
-
-    expect(mockClear).toHaveBeenCalled()
-    expect(mockClearAllSessionsFn).toHaveBeenCalled()
+    // Should not throw
+    await expect(migrateAnonData()).resolves.toBeUndefined()
 
     consoleSpy.mockRestore()
   })

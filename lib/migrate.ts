@@ -4,7 +4,6 @@ import { anonymousStorage } from '@/lib/storage'
 import {
   getGroupSessions,
   getDirectGiftSessions,
-  clearAllSessions,
   type GroupSession,
   type DirectGiftSession,
 } from '@/lib/auth'
@@ -48,7 +47,9 @@ export function collectMigrationData(): MigrationData | null {
  * Se llama después de login/signup exitoso.
  *
  * - Establece el nombre en user_metadata si el usuario no tiene uno
- * - Limpia todo el localStorage anónimo
+ * - NO limpia localStorage hasta Phase 4 (cuando familias estén vinculadas en DB)
+ *   Si limpiamos ahora, al cerrar sesión el usuario pierde acceso a sus grupos
+ *   porque AccessGuard/useIsCoordinator usan localStorage como fuente de verdad.
  *
  * Seguro de llamar múltiples veces — verifica si hay datos antes de actuar.
  */
@@ -74,14 +75,8 @@ export async function migrateAnonData(): Promise<void> {
     }
   }
 
-  // TODO: Phase 4 — vincular familias al user_id en la BD
+  // TODO: Phase 4 — vincular familias al user_id en la BD y limpiar localStorage
   // Requiere: ALTER TABLE families ADD COLUMN user_id UUID REFERENCES auth.users(id)
   // Para cada groupSession, actualizar family.user_id = userId
-
-  // Limpiar datos anónimos del localStorage
-  anonymousStorage.clear()
-  clearAllSessions()
-  if (typeof window !== 'undefined') {
-    localStorage.removeItem('poolift_direct_gifts')
-  }
+  // Una vez hecho, mover aquí: anonymousStorage.clear(), clearAllSessions()
 }
