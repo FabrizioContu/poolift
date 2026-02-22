@@ -12,7 +12,10 @@
       "Bash(npx next lint)",
       "mcp__context7__query-docs",
       "Bash(npx vitest run:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(git stash:*)",
+      "Bash(git checkout:*)",
+      "Bash(git stash pop:*)"
     ]
   }
 }

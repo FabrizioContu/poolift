@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, use } from "react";
+import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/Button";
 import {
   ShoppingCart,
@@ -13,6 +14,11 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { formatPrice, calculatePricePerFamily } from "@/lib/utils";
 import Image from "next/image";
+import { useAuth } from "@/lib/auth";
+
+const AuthModal = dynamic(() =>
+  import("@/components/auth/AuthModal").then((m) => ({ default: m.AuthModal }))
+);
 
 interface DirectGiftData {
   id: string;
@@ -34,12 +40,14 @@ export default function DirectGiftPurchasePage({
   const router = useRouter();
   const searchParams = useSearchParams();
   const shareCode = searchParams.get("shareCode");
+  const { isAnonymous } = useAuth();
 
   const [gift, setGift] = useState<DirectGiftData | null>(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [showAuthNudge, setShowAuthNudge] = useState(false);
 
   const [finalPrice, setFinalPrice] = useState("");
   const [comment, setComment] = useState("");
@@ -142,6 +150,7 @@ export default function DirectGiftPurchasePage({
       }
 
       setSuccess(true);
+      if (isAnonymous) setShowAuthNudge(true);
 
       setTimeout(() => {
         if (shareCode) {
@@ -241,20 +250,29 @@ export default function DirectGiftPurchasePage({
   // Success screen
   if (success) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center px-4">
-          <CheckCircle className="mx-auto text-green-500 mb-4" size={64} />
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">
-            ¡Regalo Finalizado!
-          </h1>
-          <p className="text-gray-700 mb-4">
-            Los participantes podrán ver el precio final.
-          </p>
-          <p className="text-lg font-semibold text-green-600">
-            Precio por persona: {estimatedPricePerPerson}€
-          </p>
+      <>
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+          <div className="text-center px-4">
+            <CheckCircle className="mx-auto text-green-500 mb-4" size={64} />
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">
+              ¡Regalo Finalizado!
+            </h1>
+            <p className="text-gray-700 mb-4">
+              Los participantes podrán ver el precio final.
+            </p>
+            <p className="text-lg font-semibold text-green-600">
+              Precio por persona: {estimatedPricePerPerson}€
+            </p>
+          </div>
         </div>
-      </div>
+        <AuthModal
+          isOpen={showAuthNudge}
+          onClose={() => setShowAuthNudge(false)}
+          defaultTab="register"
+          headline="¡Regalo completado! ¿Guardamos tus compras?"
+          subheadline="Crea una cuenta para ver el historial de todos tus regalos"
+        />
+      </>
     );
   }
 

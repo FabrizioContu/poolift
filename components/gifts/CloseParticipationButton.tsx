@@ -1,11 +1,17 @@
 'use client'
 
 import { useState } from 'react'
+import dynamic from 'next/dynamic'
 import { Button } from '@/components/ui/Button'
 import { Modal } from '@/components/ui/Modal'
 import { Lock, AlertTriangle, Users, Check, Copy, Share2 } from 'lucide-react'
 import { formatPrice, calculatePricePerFamily } from '@/lib/utils'
 import { generateParticipationClosedMessage } from '@/lib/messages'
+import { useAuth } from '@/lib/auth'
+
+const AuthModal = dynamic(() =>
+  import('@/components/auth/AuthModal').then((m) => ({ default: m.AuthModal }))
+)
 
 interface CloseParticipationButtonProps {
   giftId: string
@@ -28,8 +34,10 @@ export function CloseParticipationButton({
   totalPrice,
   onSuccess
 }: CloseParticipationButtonProps) {
+  const { isAnonymous } = useAuth()
   const [showConfirmModal, setShowConfirmModal] = useState(false)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [showAuthNudge, setShowAuthNudge] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [copied, setCopied] = useState(false)
@@ -62,6 +70,7 @@ export function CloseParticipationButton({
       setShowConfirmModal(false)
       setShowSuccessModal(true)
       onSuccess?.()
+      if (isAnonymous) setShowAuthNudge(true)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Error al cerrar')
     } finally {
@@ -301,6 +310,15 @@ export function CloseParticipationButton({
           </div>
         </Modal>
       )}
+
+      {/* Auth nudge — aparece tras cerrar participación si el usuario es anónimo */}
+      <AuthModal
+        isOpen={showAuthNudge}
+        onClose={() => setShowAuthNudge(false)}
+        defaultTab="register"
+        headline="¡Regalo cerrado! ¿Guardamos tu historial?"
+        subheadline="Crea una cuenta gratuita para acceder desde cualquier dispositivo"
+      />
     </>
   )
 }
