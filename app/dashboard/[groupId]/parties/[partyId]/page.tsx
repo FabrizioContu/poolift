@@ -5,6 +5,7 @@ import Link from "next/link";
 import { PartyDetailTabs } from "./PartyDetailTabs";
 import { AddProposalButton } from "@/components/parties/AddProposalButton";
 import { GiftStatusCard } from "@/components/gifts/GiftStatusCard";
+import { SpoilerGuard } from "@/components/auth";
 
 interface PartyWithRelations {
   id: string;
@@ -167,6 +168,7 @@ export default async function PartyDetailPage({
   const coordinatorId = party.coordinator_id;
 
   return (
+    <SpoilerGuard celebrantNames={celebrantNames}>
     <div className="container mx-auto px-4 py-8">
       {/* Back Link */}
       <Link
@@ -244,5 +246,6 @@ export default async function PartyDetailPage({
         groupId={groupId}
       />
     </div>
+    </SpoilerGuard>
   );
 }

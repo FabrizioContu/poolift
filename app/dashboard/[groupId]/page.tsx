@@ -4,6 +4,7 @@ import { AddBirthdayButton } from "@/components/AddBirthdayButton";
 import { GroupHeader } from "@/components/groups/GroupHeader";
 import { DashboardTabs } from "@/components/dashboard/DashboardTabs";
 import { OnboardingGuide } from "@/components/dashboard/OnboardingGuide";
+import { AccessGuard } from "@/components/auth";
 
 interface Party {
   id: string;
@@ -145,38 +146,40 @@ export default async function DashboardPage({
   const needsOnboarding = birthdays.length === 0;
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <GroupHeader
-        groupName={group.name}
-        inviteCode={group.invite_code}
-        familyCount={group.familyCount}
-      />
-
-      {needsOnboarding ? (
-        <OnboardingGuide
-          groupId={groupId}
-          birthdayCount={birthdays.length}
-          partyCount={parties.length}
+    <AccessGuard groupId={groupId}>
+      <div className="container mx-auto px-4 py-8">
+        <GroupHeader
+          groupName={group.name}
+          inviteCode={group.invite_code}
+          familyCount={group.familyCount}
         />
-      ) : (
-        <>
-          <header className="mb-8">
-            <div className="flex items-center justify-between">
-              <h1 className="text-3xl font-bold">Calendario de Fiestas</h1>
-            </div>
-            <div className="flex gap-3 py-3">
-              <AddBirthdayButton groupId={groupId} />
-              <CreatePartyButton groupId={groupId} />
-            </div>
-          </header>
 
-          <DashboardTabs
-            parties={parties}
-            birthdays={birthdays}
+        {needsOnboarding ? (
+          <OnboardingGuide
             groupId={groupId}
+            birthdayCount={birthdays.length}
+            partyCount={parties.length}
           />
-        </>
-      )}
-    </div>
+        ) : (
+          <>
+            <header className="mb-8">
+              <div className="flex items-center justify-between">
+                <h1 className="text-3xl font-bold">Calendario de Fiestas</h1>
+              </div>
+              <div className="flex gap-3 py-3">
+                <AddBirthdayButton groupId={groupId} />
+                <CreatePartyButton groupId={groupId} />
+              </div>
+            </header>
+
+            <DashboardTabs
+              parties={parties}
+              birthdays={birthdays}
+              groupId={groupId}
+            />
+          </>
+        )}
+      </div>
+    </AccessGuard>
   );
 }
