@@ -15,7 +15,9 @@
       "Bash(npx tsc:*)",
       "Bash(git stash:*)",
       "Bash(git checkout:*)",
-      "Bash(git stash pop:*)"
+      "Bash(git stash pop:*)",
+      "Bash(grep:*)",
+      "Bash(npm run lint)"
     ]
   }
 }

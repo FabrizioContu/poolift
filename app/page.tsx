@@ -1,7 +1,12 @@
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { Gift, Zap, Users, Share2, CheckCircle, Sparkles, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui";
 import { MisGruposButton } from "@/components/nav/MisGruposButton";
+
+const UserMenu = dynamic(() =>
+  import("@/components/auth/UserMenu").then((m) => ({ default: m.UserMenu }))
+);
 
 export default function LandingPage() {
   return (
@@ -21,6 +26,7 @@ export default function LandingPage() {
               Como funciona
             </Link>
             <MisGruposButton />
+            <UserMenu />
           </div>
         </nav>
       </header>

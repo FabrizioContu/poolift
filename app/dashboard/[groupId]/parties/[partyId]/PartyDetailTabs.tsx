@@ -1,6 +1,6 @@
 "use client";
 
-import { useSyncExternalStore, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { ProposalCard } from "@/components/cards/ProposalCard";
 import { FileText } from "lucide-react";
 
@@ -28,34 +28,27 @@ interface PartyDetailTabsProps {
   groupId: string;
 }
 
-// Hook to check if current user is the coordinator using localStorage
-function useIsCoordinator(coordinatorId: string | null, groupId: string): boolean {
-  const getSnapshot = useCallback(() => {
-    if (!coordinatorId || !groupId) return false;
-
+function checkIsCoordinator(coordinatorId: string | null, groupId: string): boolean {
+  if (typeof window === "undefined" || !coordinatorId || !groupId) return false;
+  try {
     const sessions = localStorage.getItem("poolift_groups");
-    if (sessions) {
-      try {
-        const groupSessions = JSON.parse(sessions);
-        const session = groupSessions.find(
-          (s: { groupId: string; familyId: string }) => s.groupId === groupId
-        );
-        return session?.familyId === coordinatorId;
-      } catch {
-        return false;
-      }
-    }
+    if (!sessions) return false;
+    const groupSessions: Array<{ groupId: string; familyId: string }> = JSON.parse(sessions);
+    const session = groupSessions.find((s) => s.groupId === groupId);
+    return session?.familyId === coordinatorId;
+  } catch {
     return false;
+  }
+}
+
+function useIsCoordinator(coordinatorId: string | null, groupId: string): boolean {
+  const [isCoordinator, setIsCoordinator] = useState(false);
+
+  useEffect(() => {
+    setIsCoordinator(checkIsCoordinator(coordinatorId, groupId));
   }, [coordinatorId, groupId]);
 
-  const subscribe = useCallback((callback: () => void) => {
-    window.addEventListener("storage", callback);
-    return () => window.removeEventListener("storage", callback);
-  }, []);
-
-  const getServerSnapshot = useCallback(() => false, []);
-
-  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  return isCoordinator;
 }
 
 export function PartyDetailTabs({

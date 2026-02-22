@@ -3,6 +3,11 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 const mockSignOut = vi.fn()
+const mockPush = vi.fn()
+
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({ push: mockPush }),
+}))
 
 vi.mock('@/lib/auth', () => ({
   useAuth: vi.fn(),

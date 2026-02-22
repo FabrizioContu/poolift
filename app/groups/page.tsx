@@ -2,12 +2,24 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Plus, Home, Users, Search, Gift } from "lucide-react";
+import dynamic from "next/dynamic";
+import { Plus, Home, Users, Search, Gift, Lock, LogIn } from "lucide-react";
 import { supabase } from "@/lib/supabase";
-import { getGroupSessions, GroupSession, getDirectGiftSessions, DirectGiftSession, removeDirectGiftSession } from "@/lib/auth";
+import {
+  getGroupSessions,
+  GroupSession,
+  getDirectGiftSessions,
+  DirectGiftSession,
+  removeDirectGiftSession,
+  useAuth,
+} from "@/lib/auth";
 import { GroupCard } from "@/components/groups/GroupCard";
 import { Button } from "@/components/ui/Button";
 import { OCCASION_LABELS, type OccasionType } from "@/lib/types";
+
+const AuthModal = dynamic(() =>
+  import("@/components/auth/AuthModal").then((m) => ({ default: m.AuthModal }))
+);
 
 interface GroupWithCounts {
   id: string;
@@ -30,6 +42,7 @@ function getInitialDirectGifts(): DirectGiftSession[] {
 }
 
 export default function GroupsPage() {
+  const { isAnonymous, loading: authLoading } = useAuth();
   const [loading, setLoading] = useState(true);
   const [myGroups, setMyGroups] = useState<
     (GroupWithCounts & { isCreator: boolean })[]
@@ -38,37 +51,12 @@ export default function GroupsPage() {
   const [showAll, setShowAll] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [sessions, setSessions] = useState<GroupSession[]>(getInitialSessions);
-  const [directGifts, setDirectGifts] = useState<DirectGiftSession[]>(getInitialDirectGifts);
+  const [directGifts, setDirectGifts] =
+    useState<DirectGiftSession[]>(getInitialDirectGifts);
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
-
-    async function loadAllGroups() {
-      const { data } = await supabase
-        .from("groups")
-        .select(
-          `
-          id,
-          name,
-          invite_code,
-          families!families_group_id_fkey(id),
-          parties(id)
-        `
-        )
-        .order("created_at", { ascending: false })
-        .limit(20);
-
-      if (data && isMounted) {
-        const groupsWithCounts = data.map((g) => ({
-          id: g.id,
-          name: g.name,
-          invite_code: g.invite_code,
-          familyCount: g.families?.length || 0,
-          partyCount: g.parties?.length || 0,
-        }));
-        setAllGroups(groupsWithCounts);
-      }
-    }
 
     async function loadGroups() {
       const savedSessions = getGroupSessions();
@@ -83,7 +71,9 @@ export default function GroupsPage() {
           .in("share_code", shareCodes)
           .neq("status", "cancelled");
 
-        const validShareCodes = new Set(validGifts?.map((g) => g.share_code) || []);
+        const validShareCodes = new Set(
+          validGifts?.map((g) => g.share_code) || []
+        );
 
         // Remove invalid gifts from localStorage
         savedDirectGifts.forEach((gift) => {
@@ -93,7 +83,9 @@ export default function GroupsPage() {
         });
 
         // Filter to only valid gifts
-        savedDirectGifts = savedDirectGifts.filter((g) => validShareCodes.has(g.shareCode));
+        savedDirectGifts = savedDirectGifts.filter((g) =>
+          validShareCodes.has(g.shareCode)
+        );
       }
 
       if (isMounted) {
@@ -101,6 +93,34 @@ export default function GroupsPage() {
         setDirectGifts(savedDirectGifts);
       }
 
+      // Always load all groups (for anonymous locked view and authenticated toggle)
+      const { data: allGroupsData } = await supabase
+        .from("groups")
+        .select(
+          `
+          id,
+          name,
+          invite_code,
+          families!families_group_id_fkey(id),
+          parties(id)
+        `
+        )
+        .order("created_at", { ascending: false })
+        .limit(20);
+
+      if (allGroupsData && isMounted) {
+        setAllGroups(
+          allGroupsData.map((g) => ({
+            id: g.id,
+            name: g.name,
+            invite_code: g.invite_code,
+            familyCount: g.families?.length || 0,
+            partyCount: g.parties?.length || 0,
+          }))
+        );
+      }
+
+      // Load my groups if user has sessions
       if (savedSessions.length > 0) {
         const groupIds = savedSessions.map((s) => s.groupId);
 
@@ -129,19 +149,13 @@ export default function GroupsPage() {
               isCreator: session?.isCreator || false,
             };
           });
-          setMyGroups(groupsWithCounts);
+          if (isMounted) setMyGroups(groupsWithCounts);
         }
       } else if (savedDirectGifts.length === 0) {
-        // Only show all groups if user has no groups AND no direct gifts
-        if (isMounted) {
-          setShowAll(true);
-        }
-        await loadAllGroups();
+        if (isMounted) setShowAll(true);
       }
 
-      if (isMounted) {
-        setLoading(false);
-      }
+      if (isMounted) setLoading(false);
     }
 
     loadGroups();
@@ -151,40 +165,20 @@ export default function GroupsPage() {
     };
   }, []);
 
-  const handleToggleShowAll = async () => {
-    if (!showAll && allGroups.length === 0) {
-      // Load all groups if not already loaded
-      const { data } = await supabase
-        .from("groups")
-        .select(
-          `
-          id,
-          name,
-          invite_code,
-          families!families_group_id_fkey(id),
-          parties(id)
-        `
-        )
-        .order("created_at", { ascending: false })
-        .limit(20);
-
-      if (data) {
-        const groupsWithCounts = data.map((g) => ({
-          id: g.id,
-          name: g.name,
-          invite_code: g.invite_code,
-          familyCount: g.families?.length || 0,
-          partyCount: g.parties?.length || 0,
-        }));
-        setAllGroups(groupsWithCounts);
-      }
-    }
+  const handleToggleShowAll = () => {
     setShowAll(!showAll);
   };
 
-  const displayedGroups = showAll ? allGroups : myGroups;
+  // For anonymous: always show allGroups (locked)
+  // For authenticated: show myGroups or allGroups based on toggle
+  const displayedGroups = isAnonymous
+    ? allGroups
+    : showAll
+      ? allGroups
+      : myGroups;
+
   const filteredGroups = displayedGroups.filter((g) =>
-    g.name.toLowerCase().includes(searchTerm.toLowerCase()),
+    g.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -194,12 +188,18 @@ export default function GroupsPage() {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-3xl font-bold text-gray-900">
-              {showAll ? "Todos los Grupos" : "Mis Grupos"}
+              {isAnonymous
+                ? "Grupos"
+                : showAll
+                  ? "Todos los Grupos"
+                  : "Mis Grupos"}
             </h1>
             <p className="text-gray-700 mt-1">
-              {showAll
-                ? "Explora grupos disponibles"
-                : "Grupos donde participas"}
+              {isAnonymous
+                ? "Inicia sesión para acceder a tus grupos"
+                : showAll
+                  ? "Explora grupos disponibles"
+                  : "Grupos donde participas"}
             </p>
           </div>
           <div className="flex gap-3">
@@ -209,14 +209,35 @@ export default function GroupsPage() {
                 Inicio
               </Button>
             </Link>
-            <Link href="/create-group">
-              <Button className="flex items-center gap-2">
-                <Plus size={18} />
-                Crear Grupo
-              </Button>
-            </Link>
+            {!isAnonymous && (
+              <Link href="/create-group">
+                <Button className="flex items-center gap-2">
+                  <Plus size={18} />
+                  Crear Grupo
+                </Button>
+              </Link>
+            )}
           </div>
         </div>
+
+        {/* Auth banner for anonymous users */}
+        {!authLoading && isAnonymous && (
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <Lock className="text-blue-600 flex-shrink-0" size={20} />
+              <p className="text-blue-800 text-sm">
+                Inicia sesión para ver si tienes acceso a estos grupos
+              </p>
+            </div>
+            <Button
+              onClick={() => setShowAuthModal(true)}
+              className="flex items-center gap-2 flex-shrink-0"
+            >
+              <LogIn size={16} />
+              Entrar
+            </Button>
+          </div>
+        )}
 
         {/* Toggle & Search */}
         <div className="flex flex-col sm:flex-row gap-4 mb-6">
@@ -233,7 +254,7 @@ export default function GroupsPage() {
               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
-          {sessions.length > 0 && (
+          {!isAnonymous && sessions.length > 0 && (
             <Button
               variant="secondary"
               onClick={handleToggleShowAll}
@@ -246,11 +267,65 @@ export default function GroupsPage() {
         </div>
 
         {/* Content */}
-        {loading ? (
+        {loading || authLoading ? (
           <div className="text-center py-12">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
             <p className="text-gray-700 mt-4">Cargando grupos...</p>
           </div>
+        ) : isAnonymous ? (
+          // Anonymous: locked group cards
+          filteredGroups.length === 0 ? (
+            <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
+              <Users size={48} className="mx-auto text-gray-300 mb-4" />
+              <p className="text-gray-700 font-medium">
+                No hay grupos disponibles
+              </p>
+            </div>
+          ) : (
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {filteredGroups.map((group) => (
+                <div
+                  key={group.id}
+                  className="border border-gray-200 rounded-lg p-6 bg-white"
+                >
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="p-2 rounded-lg bg-gray-100">
+                        <Users className="text-gray-400" size={28} />
+                      </div>
+                      <div>
+                        <h3 className="text-xl font-bold text-gray-900">
+                          {group.name}
+                        </h3>
+                        <div className="flex gap-2 mt-1 flex-wrap">
+                          {group.familyCount !== undefined && (
+                            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
+                              {group.familyCount}{" "}
+                              {group.familyCount === 1 ? "familia" : "familias"}
+                            </span>
+                          )}
+                          {group.partyCount !== undefined &&
+                            group.partyCount > 0 && (
+                              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                {group.partyCount}{" "}
+                                {group.partyCount === 1 ? "fiesta" : "fiestas"}
+                              </span>
+                            )}
+                        </div>
+                      </div>
+                    </div>
+                    <Lock className="text-gray-400 flex-shrink-0" size={18} />
+                  </div>
+                  <button
+                    onClick={() => setShowAuthModal(true)}
+                    className="mt-4 w-full text-sm text-blue-600 hover:text-blue-800 text-center py-2 border border-blue-200 rounded-lg hover:bg-blue-50 transition"
+                  >
+                    Inicia sesión para ver si tienes acceso
+                  </button>
+                </div>
+              ))}
+            </div>
+          )
         ) : filteredGroups.length === 0 ? (
           <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
             <Users size={48} className="mx-auto text-gray-300 mb-4" />
@@ -317,8 +392,8 @@ export default function GroupsPage() {
           </div>
         )}
 
-        {/* Direct Gifts Section */}
-        {directGifts.length > 0 && !showAll && (
+        {/* Direct Gifts Section (only for authenticated users) */}
+        {!isAnonymous && directGifts.length > 0 && !showAll && (
           <div className="mt-10">
             <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
               <Gift size={24} className="text-green-600" />
@@ -356,8 +431,8 @@ export default function GroupsPage() {
           </div>
         )}
 
-        {/* Join link */}
-        {!showAll && sessions.length > 0 && (
+        {/* Join link (only for authenticated users with sessions) */}
+        {!isAnonymous && !showAll && sessions.length > 0 && (
           <div className="mt-8 text-center">
             <p className="text-gray-700 text-sm">
               ¿Tienes un código de invitación?{" "}
@@ -371,6 +446,13 @@ export default function GroupsPage() {
           </div>
         )}
       </div>
+
+      {showAuthModal && (
+        <AuthModal
+          isOpen={showAuthModal}
+          onClose={() => setShowAuthModal(false)}
+        />
+      )}
     </div>
   );
 }

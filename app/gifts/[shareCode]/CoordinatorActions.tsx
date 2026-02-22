@@ -1,6 +1,6 @@
 'use client'
 
-import { useSyncExternalStore, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/Button'
 import { CloseParticipationButton } from '@/components/gifts/CloseParticipationButton'
 import { ShoppingCart, Settings } from 'lucide-react'
@@ -40,19 +40,13 @@ function checkIsCoordinator(giftId: string, coordinatorId: string | null, groupI
 }
 
 function useIsCoordinator(giftId: string, coordinatorId: string | null, groupId: string | null): boolean {
-  const getSnapshot = useCallback(
-    () => checkIsCoordinator(giftId, coordinatorId, groupId),
-    [giftId, coordinatorId, groupId]
-  )
+  const [isCoordinator, setIsCoordinator] = useState(false)
 
-  const getServerSnapshot = useCallback(() => false, [])
+  useEffect(() => {
+    setIsCoordinator(checkIsCoordinator(giftId, coordinatorId, groupId))
+  }, [giftId, coordinatorId, groupId])
 
-  const subscribe = useCallback((callback: () => void) => {
-    window.addEventListener('storage', callback)
-    return () => window.removeEventListener('storage', callback)
-  }, [])
-
-  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot)
+  return isCoordinator
 }
 
 export function CoordinatorActions({
