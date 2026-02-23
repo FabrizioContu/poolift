@@ -62,6 +62,7 @@ export interface Family {
   name: string
   is_creator: boolean
   joined_at: string
+  user_id?: string | null
 }
 
 export interface Birthday {
