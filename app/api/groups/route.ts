@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
+import { createClient } from '@/lib/supabase/server'
 
 function generateUniqueCode(length: number = 12): string {
   const chars = 'abcdefghijklmnopqrstuvwxyz0123456789'
@@ -41,6 +42,12 @@ export async function POST(request: NextRequest) {
     
     if (groupError) throw groupError
     
+    // Try to get authenticated user to link creator family immediately
+    const serverClient = await createClient()
+    const {
+      data: { user },
+    } = await serverClient.auth.getUser()
+
     // Crear familia creadora
     const { data: family, error: familyError } = await supabase
       .from('families')
@@ -48,6 +55,7 @@ export async function POST(request: NextRequest) {
         group_id: group.id,
         name: familyName,
         is_creator: true,
+        ...(user ? { user_id: user.id } : {}),
       })
       .select()
       .single()

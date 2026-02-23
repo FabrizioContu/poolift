@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/lib/auth'
 import { anonymousStorage } from '@/lib/storage'
+import { createClient } from '@/lib/supabase/client'
 
 interface AccessGuardProps {
   groupId: string
@@ -14,8 +15,10 @@ interface AccessGuardProps {
 /**
  * AccessGuard - Protege rutas de grupos
  *
+ * Authenticated: verifica en BD que el user_id tenga una familia en el grupo.
+ *   Fallback a localStorage para familias creadas antes de Phase 5
+ *   o si la migración aún no ha corrido.
  * Anonymous: Verifica localStorage (hasAccess)
- * Authenticated: Permite acceso (TODO: verificar en DB cuando tengamos RLS)
  */
 export function AccessGuard({ groupId, children }: AccessGuardProps) {
   const { user, loading } = useAuth()
@@ -27,19 +30,39 @@ export function AccessGuard({ groupId, children }: AccessGuardProps) {
     async function checkAccess() {
       if (loading) return
 
-      // Usuario autenticado - permitir acceso
-      // TODO: Cuando implementemos RLS, verificar en database
       if (user) {
-        setHasAccess(true)
-        setChecking(false)
+        // Check DB: does this user have a linked family in this group?
+        try {
+          const supabase = createClient()
+          const { data: family } = await supabase
+            .from('families')
+            .select('id')
+            .eq('group_id', groupId)
+            .eq('user_id', user.id)
+            .maybeSingle()
+
+          if (family) {
+            setHasAccess(true)
+            setChecking(false)
+            return
+          }
+        } catch {
+          // DB check failed — fall through to localStorage fallback
+        }
+
+        // Fallback: localStorage (pre-Phase5 families or failed migration)
+        if (anonymousStorage.hasAccess(groupId)) {
+          setHasAccess(true)
+          setChecking(false)
+          return
+        }
+
+        router.push('/')
         return
       }
 
-      // Usuario anónimo - verificar localStorage
-      const hasLocalAccess = anonymousStorage.hasAccess(groupId)
-
-      if (!hasLocalAccess) {
-        // Sin acceso - redirigir a home
+      // Anonymous user — check localStorage
+      if (!anonymousStorage.hasAccess(groupId)) {
         router.push('/')
         return
       }
@@ -63,11 +86,9 @@ export function AccessGuard({ groupId, children }: AccessGuardProps) {
     )
   }
 
-  // Sin acceso - redirigiendo
   if (!hasAccess) {
     return null
   }
 
-  // Con acceso - mostrar contenido
   return <>{children}</>
 }
