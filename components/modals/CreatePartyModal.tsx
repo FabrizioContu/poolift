@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Modal } from '@/components/ui/Modal'
 import { Button } from '@/components/ui/Button'
+import { Alert } from '@/components/ui/Alert'
 import { Calendar, Users, PartyPopper } from 'lucide-react'
 
 interface BirthdayOption {
@@ -188,12 +189,7 @@ export function CreatePartyModal({
           </div>
         )}
 
-        {/* Error */}
-        {error && (
-          <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
-            {error}
-          </div>
-        )}
+        {error && <Alert variant="error">{error}</Alert>}
 
         {/* Botones */}
         <div className="flex gap-3 pt-2">

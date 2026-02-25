@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Modal } from "@/components/ui/Modal";
 import { Button } from "@/components/ui/Button";
+import { Alert } from "@/components/ui/Alert";
 import { AlertTriangle } from "lucide-react";
 
 interface ConfirmDeleteModalProps {
@@ -63,11 +64,7 @@ export function ConfirmDeleteModal({
 
         <p className="text-gray-700 mb-4">{message}</p>
 
-        {displayError && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-3 mb-4">
-            <p className="text-red-700 text-sm font-medium">{displayError}</p>
-          </div>
-        )}
+        {displayError && <Alert variant="error">{displayError}</Alert>}
 
         <div className="flex gap-3 mt-6">
           <Button

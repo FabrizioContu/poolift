@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { Users, CheckCircle } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
+import { Alert } from '@/components/ui/Alert'
 import { addGroupToSession } from '@/lib/auth'
 import { anonymousStorage } from '@/lib/storage'
 
@@ -86,7 +87,7 @@ export function JoinGroupForm({ groupId, groupName, inviteCode }: JoinGroupFormP
 
   if (success) {
     return (
-      <div className="bg-white rounded-lg shadow-lg p-8 text-center">
+      <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
         <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
           <CheckCircle className="w-8 h-8 text-green-600" />
         </div>
@@ -101,7 +102,7 @@ export function JoinGroupForm({ groupId, groupName, inviteCode }: JoinGroupFormP
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-8">
+    <div className="bg-white rounded-lg border border-gray-200 p-8">
       <div className="text-center mb-6">
         <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
           <Users className="w-8 h-8 text-purple-600" />
@@ -134,11 +135,7 @@ export function JoinGroupForm({ groupId, groupName, inviteCode }: JoinGroupFormP
           )}
         </div>
 
-        {error && (
-          <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
-            {error}
-          </div>
-        )}
+        {error && <Alert variant="error">{error}</Alert>}
 
         <Button
           type="submit"
