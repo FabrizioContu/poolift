@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Modal, Button, Alert } from "@/components/ui";
+import { Modal, Button, Alert, DatePickerInput } from "@/components/ui";
 import { Cake } from "lucide-react";
 
 interface AddBirthdayModalProps {
@@ -145,20 +145,18 @@ export function AddBirthdayModal({
         </div>
 
         <div>
-          <label
-            htmlFor="birthDate"
-            className="block text-sm font-medium text-gray-700 mb-1"
-          >
+          <label className="block text-sm font-medium text-gray-700 mb-1">
             Fecha de nacimiento <span className="text-red-500">*</span>
           </label>
-          <input
-            id="birthDate"
-            type="date"
+          <DatePickerInput
             value={birthDate}
-            onChange={(e) => setBirthDate(e.target.value)}
+            onChange={setBirthDate}
             max={getTodayDate()}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="Seleccionar fecha de nacimiento"
             disabled={isSubmitting}
+            showDropdownNav
+            fromYear={new Date().getFullYear() - 20}
+            toYear={new Date().getFullYear()}
           />
         </div>
 
