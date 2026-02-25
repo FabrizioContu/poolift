@@ -1,4 +1,5 @@
 export { Alert } from "./Alert";
+export { DatePickerInput } from "./DatePickerInput";
 export { Badge } from "./Badge";
 export { Button } from "./Button";
 export { Card } from "./Card";
