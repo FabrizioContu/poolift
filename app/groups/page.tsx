@@ -185,7 +185,7 @@ export default function GroupsPage() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <main id="main-content" className="min-h-screen bg-gray-50">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
@@ -206,18 +206,14 @@ export default function GroupsPage() {
             </p>
           </div>
           <div className="flex gap-3">
-            <Link href="/">
-              <Button variant="secondary" className="flex items-center gap-2">
-                <Home size={18} />
-                Inicio
-              </Button>
+            <Link href="/" className="flex items-center gap-2 px-4 py-2 rounded-lg font-bold transition bg-gray-200 text-gray-800 hover:bg-gray-300">
+              <Home size={18} />
+              Inicio
             </Link>
             {!isAnonymous && (
-              <Link href="/create-group">
-                <Button className="flex items-center gap-2">
-                  <Plus size={18} />
-                  Crear Grupo
-                </Button>
+              <Link href="/create-group" className="flex items-center gap-2 px-4 py-2 rounded-lg font-bold transition bg-blue-500 text-white hover:bg-blue-600">
+                <Plus size={18} />
+                Crear Grupo
               </Link>
             )}
           </div>
@@ -251,6 +247,7 @@ export default function GroupsPage() {
             />
             <input
               type="text"
+              aria-label="Buscar grupos"
               placeholder="Buscar grupos..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -271,8 +268,8 @@ export default function GroupsPage() {
 
         {/* Content */}
         {loading || authLoading ? (
-          <div className="text-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
+          <div role="status" aria-label="Cargando grupos" className="text-center py-12">
+            <div aria-hidden="true" className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
             <p className="text-gray-700 mt-4">Cargando grupos...</p>
           </div>
         ) : isAnonymous ? (
@@ -368,11 +365,11 @@ export default function GroupsPage() {
                   Crea un grupo nuevo o únete a uno existente
                 </p>
                 <div className="flex gap-3 justify-center mt-4">
-                  <Link href="/create-group">
-                    <Button>Crear Grupo</Button>
+                  <Link href="/create-group" className="px-4 py-2 rounded-lg font-bold transition bg-blue-500 text-white hover:bg-blue-600">
+                    Crear Grupo
                   </Link>
-                  <Link href="/join">
-                    <Button variant="secondary">Unirse a Grupo</Button>
+                  <Link href="/join" className="px-4 py-2 rounded-lg font-bold transition bg-gray-200 text-gray-800 hover:bg-gray-300">
+                    Unirse a Grupo
                   </Link>
                 </div>
               </>
@@ -456,6 +453,6 @@ export default function GroupsPage() {
           onClose={() => setShowAuthModal(false)}
         />
       )}
-    </div>
+    </main>
   );
 }

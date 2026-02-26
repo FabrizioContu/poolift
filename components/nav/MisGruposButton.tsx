@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
-import { Button } from '@/components/ui/Button'
 import { getGroupSessions, getDirectGiftSessions } from '@/lib/auth'
 
 function getInitialCount(): number {
@@ -28,15 +27,13 @@ export function MisGruposButton() {
   }, [updateCount])
 
   return (
-    <Link href="/groups">
-      <Button variant="secondary" className="px-4 py-2 relative">
-        Mis Grupos
-        {count > 0 && (
-          <span className="absolute -top-1.5 -right-1.5 bg-blue-600 text-white text-xs font-bold rounded-full min-w-[20px] h-5 flex items-center justify-center px-1.5">
-            {count}
-          </span>
-        )}
-      </Button>
+    <Link href="/groups" className="relative px-4 py-2 rounded-lg font-bold transition bg-gray-200 text-gray-800 hover:bg-gray-300">
+      Mis Grupos
+      {count > 0 && (
+        <span className="absolute -top-1.5 -right-1.5 bg-blue-600 text-white text-xs font-bold rounded-full min-w-[20px] h-5 flex items-center justify-center px-1.5">
+          {count}
+        </span>
+      )}
     </Link>
   )
 }
