@@ -4,7 +4,8 @@ import { useState } from "react";
 import { Modal } from "@/components/ui/Modal";
 import { Button } from "@/components/ui/Button";
 import { Alert } from "@/components/ui/Alert";
-import { Calendar, Users, PartyPopper } from "lucide-react";
+import { DatePickerInput } from "@/components/ui/DatePickerInput";
+import { Users, PartyPopper } from "lucide-react";
 
 interface BirthdayOption {
   id: string;
@@ -105,16 +106,14 @@ export function CreatePartyModal({
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Fecha de la fiesta */}
         <div>
-          <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
-            <Calendar size={18} />
+          <label className="block text-sm font-medium text-gray-700 mb-2">
             Fecha de la Fiesta
           </label>
-          <input
-            type="date"
+          <DatePickerInput
             value={partyDate}
-            onChange={(e) => setPartyDate(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            onChange={setPartyDate}
             min={new Date().toISOString().split("T")[0]}
+            placeholder="Seleccionar fecha de la fiesta"
           />
         </div>
 

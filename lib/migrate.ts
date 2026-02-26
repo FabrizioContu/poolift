@@ -4,6 +4,7 @@ import { anonymousStorage } from '@/lib/storage'
 import {
   getGroupSessions,
   getDirectGiftSessions,
+  clearAllSessions,
   type GroupSession,
   type DirectGiftSession,
 } from '@/lib/auth'
@@ -44,12 +45,11 @@ export function collectMigrationData(): MigrationData | null {
 
 /**
  * Migra datos anónimos al usuario autenticado.
- * Se llama después de login/signup exitoso.
+ * Se llama después de login/signup exitoso y en auth/complete (OAuth).
  *
  * - Establece el nombre en user_metadata si el usuario no tiene uno
- * - NO limpia localStorage hasta Phase 4 (cuando familias estén vinculadas en DB)
- *   Si limpiamos ahora, al cerrar sesión el usuario pierde acceso a sus grupos
- *   porque AccessGuard/useIsCoordinator usan localStorage como fuente de verdad.
+ * - Vincula familias anónimas al user_id en la BD
+ * - Limpia localStorage una vez vinculado (directGiftSessions se mantienen)
  *
  * Seguro de llamar múltiples veces — verifica si hay datos antes de actuar.
  */
@@ -75,8 +75,33 @@ export async function migrateAnonData(): Promise<void> {
     }
   }
 
-  // TODO: Phase 4 — vincular familias al user_id en la BD y limpiar localStorage
-  // Requiere: ALTER TABLE families ADD COLUMN user_id UUID REFERENCES auth.users(id)
-  // Para cada groupSession, actualizar family.user_id = userId
-  // Una vez hecho, mover aquí: anonymousStorage.clear(), clearAllSessions()
+  // Vincular familias al user_id en la BD
+  const familyIds = data.groupSessions
+    .map((s) => s.familyId)
+    .filter((id): id is string => Boolean(id))
+
+  if (familyIds.length > 0) {
+    try {
+      const response = await fetch('/api/families/link', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ familyIds }),
+      })
+
+      if (!response.ok) {
+        console.error('migrate: link endpoint returned', response.status)
+        // Non-blocking — localStorage fallback still works in AccessGuard
+        return
+      }
+    } catch (e) {
+      console.error('migrate: error linking families', e)
+      // Non-blocking — localStorage fallback still works in AccessGuard
+      return
+    }
+  }
+
+  // Limpiar localStorage ahora que las familias están vinculadas en BD
+  // directGiftSessions se mantienen — no hay vinculación a DB para regalos directos aún
+  anonymousStorage.clear()
+  clearAllSessions()
 }

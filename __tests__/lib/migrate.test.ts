@@ -45,6 +45,14 @@ function setupNoData() {
   mockGetDirectGiftSessionsFn.mockReturnValue([])
 }
 
+function mockFetchSuccess() {
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true }))
+}
+
+function mockFetchFailure() {
+  vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, status: 500 }))
+}
+
 describe('collectMigrationData', () => {
   beforeEach(() => {
     vi.clearAllMocks()
@@ -163,6 +171,7 @@ describe('collectMigrationData', () => {
 describe('migrateAnonData', () => {
   beforeEach(() => {
     vi.clearAllMocks()
+    vi.unstubAllGlobals()
     setupNoData()
   })
 
@@ -187,6 +196,7 @@ describe('migrateAnonData', () => {
       data: { user: { id: 'u1', user_metadata: {} } },
     })
     mockUpdateUser.mockResolvedValue({ data: {}, error: null })
+    mockFetchSuccess()
 
     await migrateAnonData()
 
@@ -206,16 +216,81 @@ describe('migrateAnonData', () => {
     mockGetUser.mockResolvedValue({
       data: { user: { id: 'u1', user_metadata: { name: 'Carlos' } } },
     })
+    mockFetchSuccess()
 
     await migrateAnonData()
 
     expect(mockUpdateUser).not.toHaveBeenCalled()
   })
 
-  it('does not clear localStorage (deferred to Phase 4)', async () => {
-    // localStorage is NOT cleared on login because AccessGuard and useIsCoordinator
-    // rely on it. Clearing now would break access after logout.
-    // Phase 4 will clear it once families are linked to user_id in the DB.
+  it('calls link endpoint with family IDs from group sessions', async () => {
+    const mockFetch = vi.fn().mockResolvedValue({ ok: true })
+    vi.stubGlobal('fetch', mockFetch)
+
+    mockGetMigrationData.mockReturnValue({
+      groups: [],
+      userName: null,
+      familyId: null,
+    })
+    mockGetGroupSessionsFn.mockReturnValue([
+      {
+        groupId: 'g1',
+        groupName: 'Clase 2B',
+        familyId: 'f1',
+        familyName: 'Garcia',
+        isCreator: false,
+        inviteCode: 'abc',
+        joinedAt: '2026-01-01',
+      },
+      {
+        groupId: 'g2',
+        groupName: 'Clase 3A',
+        familyId: 'f2',
+        familyName: 'Lopez',
+        isCreator: true,
+        inviteCode: 'def',
+        joinedAt: '2026-01-02',
+      },
+    ])
+    mockGetDirectGiftSessionsFn.mockReturnValue([])
+
+    await migrateAnonData()
+
+    expect(mockFetch).toHaveBeenCalledWith('/api/families/link', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ familyIds: ['f1', 'f2'] }),
+    })
+  })
+
+  it('clears localStorage after successful migration', async () => {
+    mockFetchSuccess()
+    mockGetMigrationData.mockReturnValue({
+      groups: ['g1'],
+      userName: null,
+      familyId: null,
+    })
+    mockGetGroupSessionsFn.mockReturnValue([
+      {
+        groupId: 'g1',
+        groupName: 'Clase 2B',
+        familyId: 'f1',
+        familyName: 'Garcia',
+        isCreator: false,
+        inviteCode: 'abc',
+        joinedAt: '2026-01-01',
+      },
+    ])
+    mockGetDirectGiftSessionsFn.mockReturnValue([])
+
+    await migrateAnonData()
+
+    expect(mockClear).toHaveBeenCalled()
+    expect(mockClearAllSessionsFn).toHaveBeenCalled()
+  })
+
+  it('clears localStorage even when no family IDs to link', async () => {
+    // Only has anonymousStorage groups, no groupSessions → no family IDs
     mockGetMigrationData.mockReturnValue({
       groups: ['g1'],
       userName: null,
@@ -226,8 +301,38 @@ describe('migrateAnonData', () => {
 
     await migrateAnonData()
 
+    expect(mockClear).toHaveBeenCalled()
+    expect(mockClearAllSessionsFn).toHaveBeenCalled()
+  })
+
+  it('does not clear localStorage if link endpoint fails', async () => {
+    mockFetchFailure()
+    const consoleSpy = vi.spyOn(console, 'error').mockImplementation(() => {})
+
+    mockGetMigrationData.mockReturnValue({
+      groups: [],
+      userName: null,
+      familyId: null,
+    })
+    mockGetGroupSessionsFn.mockReturnValue([
+      {
+        groupId: 'g1',
+        groupName: 'Clase 2B',
+        familyId: 'f1',
+        familyName: 'Garcia',
+        isCreator: false,
+        inviteCode: 'abc',
+        joinedAt: '2026-01-01',
+      },
+    ])
+    mockGetDirectGiftSessionsFn.mockReturnValue([])
+
+    await migrateAnonData()
+
     expect(mockClear).not.toHaveBeenCalled()
     expect(mockClearAllSessionsFn).not.toHaveBeenCalled()
+
+    consoleSpy.mockRestore()
   })
 
   it('still migrates name even if user_metadata update fails', async () => {

@@ -203,6 +203,7 @@ export function AddProposalModal({
             value={votingDeadline}
             onChange={setVotingDeadline}
             min={new Date().toISOString().split("T")[0]}
+            placeholder="Seleccionar fecha límite"
           />
         </div>
 

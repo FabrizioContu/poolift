@@ -4,6 +4,27 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { CreatePartyModal } from "@/components/modals/CreatePartyModal";
 
+vi.mock("@/components/ui/DatePickerInput", () => ({
+  DatePickerInput: ({ value, onChange, max, min, placeholder, disabled }: {
+    value: string
+    onChange: (v: string) => void
+    max?: string
+    min?: string
+    placeholder?: string
+    disabled?: boolean
+  }) => (
+    <input
+      type="date"
+      value={value}
+      onChange={(e) => onChange(e.target.value)}
+      max={max}
+      min={min}
+      placeholder={placeholder}
+      disabled={disabled}
+    />
+  ),
+}))
+
 const mockBirthdays = [
   { id: "1", child_name: "Juan", birth_date: "2020-03-15" },
   { id: "2", child_name: "María", birth_date: "2019-06-22" },

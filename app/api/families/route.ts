@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/server";
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
@@ -84,6 +85,12 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Try to get authenticated user to link family immediately
+    const serverClient = await createClient()
+    const {
+      data: { user },
+    } = await serverClient.auth.getUser()
+
     // Create family
     const { data: family, error: familyError } = await supabase
       .from("families")
@@ -91,6 +98,7 @@ export async function POST(request: NextRequest) {
         group_id: groupId,
         name: trimmedName,
         is_creator: false,
+        ...(user ? { user_id: user.id } : {}),
       })
       .select()
       .single();

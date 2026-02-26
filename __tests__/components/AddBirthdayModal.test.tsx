@@ -1,7 +1,32 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { AddBirthdayModal } from '@/components/modals/AddBirthdayModal'
+
+vi.mock('@/components/ui', async () => {
+  const actual = await vi.importActual<typeof import('@/components/ui')>('@/components/ui')
+  return {
+    ...actual,
+    DatePickerInput: ({ value, onChange, max, min, placeholder, disabled }: {
+      value: string
+      onChange: (v: string) => void
+      max?: string
+      min?: string
+      placeholder?: string
+      disabled?: boolean
+    }) => (
+      <input
+        type="date"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        max={max}
+        min={min}
+        placeholder={placeholder}
+        disabled={disabled}
+      />
+    ),
+  }
+})
 
 const defaultProps = {
   isOpen: true,
@@ -113,7 +138,7 @@ describe('AddBirthdayModal', () => {
     await user.type(nameInput, 'María')
 
     const dateInput = getDateInput(container)
-    await user.type(dateInput, '2018-05-15')
+    fireEvent.change(dateInput, { target: { value: '2018-05-15' } })
 
     const submitButton = screen.getByRole('button', { name: /añadir cumpleaños/i })
     await user.click(submitButton)
@@ -142,7 +167,7 @@ describe('AddBirthdayModal', () => {
     await user.type(nameInput, 'María')
 
     const dateInput = getDateInput(container)
-    await user.type(dateInput, '2018-05-15')
+    fireEvent.change(dateInput, { target: { value: '2018-05-15' } })
 
     const submitButton = screen.getByRole('button', { name: /añadir cumpleaños/i })
     await user.click(submitButton)
@@ -199,7 +224,7 @@ describe('AddBirthdayModal', () => {
     await user.type(nameInput, 'María')
 
     const dateInput = getDateInput(container)
-    await user.type(dateInput, '2018-05-15')
+    fireEvent.change(dateInput, { target: { value: '2018-05-15' } })
 
     const submitButton = screen.getByRole('button', { name: /añadir cumpleaños/i })
     await user.click(submitButton)
@@ -222,7 +247,7 @@ describe('AddBirthdayModal', () => {
     await user.type(nameInput, 'María')
 
     const dateInput = getDateInput(container)
-    await user.type(dateInput, '2018-05-15')
+    fireEvent.change(dateInput, { target: { value: '2018-05-15' } })
 
     const submitButton = screen.getByRole('button', { name: /añadir cumpleaños/i })
     await user.click(submitButton)
