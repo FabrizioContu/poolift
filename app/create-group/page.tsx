@@ -172,7 +172,7 @@ export default function CreateGroupPage() {
   const groupTypes: GroupType[] = ["class", "friends", "family", "work", "other"];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-12 px-4">
+    <main id="main-content" className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-12 px-4">
       <div className="max-w-md mx-auto">
         <Link
           href="/"
@@ -197,17 +197,20 @@ export default function CreateGroupPage() {
           </div>
 
           {/* Step indicator */}
-          <div className="flex justify-center gap-2 mb-6">
+          <div role="group" aria-label={`Paso ${step} de 2`} className="flex justify-center gap-2 mb-6">
             <div
+              aria-current={step === 1 ? "step" : undefined}
               className={`w-3 h-3 rounded-full ${
                 step === 1 ? "bg-blue-600" : "bg-gray-300"
               }`}
             />
             <div
+              aria-current={step === 2 ? "step" : undefined}
               className={`w-3 h-3 rounded-full ${
                 step === 2 ? "bg-blue-600" : "bg-gray-300"
               }`}
             />
+            <span className="sr-only">Paso {step} de 2</span>
           </div>
 
           {/* Step 1: Group Type Selection */}
@@ -261,10 +264,11 @@ export default function CreateGroupPage() {
 
               {/* Group name */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="group-name" className="block text-sm font-medium text-gray-700 mb-1">
                   {copy.groupLabel} <span className="text-red-500">*</span>
                 </label>
                 <input
+                  id="group-name"
                   type="text"
                   value={groupName}
                   onChange={(e) => setGroupName(e.target.value)}
@@ -281,10 +285,11 @@ export default function CreateGroupPage() {
 
               {/* User/Family name */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label htmlFor="family-name" className="block text-sm font-medium text-gray-700 mb-1">
                   {copy.userLabel} <span className="text-red-500">*</span>
                 </label>
                 <input
+                  id="family-name"
                   type="text"
                   value={familyName}
                   onChange={(e) => setFamilyName(e.target.value)}
@@ -299,7 +304,7 @@ export default function CreateGroupPage() {
               </div>
 
               {error && (
-                <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
+                <div role="alert" className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
                   {error}
                 </div>
               )}
@@ -345,6 +350,6 @@ export default function CreateGroupPage() {
           groupName={createdGroup.group.name}
         />
       )}
-    </div>
+    </main>
   );
 }

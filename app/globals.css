@@ -35,3 +35,17 @@ body {
 input, textarea, select {
   color: #111827; /* gray-900 */
 }
+
+/* 2.4.7 Focus Visible — visible focus ring on all interactive elements */
+:focus-visible {
+  outline: 3px solid #2563eb; /* blue-600 */
+  outline-offset: 2px;
+}
+
+/* 2.2.2 Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

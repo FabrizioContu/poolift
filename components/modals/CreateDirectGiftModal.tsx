@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { X, Gift, Copy, MessageCircle, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/Button";
@@ -25,6 +25,36 @@ export function CreateDirectGiftModal({
   const [organizerName, setOrganizerName] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const dialogRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const el = dialogRef.current;
+    if (!el) return;
+
+    const focusable = el.querySelectorAll<HTMLElement>(
+      'button, input, select, textarea, [tabindex]:not([tabindex="-1"])'
+    );
+    focusable[0]?.focus();
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') { onClose(); return; }
+      if (e.key !== 'Tab') return;
+      const els = el.querySelectorAll<HTMLElement>(
+        'button, input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      );
+      const first = els[0];
+      const last = els[els.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) { e.preventDefault(); last?.focus(); }
+      } else {
+        if (document.activeElement === last) { e.preventDefault(); first?.focus(); }
+      }
+    };
+
+    el.addEventListener('keydown', handleKeyDown);
+    return () => el.removeEventListener('keydown', handleKeyDown);
+  }, [isOpen, onClose]);
 
   // Success state
   const [created, setCreated] = useState(false);
@@ -119,11 +149,11 @@ Apuntate aqui: ${getGiftLink()}`;
   // Success screen
   if (created && shareCode) {
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div role="dialog" aria-modal="true" aria-labelledby="gift-created-title" className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
         <div className="bg-white rounded-xl max-w-md w-full p-5 max-h-[85vh] overflow-y-auto">
           <div className="text-center">
             <CheckCircle className="mx-auto text-green-500 mb-3" size={40} />
-            <h2 className="text-xl font-bold mb-1 text-gray-900">
+            <h2 id="gift-created-title" className="text-xl font-bold mb-1 text-gray-900">
               Regalo Creado!
             </h2>
             <p className="text-gray-900 text-sm mb-4">
@@ -181,7 +211,7 @@ Apuntate aqui: ${getGiftLink()}`;
 
   // Form screen
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="direct-gift-title" className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
       <div className="bg-white rounded-xl max-w-md w-full p-6 max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
@@ -189,10 +219,11 @@ Apuntate aqui: ${getGiftLink()}`;
             <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
               <Gift className="text-green-600" size={20} />
             </div>
-            <h2 className="text-xl font-bold text-gray-900">Regalo Directo</h2>
+            <h2 id="direct-gift-title" className="text-xl font-bold text-gray-900">Regalo Directo</h2>
           </div>
           <button
             onClick={onClose}
+            aria-label="Cerrar"
             className="text-gray-700 hover:text-gray-900"
           >
             <X size={24} />
@@ -206,10 +237,11 @@ Apuntate aqui: ${getGiftLink()}`;
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Para quien */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="recipient-name" className="block text-sm font-medium text-gray-700 mb-2">
               Para quien es el regalo? *
             </label>
             <input
+              id="recipient-name"
               type="text"
               required
               value={recipientName}
@@ -221,10 +253,11 @@ Apuntate aqui: ${getGiftLink()}`;
 
           {/* Tipo de ocasion */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="occasion-type" className="block text-sm font-medium text-gray-700 mb-2">
               Tipo de ocasion *
             </label>
             <select
+              id="occasion-type"
               required
               value={occasion}
               onChange={(e) => setOccasion(e.target.value as OccasionType)}
@@ -240,10 +273,11 @@ Apuntate aqui: ${getGiftLink()}`;
 
           {/* Que regalo propones (opcional) */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="gift-idea" className="block text-sm font-medium text-gray-700 mb-2">
               Que regalo propones? (opcional)
             </label>
             <input
+              id="gift-idea"
               type="text"
               value={giftIdea}
               onChange={(e) => setGiftIdea(e.target.value)}
@@ -254,12 +288,13 @@ Apuntate aqui: ${getGiftLink()}`;
 
           {/* Precio estimado (opcional) */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="estimated-price" className="block text-sm font-medium text-gray-700 mb-2">
               Precio estimado (opcional)
             </label>
             <div className="relative">
               <span className="absolute left-3 top-2.5 text-gray-700">€</span>
               <input
+                id="estimated-price"
                 type="number"
                 step="0.01"
                 min="0"
@@ -273,10 +308,11 @@ Apuntate aqui: ${getGiftLink()}`;
 
           {/* Tu nombre */}
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor="organizer-name" className="block text-sm font-medium text-gray-700 mb-2">
               Tu nombre *
             </label>
             <input
+              id="organizer-name"
               type="text"
               required
               value={organizerName}
@@ -291,7 +327,7 @@ Apuntate aqui: ${getGiftLink()}`;
 
           {/* Error */}
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-3">
+            <div role="alert" className="bg-red-50 border border-red-200 rounded-lg p-3">
               <p className="text-sm text-red-700">{error}</p>
             </div>
           )}

@@ -1,6 +1,8 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Gift, Users, ArrowLeft, Sparkles, Calendar, Heart } from "lucide-react";
-import { Button } from "@/components/ui";
+
+export const metadata: Metadata = { title: "Empezar | Poolift" };
 
 export default function StartPage() {
   return (
@@ -61,9 +63,9 @@ export default function StartPage() {
                 </div>
               </div>
 
-              <Button className="w-full bg-green-600 hover:bg-green-700">
+              <span className="block w-full px-4 py-2 rounded-lg font-bold transition bg-green-600 text-white text-center">
                 Organizar regalo
-              </Button>
+              </span>
             </div>
           </Link>
 
@@ -93,9 +95,9 @@ export default function StartPage() {
                 </div>
               </div>
 
-              <Button className="w-full">
+              <span className="block w-full px-4 py-2 rounded-lg font-bold transition bg-blue-500 text-white text-center">
                 Crear grupo
-              </Button>
+              </span>
             </div>
           </Link>
         </div>

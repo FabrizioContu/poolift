@@ -36,7 +36,7 @@ export default function JoinPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-12 px-4">
+    <main id="main-content" className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-12 px-4">
       <div className="max-w-md mx-auto">
         <Link
           href="/"
@@ -59,10 +59,11 @@ export default function JoinPage() {
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label htmlFor="invite-code" className="block text-sm font-medium text-gray-700 mb-1">
                 Código de invitación <span className="text-red-500">*</span>
               </label>
               <input
+                id="invite-code"
                 type="text"
                 value={inviteCode}
                 onChange={(e) => setInviteCode(e.target.value.toLowerCase())}
@@ -74,7 +75,7 @@ export default function JoinPage() {
             </div>
 
             {error && (
-              <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
+              <div role="alert" className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
                 {error}
               </div>
             )}
@@ -92,6 +93,6 @@ export default function JoinPage() {
           </p>
         </div>
       </div>
-    </div>
+    </main>
   )
 }

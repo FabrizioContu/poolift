@@ -1,7 +1,6 @@
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { Gift, Zap, Users, Share2, CheckCircle, Sparkles, ArrowRight } from "lucide-react";
-import { Button } from "@/components/ui";
 import { MisGruposButton } from "@/components/nav/MisGruposButton";
 
 const UserMenu = dynamic(() =>
@@ -31,6 +30,7 @@ export default function LandingPage() {
         </nav>
       </header>
 
+      <main id="main-content">
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-12 md:py-20">
         <div className="max-w-4xl mx-auto text-center">
@@ -44,11 +44,12 @@ export default function LandingPage() {
             Comparte tu idea, coordina con quien quieras y organiza el regalo perfecto en minutos.
           </p>
 
-          <Link href="/start">
-            <Button className="px-10 py-4 text-lg">
-              Organiza tu regalo
-              <ArrowRight className="ml-2 inline" size={20} />
-            </Button>
+          <Link
+            href="/start"
+            className="inline-flex items-center px-10 py-4 text-lg rounded-lg font-bold transition bg-blue-500 text-white hover:bg-blue-600"
+          >
+            Organiza tu regalo
+            <ArrowRight className="ml-2 inline" size={20} />
           </Link>
 
           <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 mt-8 text-sm text-gray-700">
@@ -224,11 +225,12 @@ export default function LandingPage() {
             Empieza ahora, es gratis y sin registro.
           </p>
 
-          <Link href="/start">
-            <Button className="px-10 py-4 text-lg">
-              Empezar
-              <ArrowRight className="ml-2 inline" size={20} />
-            </Button>
+          <Link
+            href="/start"
+            className="inline-flex items-center px-10 py-4 text-lg rounded-lg font-bold transition bg-blue-500 text-white hover:bg-blue-600"
+          >
+            Empezar
+            <ArrowRight className="ml-2 inline" size={20} />
           </Link>
 
           <p className="mt-6 text-gray-700">
@@ -240,6 +242,7 @@ export default function LandingPage() {
         </div>
       </section>
 
+      </main>
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-12">
         <div className="container mx-auto px-4 text-center">
@@ -247,7 +250,7 @@ export default function LandingPage() {
             <Gift size={24} />
             <span className="text-xl font-bold">Poolift</span>
           </div>
-          <p className="text-gray-300">Organiza regalos en grupo</p>
+          <p className="text-gray-400">Organiza regalos en grupo</p>
         </div>
       </footer>
     </div>
