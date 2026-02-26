@@ -79,47 +79,49 @@ export function InviteCodeModal({
         </div>
 
         <div className="space-y-3 mb-6">
-          <button
+          <Button
+            variant="secondary"
             onClick={handleCopyCode}
-            className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 hover:bg-gray-200 rounded-lg transition"
+            className="w-full flex items-center justify-center gap-2 py-3"
           >
             {copiedCode ? (
               <>
                 <Check size={20} className="text-green-600" />
-                <span className="text-green-600 font-medium">¡Código copiado!</span>
+                <span className="text-green-600">¡Código copiado!</span>
               </>
             ) : (
               <>
-                <Copy size={20} className="text-gray-700" />
-                <span className="text-gray-700">Copiar Código</span>
+                <Copy size={20} />
+                <span>Copiar Código</span>
               </>
             )}
-          </button>
+          </Button>
 
-          <button
+          <Button
+            variant="secondary"
             onClick={handleCopyLink}
-            className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 hover:bg-gray-200 rounded-lg transition"
+            className="w-full flex items-center justify-center gap-2 py-3"
           >
             {copiedLink ? (
               <>
                 <Check size={20} className="text-green-600" />
-                <span className="text-green-600 font-medium">¡Link copiado!</span>
+                <span className="text-green-600">¡Link copiado!</span>
               </>
             ) : (
               <>
-                <LinkIcon size={20} className="text-gray-700" />
-                <span className="text-gray-700">Copiar Link</span>
+                <LinkIcon size={20} />
+                <span>Copiar Link</span>
               </>
             )}
-          </button>
+          </Button>
 
-          <button
+          <Button
             onClick={handleShareWhatsApp}
-            className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-500 hover:bg-green-600 text-white rounded-lg transition"
+            className="w-full flex items-center justify-center gap-2 py-3 bg-green-500 hover:bg-green-600"
           >
             <MessageCircle size={20} />
             <span>Compartir en WhatsApp</span>
-          </button>
+          </Button>
         </div>
 
         <Button onClick={handleGoToDashboard} className="w-full py-3">

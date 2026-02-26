@@ -4,6 +4,7 @@
 import { useEffect, useRef, useCallback, useSyncExternalStore } from 'react'
 import { useRouter } from 'next/navigation'
 import { Gift } from 'lucide-react'
+import { Button } from '@/components/ui/Button'
 import { useAuth } from '@/lib/auth'
 import { anonymousStorage } from '@/lib/storage'
 
@@ -126,7 +127,7 @@ export function SpoilerGuard({ celebrantNames, children }: SpoilerGuardProps) {
   if (isCelebrant) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-yellow-50 to-orange-50 p-4">
-        <div className="text-center p-8 bg-white rounded-2xl shadow-xl max-w-md">
+        <div className="text-center p-8 bg-white rounded-lg shadow-lg max-w-md border border-gray-200">
           <Gift className="mx-auto text-yellow-500 mb-4" size={64} />
 
           <h2 className="text-3xl font-bold mb-3 text-gray-900">Sorpresa!</h2>
@@ -145,12 +146,12 @@ export function SpoilerGuard({ celebrantNames, children }: SpoilerGuardProps) {
             </p>
           </div>
 
-          <button
+          <Button
             onClick={handleGoHome}
-            className="w-full mb-3 px-6 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 font-medium transition"
+            className="w-full mb-3"
           >
             Volver al Inicio
-          </button>
+          </Button>
 
           <button onClick={handleNotMe} className="text-sm text-gray-700 hover:text-gray-700">
             No soy {userName}

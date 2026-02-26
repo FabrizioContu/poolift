@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/Button";
 import { Modal } from "@/components/ui/Modal";
+import { Alert } from "@/components/ui/Alert";
 import {
   Settings,
   Lock,
@@ -301,7 +302,7 @@ La participación está cerrada. Mas info: ${giftUrl}`;
               )}
             </div>
 
-            {error && <p className="text-red-500 text-sm">{error}</p>}
+            {error && <Alert variant="error">{error}</Alert>}
 
             <div className="flex gap-3 pt-2">
               <Button
@@ -476,9 +477,7 @@ La participación está cerrada. Mas info: ${giftUrl}`;
               )}
             </div>
 
-            {cancelError && (
-              <p className="text-red-500 text-sm">{cancelError}</p>
-            )}
+            {cancelError && <Alert variant="error">{cancelError}</Alert>}
 
             <div className="flex gap-3 pt-2">
               <Button

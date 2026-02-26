@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Modal } from "@/components/ui/Modal";
 import { Button } from "@/components/ui/Button";
+import { Alert } from "@/components/ui/Alert";
 import { DatePickerInput } from "@/components/ui/DatePickerInput";
 import { Plus, Trash2 } from "lucide-react";
 
@@ -215,11 +216,7 @@ export function AddProposalModal({
           </div>
         </div>
 
-        {error && (
-          <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
-            {error}
-          </div>
-        )}
+        {error && <Alert variant="error">{error}</Alert>}
 
         <div className="flex gap-3 pt-2">
           <Button
