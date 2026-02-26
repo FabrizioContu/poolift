@@ -1,29 +1,29 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { Modal } from '@/components/ui/Modal'
-import { Button } from '@/components/ui/Button'
-import { Alert } from '@/components/ui/Alert'
-import { Calendar, Users, PartyPopper } from 'lucide-react'
+import { useState } from "react";
+import { Modal } from "@/components/ui/Modal";
+import { Button } from "@/components/ui/Button";
+import { Alert } from "@/components/ui/Alert";
+import { Calendar, Users, PartyPopper } from "lucide-react";
 
 interface BirthdayOption {
-  id: string
-  child_name: string
-  birth_date: string
+  id: string;
+  child_name: string;
+  birth_date: string;
 }
 
 interface FamilyOption {
-  id: string
-  name: string
+  id: string;
+  name: string;
 }
 
 interface CreatePartyModalProps {
-  isOpen: boolean
-  onClose: () => void
-  groupId: string
-  birthdays: BirthdayOption[]
-  families?: FamilyOption[]
-  onSuccess?: () => void
+  isOpen: boolean;
+  onClose: () => void;
+  groupId: string;
+  birthdays: BirthdayOption[];
+  families?: FamilyOption[];
+  onSuccess?: () => void;
 }
 
 export function CreatePartyModal({
@@ -32,73 +32,73 @@ export function CreatePartyModal({
   groupId,
   birthdays,
   families = [],
-  onSuccess
+  onSuccess,
 }: CreatePartyModalProps) {
-  const [partyDate, setPartyDate] = useState('')
-  const [selectedCelebrants, setSelectedCelebrants] = useState<string[]>([])
-  const [coordinatorId, setCoordinatorId] = useState('')
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [error, setError] = useState<string | null>(null)
+  const [partyDate, setPartyDate] = useState("");
+  const [selectedCelebrants, setSelectedCelebrants] = useState<string[]>([]);
+  const [coordinatorId, setCoordinatorId] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleCelebrantToggle = (birthdayId: string) => {
-    setSelectedCelebrants(prev =>
+    setSelectedCelebrants((prev) =>
       prev.includes(birthdayId)
-        ? prev.filter(id => id !== birthdayId)
-        : [...prev, birthdayId]
-    )
-  }
+        ? prev.filter((id) => id !== birthdayId)
+        : [...prev, birthdayId],
+    );
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError(null)
+    e.preventDefault();
+    setError(null);
 
     if (!partyDate) {
-      setError('Selecciona una fecha para la fiesta')
-      return
+      setError("Selecciona una fecha para la fiesta");
+      return;
     }
 
     if (selectedCelebrants.length === 0) {
-      setError('Selecciona al menos un celebrante')
-      return
+      setError("Selecciona al menos un celebrante");
+      return;
     }
 
-    setIsSubmitting(true)
+    setIsSubmitting(true);
 
     try {
-      const response = await fetch('/api/parties', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/parties", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           groupId,
           partyDate,
           coordinatorId: coordinatorId || undefined,
-          celebrantIds: selectedCelebrants
-        })
-      })
+          celebrantIds: selectedCelebrants,
+        }),
+      });
 
       if (!response.ok) {
-        const data = await response.json()
-        throw new Error(data.error || 'Error al crear la fiesta')
+        const data = await response.json();
+        throw new Error(data.error || "Error al crear la fiesta");
       }
 
       // Reset form
-      setPartyDate('')
-      setSelectedCelebrants([])
-      setCoordinatorId('')
+      setPartyDate("");
+      setSelectedCelebrants([]);
+      setCoordinatorId("");
 
-      onSuccess?.()
-      onClose()
+      onSuccess?.();
+      onClose();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Error al crear la fiesta')
+      setError(err instanceof Error ? err.message : "Error al crear la fiesta");
     } finally {
-      setIsSubmitting(false)
+      setIsSubmitting(false);
     }
-  }
+  };
 
   const formatBirthDate = (dateStr: string) => {
-    const date = new Date(dateStr)
-    return date.toLocaleDateString('es-ES', { day: 'numeric', month: 'long' })
-  }
+    const date = new Date(dateStr);
+    return date.toLocaleDateString("es-ES", { day: "numeric", month: "long" });
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Crear Nueva Fiesta">
@@ -114,7 +114,7 @@ export function CreatePartyModal({
             value={partyDate}
             onChange={(e) => setPartyDate(e.target.value)}
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            min={new Date().toISOString().split('T')[0]}
+            min={new Date().toISOString().split("T")[0]}
           />
         </div>
 
@@ -139,8 +139,8 @@ export function CreatePartyModal({
                   key={birthday.id}
                   className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition ${
                     selectedCelebrants.includes(birthday.id)
-                      ? 'border-blue-500 bg-blue-50'
-                      : 'border-gray-200 hover:border-gray-300'
+                      ? "border-blue-500 bg-blue-50"
+                      : "border-gray-200 hover:border-gray-300"
                   }`}
                 >
                   <input
@@ -169,7 +169,9 @@ export function CreatePartyModal({
             <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
               <Users size={18} />
               Coordinador
-              <span className="text-xs text-gray-700 font-normal">(opcional)</span>
+              <span className="text-xs text-gray-700 font-normal">
+                (opcional)
+              </span>
             </label>
             <select
               value={coordinatorId}
@@ -184,7 +186,8 @@ export function CreatePartyModal({
               ))}
             </select>
             <p className="text-xs text-gray-700 mt-1">
-              Si no seleccionas, se asignará a la familia que menos fiestas haya coordinado
+              Si no seleccionas, se asignará a la familia que menos fiestas haya
+              coordinado
             </p>
           </div>
         )}
@@ -207,12 +210,12 @@ export function CreatePartyModal({
             disabled={isSubmitting || selectedCelebrants.length === 0}
             className="flex-1"
           >
-            {isSubmitting ? 'Creando...' : 'Crear Fiesta'}
+            {isSubmitting ? "Creando..." : "Crear Fiesta"}
           </Button>
         </div>
       </form>
     </Modal>
-  )
+  );
 }
 
-export default CreatePartyModal
+export default CreatePartyModal;
