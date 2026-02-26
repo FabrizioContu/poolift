@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Modal } from "@/components/ui/Modal";
 import { Button } from "@/components/ui/Button";
 import { Alert } from "@/components/ui/Alert";
+import { DatePickerInput } from "@/components/ui/DatePickerInput";
 import { Plus, Trash2 } from "lucide-react";
 
 interface ProposalItem {
@@ -198,12 +199,11 @@ export function AddProposalModal({
             Fecha límite de votación
             <span className="text-gray-700 font-normal"> (opcional)</span>
           </label>
-          <input
-            type="date"
+          <DatePickerInput
             value={votingDeadline}
-            onChange={(e) => setVotingDeadline(e.target.value)}
+            onChange={setVotingDeadline}
             min={new Date().toISOString().split("T")[0]}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            placeholder="Seleccionar fecha límite"
           />
         </div>
 

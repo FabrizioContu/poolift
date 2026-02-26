@@ -7,12 +7,12 @@ import { Plus, Home, Users, Search, Gift, Lock, LogIn } from "lucide-react";
 import { supabase } from "@/lib/supabase";
 import {
   getGroupSessions,
-  GroupSession,
   getDirectGiftSessions,
   DirectGiftSession,
   removeDirectGiftSession,
   useAuth,
 } from "@/lib/auth";
+import { migrateAnonData } from "@/lib/migrate";
 import { GroupCard } from "@/components/groups/GroupCard";
 import { Button } from "@/components/ui/Button";
 import { OCCASION_LABELS, type OccasionType } from "@/lib/types";
@@ -29,12 +29,6 @@ interface GroupWithCounts {
   partyCount: number;
 }
 
-// Initialize sessions synchronously from localStorage
-function getInitialSessions(): GroupSession[] {
-  if (typeof window === "undefined") return [];
-  return getGroupSessions();
-}
-
 // Initialize direct gifts synchronously from localStorage
 function getInitialDirectGifts(): DirectGiftSession[] {
   if (typeof window === "undefined") return [];
@@ -42,7 +36,7 @@ function getInitialDirectGifts(): DirectGiftSession[] {
 }
 
 export default function GroupsPage() {
-  const { isAnonymous, loading: authLoading } = useAuth();
+  const { user, isAnonymous, loading: authLoading } = useAuth();
   const [loading, setLoading] = useState(true);
   const [myGroups, setMyGroups] = useState<
     (GroupWithCounts & { isCreator: boolean })[]
@@ -50,16 +44,16 @@ export default function GroupsPage() {
   const [allGroups, setAllGroups] = useState<GroupWithCounts[]>([]);
   const [showAll, setShowAll] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [sessions, setSessions] = useState<GroupSession[]>(getInitialSessions);
   const [directGifts, setDirectGifts] =
     useState<DirectGiftSession[]>(getInitialDirectGifts);
   const [showAuthModal, setShowAuthModal] = useState(false);
 
   useEffect(() => {
+    if (authLoading) return;
+
     let isMounted = true;
 
     async function loadGroups() {
-      const savedSessions = getGroupSessions();
       let savedDirectGifts = getDirectGiftSessions();
 
       // Validate direct gifts against Supabase - remove cancelled/deleted ones
@@ -75,21 +69,18 @@ export default function GroupsPage() {
           validGifts?.map((g) => g.share_code) || []
         );
 
-        // Remove invalid gifts from localStorage
         savedDirectGifts.forEach((gift) => {
           if (!validShareCodes.has(gift.shareCode)) {
             removeDirectGiftSession(gift.shareCode);
           }
         });
 
-        // Filter to only valid gifts
         savedDirectGifts = savedDirectGifts.filter((g) =>
           validShareCodes.has(g.shareCode)
         );
       }
 
       if (isMounted) {
-        setSessions(savedSessions);
         setDirectGifts(savedDirectGifts);
       }
 
@@ -120,39 +111,51 @@ export default function GroupsPage() {
         );
       }
 
-      // Load my groups if user has sessions
-      if (savedSessions.length > 0) {
-        const groupIds = savedSessions.map((s) => s.groupId);
-
-        const { data: groups } = await supabase
-          .from("groups")
-          .select(
-            `
-            id,
-            name,
-            invite_code,
-            families!families_group_id_fkey(id),
-            parties(id)
-          `
-          )
-          .in("id", groupIds);
-
-        if (groups && isMounted) {
-          const groupsWithCounts = groups.map((g) => {
-            const session = savedSessions.find((s) => s.groupId === g.id);
-            return {
-              id: g.id,
-              name: g.name,
-              invite_code: g.invite_code,
-              familyCount: g.families?.length || 0,
-              partyCount: g.parties?.length || 0,
-              isCreator: session?.isCreator || false,
-            };
-          });
-          if (isMounted) setMyGroups(groupsWithCounts);
+      if (!isAnonymous && user) {
+        // Auto-migrate if localStorage still has sessions from before Phase 5
+        const pendingSessions = getGroupSessions();
+        if (pendingSessions.length > 0) {
+          await migrateAnonData();
         }
-      } else if (savedDirectGifts.length === 0) {
-        if (isMounted) setShowAll(true);
+
+        // Load my groups from DB via families.user_id
+        const { data: myFamilies } = await supabase
+          .from("families")
+          .select("id, is_creator, group_id")
+          .eq("user_id", user.id);
+
+        if (myFamilies && myFamilies.length > 0) {
+          const groupIds = myFamilies.map((f) => f.group_id);
+          const familyMap = new Map(myFamilies.map((f) => [f.group_id, f]));
+
+          const { data: groups } = await supabase
+            .from("groups")
+            .select(
+              `
+              id,
+              name,
+              invite_code,
+              families!families_group_id_fkey(id),
+              parties(id)
+            `
+            )
+            .in("id", groupIds);
+
+          if (groups && isMounted) {
+            setMyGroups(
+              groups.map((g) => ({
+                id: g.id,
+                name: g.name,
+                invite_code: g.invite_code,
+                familyCount: g.families?.length || 0,
+                partyCount: g.parties?.length || 0,
+                isCreator: familyMap.get(g.id)?.is_creator || false,
+              }))
+            );
+          }
+        } else if (isMounted && savedDirectGifts.length === 0) {
+          setShowAll(true);
+        }
       }
 
       if (isMounted) setLoading(false);
@@ -163,7 +166,7 @@ export default function GroupsPage() {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [authLoading, isAnonymous, user]);
 
   const handleToggleShowAll = () => {
     setShowAll(!showAll);
@@ -254,7 +257,7 @@ export default function GroupsPage() {
               className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             />
           </div>
-          {!isAnonymous && sessions.length > 0 && (
+          {!isAnonymous && myGroups.length > 0 && (
             <Button
               variant="secondary"
               onClick={handleToggleShowAll}
@@ -431,8 +434,8 @@ export default function GroupsPage() {
           </div>
         )}
 
-        {/* Join link (only for authenticated users with sessions) */}
-        {!isAnonymous && !showAll && sessions.length > 0 && (
+        {/* Join link (only for authenticated users with groups) */}
+        {!isAnonymous && !showAll && myGroups.length > 0 && (
           <div className="mt-8 text-center">
             <p className="text-gray-700 text-sm">
               ¿Tienes un código de invitación?{" "}
