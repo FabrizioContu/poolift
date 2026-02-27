@@ -87,3 +87,9 @@ CLAUDE.md
 # Misc
 *.pem
 .eslintcache
+
+# Supabase CLI artifacts (not needed in repo)
+supabase/.branches/
+supabase/.temp/
+
+# MCP — .mcp.json is intentionally committed (no secrets; uses ${SUPABASE_ACCESS_TOKEN} env var)
