@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
+import { createClient } from '@/lib/supabase/server'
 
 export async function PUT(
   request: NextRequest,
@@ -8,10 +9,15 @@ export async function PUT(
   try {
     const { id } = await params
 
+    const serverClient = await createClient()
+    const {
+      data: { user },
+    } = await serverClient.auth.getUser()
+
     // Get direct gift with participant count
     const { data: gift, error: fetchError } = await supabase
       .from('direct_gifts')
-      .select('id, status, estimated_price')
+      .select('id, status, estimated_price, organizer_user_id')
       .eq('id', id)
       .single()
 
@@ -20,6 +26,16 @@ export async function PUT(
         { error: 'Regalo no encontrado' },
         { status: 404 }
       )
+    }
+
+    // Validate organizer ownership when organizer_user_id is set
+    if (gift.organizer_user_id) {
+      if (!user || user.id !== gift.organizer_user_id) {
+        return NextResponse.json(
+          { error: 'No autorizado' },
+          { status: 403 }
+        )
+      }
     }
 
     if (gift.status !== 'open') {

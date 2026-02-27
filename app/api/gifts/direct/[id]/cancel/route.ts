@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/server";
 
 /**
  * Cancel a direct gift
@@ -12,10 +13,15 @@ export async function PUT(
   try {
     const { id } = await params;
 
+    const serverClient = await createClient();
+    const {
+      data: { user },
+    } = await serverClient.auth.getUser();
+
     // Get current gift status
     const { data: gift, error: fetchError } = await supabase
       .from("direct_gifts")
-      .select("status")
+      .select("status, organizer_user_id")
       .eq("id", id)
       .single();
 
@@ -24,6 +30,16 @@ export async function PUT(
         { error: "Regalo no encontrado" },
         { status: 404 }
       );
+    }
+
+    // Validate organizer ownership when organizer_user_id is set
+    if (gift.organizer_user_id) {
+      if (!user || user.id !== gift.organizer_user_id) {
+        return NextResponse.json(
+          { error: "No autorizado" },
+          { status: 403 }
+        );
+      }
     }
 
     // Can only cancel if not already purchased

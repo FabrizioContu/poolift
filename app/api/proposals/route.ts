@@ -1,8 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
+import { createClient } from '@/lib/supabase/server'
 
 export async function POST(request: NextRequest) {
   try {
+    const serverClient = await createClient()
+    await serverClient.auth.getUser() // establishes session for future RLS
+
     const {
       partyId,
       name,

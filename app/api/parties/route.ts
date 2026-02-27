@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
+import { createClient } from '@/lib/supabase/server'
 
 // Asignar coordinador automáticamente (rotativo)
 async function assignCoordinator(groupId: string): Promise<string | null> {
@@ -30,9 +31,12 @@ async function assignCoordinator(groupId: string): Promise<string | null> {
 
 export async function POST(request: NextRequest) {
   try {
-    const { 
-      groupId, 
-      partyDate, 
+    const serverClient = await createClient()
+    await serverClient.auth.getUser() // establishes session for future RLS
+
+    const {
+      groupId,
+      partyDate,
       coordinatorId,
       celebrantIds // Array de birthday IDs
     } = await request.json()

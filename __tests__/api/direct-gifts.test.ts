@@ -19,6 +19,15 @@ vi.mock('@/lib/supabase', () => ({
   supabase: mockSupabase,
 }))
 
+// Mock server Supabase client (used for auth.getUser in route handlers)
+vi.mock('@/lib/supabase/server', () => ({
+  createClient: vi.fn().mockResolvedValue({
+    auth: {
+      getUser: vi.fn().mockResolvedValue({ data: { user: null }, error: null }),
+    },
+  }),
+}))
+
 // Mock NextRequest with required properties
 function createMockRequest(url: string, options?: { method?: string; body?: string }): NextRequest {
   const body = options?.body ? JSON.parse(options.body) : null
