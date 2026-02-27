@@ -100,8 +100,27 @@ export async function migrateAnonData(): Promise<void> {
     }
   }
 
-  // Limpiar localStorage ahora que las familias están vinculadas en BD
-  // directGiftSessions se mantienen — no hay vinculación a DB para regalos directos aún
+  // Vincular regalos directos al user_id en la BD
+  const shareCodes = data.directGiftSessions.map((s) => s.shareCode)
+
+  if (shareCodes.length > 0) {
+    try {
+      await fetch('/api/gifts/direct/link', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ shareCodes }),
+      })
+      // Non-blocking — share code access still works even if linking fails
+    } catch (e) {
+      console.error('migrate: error linking direct gifts', e)
+    }
+  }
+
+  // Limpiar localStorage ahora que todo está vinculado en BD
   anonymousStorage.clear()
   clearAllSessions()
+  // Clear direct gift sessions too — user can now access them via user_id
+  if (typeof window !== 'undefined') {
+    localStorage.removeItem('poolift_direct_gifts')
+  }
 }

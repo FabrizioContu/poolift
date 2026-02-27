@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/server";
 
 /**
  * Direct Gifts API
@@ -35,6 +36,11 @@ function generateUniqueCode(length: number = 12): string {
 
 export async function POST(request: NextRequest) {
   try {
+    const serverClient = await createClient();
+    const {
+      data: { user },
+    } = await serverClient.auth.getUser();
+
     const { recipientName, occasion, giftIdea, estimatedPrice, organizerName } =
       await request.json();
 
@@ -76,6 +82,7 @@ export async function POST(request: NextRequest) {
         organizer_name: organizerName.trim(),
         share_code: shareCode,
         status: "open",
+        ...(user ? { organizer_user_id: user.id } : {}),
       })
       .select()
       .single();

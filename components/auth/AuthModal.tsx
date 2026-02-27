@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
+import Link from 'next/link'
 import { Modal } from '@/components/ui/Modal'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
@@ -269,6 +270,15 @@ export function AuthModal({
               >
                 {isSubmitting ? 'Entrando...' : 'Entrar'}
               </Button>
+              <div className="text-center">
+                <Link
+                  href="/auth/reset-password"
+                  className="text-sm text-blue-600 hover:underline"
+                  onClick={onClose}
+                >
+                  ¿Olvidaste tu contraseña?
+                </Link>
+              </div>
             </form>
           )}
 
