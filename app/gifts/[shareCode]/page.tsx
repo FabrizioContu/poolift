@@ -1,4 +1,4 @@
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/server";
 import { GiftParticipation } from "./GiftParticipation";
 import { DirectGiftParticipation } from "./DirectGiftParticipation";
 import { DirectGiftOrganizerActions } from "./DirectGiftOrganizerActions";
@@ -41,6 +41,7 @@ interface DirectGift {
 }
 
 async function getDirectGift(shareCode: string): Promise<DirectGift | null> {
+  const supabase = await createClient();
   const { data: gift, error } = await supabase
     .from("direct_gifts")
     .select("*")
@@ -65,6 +66,7 @@ async function getDirectGift(shareCode: string): Promise<DirectGift | null> {
 }
 
 async function getGift(shareCode: string) {
+  const supabase = await createClient();
   const { data: gift, error } = await supabase
     .from("gifts")
     .select(
