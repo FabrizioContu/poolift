@@ -392,8 +392,8 @@ export default function GroupsPage() {
           </div>
         )}
 
-        {/* Direct Gifts Section (only for authenticated users) */}
-        {!isAnonymous && directGifts.length > 0 && !showAll && (
+        {/* Direct Gifts Section */}
+        {directGifts.length > 0 && !showAll && (
           <div className="mt-10">
             <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
               <Gift size={24} className="text-green-600" />

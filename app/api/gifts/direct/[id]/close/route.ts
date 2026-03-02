@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { supabase } from '@/lib/supabase'
 import { createClient } from '@/lib/supabase/server'
 
 export async function PUT(
@@ -15,9 +14,9 @@ export async function PUT(
     } = await serverClient.auth.getUser()
 
     // Get direct gift with participant count
-    const { data: gift, error: fetchError } = await supabase
+    const { data: gift, error: fetchError } = await serverClient
       .from('direct_gifts')
-      .select('id, status, estimated_price, organizer_user_id')
+      .select('*')
       .eq('id', id)
       .single()
 
@@ -46,7 +45,7 @@ export async function PUT(
     }
 
     // Get participant count
-    const { data: participants } = await supabase
+    const { data: participants } = await serverClient
       .from('direct_gift_participants')
       .select('id')
       .eq('direct_gift_id', id)
@@ -65,7 +64,7 @@ export async function PUT(
     const pricePerParticipant = totalPrice / participantCount
 
     // Close participation
-    const { data: updatedGift, error: updateError } = await supabase
+    const { data: updatedGift, error: updateError } = await serverClient
       .from('direct_gifts')
       .update({
         status: 'closed'

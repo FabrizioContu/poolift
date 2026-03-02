@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase";
 import { createClient } from "@/lib/supabase/server";
 
 /**
@@ -19,9 +18,9 @@ export async function PUT(
     } = await serverClient.auth.getUser();
 
     // Get current gift status
-    const { data: gift, error: fetchError } = await supabase
+    const { data: gift, error: fetchError } = await serverClient
       .from("direct_gifts")
-      .select("status, organizer_user_id")
+      .select("*")
       .eq("id", id)
       .single();
 
@@ -58,7 +57,7 @@ export async function PUT(
     }
 
     // Update status to cancelled
-    const { error: updateError } = await supabase
+    const { error: updateError } = await serverClient
       .from("direct_gifts")
       .update({
         status: "cancelled",

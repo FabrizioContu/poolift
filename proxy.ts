@@ -1,12 +1,12 @@
-// middleware.ts
+// proxy.ts
 import { updateSession } from '@/lib/supabase/middleware'
 import { type NextRequest } from 'next/server'
 
 /**
- * Middleware para refrescar sesión de Supabase en cada request
+ * Proxy para refrescar sesión de Supabase en cada request
  * Necesario para mantener sesión activa
  */
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   return await updateSession(request)
 }
 
