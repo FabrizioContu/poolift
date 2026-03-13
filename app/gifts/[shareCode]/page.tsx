@@ -591,6 +591,7 @@ export default async function GiftPage({
           isPurchased={isPurchased}
           coordinatorName={gift.party?.coordinator?.name || null}
           groupId={gift.party?.group_id || null}
+          participants={gift.participants || []}
         />
       </div>
     </div>
