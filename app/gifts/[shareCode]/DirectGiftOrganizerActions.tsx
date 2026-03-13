@@ -139,10 +139,10 @@ export function DirectGiftOrganizerActions({
   };
 
   const handleShareWhatsApp = () => {
-    const message = `Hola! El regalo para ${recipientName} ya tiene ${participantCount} participantes.
+    const message = `Hola! El regalo para ${recipientName} ya tiene ${participantCount} familias.
 
 ${giftIdea ? `Regalo: ${giftIdea}` : ""}
-Precio por persona: ${finalPricePerPerson || estimatedPricePerPerson}€
+Precio por familia: ${finalPricePerPerson || estimatedPricePerPerson}€
 
 La participación está cerrada. Mas info: ${giftUrl}`;
 
@@ -281,7 +281,7 @@ La participación está cerrada. Mas info: ${giftUrl}`;
               <div className="flex items-center gap-2 text-green-800 mb-2">
                 <Users size={18} />
                 <span className="font-medium">
-                  {participantCount} participantes
+                  {participantCount} familias
                 </span>
               </div>
               {estimatedPrice && (
@@ -293,7 +293,7 @@ La participación está cerrada. Mas info: ${giftUrl}`;
                     </span>
                   </div>
                   <div className="flex justify-between items-center mt-2 pt-2 border-t border-green-200">
-                    <span className="text-gray-700">Precio por persona:</span>
+                    <span className="text-gray-700">Precio por familia:</span>
                     <span className="font-bold text-green-600 text-lg">
                       {estimatedPricePerPerson}€
                     </span>
@@ -360,7 +360,7 @@ La participación está cerrada. Mas info: ${giftUrl}`;
               )}
 
               <div className="flex justify-between items-center pt-2 border-t border-gray-200">
-                <span className="text-gray-700">Participantes:</span>
+                <span className="text-gray-700">Familias:</span>
                 <span className="font-bold">{participantCount}</span>
               </div>
 
@@ -374,7 +374,7 @@ La participación está cerrada. Mas info: ${giftUrl}`;
                   </div>
 
                   <div className="flex justify-between items-center pt-2 border-t border-gray-200">
-                    <span className="text-gray-700">Precio por persona:</span>
+                    <span className="text-gray-700">Precio por familia:</span>
                     <span className="font-bold text-green-600 text-xl">
                       {finalPricePerPerson || estimatedPricePerPerson}€
                     </span>
@@ -386,7 +386,7 @@ La participación está cerrada. Mas info: ${giftUrl}`;
             {/* Participants List */}
             {participantNames.length > 0 && (
               <div>
-                <p className="text-xs text-gray-700 mb-2">Participantes:</p>
+                <p className="text-xs text-gray-700 mb-2">Familias:</p>
                 <div className="flex flex-wrap gap-1">
                   {participantNames.map((name, index) => (
                     <span

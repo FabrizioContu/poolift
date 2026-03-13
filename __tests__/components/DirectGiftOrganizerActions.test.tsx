@@ -152,7 +152,7 @@ describe('DirectGiftOrganizerActions', () => {
 
       await user.click(screen.getByRole('button', { name: /Cerrar Participación/i }))
 
-      expect(screen.getByText('3 participantes')).toBeInTheDocument()
+      expect(screen.getByText('3 familias')).toBeInTheDocument()
     })
 
     it('muestra precio total y por persona en modal', async () => {

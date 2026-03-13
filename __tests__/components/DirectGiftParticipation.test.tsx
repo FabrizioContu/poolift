@@ -33,7 +33,7 @@ describe('DirectGiftParticipation', () => {
       render(<DirectGiftParticipation {...defaultProps} />)
 
       expect(screen.getByText('Apúntate al Regalo')).toBeInTheDocument()
-      expect(screen.getByPlaceholderText('ej: María, Juan García...')).toBeInTheDocument()
+      expect(screen.getByPlaceholderText('Ej: Familia García')).toBeInTheDocument()
       expect(screen.getByRole('button', { name: 'Apuntarme' })).toBeInTheDocument()
     })
 
@@ -48,7 +48,7 @@ describe('DirectGiftParticipation', () => {
       const user = userEvent.setup()
       render(<DirectGiftParticipation {...defaultProps} />)
 
-      await user.type(screen.getByPlaceholderText('ej: María, Juan García...'), 'Juan')
+      await user.type(screen.getByPlaceholderText('Ej: Familia García'), 'Juan')
 
       expect(screen.getByRole('button', { name: 'Apuntarme' })).not.toBeDisabled()
     })
@@ -60,7 +60,7 @@ describe('DirectGiftParticipation', () => {
       render(<DirectGiftParticipation {...defaultProps} />)
 
       // Type and clear to trigger validation
-      const input = screen.getByPlaceholderText('ej: María, Juan García...')
+      const input = screen.getByPlaceholderText('Ej: Familia García')
       await user.type(input, 'a')
       await user.clear(input)
 
@@ -77,9 +77,9 @@ describe('DirectGiftParticipation', () => {
 
       render(<DirectGiftParticipation {...defaultProps} />)
 
-      await user.type(screen.getByPlaceholderText('ej: María, Juan García...'), 'J')
+      await user.type(screen.getByPlaceholderText('Ej: Familia García'), 'J')
       // Force enable button by modifying the input
-      const input = screen.getByPlaceholderText('ej: María, Juan García...')
+      const input = screen.getByPlaceholderText('Ej: Familia García')
       await user.clear(input)
       await user.type(input, 'Jo')
       await user.clear(input)
@@ -99,7 +99,7 @@ describe('DirectGiftParticipation', () => {
 
       render(<DirectGiftParticipation {...defaultProps} />)
 
-      await user.type(screen.getByPlaceholderText('ej: María, Juan García...'), '  Juan García  ')
+      await user.type(screen.getByPlaceholderText('Ej: Familia García'), '  Juan García  ')
       await user.click(screen.getByRole('button', { name: 'Apuntarme' }))
 
       await waitFor(() => {
@@ -121,7 +121,7 @@ describe('DirectGiftParticipation', () => {
 
       render(<DirectGiftParticipation {...defaultProps} />)
 
-      const input = screen.getByPlaceholderText('ej: María, Juan García...')
+      const input = screen.getByPlaceholderText('Ej: Familia García')
       await user.type(input, 'María{enter}')
 
       await waitFor(() => {
@@ -142,7 +142,7 @@ describe('DirectGiftParticipation', () => {
 
       render(<DirectGiftParticipation {...defaultProps} />)
 
-      await user.type(screen.getByPlaceholderText('ej: María, Juan García...'), 'María')
+      await user.type(screen.getByPlaceholderText('Ej: Familia García'), 'María')
       await user.click(screen.getByRole('button', { name: 'Apuntarme' }))
 
       expect(screen.getByText('Apuntando...')).toBeInTheDocument()
@@ -157,7 +157,7 @@ describe('DirectGiftParticipation', () => {
 
       render(<DirectGiftParticipation {...defaultProps} />)
 
-      await user.type(screen.getByPlaceholderText('ej: María, Juan García...'), 'María')
+      await user.type(screen.getByPlaceholderText('Ej: Familia García'), 'María')
       await user.click(screen.getByRole('button', { name: 'Apuntarme' }))
 
       await waitFor(() => {
@@ -174,7 +174,7 @@ describe('DirectGiftParticipation', () => {
 
       render(<DirectGiftParticipation {...defaultProps} />)
 
-      await user.type(screen.getByPlaceholderText('ej: María, Juan García...'), 'María')
+      await user.type(screen.getByPlaceholderText('Ej: Familia García'), 'María')
       await user.click(screen.getByRole('button', { name: 'Apuntarme' }))
 
       await waitFor(() => {
@@ -193,7 +193,7 @@ describe('DirectGiftParticipation', () => {
 
       render(<DirectGiftParticipation {...defaultProps} />)
 
-      await user.type(screen.getByPlaceholderText('ej: María, Juan García...'), 'María')
+      await user.type(screen.getByPlaceholderText('Ej: Familia García'), 'María')
       await user.click(screen.getByRole('button', { name: 'Apuntarme' }))
 
       await waitFor(() => {
@@ -210,7 +210,7 @@ describe('DirectGiftParticipation', () => {
 
       render(<DirectGiftParticipation {...defaultProps} />)
 
-      await user.type(screen.getByPlaceholderText('ej: María, Juan García...'), 'María')
+      await user.type(screen.getByPlaceholderText('Ej: Familia García'), 'María')
       await user.click(screen.getByRole('button', { name: 'Apuntarme' }))
 
       await waitFor(() => {
@@ -224,7 +224,7 @@ describe('DirectGiftParticipation', () => {
 
       render(<DirectGiftParticipation {...defaultProps} />)
 
-      await user.type(screen.getByPlaceholderText('ej: María, Juan García...'), 'María')
+      await user.type(screen.getByPlaceholderText('Ej: Familia García'), 'María')
       await user.click(screen.getByRole('button', { name: 'Apuntarme' }))
 
       await waitFor(() => {
@@ -241,7 +241,7 @@ describe('DirectGiftParticipation', () => {
     it('muestra estado apuntado cuando hay datos en localStorage', () => {
       render(<DirectGiftParticipation {...defaultProps} />)
 
-      expect(screen.getByText('Estás apuntado!')).toBeInTheDocument()
+      expect(screen.getByText('Tu familia está apuntada')).toBeInTheDocument()
       expect(screen.getByText('María')).toBeInTheDocument()
       expect(screen.getByRole('button', { name: 'Salirme del regalo' })).toBeInTheDocument()
     })
@@ -337,7 +337,7 @@ describe('DirectGiftParticipation', () => {
 
       render(<DirectGiftParticipation {...defaultProps} />)
 
-      await user.type(screen.getByPlaceholderText('ej: María, Juan García...'), 'José María O\'Brien')
+      await user.type(screen.getByPlaceholderText('Ej: Familia García'), 'José María O\'Brien')
       await user.click(screen.getByRole('button', { name: 'Apuntarme' }))
 
       await waitFor(() => {
@@ -359,7 +359,7 @@ describe('DirectGiftParticipation', () => {
 
       render(<DirectGiftParticipation {...defaultProps} />)
 
-      await user.type(screen.getByPlaceholderText('ej: María, Juan García...'), 'María 😊')
+      await user.type(screen.getByPlaceholderText('Ej: Familia García'), 'María 😊')
       await user.click(screen.getByRole('button', { name: 'Apuntarme' }))
 
       await waitFor(() => {
@@ -378,7 +378,7 @@ describe('DirectGiftParticipation', () => {
 
       render(<DirectGiftParticipation {...defaultProps} />)
 
-      await user.type(screen.getByPlaceholderText('ej: María, Juan García...'), 'María')
+      await user.type(screen.getByPlaceholderText('Ej: Familia García'), 'María')
 
       const button = screen.getByRole('button', { name: 'Apuntarme' })
       await user.click(button)
@@ -411,7 +411,7 @@ describe('DirectGiftParticipation', () => {
 
       render(<DirectGiftParticipation {...defaultProps} />)
 
-      const input = screen.getByPlaceholderText('ej: María, Juan García...')
+      const input = screen.getByPlaceholderText('Ej: Familia García')
       await user.type(input, 'María')
       await user.click(screen.getByRole('button', { name: 'Apuntarme' }))
 

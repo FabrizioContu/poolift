@@ -52,7 +52,7 @@ export function DirectGiftParticipation({
 
   const handleJoin = async () => {
     if (!participantName.trim()) {
-      setError("Ingresa tu nombre");
+      setError("Ingresa el nombre de tu familia");
       return;
     }
 
@@ -158,7 +158,7 @@ export function DirectGiftParticipation({
             <CheckCircle className="text-green-600" size={32} />
           </div>
           <h3 className="text-xl font-bold mb-2 text-gray-900">
-            {isOrganizer ? "Eres el organizador" : "Estás apuntado!"}
+            {isOrganizer ? "Eres el organizador" : "Tu familia está apuntada"}
           </h3>
           <p className="text-gray-700 mb-6">
             Como: <strong>{participantName}</strong>
@@ -192,13 +192,13 @@ export function DirectGiftParticipation({
       <div className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Tu nombre
+            Nombre de tu familia
           </label>
           <input
             type="text"
             value={participantName}
             onChange={(e) => setParticipantName(e.target.value)}
-            placeholder="ej: María, Juan García..."
+            placeholder="Ej: Familia García"
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
             disabled={loading}
             onKeyDown={(e) => {
@@ -208,6 +208,7 @@ export function DirectGiftParticipation({
               }
             }}
           />
+          <p className="text-xs text-gray-500 mt-1">Una participación por familia</p>
         </div>
 
         {error && <p className="text-red-500 text-sm">{error}</p>}
