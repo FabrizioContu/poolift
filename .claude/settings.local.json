@@ -25,7 +25,11 @@
       "mcp__chrome-devtools__fill_form",
       "mcp__chrome-devtools__navigate_page",
       "Bash(find:*)",
-      "mcp__chrome-devtools__evaluate_script"
+      "mcp__chrome-devtools__evaluate_script",
+      "Bash(python -c \"import json,sys; p=json.load\\(sys.stdin\\); print\\(p.get\\(''''version'''',''''?''''\\)\\); print\\(p.get\\(''''description'''',''''?''''\\)\\)\")",
+      "mcp__claude_ai_Supabase__list_migrations",
+      "mcp__claude_ai_Supabase__apply_migration",
+      "mcp__claude_ai_Supabase__execute_sql"
     ]
   }
 }
