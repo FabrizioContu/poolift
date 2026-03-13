@@ -311,6 +311,7 @@ export default async function GiftPage({
             shareCode={shareCode}
             status={directGift.status}
             organizerName={directGift.organizer_name}
+            participants={directGift.participants}
           />
         </div>
       </div>

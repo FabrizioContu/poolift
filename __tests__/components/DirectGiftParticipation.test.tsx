@@ -15,6 +15,7 @@ const defaultProps = {
   shareCode: 'abc123xyz',
   status: 'open',
   organizerName: 'María',
+  participants: [],
 }
 
 describe('DirectGiftParticipation', () => {
@@ -298,6 +299,66 @@ describe('DirectGiftParticipation', () => {
       await waitFor(() => {
         expect(screen.getByText('No puedes salirte, la participación está cerrada')).toBeInTheDocument()
       })
+    })
+  })
+
+  describe('Detección "ya representado"', () => {
+    const participantsWithFamilies = [
+      { id: 'p-1', participant_name: 'Familia García' },
+      { id: 'p-2', participant_name: 'Familia López' },
+    ]
+
+    it('muestra links "Soy de esta familia" cuando hay participantes y no está unido', () => {
+      render(<DirectGiftParticipation {...defaultProps} participants={participantsWithFamilies} />)
+
+      expect(screen.getByText('¿Tu familia ya está apuntada?')).toBeInTheDocument()
+      expect(screen.getByText('Soy de Familia García →')).toBeInTheDocument()
+      expect(screen.getByText('Soy de Familia López →')).toBeInTheDocument()
+    })
+
+    it('no muestra links si no hay participantes', () => {
+      render(<DirectGiftParticipation {...defaultProps} participants={[]} />)
+
+      expect(screen.queryByText('¿Tu familia ya está apuntada?')).not.toBeInTheDocument()
+    })
+
+    it('click en "Soy de esta familia" muestra banner de representación', async () => {
+      const user = userEvent.setup()
+      render(<DirectGiftParticipation {...defaultProps} participants={participantsWithFamilies} />)
+
+      await user.click(screen.getByText('Soy de Familia García →'))
+
+      expect(screen.getByText('Tu familia ya está representada')).toBeInTheDocument()
+      expect(screen.getByText('Familia García')).toBeInTheDocument()
+      expect(screen.getByText('No necesitas apuntarte de nuevo')).toBeInTheDocument()
+    })
+
+    it('click en "Soy de esta familia" guarda en localStorage y oculta el form', async () => {
+      const user = userEvent.setup()
+      render(<DirectGiftParticipation {...defaultProps} participants={participantsWithFamilies} />)
+
+      await user.click(screen.getByText('Soy de Familia García →'))
+
+      expect(localStorage.getItem('direct_gift_gift-123_represented_by')).toBe('Familia García')
+      expect(screen.queryByRole('button', { name: 'Apuntarme' })).not.toBeInTheDocument()
+    })
+
+    it('muestra banner si localStorage ya tiene represented_by en mount', () => {
+      localStorage.setItem('direct_gift_gift-123_represented_by', 'Familia García')
+
+      render(<DirectGiftParticipation {...defaultProps} participants={participantsWithFamilies} />)
+
+      expect(screen.getByText('Tu familia ya está representada')).toBeInTheDocument()
+      expect(screen.queryByRole('button', { name: 'Apuntarme' })).not.toBeInTheDocument()
+    })
+
+    it('no muestra links si el usuario ya está unido', () => {
+      localStorage.setItem('direct_gift_gift-123_participant', 'Familia García')
+
+      render(<DirectGiftParticipation {...defaultProps} participants={participantsWithFamilies} />)
+
+      expect(screen.queryByText('¿Tu familia ya está apuntada?')).not.toBeInTheDocument()
+      expect(screen.getByText('Tu familia está apuntada')).toBeInTheDocument()
     })
   })
 
