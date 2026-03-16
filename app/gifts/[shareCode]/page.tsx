@@ -235,12 +235,12 @@ export default async function GiftPage({
             {/* Price Per Person - when closed or purchased */}
             {(isClosed || isPurchased) && pricePerPerson && (
               <div className="mt-4 p-4 bg-linear-to-br from-green-50 to-emerald-50 rounded-xl text-center">
-                <p className="text-sm text-gray-700 mb-1">Precio por persona</p>
+                <p className="text-sm text-gray-700 mb-1">Precio por familia</p>
                 <p className="text-3xl font-bold text-green-600">
                   {pricePerPerson}€
                 </p>
                 <p className="text-xs text-gray-700 mt-1">
-                  ({participantCount} participantes)
+                  ({participantCount} familias)
                 </p>
               </div>
             )}
@@ -277,7 +277,7 @@ export default async function GiftPage({
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-bold flex items-center gap-2 text-gray-900">
                 <Users size={24} />
-                Participantes
+                Familias participantes
               </h2>
               <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full font-semibold">
                 {participantCount}
@@ -286,7 +286,7 @@ export default async function GiftPage({
 
             {participantCount === 0 ? (
               <p className="text-gray-700 text-center py-6">
-                Sé el primero en apuntarte
+                Sé la primera familia en apuntarse
               </p>
             ) : (
               <ul className="space-y-2">
@@ -311,6 +311,7 @@ export default async function GiftPage({
             shareCode={shareCode}
             status={directGift.status}
             organizerName={directGift.organizer_name}
+            participants={directGift.participants}
           />
         </div>
       </div>
@@ -590,6 +591,7 @@ export default async function GiftPage({
           isPurchased={isPurchased}
           coordinatorName={gift.party?.coordinator?.name || null}
           groupId={gift.party?.group_id || null}
+          participants={gift.participants || []}
         />
       </div>
     </div>

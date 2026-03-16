@@ -152,7 +152,7 @@ describe('DirectGiftOrganizerActions', () => {
 
       await user.click(screen.getByRole('button', { name: /Cerrar Participación/i }))
 
-      expect(screen.getByText('3 participantes')).toBeInTheDocument()
+      expect(screen.getByText('3 familias')).toBeInTheDocument()
     })
 
     it('muestra precio total y por persona en modal', async () => {
@@ -396,6 +396,112 @@ describe('DirectGiftOrganizerActions', () => {
 
       expect(screen.queryByRole('button', { name: /Cerrar Participación/i })).not.toBeInTheDocument()
       expect(screen.queryByRole('link', { name: /Finalizar Compra/i })).not.toBeInTheDocument()
+    })
+  })
+
+  describe('Merge de participantes duplicados', () => {
+    beforeEach(() => {
+      localStorage.setItem('direct_gift_gift-123_organizer', 'true')
+    })
+
+    it('botón fusionar no visible con menos de 2 participantes', () => {
+      render(<DirectGiftOrganizerActions {...defaultProps} participantCount={1} participantNames={['Juan']} />)
+
+      expect(screen.queryByRole('button', { name: /Fusionar/i })).not.toBeInTheDocument()
+    })
+
+    it('botón fusionar visible con 2+ participantes y status open', () => {
+      render(<DirectGiftOrganizerActions {...defaultProps} />)
+
+      expect(screen.getByRole('button', { name: /Fusionar participantes duplicados/i })).toBeInTheDocument()
+    })
+
+    it('botón fusionar no visible cuando status no es open', () => {
+      render(<DirectGiftOrganizerActions {...defaultProps} status="closed" />)
+
+      expect(screen.queryByRole('button', { name: /Fusionar/i })).not.toBeInTheDocument()
+    })
+
+    it('abre modal de fusión al hacer clic en el botón', async () => {
+      const user = userEvent.setup()
+      render(<DirectGiftOrganizerActions {...defaultProps} />)
+
+      await user.click(screen.getByRole('button', { name: /Fusionar participantes duplicados/i }))
+
+      // Button + modal title both have this text — verify at least one is a heading
+      expect(screen.getAllByText('Fusionar participantes duplicados').length).toBeGreaterThanOrEqual(1)
+      expect(screen.getByText('Mantener')).toBeInTheDocument()
+      expect(screen.getByText('Eliminar (duplicado)')).toBeInTheDocument()
+    })
+
+    it('muestra advertencia cuando se selecciona el mismo participante en ambos selects', async () => {
+      const user = userEvent.setup()
+      render(<DirectGiftOrganizerActions {...defaultProps} participantNames={['Juan', 'Ana', 'Pedro']} />)
+
+      await user.click(screen.getByRole('button', { name: /Fusionar participantes duplicados/i }))
+
+      // Both selects default to first two items; change remove to same as keep
+      const selects = screen.getAllByRole('combobox')
+      await user.selectOptions(selects[1], 'Juan') // same as keep
+
+      expect(screen.getByText('Selecciona dos participantes distintos')).toBeInTheDocument()
+    })
+
+    it('botón Fusionar deshabilitado con mismo participante en ambos selects', async () => {
+      const user = userEvent.setup()
+      render(<DirectGiftOrganizerActions {...defaultProps} participantNames={['Juan', 'Ana']} />)
+
+      await user.click(screen.getByRole('button', { name: /Fusionar participantes duplicados/i }))
+
+      const selects = screen.getAllByRole('combobox')
+      await user.selectOptions(selects[1], 'Juan')
+
+      const fusionarButton = screen.getByRole('button', { name: 'Fusionar' })
+      expect(fusionarButton).toBeDisabled()
+    })
+
+    it('llama al API correcto al confirmar merge', async () => {
+      const user = userEvent.setup()
+      ;(global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve({ success: true, kept: 'Juan', removed: 'Ana' }),
+      })
+
+      render(<DirectGiftOrganizerActions {...defaultProps} participantNames={['Juan', 'Ana', 'Pedro']} />)
+
+      await user.click(screen.getByRole('button', { name: /Fusionar participantes duplicados/i }))
+
+      const fusionarButton = screen.getByRole('button', { name: 'Fusionar' })
+      await user.click(fusionarButton)
+
+      await waitFor(() => {
+        expect(global.fetch).toHaveBeenCalledWith(
+          '/api/gifts/direct/gift-123/participants/merge',
+          expect.objectContaining({
+            method: 'PUT',
+            body: expect.stringContaining('"keep"'),
+          })
+        )
+      })
+    })
+
+    it('muestra error del API en el modal', async () => {
+      const user = userEvent.setup()
+      ;(global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+        ok: false,
+        json: () => Promise.resolve({ error: 'Participante no encontrado' }),
+      })
+
+      render(<DirectGiftOrganizerActions {...defaultProps} participantNames={['Juan', 'Ana']} />)
+
+      await user.click(screen.getByRole('button', { name: /Fusionar participantes duplicados/i }))
+
+      const fusionarButton = screen.getByRole('button', { name: 'Fusionar' })
+      await user.click(fusionarButton)
+
+      await waitFor(() => {
+        expect(screen.getByText('Participante no encontrado')).toBeInTheDocument()
+      })
     })
   })
 

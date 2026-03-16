@@ -2,13 +2,19 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/Button";
-import { UserPlus, UserMinus, CheckCircle } from "lucide-react";
+import { UserPlus, UserMinus, CheckCircle, Users } from "lucide-react";
+
+interface DirectGiftParticipant {
+  id: string;
+  participant_name: string;
+}
 
 interface DirectGiftParticipationProps {
   giftId: string;
   shareCode: string;
   status: string;
   organizerName: string;
+  participants?: DirectGiftParticipant[];
 }
 
 export function DirectGiftParticipation({
@@ -16,12 +22,14 @@ export function DirectGiftParticipation({
   shareCode,
   status,
   organizerName,
+  participants = [],
 }: DirectGiftParticipationProps) {
   const [participantName, setParticipantName] = useState("");
   const [loading, setLoading] = useState(false);
   const [joined, setJoined] = useState(false);
   const [isOrganizer, setIsOrganizer] = useState(false);
   const [error, setError] = useState("");
+  const [representedBy, setRepresentedBy] = useState<string | null>(null);
 
   const isOpen = status === "open";
 
@@ -47,12 +55,29 @@ export function DirectGiftParticipation({
     if (saved) {
       setParticipantName(saved);
       setJoined(true);
+      return;
+    }
+
+    // Check if represented by an existing participant (family claim)
+    // This covers the case where parent B opens the link after parent A already joined
+    // and parent A set localStorage on this device (e.g. same phone)
+    // OR parent B previously clicked "Soy de esta familia"
+    const claimedFamily = localStorage.getItem(
+      `direct_gift_${giftId}_represented_by`
+    );
+    if (claimedFamily) {
+      setRepresentedBy(claimedFamily);
     }
   }, [giftId, shareCode, organizerName]);
 
+  const handleClaimRepresentation = (familyName: string) => {
+    localStorage.setItem(`direct_gift_${giftId}_represented_by`, familyName);
+    setRepresentedBy(familyName);
+  };
+
   const handleJoin = async () => {
     if (!participantName.trim()) {
-      setError("Ingresa tu nombre");
+      setError("Ingresa el nombre de tu familia");
       return;
     }
 
@@ -158,7 +183,7 @@ export function DirectGiftParticipation({
             <CheckCircle className="text-green-600" size={32} />
           </div>
           <h3 className="text-xl font-bold mb-2 text-gray-900">
-            {isOrganizer ? "Eres el organizador" : "Estás apuntado!"}
+            {isOrganizer ? "Eres el organizador" : "Tu familia está apuntada"}
           </h3>
           <p className="text-gray-700 mb-6">
             Como: <strong>{participantName}</strong>
@@ -182,6 +207,28 @@ export function DirectGiftParticipation({
     );
   }
 
+  // Show "already represented" state — family claim via localStorage without a new DB row
+  if (representedBy) {
+    return (
+      <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
+        <div className="text-center">
+          <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Users className="text-green-600" size={32} />
+          </div>
+          <h3 className="text-xl font-bold mb-2 text-gray-900">
+            Tu familia ya está representada
+          </h3>
+          <p className="text-gray-700">
+            Representado por: <strong>{representedBy}</strong>
+          </p>
+          <p className="text-sm text-gray-500 mt-2">
+            No necesitas apuntarte de nuevo
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   // Show join form
   return (
     <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
@@ -189,16 +236,34 @@ export function DirectGiftParticipation({
         Apúntate al Regalo
       </h3>
 
+      {/* "Already represented" links — show when there are existing participants */}
+      {participants.length > 0 && (
+        <div className="mb-4 p-3 bg-gray-50 rounded-lg">
+          <p className="text-xs text-gray-500 mb-2">¿Tu familia ya está apuntada?</p>
+          <div className="flex flex-wrap gap-2">
+            {participants.map((p) => (
+              <button
+                key={p.id}
+                onClick={() => handleClaimRepresentation(p.participant_name)}
+                className="text-xs bg-white border border-gray-200 rounded-full px-3 py-1 text-gray-700 hover:border-green-400 hover:text-green-700 transition-colors"
+              >
+                Soy de {p.participant_name} →
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
       <div className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">
-            Tu nombre
+            Nombre de tu familia
           </label>
           <input
             type="text"
             value={participantName}
             onChange={(e) => setParticipantName(e.target.value)}
-            placeholder="ej: María, Juan García..."
+            placeholder="Ej: Familia García"
             className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
             disabled={loading}
             onKeyDown={(e) => {
@@ -208,6 +273,7 @@ export function DirectGiftParticipation({
               }
             }}
           />
+          <p className="text-xs text-gray-500 mt-1">Una participación por familia</p>
         </div>
 
         {error && <p className="text-red-500 text-sm">{error}</p>}
