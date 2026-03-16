@@ -13,7 +13,7 @@ export function Button({
     "px-4 py-2 rounded-lg font-bold transition disabled:opacity-50 disabled:cursor-not-allowed";
 
   const variantStyles = {
-    primary: "bg-blue-500 text-white hover:bg-blue-600",
+    primary: "bg-bondi-blue-400 text-white hover:bg-bondi-blue-500",
     secondary: "bg-gray-200 text-gray-800 hover:bg-gray-300",
     danger: "bg-red-500 text-white hover:bg-red-600",
   };

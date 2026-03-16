@@ -227,12 +227,12 @@ La participación está cerrada. Mas info: ${giftUrl}`;
 
   if (isPurchased) {
     return (
-      <div className="bg-green-50 rounded-2xl p-6 mb-6">
-        <div className="flex items-center gap-2 text-green-800 mb-2">
+      <div className="bg-ocean-mist-50 rounded-2xl p-6 mb-6">
+        <div className="flex items-center gap-2 text-ocean-mist-700 mb-2">
           <Settings size={20} />
           <span className="font-semibold">Panel de Organizador</span>
         </div>
-        <p className="text-green-700 text-sm">
+        <p className="text-ocean-mist-600 text-sm">
           El regalo ha sido comprado y finalizado.
         </p>
       </div>
@@ -241,8 +241,8 @@ La participación está cerrada. Mas info: ${giftUrl}`;
 
   return (
     <>
-      <div className="bg-green-50 rounded-2xl p-6 mb-6">
-        <div className="flex items-center gap-2 text-green-800 mb-4">
+      <div className="bg-ocean-mist-50 rounded-2xl p-6 mb-6">
+        <div className="flex items-center gap-2 text-ocean-mist-700 mb-4">
           <Settings size={20} />
           <span className="font-semibold">Panel de Organizador</span>
         </div>
@@ -260,7 +260,7 @@ La participación está cerrada. Mas info: ${giftUrl}`;
             </Button>
           ) : (
             <Link href={`/organizer/${giftId}/purchase?shareCode=${shareCode}`}>
-              <Button className="w-full bg-green-600 hover:bg-green-700">
+              <Button className="w-full bg-ocean-mist-400 hover:bg-ocean-mist-500">
                 <ShoppingCart size={18} className="mr-2" />
                 Finalizar Compra
               </Button>
@@ -297,7 +297,7 @@ La participación está cerrada. Mas info: ${giftUrl}`;
           )}
 
           {/* Cancel Button - only show if not purchased */}
-          <div className="pt-3 border-t border-green-200">
+          <div className="pt-3 border-t border-ocean-mist-200">
             <Button
               onClick={() => setShowCancelModal(true)}
               variant="secondary"
@@ -331,8 +331,8 @@ La participación está cerrada. Mas info: ${giftUrl}`;
               </div>
             </div>
 
-            <div className="p-4 bg-green-50 rounded-lg">
-              <div className="flex items-center gap-2 text-green-800 mb-2">
+            <div className="p-4 bg-ocean-mist-50 rounded-lg">
+              <div className="flex items-center gap-2 text-ocean-mist-700 mb-2">
                 <Users size={18} />
                 <span className="font-medium">{participantCount} familias</span>
               </div>
@@ -340,13 +340,13 @@ La participación está cerrada. Mas info: ${giftUrl}`;
                 <>
                   <div className="flex justify-between items-center">
                     <span className="text-gray-700">Total estimado:</span>
-                    <span className="font-bold text-green-600">
+                    <span className="font-bold text-ocean-mist-400">
                       {formatPrice(totalPrice)}
                     </span>
                   </div>
-                  <div className="flex justify-between items-center mt-2 pt-2 border-t border-green-200">
+                  <div className="flex justify-between items-center mt-2 pt-2 border-t border-ocean-mist-200">
                     <span className="text-gray-700">Precio por familia:</span>
-                    <span className="font-bold text-green-600 text-lg">
+                    <span className="font-bold text-ocean-mist-400 text-lg">
                       {estimatedPricePerPerson}€
                     </span>
                   </div>
@@ -368,7 +368,7 @@ La participación está cerrada. Mas info: ${giftUrl}`;
               <Button
                 onClick={handleClose}
                 disabled={loading}
-                className="flex-1 bg-green-600 hover:bg-green-700"
+                className="flex-1 bg-ocean-mist-400 hover:bg-ocean-mist-500"
               >
                 {loading ? "Cerrando..." : "Cerrar Participación"}
               </Button>
@@ -385,13 +385,13 @@ La participación está cerrada. Mas info: ${giftUrl}`;
           title="Participación Cerrada"
         >
           <div className="space-y-4">
-            <div className="flex items-center gap-3 p-4 bg-green-50 rounded-lg">
-              <Check className="text-green-600 shrink-0" size={24} />
+            <div className="flex items-center gap-3 p-4 bg-ocean-mist-50 rounded-lg">
+              <Check className="text-ocean-mist-400 shrink-0" size={24} />
               <div>
-                <p className="font-medium text-green-800">
+                <p className="font-medium text-ocean-mist-700">
                   La participación ha sido cerrada
                 </p>
-                <p className="text-sm text-green-700 mt-1">
+                <p className="text-sm text-ocean-mist-600 mt-1">
                   Comparte el enlace para que vean el precio final.
                 </p>
               </div>
@@ -427,7 +427,7 @@ La participación está cerrada. Mas info: ${giftUrl}`;
 
                   <div className="flex justify-between items-center pt-2 border-t border-gray-200">
                     <span className="text-gray-700">Precio por familia:</span>
-                    <span className="font-bold text-green-600 text-xl">
+                    <span className="font-bold text-ocean-mist-400 text-xl">
                       {finalPricePerPerson || estimatedPricePerPerson}€
                     </span>
                   </div>
@@ -443,7 +443,7 @@ La participación está cerrada. Mas info: ${giftUrl}`;
                   {participantNames.map((name, index) => (
                     <span
                       key={index}
-                      className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full"
+                      className="bg-ocean-mist-50 text-ocean-mist-700 text-xs px-2 py-1 rounded-full"
                     >
                       {name}
                     </span>
@@ -458,7 +458,7 @@ La participación está cerrada. Mas info: ${giftUrl}`;
 
               <Button
                 onClick={handleShareWhatsApp}
-                className="w-full bg-green-500 hover:bg-green-600"
+                className="w-full bg-ocean-mist-500 hover:bg-green-600"
               >
                 <Share2 size={18} className="mr-2" />
                 Compartir por WhatsApp
@@ -521,7 +521,7 @@ La participación está cerrada. Mas info: ${giftUrl}`;
                 {recipientName}
               </p>
               {participantCount > 0 && (
-                <p className="text-sm text-orange-600">
+                <p className="text-sm text-tropical-teal-500">
                   Hay {participantCount} participante
                   {participantCount > 1 ? "s" : ""} apuntado
                   {participantCount > 1 ? "s" : ""}.
@@ -572,7 +572,7 @@ La participación está cerrada. Mas info: ${giftUrl}`;
               <select
                 value={mergeKeep}
                 onChange={(e) => setMergeKeep(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-mist-400 focus:border-transparent"
               >
                 {participantNames.map((name) => (
                   <option key={name} value={name}>
@@ -589,7 +589,7 @@ La participación está cerrada. Mas info: ${giftUrl}`;
               <select
                 value={mergeRemove}
                 onChange={(e) => setMergeRemove(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-mist-400 focus:border-transparent"
               >
                 {participantNames.map((name) => (
                   <option key={name} value={name}>
@@ -600,7 +600,7 @@ La participación está cerrada. Mas info: ${giftUrl}`;
             </div>
 
             {mergeKeep === mergeRemove && (
-              <p className="text-sm text-orange-600">
+              <p className="text-sm text-tropical-teal-500">
                 Selecciona dos participantes distintos
               </p>
             )}
@@ -624,7 +624,7 @@ La participación está cerrada. Mas info: ${giftUrl}`;
                   !mergeRemove ||
                   mergeKeep === mergeRemove
                 }
-                className="flex-1 bg-green-600 hover:bg-green-700"
+                className="flex-1 bg-ocean-mist-400 hover:bg-ocean-mist-500"
               >
                 {mergeLoading ? "Fusionando..." : "Fusionar"}
               </Button>

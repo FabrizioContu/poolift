@@ -23,10 +23,10 @@ export function Card({
 
   const baseStyles = "bg-white border rounded-lg";
   const borderStyles = selected
-    ? "border-green-500 bg-green-50"
+    ? "border-emerald-400 bg-emerald-50"
     : "border-gray-200";
   const hoverStyles = hover
-    ? "hover:shadow-lg hover:border-blue-300 transition cursor-pointer"
+    ? "hover:shadow-lg hover:border-bondi-blue-200 transition cursor-pointer"
     : "";
 
   return (

@@ -11,7 +11,7 @@ describe('Button', () => {
   it('aplica la variante primary por defecto', () => {
     render(<Button>Primary</Button>)
     const button = screen.getByText('Primary')
-    expect(button).toHaveClass('bg-blue-500')
+    expect(button).toHaveClass('bg-bondi-blue-400')
   })
   
   it('aplica la variante secondary', () => {

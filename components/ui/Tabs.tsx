@@ -26,7 +26,7 @@ export function Tabs({ tabs, defaultTab, children }: TabsProps) {
               onClick={() => setActiveTab(tab.id)}
               className={`py-3 px-1 border-b-2 font-medium text-sm transition ${
                 activeTab === tab.id
-                  ? "border-blue-500 text-blue-600"
+                  ? "border-bondi-blue-400 text-bondi-blue-500"
                   : "border-transparent text-gray-700 hover:text-gray-700 hover:border-gray-300"
               }`}
             >

@@ -1,165 +1,173 @@
-'use client'
+"use client";
 
-import { useState, useEffect, use } from 'react'
-import dynamic from 'next/dynamic'
-import { Button } from '@/components/ui/Button'
-import { ShoppingCart, Upload, FileText, ArrowLeft, CheckCircle } from 'lucide-react'
-import { useRouter } from 'next/navigation'
-import Link from 'next/link'
-import { formatPrice, calculatePricePerFamily } from '@/lib/utils'
-import { useAuth } from '@/lib/auth'
+import { useState, useEffect, use } from "react";
+import dynamic from "next/dynamic";
+import { Button } from "@/components/ui/Button";
+import {
+  ShoppingCart,
+  Upload,
+  FileText,
+  ArrowLeft,
+  CheckCircle,
+} from "lucide-react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { formatPrice, calculatePricePerFamily } from "@/lib/utils";
+import { useAuth } from "@/lib/auth";
 
 const AuthModal = dynamic(() =>
-  import('@/components/auth/AuthModal').then((m) => ({ default: m.AuthModal }))
-)
+  import("@/components/auth/AuthModal").then((m) => ({ default: m.AuthModal })),
+);
 
 interface GiftData {
-  id: string
-  share_code: string
-  participation_open: boolean
-  purchased_at: string | null
+  id: string;
+  share_code: string;
+  participation_open: boolean;
+  purchased_at: string | null;
   proposal: {
-    name: string
-    total_price: number
-  } | null
-  participants: Array<{ id: string; family_name: string }>
+    name: string;
+    total_price: number;
+  } | null;
+  participants: Array<{ id: string; family_name: string }>;
   party: {
     party_celebrants: Array<{
-      birthdays: { child_name: string }
-    }>
-  } | null
+      birthdays: { child_name: string };
+    }>;
+  } | null;
 }
 
 export default function PurchasePage({
-  params
+  params,
 }: {
-  params: Promise<{ giftId: string }>
+  params: Promise<{ giftId: string }>;
 }) {
-  const { giftId } = use(params)
-  const router = useRouter()
-  const { isAnonymous } = useAuth()
+  const { giftId } = use(params);
+  const router = useRouter();
+  const { isAnonymous } = useAuth();
 
-  const [gift, setGift] = useState<GiftData | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [submitting, setSubmitting] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [success, setSuccess] = useState(false)
-  const [showAuthNudge, setShowAuthNudge] = useState(false)
+  const [gift, setGift] = useState<GiftData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+  const [showAuthNudge, setShowAuthNudge] = useState(false);
 
-  const [finalPrice, setFinalPrice] = useState('')
-  const [comment, setComment] = useState('')
-  const [receipt, setReceipt] = useState<File | null>(null)
-  const [preview, setPreview] = useState<string | null>(null)
+  const [finalPrice, setFinalPrice] = useState("");
+  const [comment, setComment] = useState("");
+  const [receipt, setReceipt] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
 
   // Fetch gift data
   useEffect(() => {
     async function fetchGift() {
       try {
         // We need to get the share code first to fetch the gift
-        const response = await fetch(`/api/gifts/${giftId}`)
+        const response = await fetch(`/api/gifts/${giftId}`);
         if (response.ok) {
-          const data = await response.json()
-          setGift(data.gift)
+          const data = await response.json();
+          setGift(data.gift);
 
           // Pre-fill with proposal price
           if (data.gift?.proposal?.total_price) {
-            setFinalPrice(data.gift.proposal.total_price.toString())
+            setFinalPrice(data.gift.proposal.total_price.toString());
           }
         } else {
-          setError('Regalo no encontrado')
+          setError("Regalo no encontrado");
         }
       } catch {
-        setError('Error al cargar el regalo')
+        setError("Error al cargar el regalo");
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
     }
 
-    fetchGift()
-  }, [giftId])
+    fetchGift();
+  }, [giftId]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
+    const file = e.target.files?.[0];
+    if (!file) return;
 
     // Validate file size (max 5MB)
     if (file.size > 5 * 1024 * 1024) {
-      setError('El archivo es demasiado grande (máximo 5MB)')
-      return
+      setError("El archivo es demasiado grande (máximo 5MB)");
+      return;
     }
 
-    setReceipt(file)
-    setError(null)
+    setReceipt(file);
+    setError(null);
 
     // Preview for images
-    if (file.type.startsWith('image/')) {
-      const reader = new FileReader()
+    if (file.type.startsWith("image/")) {
+      const reader = new FileReader();
       reader.onloadend = () => {
-        setPreview(reader.result as string)
-      }
-      reader.readAsDataURL(file)
+        setPreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
     } else {
-      setPreview(null)
+      setPreview(null);
     }
-  }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (!finalPrice || parseFloat(finalPrice) <= 0) {
-      setError('Ingresa el precio final')
-      return
+      setError("Ingresa el precio final");
+      return;
     }
 
-    setSubmitting(true)
-    setError(null)
+    setSubmitting(true);
+    setError(null);
 
     try {
       // For now, we'll use the JSON API since we don't have storage setup
       // In production, you'd upload the receipt to Supabase Storage first
       const response = await fetch(`/api/gifts/${giftId}/finalize`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           finalPrice: parseFloat(finalPrice),
           coordinatorComment: comment || null,
-          receiptImageUrl: null // Would be the uploaded URL
-        })
-      })
+          receiptImageUrl: null, // Would be the uploaded URL
+        }),
+      });
 
-      const data = await response.json()
+      const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Error al finalizar')
+        throw new Error(data.error || "Error al finalizar");
       }
 
-      setSuccess(true)
-      if (isAnonymous) setShowAuthNudge(true)
+      setSuccess(true);
+      if (isAnonymous) setShowAuthNudge(true);
 
       // Redirect after delay
       setTimeout(() => {
         if (gift?.share_code) {
-          router.push(`/gifts/${gift.share_code}`)
+          router.push(`/gifts/${gift.share_code}`);
         } else {
-          router.push('/')
+          router.push("/");
         }
-      }, 2000)
+      }, 2000);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Error al finalizar compra')
+      setError(
+        err instanceof Error ? err.message : "Error al finalizar compra",
+      );
     } finally {
-      setSubmitting(false)
+      setSubmitting(false);
     }
-  }
+  };
 
   if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-bondi-blue-400 mx-auto"></div>
           <p className="text-gray-700 mt-4">Cargando...</p>
         </div>
       </div>
-    )
+    );
   }
 
   if (error && !gift) {
@@ -167,9 +175,7 @@ export default function PurchasePage({
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center px-4">
           <ShoppingCart className="mx-auto text-gray-700 mb-4" size={64} />
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">
-            {error}
-          </h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">{error}</h1>
           <Link href="/">
             <Button variant="secondary" className="mt-4">
               <ArrowLeft size={18} className="mr-2" />
@@ -178,29 +184,27 @@ export default function PurchasePage({
           </Link>
         </div>
       </div>
-    )
+    );
   }
 
-  if (!gift) return null
+  if (!gift) return null;
 
   // Check if already purchased
   if (gift.purchased_at) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center px-4">
-          <CheckCircle className="mx-auto text-green-500 mb-4" size={64} />
+          <CheckCircle className="mx-auto text-emerald-500 mb-4" size={64} />
           <h1 className="text-2xl font-bold text-gray-900 mb-2">
             Regalo ya finalizado
           </h1>
-          <p className="text-gray-700 mb-4">
-            Este regalo ya fue comprado.
-          </p>
+          <p className="text-gray-700 mb-4">Este regalo ya fue comprado.</p>
           <Link href={`/gifts/${gift.share_code}`}>
             <Button>Ver Regalo</Button>
           </Link>
         </div>
       </div>
-    )
+    );
   }
 
   // Check if participation is still open
@@ -208,7 +212,7 @@ export default function PurchasePage({
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center px-4">
-          <ShoppingCart className="mx-auto text-orange-500 mb-4" size={64} />
+          <ShoppingCart className="mx-auto text-tropical-teal-400 mb-4" size={64} />
           <h1 className="text-2xl font-bold text-gray-900 mb-2">
             Participación aún abierta
           </h1>
@@ -223,17 +227,16 @@ export default function PurchasePage({
           </Link>
         </div>
       </div>
-    )
+    );
   }
 
-  const participantCount = gift.participants?.length || 0
+  const participantCount = gift.participants?.length || 0;
   const estimatedPricePerFamily = finalPrice
     ? calculatePricePerFamily(parseFloat(finalPrice), participantCount)
-    : '0.00'
+    : "0.00";
 
-  const celebrantNames = gift.party?.party_celebrants?.map(
-    pc => pc.birthdays.child_name
-  ) || []
+  const celebrantNames =
+    gift.party?.party_celebrants?.map((pc) => pc.birthdays.child_name) || [];
 
   // Success screen
   if (success) {
@@ -241,14 +244,14 @@ export default function PurchasePage({
       <>
         <div className="min-h-screen bg-gray-50 flex items-center justify-center">
           <div className="text-center px-4">
-            <CheckCircle className="mx-auto text-green-500 mb-4" size={64} />
+            <CheckCircle className="mx-auto text-emerald-500 mb-4" size={64} />
             <h1 className="text-2xl font-bold text-gray-900 mb-2">
               ¡Regalo Finalizado!
             </h1>
             <p className="text-gray-700 mb-4">
               Las familias serán notificadas del precio final.
             </p>
-            <p className="text-lg font-semibold text-green-600">
+            <p className="text-lg font-semibold text-emerald-500">
               Precio por familia: {estimatedPricePerFamily}€
             </p>
           </div>
@@ -261,7 +264,7 @@ export default function PurchasePage({
           subheadline="Crea una cuenta para ver el historial de todos tus regalos"
         />
       </>
-    )
+    );
   }
 
   return (
@@ -278,19 +281,19 @@ export default function PurchasePage({
 
         <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
           <div className="flex items-center gap-3 mb-6">
-            <ShoppingCart className="text-blue-500" size={32} />
+            <ShoppingCart className="text-bondi-blue-400" size={32} />
             <div>
               <h1 className="text-2xl font-bold">Finalizar Compra</h1>
               {celebrantNames.length > 0 && (
                 <p className="text-gray-700">
-                  Regalo para {celebrantNames.join(' y ')}
+                  Regalo para {celebrantNames.join(" y ")}
                 </p>
               )}
             </div>
           </div>
 
           {/* Summary */}
-          <div className="bg-blue-50 p-4 rounded-lg mb-6">
+          <div className="bg-bondi-blue-50 p-4 rounded-lg mb-6">
             <p className="font-semibold text-lg mb-2">{gift.proposal?.name}</p>
             <div className="flex justify-between text-sm text-gray-700">
               <span>Precio propuesto:</span>
@@ -298,7 +301,7 @@ export default function PurchasePage({
                 {formatPrice(gift.proposal?.total_price || 0)}
               </span>
             </div>
-            <div className="flex justify-between text-sm text-gray-700 mt-1">
+            <div className="flex justify-between text-sm text-gray-900 mt-1">
               <span>Familias participantes:</span>
               <span className="font-medium">{participantCount}</span>
             </div>
@@ -318,7 +321,7 @@ export default function PurchasePage({
                   value={finalPrice}
                   onChange={(e) => setFinalPrice(e.target.value)}
                   placeholder="ej: 75.98"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent pr-12"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent pr-12"
                   required
                 />
                 <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-700">
@@ -326,8 +329,9 @@ export default function PurchasePage({
                 </span>
               </div>
               {finalPrice && parseFloat(finalPrice) > 0 && (
-                <p className="mt-2 text-sm text-green-600">
-                  Precio por familia: <strong>{estimatedPricePerFamily}€</strong>
+                <p className="mt-2 text-sm text-emerald-500">
+                  Precio por familia:{" "}
+                  <strong>{estimatedPricePerFamily}€</strong>
                 </p>
               )}
             </div>
@@ -342,7 +346,7 @@ export default function PurchasePage({
                 type="file"
                 accept="image/*,application/pdf"
                 onChange={handleFileChange}
-                className="w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                className="w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-bondi-blue-50 file:text-bondi-blue-600 hover:file:bg-bondi-blue-100"
               />
 
               {preview && (
@@ -375,14 +379,12 @@ export default function PurchasePage({
                 onChange={(e) => setComment(e.target.value)}
                 placeholder="ej: Comprado en Amazon con descuento del 20%"
                 rows={3}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent resize-none"
               />
             </div>
 
             {/* Error */}
-            {error && (
-              <p className="text-red-500 text-sm">{error}</p>
-            )}
+            {error && <p className="text-red-500 text-sm">{error}</p>}
 
             {/* Buttons */}
             <div className="flex gap-3 pt-2">
@@ -395,17 +397,13 @@ export default function PurchasePage({
               >
                 Cancelar
               </Button>
-              <Button
-                type="submit"
-                disabled={submitting}
-                className="flex-1"
-              >
-                {submitting ? 'Finalizando...' : 'Finalizar Compra'}
+              <Button type="submit" disabled={submitting} className="flex-1">
+                {submitting ? "Finalizando..." : "Finalizar Compra"}
               </Button>
             </div>
           </form>
         </div>
       </div>
     </div>
-  )
+  );
 }

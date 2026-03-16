@@ -54,11 +54,11 @@ export function ConfirmDeleteModal({
       <div className="text-center">
         <div
           className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 ${
-            dangerous ? "bg-red-100" : "bg-orange-100"
+            dangerous ? "bg-red-100" : "bg-tropical-teal-100"
           }`}
         >
           <AlertTriangle
-            className={`w-8 h-8 ${dangerous ? "text-red-600" : "text-orange-600"}`}
+            className={`w-8 h-8 ${dangerous ? "text-red-600" : "text-tropical-teal-500"}`}
           />
         </div>
 

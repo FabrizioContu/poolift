@@ -48,7 +48,7 @@ export default function TestGuardsPage() {
         <div className="space-y-3 mb-4">
           <button
             onClick={grantAccess}
-            className="px-4 py-2 bg-green-500 text-white rounded mr-2"
+            className="px-4 py-2 bg-emerald-400 text-white rounded mr-2"
           >
             Conceder Acceso
           </button>
@@ -62,7 +62,7 @@ export default function TestGuardsPage() {
 
           <button
             onClick={() => setShowAccessTest(!showAccessTest)}
-            className="px-4 py-2 bg-blue-500 text-white rounded"
+            className="px-4 py-2 bg-bondi-blue-400 text-white rounded"
           >
             {showAccessTest ? 'Ocultar' : 'Mostrar'} AccessGuard
           </button>
@@ -70,7 +70,7 @@ export default function TestGuardsPage() {
 
         {showAccessTest && (
           <AccessGuard groupId={testGroupId}>
-            <div className="p-4 bg-green-50 border border-green-300 rounded">
+            <div className="p-4 bg-emerald-50 border border-emerald-100 rounded">
               Tienes acceso! Este contenido solo es visible si tienes permiso.
             </div>
           </AccessGuard>
@@ -101,7 +101,7 @@ export default function TestGuardsPage() {
 
           <button
             onClick={() => setTestName('Pedro Sanchez')}
-            className="px-4 py-2 bg-blue-500 text-white rounded mr-2"
+            className="px-4 py-2 bg-bondi-blue-400 text-white rounded mr-2"
           >
             Nombre: Pedro Sanchez (no celebrante)
           </button>
@@ -123,7 +123,7 @@ export default function TestGuardsPage() {
 
         {showSpoilerTest && (
           <SpoilerGuard celebrantNames={testCelebrants}>
-            <div className="p-4 bg-blue-50 border border-blue-300 rounded">
+            <div className="p-4 bg-bondi-blue-50 border border-bondi-blue-200 rounded">
               No eres celebrante! Puedes ver el regalo.
               <div className="mt-2 text-sm">
                 Celebrantes: {testCelebrants.join(', ')}

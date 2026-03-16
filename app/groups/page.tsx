@@ -211,7 +211,7 @@ export default function GroupsPage() {
               Inicio
             </Link>
             {!isAnonymous && (
-              <Link href="/create-group" className="flex items-center gap-2 px-4 py-2 rounded-lg font-bold transition bg-blue-500 text-white hover:bg-blue-600">
+              <Link href="/create-group" className="flex items-center gap-2 px-4 py-2 rounded-lg font-bold transition bg-bondi-blue-400 text-white hover:bg-bondi-blue-500">
                 <Plus size={18} />
                 Crear Grupo
               </Link>
@@ -221,10 +221,10 @@ export default function GroupsPage() {
 
         {/* Auth banner for anonymous users */}
         {!authLoading && isAnonymous && (
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 flex items-center justify-between gap-4">
+          <div className="bg-bondi-blue-50 border border-bondi-blue-200 rounded-lg p-4 mb-6 flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <Lock className="text-blue-600 flex-shrink-0" size={20} />
-              <p className="text-blue-800 text-sm">
+              <Lock className="text-bondi-blue-500 flex-shrink-0" size={20} />
+              <p className="text-bondi-blue-700 text-sm">
                 Inicia sesión para ver si tienes acceso a estos grupos
               </p>
             </div>
@@ -269,7 +269,7 @@ export default function GroupsPage() {
         {/* Content */}
         {loading || authLoading ? (
           <div role="status" aria-label="Cargando grupos" className="text-center py-12">
-            <div aria-hidden="true" className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto"></div>
+            <div aria-hidden="true" className="animate-spin rounded-full h-12 w-12 border-b-2 border-bondi-blue-400 mx-auto"></div>
             <p className="text-gray-700 mt-4">Cargando grupos...</p>
           </div>
         ) : isAnonymous ? (
@@ -318,7 +318,7 @@ export default function GroupsPage() {
                   </div>
                   <button
                     onClick={() => setShowAuthModal(true)}
-                    className="mt-4 w-full text-sm text-blue-600 hover:text-blue-800 text-center py-2 border border-blue-200 rounded-lg hover:bg-blue-50 transition"
+                    className="mt-4 w-full text-sm text-bondi-blue-500 hover:text-bondi-blue-600 text-center py-2 border border-bondi-blue-200 rounded-lg hover:bg-bondi-blue-50 transition"
                   >
                     Inicia sesión para ver si tienes acceso
                   </button>
@@ -365,7 +365,7 @@ export default function GroupsPage() {
                   Crea un grupo nuevo o únete a uno existente
                 </p>
                 <div className="flex gap-3 justify-center mt-4">
-                  <Link href="/create-group" className="px-4 py-2 rounded-lg font-bold transition bg-blue-500 text-white hover:bg-blue-600">
+                  <Link href="/create-group" className="px-4 py-2 rounded-lg font-bold transition bg-bondi-blue-400 text-white hover:bg-bondi-blue-500">
                     Crear Grupo
                   </Link>
                   <Link href="/join" className="px-4 py-2 rounded-lg font-bold transition bg-gray-200 text-gray-800 hover:bg-gray-300">
@@ -396,7 +396,7 @@ export default function GroupsPage() {
         {directGifts.length > 0 && !showAll && (
           <div className="mt-10">
             <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
-              <Gift size={24} className="text-green-600" />
+              <Gift size={24} className="text-ocean-mist-400" />
               Mis Regalos Directos
             </h2>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
@@ -408,7 +408,7 @@ export default function GroupsPage() {
                 >
                   <div className="flex items-start justify-between">
                     <div>
-                      <span className="inline-block bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded-full mb-2">
+                      <span className="inline-block bg-ocean-mist-50 text-ocean-mist-700 text-xs px-2 py-0.5 rounded-full mb-2">
                         {OCCASION_LABELS[gift.occasion as OccasionType]}
                       </span>
                       <h3 className="font-semibold text-gray-900">
@@ -420,7 +420,7 @@ export default function GroupsPage() {
                         </p>
                       )}
                     </div>
-                    <Gift size={20} className="text-green-500 flex-shrink-0" />
+                    <Gift size={20} className="text-ocean-mist-400 flex-shrink-0" />
                   </div>
                   <p className="text-xs text-gray-700 mt-2">
                     Organizado por {gift.organizerName}
@@ -438,7 +438,7 @@ export default function GroupsPage() {
               ¿Tienes un código de invitación?{" "}
               <Link
                 href="/join"
-                className="text-blue-600 hover:underline font-medium"
+                className="text-bondi-blue-500 hover:underline font-medium"
               >
                 Únete a un grupo
               </Link>

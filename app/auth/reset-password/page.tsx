@@ -48,8 +48,8 @@ export default function ResetPasswordPage() {
       <div className="w-full max-w-md bg-white rounded-xl shadow-sm border border-gray-200 p-8">
         {sent ? (
           <div className="text-center space-y-4">
-            <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto">
-              <Mail size={32} className="text-green-600" />
+            <div className="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto">
+              <Mail size={32} className="text-emerald-500" />
             </div>
             <h1 className="text-xl font-bold text-gray-900">Revisa tu email</h1>
             <p className="text-gray-600 text-sm">
@@ -58,7 +58,7 @@ export default function ResetPasswordPage() {
             </p>
             <Link
               href="/"
-              className="inline-block text-sm text-blue-600 hover:underline"
+              className="inline-block text-sm text-bondi-blue-500 hover:underline"
             >
               Volver al inicio
             </Link>
@@ -95,7 +95,7 @@ export default function ResetPasswordPage() {
 
             <p className="mt-4 text-center text-sm text-gray-500">
               ¿Recuerdas tu contraseña?{' '}
-              <Link href="/" className="text-blue-600 hover:underline">
+              <Link href="/" className="text-bondi-blue-500 hover:underline">
                 Volver al inicio
               </Link>
             </p>

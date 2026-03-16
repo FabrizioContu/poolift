@@ -83,10 +83,10 @@ export function GroupCard({
 
   if (deleted) {
     return (
-      <div className="block border border-green-200 rounded-lg p-6 bg-green-50">
+      <div className="block border border-emerald-200 rounded-lg p-6 bg-emerald-50">
         <div className="text-center">
-          <div className="bg-green-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
-            <CheckCircle className="w-6 h-6 text-green-600" />
+          <div className="bg-emerald-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
+            <CheckCircle className="w-6 h-6 text-emerald-500" />
           </div>
           <h3 className="text-lg font-semibold text-gray-900 mb-1">
             Grupo eliminado
@@ -96,7 +96,7 @@ export function GroupCard({
           </p>
           <a
             href="/groups"
-            className="inline-block bg-blue-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-600 transition text-sm"
+            className="inline-block bg-bondi-blue-400 text-white px-4 py-2 rounded-lg font-medium hover:bg-bondi-blue-500 transition text-sm"
           >
             Ver Todos los Grupos
           </a>
@@ -109,17 +109,17 @@ export function GroupCard({
     <>
       <Link
         href={`/dashboard/${group.id}`}
-        className="block border border-gray-200 rounded-lg p-6 hover:shadow-lg hover:border-blue-300 transition bg-white"
+        className="block border border-gray-200 rounded-lg p-6 hover:shadow-lg hover:border-bondi-blue-200 transition bg-white"
       >
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
             <div
               className={`p-2 rounded-lg ${
-                isCreator ? "bg-blue-100" : "bg-gray-100"
+                isCreator ? "bg-bondi-blue-100" : "bg-gray-100"
               }`}
             >
               <Users
-                className={isCreator ? "text-blue-600" : "text-gray-700"}
+                className={isCreator ? "text-bondi-blue-500" : "text-gray-700"}
                 size={28}
               />
             </div>
@@ -142,7 +142,7 @@ export function GroupCard({
                   <span
                     className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
                       isCreator
-                        ? "bg-blue-100 text-blue-800"
+                        ? "bg-bondi-blue-100 text-bondi-blue-700"
                         : "bg-gray-100 text-gray-700"
                     }`}
                   >
@@ -163,18 +163,18 @@ export function GroupCard({
             <div className="flex items-center gap-2">
               <button
                 onClick={handleCopyCode}
-                className="p-2 text-gray-700 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition"
+                className="p-2 text-gray-700 hover:text-bondi-blue-500 hover:bg-bondi-blue-50 rounded-lg transition"
                 title="Copiar código"
               >
                 {copied ? (
-                  <Check size={18} className="text-green-600" />
+                  <Check size={18} className="text-emerald-500" />
                 ) : (
                   <Copy size={18} />
                 )}
               </button>
               <button
                 onClick={handleShareWhatsApp}
-                className="p-2 text-gray-700 hover:text-green-600 hover:bg-green-50 rounded-lg transition"
+                className="p-2 text-gray-700 hover:text-emerald-500 hover:bg-emerald-50 rounded-lg transition"
                 title="Compartir por WhatsApp"
               >
                 <MessageCircle size={18} />

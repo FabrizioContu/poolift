@@ -84,7 +84,7 @@ export function UserMenu() {
         aria-haspopup="true"
         aria-label={name}
       >
-        <div className="w-7 h-7 rounded-full bg-blue-500 text-white flex items-center justify-center text-sm font-bold">
+        <div className="w-7 h-7 rounded-full bg-bondi-blue-400 text-white flex items-center justify-center text-sm font-bold">
           {initial}
         </div>
         {/* <span className="text-sm font-medium hidden sm:inline">{name}</span> */}

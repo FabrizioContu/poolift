@@ -126,7 +126,7 @@ export function AddProposalModal({
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Ej: Set de LEGO + Peluche"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent"
           />
         </div>
 
@@ -157,7 +157,7 @@ export function AddProposalModal({
                       updateItem(index, "itemName", e.target.value)
                     }
                     placeholder="Nombre del producto"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent"
                   />
                   <div className="flex gap-2">
                     <input
@@ -168,7 +168,7 @@ export function AddProposalModal({
                         updateItem(index, "itemPrice", e.target.value)
                       }
                       placeholder="Precio"
-                      className="w-24 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-24 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent"
                     />
                     <input
                       type="url"
@@ -177,7 +177,7 @@ export function AddProposalModal({
                         updateItem(index, "productLink", e.target.value)
                       }
                       placeholder="Link (opcional)"
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent"
                     />
                   </div>
                 </div>
@@ -187,7 +187,7 @@ export function AddProposalModal({
           <button
             type="button"
             onClick={addItem}
-            className="mt-2 flex items-center gap-1 text-blue-500 hover:text-blue-700 text-sm"
+            className="mt-2 flex items-center gap-1 text-bondi-blue-400 hover:text-bondi-blue-600 text-sm"
           >
             <Plus size={16} />
             Agregar item
@@ -210,7 +210,7 @@ export function AddProposalModal({
         <div className="bg-gray-50 p-3 rounded-lg">
           <div className="flex justify-between items-center">
             <span className="text-sm text-gray-700">Total:</span>
-            <span className="text-lg font-bold text-blue-600">
+            <span className="text-lg font-bold text-bondi-blue-500">
               {calculateTotal().toFixed(2)}€
             </span>
           </div>

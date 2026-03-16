@@ -117,7 +117,7 @@ export function SpoilerGuard({ celebrantNames, children }: SpoilerGuardProps) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-pulse">
-          <div className="h-8 w-8 bg-blue-500 rounded-full"></div>
+          <div className="h-8 w-8 bg-bondi-blue-400 rounded-full"></div>
         </div>
       </div>
     )

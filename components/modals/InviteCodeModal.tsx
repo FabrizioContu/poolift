@@ -62,8 +62,8 @@ export function InviteCodeModal({
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="¡Grupo Creado!">
       <div className="text-center">
-        <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-          <PartyPopper className="w-8 h-8 text-green-600" />
+        <div className="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+          <PartyPopper className="w-8 h-8 text-emerald-500" />
         </div>
 
         <p className="text-gray-700 mb-6">
@@ -73,7 +73,7 @@ export function InviteCodeModal({
 
         <div className="bg-gray-50 rounded-lg p-4 mb-6">
           <p className="text-sm text-gray-700 mb-2">Código de invitación</p>
-          <p className="text-3xl font-mono font-bold text-blue-600 tracking-wider">
+          <p className="text-3xl font-mono font-bold text-bondi-blue-500 tracking-wider">
             {inviteCode}
           </p>
         </div>
@@ -86,8 +86,8 @@ export function InviteCodeModal({
           >
             {copiedCode ? (
               <>
-                <Check size={20} className="text-green-600" />
-                <span className="text-green-600">¡Código copiado!</span>
+                <Check size={20} className="text-emerald-500" />
+                <span className="text-emerald-500">¡Código copiado!</span>
               </>
             ) : (
               <>
@@ -104,8 +104,8 @@ export function InviteCodeModal({
           >
             {copiedLink ? (
               <>
-                <Check size={20} className="text-green-600" />
-                <span className="text-green-600">¡Link copiado!</span>
+                <Check size={20} className="text-emerald-500" />
+                <span className="text-emerald-500">¡Link copiado!</span>
               </>
             ) : (
               <>
@@ -117,7 +117,7 @@ export function InviteCodeModal({
 
           <Button
             onClick={handleShareWhatsApp}
-            className="w-full flex items-center justify-center gap-2 py-3 bg-green-500 hover:bg-green-600"
+            className="w-full flex items-center justify-center gap-2 py-3 bg-emerald-400 hover:bg-emerald-500"
           >
             <MessageCircle size={20} />
             <span>Compartir en WhatsApp</span>
