@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
 import { Calendar, Cake, PartyPopper } from 'lucide-react'
+import { Tabs } from '@/components/ui/Tabs'
 import { PartyCard } from '@/components/cards/PartyCard'
 import { BirthdayList } from '@/components/birthdays/BirthdayList'
 import { EmptyState } from '@/components/ui/EmptyState'
@@ -30,59 +30,52 @@ interface DashboardTabsProps {
 }
 
 export function DashboardTabs({ parties, birthdays, groupId }: DashboardTabsProps) {
-  const [activeTab, setActiveTab] = useState<'parties' | 'birthdays'>('parties')
+  const tabs = [
+    {
+      id: 'parties',
+      label: (
+        <span className="flex items-center gap-2">
+          <Calendar size={18} />
+          Fiestas ({parties.length})
+        </span>
+      ),
+    },
+    {
+      id: 'birthdays',
+      label: (
+        <span className="flex items-center gap-2">
+          <Cake size={18} />
+          Cumpleanos ({birthdays.length})
+        </span>
+      ),
+    },
+  ]
 
   return (
-    <div>
-      {/* Tab Navigation */}
-      <div className="border-b border-gray-200 mb-6">
-        <nav className="flex gap-4">
-          <button
-            onClick={() => setActiveTab('parties')}
-            className={`flex items-center gap-2 py-3 px-1 border-b-2 font-medium text-sm transition ${
-              activeTab === 'parties'
-                ? 'border-bondi-blue-400 text-bondi-blue-500'
-                : 'border-transparent text-gray-700 hover:text-gray-700 hover:border-gray-300'
-            }`}
-          >
-            <Calendar size={18} />
-            Fiestas ({parties.length})
-          </button>
-
-          <button
-            onClick={() => setActiveTab('birthdays')}
-            className={`flex items-center gap-2 py-3 px-1 border-b-2 font-medium text-sm transition ${
-              activeTab === 'birthdays'
-                ? 'border-bondi-blue-400 text-bondi-blue-500'
-                : 'border-transparent text-gray-700 hover:text-gray-700 hover:border-gray-300'
-            }`}
-          >
-            <Cake size={18} />
-            Cumpleanos ({birthdays.length})
-          </button>
-        </nav>
-      </div>
-
-      {/* Tab Content */}
-      {activeTab === 'parties' && (
-        <div className="grid gap-4">
-          {parties.length === 0 ? (
-            <EmptyState
-              icon={PartyPopper}
-              title="No hay fiestas programadas"
-              description="Usa el botón «Crear Fiesta» para organizar la primera celebración."
-            />
-          ) : (
-            parties.map((party) => (
-              <PartyCard key={party.id} party={party} />
-            ))
+    <Tabs tabs={tabs} defaultTab="parties">
+      {(activeTab) => (
+        <>
+          {activeTab === 'parties' && (
+            <div className="grid gap-4">
+              {parties.length === 0 ? (
+                <EmptyState
+                  icon={PartyPopper}
+                  title="No hay fiestas programadas"
+                  description="Usa el botón «Crear Fiesta» para organizar la primera celebración."
+                />
+              ) : (
+                parties.map((party) => (
+                  <PartyCard key={party.id} party={party} />
+                ))
+              )}
+            </div>
           )}
-        </div>
-      )}
 
-      {activeTab === 'birthdays' && (
-        <BirthdayList birthdays={birthdays} groupId={groupId} />
+          {activeTab === 'birthdays' && (
+            <BirthdayList birthdays={birthdays} groupId={groupId} />
+          )}
+        </>
       )}
-    </div>
+    </Tabs>
   )
 }

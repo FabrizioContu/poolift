@@ -182,8 +182,8 @@ export function AuthModal({
   const tabClass = (tab: 'login' | 'register') =>
     `py-3 px-1 border-b-2 font-medium text-sm transition ${
       activeTab === tab
-        ? 'border-bondi-blue-400 text-bondi-blue-500'
-        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+        ? 'border-bondi-blue-400 text-bondi-blue-500 dark:border-bondi-blue-200 dark:text-bondi-blue-200'
+        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-bondi-blue-300 dark:hover:text-bondi-blue-100 dark:hover:border-bondi-blue-500'
     }`
 
   const title = activeTab === 'login' ? 'Iniciar sesion' : 'Crear cuenta'
@@ -192,10 +192,10 @@ export function AuthModal({
     <Modal isOpen={isOpen} onClose={onClose} title={title}>
       {/* Headline (para nudge en Phase 2) */}
       {headline && (
-        <div className="mb-4 p-3 bg-bondi-blue-50 border border-bondi-blue-200 rounded-lg">
-          <p className="text-sm font-medium text-bondi-blue-700">{headline}</p>
+        <div className="mb-4 p-3 bg-bondi-blue-50 border border-bondi-blue-200 rounded-lg dark:bg-bondi-blue-700 dark:border-bondi-blue-600">
+          <p className="text-sm font-medium text-bondi-blue-700 dark:text-bondi-blue-200">{headline}</p>
           {subheadline && (
-            <p className="text-xs text-bondi-blue-500 mt-1">{subheadline}</p>
+            <p className="text-xs text-bondi-blue-500 mt-1 dark:text-bondi-blue-300">{subheadline}</p>
           )}
         </div>
       )}
@@ -203,13 +203,13 @@ export function AuthModal({
       {/* Email confirmation view */}
       {showConfirmation ? (
         <div className="text-center space-y-4 py-4">
-          <div className="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto">
-            <Mail size={32} className="text-emerald-500" />
+          <div className="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto dark:bg-emerald-800">
+            <Mail size={32} className="text-emerald-500 dark:text-emerald-300" />
           </div>
-          <h3 className="text-lg font-bold text-gray-900">
+          <h3 className="text-lg font-bold text-gray-900 dark:text-bondi-blue-50">
             Revisa tu email
           </h3>
-          <p className="text-gray-600 text-sm">
+          <p className="text-gray-600 text-sm dark:text-bondi-blue-300">
             Hemos enviado un enlace de confirmacion a tu email. Haz clic en el
             enlace para activar tu cuenta.
           </p>
@@ -220,7 +220,7 @@ export function AuthModal({
       ) : (
         <>
           {/* Tab navigation */}
-          <div className="border-b border-gray-200 mb-4">
+          <div className="border-b border-gray-200 mb-4 dark:border-bondi-blue-600">
             <nav className="flex gap-4" aria-label="Tabs">
               <button
                 type="button"
@@ -327,10 +327,10 @@ export function AuthModal({
           {/* Divider */}
           <div className="relative my-4">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300" />
+              <div className="w-full border-t border-gray-300 dark:border-bondi-blue-600" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="bg-white px-2 text-gray-500">o</span>
+              <span className="bg-white px-2 text-gray-500 dark:bg-bondi-blue-700 dark:text-bondi-blue-300">o</span>
             </div>
           </div>
 
@@ -339,7 +339,7 @@ export function AuthModal({
             type="button"
             onClick={handleGoogleLogin}
             disabled={isSubmitting}
-            className="w-full flex items-center justify-center gap-3 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition font-medium disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full flex items-center justify-center gap-3 px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition font-medium disabled:opacity-50 disabled:cursor-not-allowed dark:border-bondi-blue-600 dark:text-bondi-blue-200 dark:hover:bg-bondi-blue-600"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path

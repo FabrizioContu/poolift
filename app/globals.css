@@ -100,9 +100,14 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Improve placeholder visibility on mobile */
+/* Placeholder text — dark enough to read, light enough to distinguish from typed value */
 ::placeholder {
-  color: #6b7280; /* gray-500 instead of default lighter gray */
+  color: #111827; /* gray-900 */
+  opacity: 1;
+}
+
+.dark ::placeholder {
+  color: #57c7e9; /* bondi-blue-200 — readable on bondi-blue-800 bg */
   opacity: 1;
 }
 
@@ -119,6 +124,11 @@ input, textarea, select {
 :focus-visible {
   outline: 3px solid #168aad; /* bondi-blue-400 */
   outline-offset: 2px;
+}
+
+/* Dark mode focus ring override — bondi-blue-100 (~11:1 on bondi-blue-800) */
+.dark :focus-visible {
+  outline-color: #8fdaf0; /* bondi-blue-100 */
 }
 
 /* 2.2.2 Respect reduced motion preference */
