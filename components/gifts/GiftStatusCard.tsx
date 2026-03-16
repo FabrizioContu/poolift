@@ -19,6 +19,12 @@ interface GiftStatusCardProps {
   totalPrice: number
 }
 
+const STATUS_BADGE_CLASSES = {
+  finalized: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-800 dark:text-emerald-200',
+  closed:    'bg-tropical-teal-50 text-tropical-teal-700 dark:bg-tropical-teal-700 dark:text-tropical-teal-200',
+  active:    'bg-bondi-blue-100 text-bondi-blue-700 dark:bg-bondi-blue-600 dark:text-bondi-blue-100',
+} as const
+
 export function GiftStatusCard({ gift, proposalName, totalPrice }: GiftStatusCardProps) {
   const [copied, setCopied] = useState(false)
 
@@ -50,7 +56,7 @@ export function GiftStatusCard({ gift, proposalName, totalPrice }: GiftStatusCar
         icon: <CheckCircle className="text-emerald-400" size={32} />,
         title: 'Regalo Completado',
         badge: 'Finalizado',
-        badgeColor: 'bg-emerald-100 text-emerald-700',
+        badgeKey: 'finalized' as const,
         description: 'Compra realizada'
       }
     }
@@ -59,7 +65,7 @@ export function GiftStatusCard({ gift, proposalName, totalPrice }: GiftStatusCar
         icon: <Lock className="text-tropical-teal-400" size={32} />,
         title: 'Participación Cerrada',
         badge: 'Cerrado',
-        badgeColor: 'bg-tropical-teal-50 text-tropical-teal-700',
+        badgeKey: 'closed' as const,
         description: 'Pendiente de compra'
       }
     }
@@ -67,7 +73,7 @@ export function GiftStatusCard({ gift, proposalName, totalPrice }: GiftStatusCar
       icon: <Gift className="text-bondi-blue-400" size={32} />,
       title: 'Regalo Activo',
       badge: 'Abierto',
-      badgeColor: 'bg-emerald-100 text-emerald-700',
+      badgeKey: 'active' as const,
       description: 'Las familias pueden unirse'
     }
   }
@@ -79,45 +85,45 @@ export function GiftStatusCard({ gift, proposalName, totalPrice }: GiftStatusCar
     : priceToShow
 
   return (
-    <div className="bg-linear-to-br from-bondi-blue-50 to-bondi-blue-100 rounded-lg p-6 mb-6 border-2 border-bondi-blue-200">
+    <div className="bg-linear-to-br from-bondi-blue-50 to-bondi-blue-100 rounded-lg p-6 mb-6 border-2 border-bondi-blue-200 dark:bg-none dark:bg-bondi-blue-700 dark:border-bondi-blue-500">
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-3">
           {statusInfo.icon}
           <div>
-            <h3 className="text-xl font-bold text-gray-900">
+            <h3 className="text-xl font-bold text-gray-900 dark:text-bondi-blue-50">
               {statusInfo.title}
             </h3>
-            <p className="text-sm text-gray-700">
+            <p className="text-sm text-gray-700 dark:text-bondi-blue-200">
               {proposalName}
             </p>
           </div>
         </div>
 
-        <span className={`px-3 py-1 rounded-full text-sm font-medium ${statusInfo.badgeColor}`}>
+        <span className={`px-3 py-1 rounded-full text-sm font-medium ${STATUS_BADGE_CLASSES[statusInfo.badgeKey]}`}>
           {statusInfo.badge}
         </span>
       </div>
 
       {/* Info Grid */}
       <div className="grid grid-cols-2 gap-4 mb-4">
-        <div className="bg-white rounded-lg p-3">
+        <div className="bg-white rounded-lg p-3 dark:bg-bondi-blue-600">
           <div className="flex items-center gap-2 mb-1">
-            <Users size={16} className="text-gray-700" />
-            <span className="text-xs text-gray-700">Participantes</span>
+            <Users size={16} className="text-gray-700 dark:text-bondi-blue-300" />
+            <span className="text-xs text-gray-700 dark:text-bondi-blue-300">Participantes</span>
           </div>
-          <p className="text-lg font-bold text-gray-900">
+          <p className="text-lg font-bold text-gray-900 dark:text-bondi-blue-50">
             {gift.participantCount} {gift.participantCount === 1 ? 'familia' : 'familias'}
           </p>
         </div>
 
-        <div className="bg-white rounded-lg p-3">
+        <div className="bg-white rounded-lg p-3 dark:bg-bondi-blue-600">
           <div className="flex items-center gap-2 mb-1">
-            <Gift size={16} className="text-gray-700" />
-            <span className="text-xs text-gray-700">
+            <Gift size={16} className="text-gray-700 dark:text-bondi-blue-300" />
+            <span className="text-xs text-gray-700 dark:text-bondi-blue-300">
               {gift.purchased_at ? 'Por familia' : 'Precio est.'}
             </span>
           </div>
-          <p className="text-lg font-bold text-gray-900">
+          <p className="text-lg font-bold text-gray-900 dark:text-bondi-blue-50">
             {formatPrice(pricePerFamily)}
           </p>
         </div>
@@ -125,7 +131,7 @@ export function GiftStatusCard({ gift, proposalName, totalPrice }: GiftStatusCar
 
       {/* Description */}
       {statusInfo.description && (
-        <p className="text-sm text-gray-700 mb-4">
+        <p className="text-sm text-gray-700 mb-4 dark:text-bondi-blue-200">
           {statusInfo.description}
         </p>
       )}
@@ -161,9 +167,9 @@ export function GiftStatusCard({ gift, proposalName, totalPrice }: GiftStatusCar
       </div>
 
       {/* Share Code */}
-      <div className="mt-4 p-2 bg-white rounded-lg">
-        <p className="text-xs text-gray-700 text-center">
-          Codigo: <code className="font-mono text-gray-700">{gift.share_code}</code>
+      <div className="mt-4 p-2 bg-white rounded-lg dark:bg-bondi-blue-600">
+        <p className="text-xs text-gray-700 text-center dark:text-bondi-blue-200">
+          Codigo: <code className="font-mono text-gray-700 dark:text-bondi-blue-200">{gift.share_code}</code>
         </p>
       </div>
     </div>

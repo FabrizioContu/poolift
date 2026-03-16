@@ -38,7 +38,7 @@ export default function RootLayout({
       >
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-4 focus:left-4 focus:px-4 focus:py-2 focus:bg-white focus:text-bondi-blue-500 focus:rounded-lg focus:shadow-lg"
+          className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-4 focus:left-4 focus:px-4 focus:py-2 focus:bg-white focus:text-bondi-blue-500 focus:rounded-lg focus:shadow-lg dark:focus:bg-bondi-blue-800 dark:focus:text-bondi-blue-100"
         >
           Saltar al contenido principal
         </a>

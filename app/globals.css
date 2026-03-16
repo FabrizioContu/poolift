@@ -121,6 +121,11 @@ input, textarea, select {
   outline-offset: 2px;
 }
 
+/* Dark mode focus ring override — bondi-blue-100 (~11:1 on bondi-blue-800) */
+.dark :focus-visible {
+  outline-color: #8fdaf0; /* bondi-blue-100 */
+}
+
 /* 2.2.2 Respect reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

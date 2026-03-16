@@ -54,7 +54,7 @@ export function ConfirmDeleteModal({
       <div className="text-center">
         <div
           className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 ${
-            dangerous ? "bg-red-100" : "bg-tropical-teal-100"
+            dangerous ? "bg-red-100 dark:bg-red-900" : "bg-tropical-teal-100 dark:bg-tropical-teal-700"
           }`}
         >
           <AlertTriangle
@@ -62,7 +62,7 @@ export function ConfirmDeleteModal({
           />
         </div>
 
-        <p className="text-gray-700 mb-4">{message}</p>
+        <p className="text-gray-700 mb-4 dark:text-bondi-blue-200">{message}</p>
 
         {displayError && <Alert variant="error">{displayError}</Alert>}
 

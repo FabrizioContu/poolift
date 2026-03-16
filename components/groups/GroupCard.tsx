@@ -83,15 +83,15 @@ export function GroupCard({
 
   if (deleted) {
     return (
-      <div className="block border border-emerald-200 rounded-lg p-6 bg-emerald-50">
+      <div className="block border border-emerald-200 rounded-lg p-6 bg-emerald-50 dark:border-emerald-700 dark:bg-ocean-mist-800">
         <div className="text-center">
-          <div className="bg-emerald-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
-            <CheckCircle className="w-6 h-6 text-emerald-500" />
+          <div className="bg-emerald-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3 dark:bg-emerald-800">
+            <CheckCircle className="w-6 h-6 text-emerald-500 dark:text-emerald-300" />
           </div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-1">
+          <h3 className="text-lg font-semibold text-gray-900 mb-1 dark:text-bondi-blue-50">
             Grupo eliminado
           </h3>
-          <p className="text-gray-700 text-sm mb-4">
+          <p className="text-gray-700 text-sm mb-4 dark:text-bondi-blue-200">
             &quot;{group.name}&quot; ha sido eliminado correctamente
           </p>
           <a
@@ -109,31 +109,31 @@ export function GroupCard({
     <>
       <Link
         href={`/dashboard/${group.id}`}
-        className="block border border-gray-200 rounded-lg p-6 hover:shadow-lg hover:border-bondi-blue-200 transition bg-white"
+        className="block border border-gray-200 rounded-lg p-6 hover:shadow-lg hover:border-bondi-blue-200 transition bg-white dark:bg-bondi-blue-700 dark:border-bondi-blue-600 dark:hover:border-bondi-blue-400"
       >
         <div className="flex items-start justify-between">
           <div className="flex items-center gap-3">
             <div
               className={`p-2 rounded-lg ${
-                isCreator ? "bg-bondi-blue-100" : "bg-gray-100"
+                isCreator ? "bg-bondi-blue-100 dark:bg-bondi-blue-600" : "bg-gray-100 dark:bg-bondi-blue-700"
               }`}
             >
               <Users
-                className={isCreator ? "text-bondi-blue-500" : "text-gray-700"}
+                className={isCreator ? "text-bondi-blue-500 dark:text-bondi-blue-200" : "text-gray-700 dark:text-bondi-blue-300"}
                 size={28}
               />
             </div>
             <div>
-              <h3 className="text-xl font-bold text-gray-900">{group.name}</h3>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-bondi-blue-50">{group.name}</h3>
               <div className="flex gap-2 mt-1 flex-wrap">
                 {group.familyCount !== undefined && (
-                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-700 dark:bg-bondi-blue-600 dark:text-bondi-blue-200">
                     {group.familyCount}{" "}
                     {group.familyCount === 1 ? "familia" : "familias"}
                   </span>
                 )}
                 {group.partyCount !== undefined && group.partyCount > 0 && (
-                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300">
                     {group.partyCount}{" "}
                     {group.partyCount === 1 ? "fiesta" : "fiestas"}
                   </span>
@@ -142,8 +142,8 @@ export function GroupCard({
                   <span
                     className={`inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium ${
                       isCreator
-                        ? "bg-bondi-blue-100 text-bondi-blue-700"
-                        : "bg-gray-100 text-gray-700"
+                        ? "bg-bondi-blue-100 text-bondi-blue-700 dark:bg-bondi-blue-600 dark:text-bondi-blue-100"
+                        : "bg-gray-100 text-gray-700 dark:bg-bondi-blue-600 dark:text-bondi-blue-200"
                     }`}
                   >
                     {isCreator ? "Creador" : "Miembro"}
@@ -155,7 +155,7 @@ export function GroupCard({
         </div>
 
         <div className="mt-4 flex items-center justify-between">
-          <code className="text-sm text-gray-700 font-mono">
+          <code className="text-sm text-gray-700 font-mono dark:text-bondi-blue-200">
             {group.invite_code}
           </code>
 
@@ -163,7 +163,7 @@ export function GroupCard({
             <div className="flex items-center gap-2">
               <button
                 onClick={handleCopyCode}
-                className="p-2 text-gray-700 hover:text-bondi-blue-500 hover:bg-bondi-blue-50 rounded-lg transition"
+                className="p-2 text-gray-700 hover:text-bondi-blue-500 hover:bg-bondi-blue-50 rounded-lg transition dark:text-bondi-blue-300 dark:hover:text-bondi-blue-100 dark:hover:bg-bondi-blue-600"
                 title="Copiar código"
               >
                 {copied ? (
@@ -174,7 +174,7 @@ export function GroupCard({
               </button>
               <button
                 onClick={handleShareWhatsApp}
-                className="p-2 text-gray-700 hover:text-emerald-500 hover:bg-emerald-50 rounded-lg transition"
+                className="p-2 text-gray-700 hover:text-emerald-500 hover:bg-emerald-50 rounded-lg transition dark:text-bondi-blue-300 dark:hover:text-emerald-300 dark:hover:bg-emerald-900"
                 title="Compartir por WhatsApp"
               >
                 <MessageCircle size={18} />
@@ -182,7 +182,7 @@ export function GroupCard({
               {isCreator && (
                 <button
                   onClick={handleDeleteClick}
-                  className="p-2 text-gray-700 hover:text-red-600 hover:bg-red-50 rounded-lg transition"
+                  className="p-2 text-gray-700 hover:text-red-600 hover:bg-red-50 rounded-lg transition dark:text-bondi-blue-300 dark:hover:text-red-400 dark:hover:bg-red-900"
                   title="Eliminar grupo"
                 >
                   <Trash2 size={18} />

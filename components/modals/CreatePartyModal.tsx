@@ -106,7 +106,7 @@ export function CreatePartyModal({
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Fecha de la fiesta */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-bondi-blue-200">
             Fecha de la Fiesta
           </label>
           <DatePickerInput
@@ -119,16 +119,16 @@ export function CreatePartyModal({
 
         {/* Selección de celebrantes */}
         <div>
-          <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+          <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2 dark:text-bondi-blue-200">
             <PartyPopper size={18} />
             Celebrantes
           </label>
-          <p className="text-xs text-gray-700 mb-3">
+          <p className="text-xs text-gray-700 mb-3 dark:text-bondi-blue-300">
             Selecciona los niños que celebrarán en esta fiesta
           </p>
 
           {birthdays.length === 0 ? (
-            <p className="text-sm text-gray-700 italic">
+            <p className="text-sm text-gray-700 italic dark:text-bondi-blue-300">
               No hay cumpleaños registrados en este grupo
             </p>
           ) : (
@@ -138,8 +138,8 @@ export function CreatePartyModal({
                   key={birthday.id}
                   className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition ${
                     selectedCelebrants.includes(birthday.id)
-                      ? "border-bondi-blue-400 bg-bondi-blue-50"
-                      : "border-gray-200 hover:border-gray-300"
+                      ? "border-bondi-blue-400 bg-bondi-blue-50 dark:border-bondi-blue-300 dark:bg-bondi-blue-700"
+                      : "border-gray-200 hover:border-gray-300 dark:border-bondi-blue-600 dark:hover:border-bondi-blue-400"
                   }`}
                 >
                   <input
@@ -149,10 +149,10 @@ export function CreatePartyModal({
                     className="w-4 h-4 text-bondi-blue-400 rounded focus:ring-bondi-blue-400"
                   />
                   <div className="flex-1">
-                    <p className="font-medium text-gray-800">
+                    <p className="font-medium text-gray-800 dark:text-bondi-blue-50">
                       {birthday.child_name}
                     </p>
-                    <p className="text-xs text-gray-700">
+                    <p className="text-xs text-gray-700 dark:text-bondi-blue-300">
                       Cumple el {formatBirthDate(birthday.birth_date)}
                     </p>
                   </div>
@@ -165,17 +165,17 @@ export function CreatePartyModal({
         {/* Coordinador (opcional) */}
         {families.length > 0 && (
           <div>
-            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+            <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2 dark:text-bondi-blue-200">
               <Users size={18} />
               Coordinador
-              <span className="text-xs text-gray-700 font-normal">
+              <span className="text-xs text-gray-700 font-normal dark:text-bondi-blue-300">
                 (opcional)
               </span>
             </label>
             <select
               value={coordinatorId}
               onChange={(e) => setCoordinatorId(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent"
+              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent dark:border-bondi-blue-600 dark:bg-bondi-blue-800"
             >
               <option value="">Asignar automáticamente</option>
               {families.map((family) => (
@@ -184,7 +184,7 @@ export function CreatePartyModal({
                 </option>
               ))}
             </select>
-            <p className="text-xs text-gray-700 mt-1">
+            <p className="text-xs text-gray-700 mt-1 dark:text-bondi-blue-300">
               Si no seleccionas, se asignará a la familia que menos fiestas haya
               coordinado
             </p>

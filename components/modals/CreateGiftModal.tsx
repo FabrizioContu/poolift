@@ -113,25 +113,25 @@ Apúntate aquí: ${getGiftLink()}`;
       <Modal isOpen={isOpen} onClose={handleClose} title="Regalo Creado">
         <div className="text-center">
           <CheckCircle className="mx-auto text-emerald-400 mb-4" size={48} />
-          <h3 className="text-xl font-bold mb-2 text-gray-900">
+          <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-bondi-blue-50">
             ¡Regalo Creado!
           </h3>
-          <p className="text-gray-700 mb-6">
+          <p className="text-gray-700 mb-6 dark:text-bondi-blue-200">
             Comparte este enlace para que las familias se apunten
           </p>
 
           {/* Share Code */}
-          <div className="bg-linear-to-r from-bondi-blue-50 to-purple-50 p-6 rounded-xl mb-4">
-            <p className="text-sm text-gray-700 mb-2">Código del regalo:</p>
+          <div className="bg-linear-to-r from-bondi-blue-50 to-purple-50 p-6 rounded-xl mb-4 dark:bg-none dark:bg-bondi-blue-800">
+            <p className="text-sm text-gray-700 mb-2 dark:text-bondi-blue-300">Código del regalo:</p>
             <code className="text-3xl font-mono font-bold text-bondi-blue-500">
               {shareCode}
             </code>
           </div>
 
           {/* Full Link */}
-          <div className="p-3 bg-gray-50 rounded-lg mb-6">
-            <p className="text-xs text-gray-700 mb-1">Link directo:</p>
-            <code className="text-sm text-gray-700 break-all">
+          <div className="p-3 bg-gray-50 rounded-lg mb-6 dark:bg-bondi-blue-800">
+            <p className="text-xs text-gray-700 mb-1 dark:text-bondi-blue-300">Link directo:</p>
+            <code className="text-sm text-gray-700 break-all dark:text-bondi-blue-200">
               {getGiftLink()}
             </code>
           </div>
@@ -173,17 +173,17 @@ Apúntate aquí: ${getGiftLink()}`;
     <Modal isOpen={isOpen} onClose={onClose} title="Crear Regalo">
       <div className="text-center">
         <Gift className="mx-auto text-bondi-blue-400 mb-4" size={48} />
-        <h3 className="text-xl font-bold mb-2 text-gray-900">Crear Regalo</h3>
-        <p className="text-gray-700 mb-4">Se creará un regalo basado en:</p>
+        <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-bondi-blue-50">Crear Regalo</h3>
+        <p className="text-gray-700 mb-4 dark:text-bondi-blue-200">Se creará un regalo basado en:</p>
 
-        <div className="bg-bondi-blue-50 p-4 rounded-lg mb-4">
+        <div className="bg-bondi-blue-50 p-4 rounded-lg mb-4 dark:bg-bondi-blue-700">
           <p className="font-semibold">{proposalName}</p>
           <p className="text-2xl font-bold text-bondi-blue-500 mt-2">
             {formatPrice(totalPrice)}
           </p>
         </div>
 
-        <p className="text-sm text-gray-700 mb-6">
+        <p className="text-sm text-gray-700 mb-6 dark:text-bondi-blue-200">
           Podrás compartir el link para que las familias se apunten
         </p>
 

@@ -62,17 +62,17 @@ export function InviteCodeModal({
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="¡Grupo Creado!">
       <div className="text-center">
-        <div className="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-          <PartyPopper className="w-8 h-8 text-emerald-500" />
+        <div className="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 dark:bg-emerald-800">
+          <PartyPopper className="w-8 h-8 text-emerald-500 dark:text-emerald-300" />
         </div>
 
-        <p className="text-gray-700 mb-6">
+        <p className="text-gray-700 mb-6 dark:text-bondi-blue-200">
           Tu grupo <span className="font-semibold">{groupName}</span> ha sido creado.
           Comparte el código con las familias del grupo.
         </p>
 
-        <div className="bg-gray-50 rounded-lg p-4 mb-6">
-          <p className="text-sm text-gray-700 mb-2">Código de invitación</p>
+        <div className="bg-gray-50 rounded-lg p-4 mb-6 dark:bg-bondi-blue-800">
+          <p className="text-sm text-gray-700 mb-2 dark:text-bondi-blue-200">Código de invitación</p>
           <p className="text-3xl font-mono font-bold text-bondi-blue-500 tracking-wider">
             {inviteCode}
           </p>
