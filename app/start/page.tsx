@@ -1,12 +1,19 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Gift, Users, ArrowLeft, Sparkles, Calendar, Heart } from "lucide-react";
+import {
+  Gift,
+  Users,
+  ArrowLeft,
+  Sparkles,
+  Calendar,
+  Heart,
+} from "lucide-react";
 
 export const metadata: Metadata = { title: "Empezar | Poolift" };
 
 export default function StartPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-bondi-blue-50 to-white">
+    <div className="min-h-screen bg-linear-to-b from-bondi-blue-50 to-white">
       {/* Header */}
       <header className="container mx-auto px-4 py-6">
         <nav className="flex items-center justify-between">
@@ -14,7 +21,10 @@ export default function StartPage() {
             <Gift className="text-bondi-blue-500" size={32} />
             <span className="text-2xl font-bold text-gray-900">Poolift</span>
           </Link>
-          <Link href="/" className="text-gray-700 hover:text-gray-900 flex items-center gap-1">
+          <Link
+            href="/"
+            className="text-gray-700 hover:text-gray-900 flex items-center gap-1"
+          >
             <ArrowLeft size={18} />
             Volver
           </Link>
@@ -49,7 +59,8 @@ export default function StartPage() {
               </h2>
 
               <p className="text-gray-700 mb-6">
-                Ya se que regalar o tengo una idea en mente. Quiero organizar este regalo ahora y compartirlo.
+                Ya se que regalar o tengo una idea en mente. Quiero organizar
+                este regalo ahora y compartirlo.
               </p>
 
               <div className="space-y-2 text-sm text-gray-700 mb-6">
@@ -81,7 +92,8 @@ export default function StartPage() {
               </h2>
 
               <p className="text-gray-700 mb-6">
-                Quiero coordinar multiples regalos con el mismo grupo de personas a lo largo del tiempo.
+                Quiero coordinar multiples regalos con el mismo grupo de
+                personas a lo largo del tiempo.
               </p>
 
               <div className="space-y-2 text-sm text-gray-700 mb-6">
@@ -106,7 +118,10 @@ export default function StartPage() {
         <div className="text-center mt-12">
           <p className="text-gray-700">
             Ya tienes un codigo de invitacion?{" "}
-            <Link href="/join" className="text-bondi-blue-500 hover:underline font-medium">
+            <Link
+              href="/join"
+              className="text-bondi-blue-500 hover:underline font-medium"
+            >
               Unirse a un grupo
             </Link>
           </p>

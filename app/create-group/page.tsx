@@ -17,7 +17,7 @@ import {
 } from "@/lib/types";
 
 const InviteCodeModal = dynamic(
-  () => import("@/components/modals/InviteCodeModal")
+  () => import("@/components/modals/InviteCodeModal"),
 );
 
 interface GroupResponse {
@@ -169,10 +169,19 @@ export default function CreateGroupPage() {
     }
   };
 
-  const groupTypes: GroupType[] = ["class", "friends", "family", "work", "other"];
+  const groupTypes: GroupType[] = [
+    "class",
+    "friends",
+    "family",
+    "work",
+    "other",
+  ];
 
   return (
-    <main id="main-content" className="min-h-screen bg-gradient-to-b from-bondi-blue-50 to-white py-12 px-4">
+    <main
+      id="main-content"
+      className="min-h-screen bg-linear-to-b from-bondi-blue-50 to-white py-12 px-4"
+    >
       <div className="max-w-md mx-auto">
         <Link
           href="/"
@@ -197,7 +206,11 @@ export default function CreateGroupPage() {
           </div>
 
           {/* Step indicator */}
-          <div role="group" aria-label={`Paso ${step} de 2`} className="flex justify-center gap-2 mb-6">
+          <div
+            role="group"
+            aria-label={`Paso ${step} de 2`}
+            className="flex justify-center gap-2 mb-6"
+          >
             <div
               aria-current={step === 1 ? "step" : undefined}
               className={`w-3 h-3 rounded-full ${
@@ -264,7 +277,10 @@ export default function CreateGroupPage() {
 
               {/* Group name */}
               <div>
-                <label htmlFor="group-name" className="block text-sm font-medium text-gray-700 mb-1">
+                <label
+                  htmlFor="group-name"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   {copy.groupLabel} <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -285,7 +301,10 @@ export default function CreateGroupPage() {
 
               {/* User/Family name */}
               <div>
-                <label htmlFor="family-name" className="block text-sm font-medium text-gray-700 mb-1">
+                <label
+                  htmlFor="family-name"
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
                   {copy.userLabel} <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -304,7 +323,10 @@ export default function CreateGroupPage() {
               </div>
 
               {error && (
-                <div role="alert" className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
+                <div
+                  role="alert"
+                  className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm"
+                >
                   {error}
                 </div>
               )}
@@ -333,7 +355,10 @@ export default function CreateGroupPage() {
           {step === 2 && (
             <p className="text-center text-sm text-gray-700 mt-6">
               Ya tienes un codigo de invitacion?{" "}
-              <Link href="/join" className="text-bondi-blue-400 hover:underline">
+              <Link
+                href="/join"
+                className="text-bondi-blue-400 hover:underline"
+              >
                 Unirse a grupo
               </Link>
             </p>

@@ -1,60 +1,79 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { Cake, PartyPopper, Gift, Check, ChevronRight, Plus } from 'lucide-react'
-import { Button } from '@/components/ui/Button'
-import dynamic from 'next/dynamic'
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import {
+  Cake,
+  PartyPopper,
+  Gift,
+  Check,
+  ChevronRight,
+  Plus,
+} from "lucide-react";
+import { Button } from "@/components/ui/Button";
+import dynamic from "next/dynamic";
 
-const AddBirthdayModal = dynamic(() => import('@/components/modals/AddBirthdayModal'))
+const AddBirthdayModal = dynamic(
+  () => import("@/components/modals/AddBirthdayModal"),
+);
 
 interface OnboardingGuideProps {
-  groupId: string
-  birthdayCount: number
-  partyCount: number
+  groupId: string;
+  birthdayCount: number;
+  partyCount: number;
 }
 
 interface Step {
-  number: number
-  title: string
-  description: string
-  icon: React.ElementType
-  status: 'completed' | 'active' | 'locked'
+  number: number;
+  title: string;
+  description: string;
+  icon: React.ElementType;
+  status: "completed" | "active" | "locked";
 }
 
-export function OnboardingGuide({ groupId, birthdayCount, partyCount }: OnboardingGuideProps) {
-  const [showBirthdayModal, setShowBirthdayModal] = useState(false)
-  const router = useRouter()
+export function OnboardingGuide({
+  groupId,
+  birthdayCount,
+  partyCount,
+}: OnboardingGuideProps) {
+  const [showBirthdayModal, setShowBirthdayModal] = useState(false);
+  const router = useRouter();
 
   const steps: Step[] = [
     {
       number: 1,
-      title: 'Registra los cumpleaños',
-      description: birthdayCount === 0
-        ? 'Añade los niños del grupo con su fecha de nacimiento.'
-        : `${birthdayCount} ${birthdayCount === 1 ? 'cumpleaños registrado' : 'cumpleaños registrados'}. Puedes seguir añadiendo más.`,
+      title: "Registra los cumpleaños",
+      description:
+        birthdayCount === 0
+          ? "Añade los niños del grupo con su fecha de nacimiento."
+          : `${birthdayCount} ${birthdayCount === 1 ? "cumpleaños registrado" : "cumpleaños registrados"}. Puedes seguir añadiendo más.`,
       icon: Cake,
-      status: birthdayCount > 0 ? 'completed' : 'active',
+      status: birthdayCount > 0 ? "completed" : "active",
     },
     {
       number: 2,
-      title: 'Crea la primera fiesta',
-      description: 'Elige los niños que celebran y la fecha de la fiesta.',
+      title: "Crea la primera fiesta",
+      description: "Elige los niños que celebran y la fecha de la fiesta.",
       icon: PartyPopper,
-      status: birthdayCount === 0 ? 'locked' : partyCount > 0 ? 'completed' : 'active',
+      status:
+        birthdayCount === 0
+          ? "locked"
+          : partyCount > 0
+            ? "completed"
+            : "active",
     },
     {
       number: 3,
-      title: 'Coordina el regalo',
-      description: 'Propón regalos, vota y coordina la compra entre familias.',
+      title: "Coordina el regalo",
+      description: "Propón regalos, vota y coordina la compra entre familias.",
       icon: Gift,
-      status: partyCount === 0 ? 'locked' : 'active',
+      status: partyCount === 0 ? "locked" : "active",
     },
-  ]
+  ];
 
   const handleBirthdaySuccess = () => {
-    router.refresh()
-  }
+    router.refresh();
+  };
 
   return (
     <div className="max-w-xl mx-auto">
@@ -73,7 +92,7 @@ export function OnboardingGuide({ groupId, birthdayCount, partyCount }: Onboardi
             key={step.number}
             step={step}
             onAction={
-              step.number === 1 && step.status !== 'locked'
+              step.number === 1 && step.status !== "locked"
                 ? () => setShowBirthdayModal(true)
                 : undefined
             }
@@ -90,47 +109,47 @@ export function OnboardingGuide({ groupId, birthdayCount, partyCount }: Onboardi
         />
       )}
     </div>
-  )
+  );
 }
 
 function StepCard({ step, onAction }: { step: Step; onAction?: () => void }) {
-  const Icon = step.icon
+  const Icon = step.icon;
 
-  const isCompleted = step.status === 'completed'
-  const isActive = step.status === 'active'
-  const isLocked = step.status === 'locked'
+  const isCompleted = step.status === "completed";
+  const isActive = step.status === "active";
+  const isLocked = step.status === "locked";
 
   return (
     <div
       className={`
         flex items-start gap-4 p-4 rounded-lg border transition
-        ${isActive ? 'border-bondi-blue-200 bg-bondi-blue-50' : ''}
-        ${isCompleted ? 'border-emerald-200 bg-emerald-50' : ''}
-        ${isLocked ? 'border-gray-200 bg-gray-50 opacity-60' : ''}
+        ${isActive ? "border-bondi-blue-200 bg-bondi-blue-50" : ""}
+        ${isCompleted ? "border-emerald-200 bg-emerald-50" : ""}
+        ${isLocked ? "border-gray-200 bg-gray-50 opacity-60" : ""}
       `}
     >
       {/* Step indicator */}
       <div
         className={`
-          flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center
-          ${isCompleted ? 'bg-emerald-400 text-white' : ''}
-          ${isActive ? 'bg-bondi-blue-400 text-white' : ''}
-          ${isLocked ? 'bg-gray-200 text-gray-400' : ''}
+          shrink-0 w-10 h-10 rounded-full flex items-center justify-center
+          ${isCompleted ? "bg-emerald-400 text-white" : ""}
+          ${isActive ? "bg-bondi-blue-400 text-white" : ""}
+          ${isLocked ? "bg-gray-200 text-gray-400" : ""}
         `}
       >
-        {isCompleted ? (
-          <Check size={20} />
-        ) : (
-          <Icon size={20} />
-        )}
+        {isCompleted ? <Check size={20} /> : <Icon size={20} />}
       </div>
 
       {/* Content */}
       <div className="flex-1 min-w-0">
-        <h3 className={`font-semibold ${isLocked ? 'text-gray-400' : 'text-gray-900'}`}>
+        <h3
+          className={`font-semibold ${isLocked ? "text-gray-400" : "text-gray-900"}`}
+        >
           {step.title}
         </h3>
-        <p className={`text-sm mt-0.5 ${isLocked ? 'text-gray-400' : 'text-gray-600'}`}>
+        <p
+          className={`text-sm mt-0.5 ${isLocked ? "text-gray-400" : "text-gray-600"}`}
+        >
           {step.description}
         </p>
 
@@ -153,5 +172,5 @@ function StepCard({ step, onAction }: { step: Step; onAction?: () => void }) {
         )}
       </div>
     </div>
-  )
+  );
 }

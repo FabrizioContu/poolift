@@ -1,42 +1,45 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import Link from 'next/link'
-import { UserPlus, ArrowLeft } from 'lucide-react'
-import { Button } from '@/components/ui/Button'
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { UserPlus, ArrowLeft } from "lucide-react";
+import { Button } from "@/components/ui/Button";
 
 export default function JoinPage() {
-  const router = useRouter()
-  const [inviteCode, setInviteCode] = useState('')
-  const [error, setError] = useState<string | null>(null)
+  const router = useRouter();
+  const [inviteCode, setInviteCode] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    setError(null)
+    e.preventDefault();
+    setError(null);
 
-    const trimmedCode = inviteCode.trim().toLowerCase()
+    const trimmedCode = inviteCode.trim().toLowerCase();
 
     if (!trimmedCode) {
-      setError('El código de invitación es requerido')
-      return
+      setError("El código de invitación es requerido");
+      return;
     }
 
     if (trimmedCode.length < 6 || trimmedCode.length > 12) {
-      setError('El código debe tener entre 6 y 12 caracteres')
-      return
+      setError("El código debe tener entre 6 y 12 caracteres");
+      return;
     }
 
     if (!/^[a-z0-9]+$/.test(trimmedCode)) {
-      setError('El código solo puede contener letras y números')
-      return
+      setError("El código solo puede contener letras y números");
+      return;
     }
 
-    router.push(`/join/${trimmedCode}`)
-  }
+    router.push(`/join/${trimmedCode}`);
+  };
 
   return (
-    <main id="main-content" className="min-h-screen bg-gradient-to-b from-bondi-blue-50 to-white py-12 px-4">
+    <main
+      id="main-content"
+      className="min-h-screen bg-linear-to-b from-bondi-blue-50 to-white py-12 px-4"
+    >
       <div className="max-w-md mx-auto">
         <Link
           href="/"
@@ -59,7 +62,10 @@ export default function JoinPage() {
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label htmlFor="invite-code" className="block text-sm font-medium text-gray-700 mb-1">
+              <label
+                htmlFor="invite-code"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 Código de invitación <span className="text-red-500">*</span>
               </label>
               <input
@@ -75,7 +81,10 @@ export default function JoinPage() {
             </div>
 
             {error && (
-              <div role="alert" className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
+              <div
+                role="alert"
+                className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm"
+              >
                 {error}
               </div>
             )}
@@ -86,13 +95,16 @@ export default function JoinPage() {
           </form>
 
           <p className="text-center text-sm text-gray-700 mt-6">
-            ¿No tienes código?{' '}
-            <Link href="/create-group" className="text-bondi-blue-400 hover:underline">
+            ¿No tienes código?{" "}
+            <Link
+              href="/create-group"
+              className="text-bondi-blue-400 hover:underline"
+            >
               Crear un grupo nuevo
             </Link>
           </p>
         </div>
       </div>
     </main>
-  )
+  );
 }
