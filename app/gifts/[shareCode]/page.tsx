@@ -136,7 +136,7 @@ export default async function GiftPage({
             </p>
             <Link
               href="/groups"
-              className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium"
+              className="inline-flex items-center gap-2 text-bondi-blue-500 hover:text-bondi-blue-700 font-medium"
             >
               <ArrowLeft size={18} />
               Ir a Mis Grupos
@@ -156,7 +156,7 @@ export default async function GiftPage({
 
     // Render Direct Gift page
     return (
-      <div className="min-h-screen bg-linear-to-br from-green-50 to-emerald-50 py-8 px-4">
+      <div className="min-h-screen bg-linear-to-br from-ocean-mist-50 to-lime-cream-50 py-8 px-4">
         <div className="container mx-auto max-w-2xl">
           {/* Navigation */}
           <Link
@@ -172,15 +172,15 @@ export default async function GiftPage({
             <div className="text-center">
               <div className="mb-4">
                 {isPurchased ? (
-                  <CheckCircle className="mx-auto text-green-500" size={56} />
+                  <CheckCircle className="mx-auto text-emerald-500" size={56} />
                 ) : isClosed ? (
-                  <Lock className="mx-auto text-orange-500" size={56} />
+                  <Lock className="mx-auto text-tropical-teal-400" size={56} />
                 ) : (
-                  <Gift className="mx-auto text-green-500" size={56} />
+                  <Gift className="mx-auto text-ocean-mist-400" size={56} />
                 )}
               </div>
 
-              <span className="inline-block bg-green-100 text-green-800 text-sm px-3 py-1 rounded-full font-medium mb-3">
+              <span className="inline-block bg-ocean-mist-50 text-ocean-mist-700 text-sm px-3 py-1 rounded-full font-medium mb-3">
                 {OCCASION_LABELS[directGift.occasion]}
               </span>
 
@@ -190,13 +190,13 @@ export default async function GiftPage({
 
               {/* Status Badge */}
               {isPurchased && (
-                <span className="inline-flex items-center gap-1 bg-green-100 text-green-800 text-sm px-3 py-1 rounded-full font-medium mb-2">
+                <span className="inline-flex items-center gap-1 bg-emerald-100 text-emerald-700 text-sm px-3 py-1 rounded-full font-medium mb-2">
                   <CheckCircle size={16} />
                   Comprado
                 </span>
               )}
               {isClosed && !isPurchased && (
-                <span className="inline-flex items-center gap-1 bg-orange-100 text-orange-800 text-sm px-3 py-1 rounded-full font-medium mb-2">
+                <span className="inline-flex items-center gap-1 bg-tropical-teal-50 text-tropical-teal-700 text-sm px-3 py-1 rounded-full font-medium mb-2">
                   <Lock size={16} />
                   Participación Cerrada
                 </span>
@@ -209,13 +209,13 @@ export default async function GiftPage({
 
             {/* Gift Idea */}
             {directGift.gift_idea && (
-              <div className="mt-6 p-4 bg-green-50 rounded-lg">
+              <div className="mt-6 p-4 bg-ocean-mist-50 rounded-lg">
                 <h3 className="font-semibold text-lg mb-2 text-gray-900">
                   Regalo propuesto
                 </h3>
                 <p className="text-gray-700">{directGift.gift_idea}</p>
                 {directGift.estimated_price && (
-                  <p className="mt-2 text-2xl font-bold text-green-600">
+                  <p className="mt-2 text-2xl font-bold text-ocean-mist-400">
                     {formatPrice(directGift.estimated_price)}
                   </p>
                 )}
@@ -224,9 +224,9 @@ export default async function GiftPage({
 
             {/* Only price if no idea */}
             {!directGift.gift_idea && directGift.estimated_price && (
-              <div className="mt-6 p-4 bg-green-50 rounded-lg text-center">
+              <div className="mt-6 p-4 bg-ocean-mist-50 rounded-lg text-center">
                 <p className="text-sm text-gray-700 mb-1">Precio estimado</p>
-                <p className="text-3xl font-bold text-green-600">
+                <p className="text-3xl font-bold text-ocean-mist-400">
                   {formatPrice(directGift.estimated_price)}
                 </p>
               </div>
@@ -234,9 +234,9 @@ export default async function GiftPage({
 
             {/* Price Per Person - when closed or purchased */}
             {(isClosed || isPurchased) && pricePerPerson && (
-              <div className="mt-4 p-4 bg-linear-to-br from-green-50 to-emerald-50 rounded-xl text-center">
+              <div className="mt-4 p-4 bg-linear-to-br from-ocean-mist-50 to-lime-cream-50 rounded-xl text-center">
                 <p className="text-sm text-gray-700 mb-1">Precio por familia</p>
-                <p className="text-3xl font-bold text-green-600">
+                <p className="text-3xl font-bold text-ocean-mist-400">
                   {pricePerPerson}€
                 </p>
                 <p className="text-xs text-gray-700 mt-1">
@@ -247,7 +247,7 @@ export default async function GiftPage({
 
             {/* Organizer Comment */}
             {directGift.organizer_comment && (
-              <div className="mt-4 p-4 bg-green-50 rounded-lg border-l-4 border-green-500">
+              <div className="mt-4 p-4 bg-ocean-mist-50 rounded-lg border-l-4 border-ocean-mist-400">
                 <p className="text-sm font-medium text-gray-700 mb-1">
                   Comentario del organizador:
                 </p>
@@ -279,7 +279,7 @@ export default async function GiftPage({
                 <Users size={24} />
                 Familias participantes
               </h2>
-              <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full font-semibold">
+              <span className="bg-ocean-mist-50 text-ocean-mist-700 px-3 py-1 rounded-full font-semibold">
                 {participantCount}
               </span>
             </div>
@@ -333,7 +333,7 @@ export default async function GiftPage({
           </p>
           <Link
             href="/groups"
-            className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium"
+            className="inline-flex items-center gap-2 text-bondi-blue-500 hover:text-bondi-blue-700 font-medium"
           >
             <ArrowLeft size={18} />
             Ir a Mis Grupos
@@ -363,7 +363,7 @@ export default async function GiftPage({
       : null;
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-blue-50 to-purple-50 py-8 px-4">
+    <div className="min-h-screen bg-linear-to-br from-bondi-blue-50 to-bondi-blue-100 py-8 px-4">
       <div className="container mx-auto max-w-2xl">
         {/* Navigation */}
         <Link
@@ -379,11 +379,11 @@ export default async function GiftPage({
           <div className="text-center">
             <div className="mb-4">
               {isPurchased ? (
-                <CheckCircle className="mx-auto text-green-500" size={56} />
+                <CheckCircle className="mx-auto text-emerald-500" size={56} />
               ) : isClosed ? (
-                <Lock className="mx-auto text-orange-500" size={56} />
+                <Lock className="mx-auto text-tropical-teal-400" size={56} />
               ) : (
-                <Gift className="mx-auto text-blue-500" size={56} />
+                <Gift className="mx-auto text-bondi-blue-400" size={56} />
               )}
             </div>
 
@@ -393,13 +393,13 @@ export default async function GiftPage({
 
             {/* Status Badge */}
             {isPurchased && (
-              <span className="inline-flex items-center gap-1 bg-green-100 text-green-800 text-sm px-3 py-1 rounded-full font-medium mb-4">
+              <span className="inline-flex items-center gap-1 bg-emerald-100 text-emerald-700 text-sm px-3 py-1 rounded-full font-medium mb-4">
                 <CheckCircle size={16} />
                 Comprado
               </span>
             )}
             {isClosed && !isPurchased && (
-              <span className="inline-flex items-center gap-1 bg-orange-100 text-orange-800 text-sm px-3 py-1 rounded-full font-medium mb-4">
+              <span className="inline-flex items-center gap-1 bg-tropical-teal-50 text-tropical-teal-700 text-sm px-3 py-1 rounded-full font-medium mb-4">
                 <Lock size={16} />
                 Participación Cerrada
               </span>
@@ -416,7 +416,7 @@ export default async function GiftPage({
 
           {/* Selected Proposal */}
           {gift.proposal && (
-            <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+            <div className="mt-6 p-4 bg-bondi-blue-50 rounded-lg">
               <h3 className="font-semibold text-lg mb-3 text-gray-900">
                 {gift.proposal.name}
               </h3>
@@ -441,7 +441,7 @@ export default async function GiftPage({
                               href={item.product_link}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-blue-500 hover:text-blue-700 text-xs"
+                              className="text-bondi-blue-400 hover:text-bondi-blue-600 text-xs"
                             >
                               Ver
                             </a>
@@ -457,9 +457,9 @@ export default async function GiftPage({
                   )}
                 </ul>
               )}
-              <div className="pt-3 border-t border-blue-200 flex justify-between items-center">
+              <div className="pt-3 border-t border-bondi-blue-200 flex justify-between items-center">
                 <span className="font-bold">Total:</span>
-                <span className="text-2xl font-bold text-blue-600">
+                <span className="text-2xl font-bold text-bondi-blue-500">
                   {formatPrice(gift.final_price || totalPrice)}
                 </span>
               </div>
@@ -468,19 +468,19 @@ export default async function GiftPage({
 
           {/* Price Per Family - Finalized (with real price) */}
           {isPurchased && (
-            <div className="mt-4 p-4 bg-linear-to-br from-green-50 to-blue-50 rounded-xl text-center">
+            <div className="mt-4 p-4 bg-linear-to-br from-emerald-50 to-bondi-blue-50 rounded-xl text-center">
               <p className="text-sm text-gray-700 mb-1">Precio final pagado:</p>
-              <p className="text-3xl font-bold text-green-600 mb-3">
+              <p className="text-3xl font-bold text-emerald-500 mb-3">
                 {formatPrice(gift.final_price || totalPrice)}
               </p>
-              <div className="pt-3 border-t border-green-200">
+              <div className="pt-3 border-t border-emerald-200">
                 <p className="text-xs text-gray-700 mb-1">
                   Precio por familia:
                 </p>
-                <p className="text-2xl font-bold text-blue-600">
+                <p className="text-2xl font-bold text-bondi-blue-500">
                   {pricePerFamily}€
                 </p>
-                <p className="text-xs text-gray-700 mt-1">
+                <p className="text-xs text-gray-900 mt-1">
                   ({participantCount} familias participantes)
                 </p>
               </div>
@@ -489,15 +489,15 @@ export default async function GiftPage({
 
           {/* Price Per Family - Closed but not purchased (estimated) */}
           {isClosed && !isPurchased && pricePerFamily && (
-            <div className="mt-4 p-4 bg-green-50 rounded-lg text-center">
+            <div className="mt-4 p-4 bg-bondi-blue-50 rounded-lg text-center">
               <p className="text-sm text-gray-700 mb-1">Precio por familia:</p>
-              <p className="text-3xl font-bold text-green-600">
+              <p className="text-3xl font-bold text-bondi-blue-500">
                 {pricePerFamily}€
               </p>
-              <p className="text-xs text-gray-700 mt-1">
+              <p className="text-xs text-gray-900 mt-1">
                 ({participantCount} familias participantes)
               </p>
-              <p className="text-xs text-orange-600 mt-2">
+              <p className="text-xs text-tropical-teal-500 mt-2">
                 (Precio estimado - pendiente de compra final)
               </p>
             </div>
@@ -505,7 +505,7 @@ export default async function GiftPage({
 
           {/* Coordinator Comment */}
           {gift.coordinator_comment && (
-            <div className="mt-4 p-4 bg-blue-50 rounded-lg border-l-4 border-blue-500">
+            <div className="mt-4 p-4 bg-bondi-blue-50 rounded-lg border-l-4 border-bondi-blue-400">
               <p className="text-sm font-medium text-gray-700 mb-1">
                 💬 Comentario del coordinador:
               </p>
@@ -522,7 +522,7 @@ export default async function GiftPage({
                 href={gift.receipt_image_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 text-sm font-medium"
+                className="inline-flex items-center gap-2 text-bondi-blue-500 hover:text-bondi-blue-700 text-sm font-medium"
               >
                 📎 Ver recibo de compra
               </a>
@@ -537,7 +537,7 @@ export default async function GiftPage({
               <Users size={24} />
               Familias Participantes
             </h2>
-            <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full font-semibold">
+            <span className="bg-bondi-blue-100 text-bondi-blue-700 px-3 py-1 rounded-full font-semibold">
               {participantCount}
             </span>
           </div>

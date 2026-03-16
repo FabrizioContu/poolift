@@ -54,7 +54,7 @@ export function GroupHeader({
       {/* Back navigation */}
       <Link
         href="/groups"
-        className="inline-flex items-center gap-1 text-sm text-gray-700 hover:text-blue-600 mb-4 transition"
+        className="inline-flex items-center gap-1 text-sm text-gray-700 hover:text-bondi-blue-500 mb-4 transition"
       >
         <ArrowLeft size={16} />
         Volver a Grupos
@@ -62,8 +62,8 @@ export function GroupHeader({
 
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="bg-blue-100 p-2 rounded-lg">
-            <Users className="w-6 h-6 text-blue-600" />
+          <div className="bg-bondi-blue-100 p-2 rounded-lg">
+            <Users className="w-6 h-6 text-bondi-blue-500" />
           </div>
           <div>
             <h2 className="text-2xl font-bold text-gray-900">{groupName}</h2>
@@ -74,18 +74,18 @@ export function GroupHeader({
               <span className="text-gray-700">·</span>
               <button
                 onClick={handleCopyCode}
-                className="inline-flex items-center gap-1 text-sm text-gray-700 hover:text-blue-600 transition"
+                className="inline-flex items-center gap-1 text-sm text-gray-700 hover:text-bondi-blue-500 transition"
                 title="Copiar código"
               >
                 <span className="font-mono font-medium">{inviteCode}</span>
                 {copiedCode ? (
-                  <Check className="w-4 h-4 text-green-600" />
+                  <Check className="w-4 h-4 text-emerald-500" />
                 ) : (
                   <Copy className="w-4 h-4" />
                 )}
               </button>
               {copiedCode && (
-                <span className="text-sm text-green-600">¡Copiado!</span>
+                <span className="text-sm text-emerald-500">¡Copiado!</span>
               )}
             </div>
           </div>

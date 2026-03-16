@@ -47,27 +47,27 @@ export function GiftStatusCard({ gift, proposalName, totalPrice }: GiftStatusCar
   const getStatusInfo = () => {
     if (gift.purchased_at) {
       return {
-        icon: <CheckCircle className="text-green-500" size={32} />,
+        icon: <CheckCircle className="text-emerald-400" size={32} />,
         title: 'Regalo Completado',
         badge: 'Finalizado',
-        badgeColor: 'bg-green-100 text-green-800',
+        badgeColor: 'bg-emerald-100 text-emerald-700',
         description: 'Compra realizada'
       }
     }
     if (!gift.participation_open) {
       return {
-        icon: <Lock className="text-orange-500" size={32} />,
+        icon: <Lock className="text-tropical-teal-400" size={32} />,
         title: 'Participación Cerrada',
         badge: 'Cerrado',
-        badgeColor: 'bg-orange-100 text-orange-800',
+        badgeColor: 'bg-tropical-teal-50 text-tropical-teal-700',
         description: 'Pendiente de compra'
       }
     }
     return {
-      icon: <Gift className="text-blue-500" size={32} />,
+      icon: <Gift className="text-bondi-blue-400" size={32} />,
       title: 'Regalo Activo',
       badge: 'Abierto',
-      badgeColor: 'bg-green-100 text-green-800',
+      badgeColor: 'bg-emerald-100 text-emerald-700',
       description: 'Las familias pueden unirse'
     }
   }
@@ -79,7 +79,7 @@ export function GiftStatusCard({ gift, proposalName, totalPrice }: GiftStatusCar
     : priceToShow
 
   return (
-    <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-lg p-6 mb-6 border-2 border-blue-200">
+    <div className="bg-linear-to-br from-bondi-blue-50 to-bondi-blue-100 rounded-lg p-6 mb-6 border-2 border-bondi-blue-200">
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-3">
           {statusInfo.icon}

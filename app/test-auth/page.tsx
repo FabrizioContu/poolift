@@ -60,7 +60,7 @@ export default function TestAuthPage() {
           <p>
             <span className="font-medium">Authenticated:</span>{' '}
             {isAuthenticated ? (
-              <span className="text-green-600">Yes</span>
+              <span className="text-emerald-500">Yes</span>
             ) : (
               <span className="text-red-600">No</span>
             )}
@@ -70,7 +70,7 @@ export default function TestAuthPage() {
             {isAnonymous ? (
               <span className="text-yellow-600">Yes</span>
             ) : (
-              <span className="text-green-600">No</span>
+              <span className="text-emerald-500">No</span>
             )}
           </p>
           {user && (
@@ -98,7 +98,7 @@ export default function TestAuthPage() {
               placeholder="test@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 border rounded focus:ring-2 focus:ring-bondi-blue-400 focus:border-bondi-blue-400"
             />
           </div>
 
@@ -109,7 +109,7 @@ export default function TestAuthPage() {
               placeholder="Min 6 characters"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 border rounded focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className="w-full px-3 py-2 border rounded focus:ring-2 focus:ring-bondi-blue-400 focus:border-bondi-blue-400"
             />
           </div>
 
@@ -117,7 +117,7 @@ export default function TestAuthPage() {
             <button
               onClick={handleSignUp}
               disabled={!email || !password}
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-4 py-2 bg-bondi-blue-400 text-white rounded hover:bg-bondi-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Sign Up
             </button>
@@ -125,7 +125,7 @@ export default function TestAuthPage() {
             <button
               onClick={handleSignIn}
               disabled={!email || !password}
-              className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-4 py-2 bg-emerald-400 text-white rounded hover:bg-emerald-500 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Sign In
             </button>
@@ -164,7 +164,7 @@ export default function TestAuthPage() {
 
       {/* Messages */}
       {message && (
-        <div className="p-4 bg-blue-50 border border-blue-200 rounded mb-8">
+        <div className="p-4 bg-bondi-blue-50 border border-bondi-blue-200 rounded mb-8">
           <pre className="whitespace-pre-wrap text-sm">{message}</pre>
         </div>
       )}
@@ -183,7 +183,7 @@ export default function TestAuthPage() {
 
       {/* Back link */}
       <div className="mt-8">
-        <Link href="/" className="text-blue-600 hover:underline">
+        <Link href="/" className="text-bondi-blue-500 hover:underline">
           Back to home
         </Link>
       </div>

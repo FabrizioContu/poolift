@@ -112,7 +112,7 @@ Apúntate aquí: ${getGiftLink()}`;
     return (
       <Modal isOpen={isOpen} onClose={handleClose} title="Regalo Creado">
         <div className="text-center">
-          <CheckCircle className="mx-auto text-green-500 mb-4" size={48} />
+          <CheckCircle className="mx-auto text-emerald-400 mb-4" size={48} />
           <h3 className="text-xl font-bold mb-2 text-gray-900">
             ¡Regalo Creado!
           </h3>
@@ -121,9 +121,9 @@ Apúntate aquí: ${getGiftLink()}`;
           </p>
 
           {/* Share Code */}
-          <div className="bg-linear-to-r from-blue-50 to-purple-50 p-6 rounded-xl mb-4">
+          <div className="bg-linear-to-r from-bondi-blue-50 to-purple-50 p-6 rounded-xl mb-4">
             <p className="text-sm text-gray-700 mb-2">Código del regalo:</p>
-            <code className="text-3xl font-mono font-bold text-blue-600">
+            <code className="text-3xl font-mono font-bold text-bondi-blue-500">
               {shareCode}
             </code>
           </div>
@@ -149,7 +149,7 @@ Apúntate aquí: ${getGiftLink()}`;
             <Button
               onClick={handleShareWhatsApp}
               variant="secondary"
-              className="w-full flex justify-center gap-5 hover:bg-green-600 hover:text-white"
+              className="w-full flex justify-center gap-5 hover:bg-emerald-500 hover:text-white"
             >
               <MessageCircle size={18} className="mr-2  " />
               Compartir por WhatsApp
@@ -172,13 +172,13 @@ Apúntate aquí: ${getGiftLink()}`;
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Crear Regalo">
       <div className="text-center">
-        <Gift className="mx-auto text-blue-500 mb-4" size={48} />
+        <Gift className="mx-auto text-bondi-blue-400 mb-4" size={48} />
         <h3 className="text-xl font-bold mb-2 text-gray-900">Crear Regalo</h3>
         <p className="text-gray-700 mb-4">Se creará un regalo basado en:</p>
 
-        <div className="bg-blue-50 p-4 rounded-lg mb-4">
+        <div className="bg-bondi-blue-50 p-4 rounded-lg mb-4">
           <p className="font-semibold">{proposalName}</p>
-          <p className="text-2xl font-bold text-blue-600 mt-2">
+          <p className="text-2xl font-bold text-bondi-blue-500 mt-2">
             {formatPrice(totalPrice)}
           </p>
         </div>

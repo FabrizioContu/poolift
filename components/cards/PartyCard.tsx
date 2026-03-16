@@ -58,7 +58,7 @@ export function PartyCard({ party }: PartyCardProps) {
     <>
       <Link
         href={`/dashboard/${party.group_id}/parties/${party.id}`}
-        className="block bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg hover:border-blue-300 transition"
+        className="block bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg hover:border-bondi-blue-200 transition"
       >
         <div className="flex items-start justify-between">
           <div className="flex-1">

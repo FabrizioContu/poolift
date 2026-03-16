@@ -113,7 +113,7 @@ export function ProposalCard({
       <div
         className={`border rounded-lg p-4 ${
           proposal.is_selected
-            ? "border-green-500 bg-green-50"
+            ? "border-emerald-400 bg-emerald-50"
             : "border-gray-200 bg-white"
         }`}
       >
@@ -122,13 +122,13 @@ export function ProposalCard({
             <h3 className="font-semibold text-lg flex items-center gap-2 text-gray-900">
               {proposal.name}
               {proposal.is_selected && (
-                <Badge variant="green" size="sm" className="bg-green-500 text-white">
+                <Badge variant="green" size="sm" className="bg-emerald-400 text-white">
                   <Check size={12} className="mr-1" />
                   Seleccionada
                 </Badge>
               )}
             </h3>
-            <p className="text-blue-600 font-medium">
+            <p className="text-bondi-blue-500 font-medium">
               {formatPrice(proposal.total_price)}
             </p>
           </div>
@@ -169,7 +169,7 @@ export function ProposalCard({
                         href={item.product_link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-blue-500 hover:text-blue-700"
+                        className="text-bondi-blue-400 hover:text-bondi-blue-600"
                       >
                         <ExternalLink size={14} />
                       </a>
@@ -208,7 +208,7 @@ export function ProposalCard({
                   placeholder="Tu nombre"
                   value={voterName}
                   onChange={(e) => setVoterName(e.target.value)}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent"
                 />
                 {error && <p className="text-red-500 text-xs">{error}</p>}
                 <div className="flex gap-4">

@@ -144,8 +144,8 @@ export function GiftParticipation({
       return (
         <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
           <div className="text-center">
-            <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <CheckCircle className="text-green-600" size={32} />
+            <div className="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <CheckCircle className="text-emerald-500" size={32} />
             </div>
             <h3 className="text-xl font-bold mb-2 text-gray-900">
               ¡Estás participando!
@@ -173,8 +173,8 @@ export function GiftParticipation({
     return (
       <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
         <div className="text-center">
-          <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-            <CheckCircle className="text-green-600" size={32} />
+          <div className="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <CheckCircle className="text-emerald-500" size={32} />
           </div>
           <h3 className="text-xl font-bold mb-2 text-gray-900">
             {isCoordinator ? "Eres el coordinador" : "¡Estás apuntado!"}
@@ -206,8 +206,8 @@ export function GiftParticipation({
     return (
       <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
         <div className="text-center">
-          <div className="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Users className="text-blue-600" size={32} />
+          <div className="bg-bondi-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Users className="text-bondi-blue-500" size={32} />
           </div>
           <h3 className="text-xl font-bold mb-2 text-gray-900">
             Tu familia ya está representada
@@ -239,7 +239,7 @@ export function GiftParticipation({
               <button
                 key={p.id}
                 onClick={() => handleClaimRepresentation(p.family_name)}
-                className="text-xs bg-white border border-gray-200 rounded-full px-3 py-1 text-gray-700 hover:border-blue-400 hover:text-blue-700 transition-colors"
+                className="text-xs bg-white border border-gray-200 rounded-full px-3 py-1 text-gray-700 hover:border-bondi-blue-300 hover:text-bondi-blue-600 transition-colors"
               >
                 Soy de {p.family_name} →
               </button>
@@ -258,7 +258,7 @@ export function GiftParticipation({
             value={familyName}
             onChange={(e) => setFamilyName(e.target.value)}
             placeholder="ej: Familia García"
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent"
             disabled={loading}
             onKeyDown={(e) => {
               if (e.key === "Enter") {

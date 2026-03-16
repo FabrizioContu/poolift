@@ -152,7 +152,7 @@ Apuntate aqui: ${getGiftLink()}`;
       <div role="dialog" aria-modal="true" aria-labelledby="gift-created-title" className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
         <div className="bg-white rounded-xl max-w-md w-full p-5 max-h-[85vh] overflow-y-auto">
           <div className="text-center">
-            <CheckCircle className="mx-auto text-green-500 mb-3" size={40} />
+            <CheckCircle className="mx-auto text-emerald-400 mb-3" size={40} />
             <h2 id="gift-created-title" className="text-xl font-bold mb-1 text-gray-900">
               Regalo Creado!
             </h2>
@@ -171,7 +171,7 @@ Apuntate aqui: ${getGiftLink()}`;
             <div className="flex flex-col gap-2">
               <Button
                 onClick={handleViewGift}
-                className="w-full bg-green-600 hover:bg-green-700"
+                className="w-full bg-emerald-500 hover:bg-emerald-700"
               >
                 Ir al regalo
               </Button>
@@ -216,8 +216,8 @@ Apuntate aqui: ${getGiftLink()}`;
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center">
-              <Gift className="text-green-600" size={20} />
+            <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center">
+              <Gift className="text-emerald-500" size={20} />
             </div>
             <h2 id="direct-gift-title" className="text-xl font-bold text-gray-900">Regalo Directo</h2>
           </div>
@@ -247,7 +247,7 @@ Apuntate aqui: ${getGiftLink()}`;
               value={recipientName}
               onChange={(e) => setRecipientName(e.target.value)}
               placeholder="ej: Laura (despedida) / Ana y Pedro (boda)"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent"
             />
           </div>
 
@@ -261,7 +261,7 @@ Apuntate aqui: ${getGiftLink()}`;
               required
               value={occasion}
               onChange={(e) => setOccasion(e.target.value as OccasionType)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent"
             >
               {(Object.keys(OCCASION_LABELS) as OccasionType[]).map((type) => (
                 <option key={type} value={type}>
@@ -282,7 +282,7 @@ Apuntate aqui: ${getGiftLink()}`;
               value={giftIdea}
               onChange={(e) => setGiftIdea(e.target.value)}
               placeholder="ej: Experiencia spa, vale Amazon..."
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent"
             />
           </div>
 
@@ -301,7 +301,7 @@ Apuntate aqui: ${getGiftLink()}`;
                 value={estimatedPrice}
                 onChange={(e) => setEstimatedPrice(e.target.value)}
                 placeholder="50"
-                className="w-full px-4 py-2 pl-8 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                className="w-full px-4 py-2 pl-8 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent"
               />
             </div>
           </div>
@@ -318,7 +318,7 @@ Apuntate aqui: ${getGiftLink()}`;
               value={organizerName}
               onChange={(e) => setOrganizerName(e.target.value)}
               placeholder="ej: Maria"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent"
             />
             <p className="text-xs text-gray-700 mt-1">
               Para que te identifiquen como organizador
@@ -346,7 +346,7 @@ Apuntate aqui: ${getGiftLink()}`;
             <Button
               type="submit"
               disabled={loading}
-              className="flex-1 bg-green-600 hover:bg-green-700"
+              className="flex-1 bg-emerald-500 hover:bg-emerald-700"
             >
               {loading ? "Creando..." : "Crear Regalo"}
             </Button>

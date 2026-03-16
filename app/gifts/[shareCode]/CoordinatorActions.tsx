@@ -106,12 +106,12 @@ export function CoordinatorActions({
 
   if (isPurchased) {
     return (
-      <div className="bg-green-50 rounded-2xl p-6 mb-6">
-        <div className="flex items-center gap-2 text-green-800 mb-2">
+      <div className="bg-emerald-50 rounded-2xl p-6 mb-6">
+        <div className="flex items-center gap-2 text-emerald-700 mb-2">
           <Settings size={20} />
           <span className="font-semibold">Panel de Coordinador</span>
         </div>
-        <p className="text-green-700 text-sm">
+        <p className="text-emerald-600 text-sm">
           El regalo ha sido comprado y finalizado.
         </p>
       </div>
@@ -120,8 +120,8 @@ export function CoordinatorActions({
 
   return (
     <>
-      <div className="bg-blue-50 rounded-2xl p-6 mb-6">
-        <div className="flex items-center gap-2 text-blue-800 mb-4">
+      <div className="bg-bondi-blue-50 rounded-2xl p-6 mb-6">
+        <div className="flex items-center gap-2 text-bondi-blue-700 mb-4">
           <Settings size={20} />
           <span className="font-semibold">Panel de Coordinador</span>
         </div>
@@ -191,7 +191,7 @@ export function CoordinatorActions({
               <select
                 value={mergeKeep}
                 onChange={(e) => setMergeKeep(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent"
               >
                 {participantNames.map((name) => (
                   <option key={name} value={name}>{name}</option>
@@ -206,7 +206,7 @@ export function CoordinatorActions({
               <select
                 value={mergeRemove}
                 onChange={(e) => setMergeRemove(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent"
               >
                 {participantNames.map((name) => (
                   <option key={name} value={name}>{name}</option>
@@ -215,7 +215,7 @@ export function CoordinatorActions({
             </div>
 
             {mergeKeep === mergeRemove && (
-              <p className="text-sm text-orange-600">
+              <p className="text-sm text-tropical-teal-500">
                 Selecciona dos participantes distintos
               </p>
             )}
@@ -234,7 +234,7 @@ export function CoordinatorActions({
               <Button
                 onClick={handleMerge}
                 disabled={mergeLoading || !mergeKeep || !mergeRemove || mergeKeep === mergeRemove}
-                className="flex-1 bg-blue-600 hover:bg-blue-700"
+                className="flex-1 bg-bondi-blue-500 hover:bg-bondi-blue-600"
               >
                 {mergeLoading ? 'Fusionando...' : 'Fusionar'}
               </Button>

@@ -73,8 +73,8 @@ export function DatePickerInput({
           'w-full flex items-center justify-between gap-2 px-3 py-2.5 border rounded-lg text-left transition text-sm',
           disabled
             ? 'bg-gray-50 text-gray-400 cursor-not-allowed border-gray-200'
-            : 'bg-white border-gray-300 hover:border-blue-400',
-          isOpen ? 'ring-2 ring-blue-500 border-transparent' : '',
+            : 'bg-white border-gray-300 hover:border-bondi-blue-300',
+          isOpen ? 'ring-2 ring-bondi-blue-400 border-transparent' : '',
           !displayValue ? 'text-gray-400' : 'text-gray-900',
         ]
           .filter(Boolean)
@@ -105,7 +105,7 @@ export function DatePickerInput({
               caption_label: showDropdownNav ? 'hidden' : 'font-semibold text-gray-800 text-sm capitalize',
               dropdowns: 'flex items-center gap-1',
               dropdown:
-                'border border-gray-200 rounded-lg px-2 py-1 text-sm font-semibold text-gray-800 bg-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 capitalize',
+                'border border-gray-200 rounded-lg px-2 py-1 text-sm font-semibold text-gray-800 bg-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-bondi-blue-400 capitalize',
               nav: 'flex items-center gap-1',
               button_previous:
                 'p-1.5 rounded-lg hover:bg-gray-100 transition text-gray-600',
@@ -119,10 +119,10 @@ export function DatePickerInput({
               week: '',
               day: 'text-center p-0.5',
               day_button:
-                'w-full h-9 flex items-center justify-center rounded-lg text-sm transition hover:bg-blue-50 hover:text-blue-600',
-              today: 'font-bold text-blue-500',
+                'w-full h-9 flex items-center justify-center rounded-lg text-sm transition hover:bg-bondi-blue-50 hover:text-bondi-blue-500',
+              today: 'font-bold text-bondi-blue-400',
               selected:
-                'bg-blue-500 text-white rounded-lg hover:bg-blue-600 hover:text-white',
+                'bg-bondi-blue-400 text-white rounded-lg hover:bg-bondi-blue-500 hover:text-white',
               outside: 'text-gray-300 opacity-50',
               disabled:
                 'text-gray-300 opacity-40 cursor-not-allowed hover:bg-transparent hover:text-gray-300',

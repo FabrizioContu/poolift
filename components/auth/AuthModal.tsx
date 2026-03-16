@@ -182,7 +182,7 @@ export function AuthModal({
   const tabClass = (tab: 'login' | 'register') =>
     `py-3 px-1 border-b-2 font-medium text-sm transition ${
       activeTab === tab
-        ? 'border-blue-500 text-blue-600'
+        ? 'border-bondi-blue-400 text-bondi-blue-500'
         : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
     }`
 
@@ -192,10 +192,10 @@ export function AuthModal({
     <Modal isOpen={isOpen} onClose={onClose} title={title}>
       {/* Headline (para nudge en Phase 2) */}
       {headline && (
-        <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-          <p className="text-sm font-medium text-blue-800">{headline}</p>
+        <div className="mb-4 p-3 bg-bondi-blue-50 border border-bondi-blue-200 rounded-lg">
+          <p className="text-sm font-medium text-bondi-blue-700">{headline}</p>
           {subheadline && (
-            <p className="text-xs text-blue-600 mt-1">{subheadline}</p>
+            <p className="text-xs text-bondi-blue-500 mt-1">{subheadline}</p>
           )}
         </div>
       )}
@@ -203,8 +203,8 @@ export function AuthModal({
       {/* Email confirmation view */}
       {showConfirmation ? (
         <div className="text-center space-y-4 py-4">
-          <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto">
-            <Mail size={32} className="text-green-600" />
+          <div className="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto">
+            <Mail size={32} className="text-emerald-500" />
           </div>
           <h3 className="text-lg font-bold text-gray-900">
             Revisa tu email
@@ -273,7 +273,7 @@ export function AuthModal({
               <div className="text-center">
                 <Link
                   href="/auth/reset-password"
-                  className="text-sm text-blue-600 hover:underline"
+                  className="text-sm text-bondi-blue-500 hover:underline"
                   onClick={onClose}
                 >
                   ¿Olvidaste tu contraseña?

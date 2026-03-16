@@ -10,6 +10,72 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* bondi-blue (50=claro → 800=oscuro) */
+  --color-bondi-blue-50: #c7ecf8;
+  --color-bondi-blue-100: #8fdaf0;
+  --color-bondi-blue-200: #57c7e9;
+  --color-bondi-blue-300: #1fb4e2;
+  --color-bondi-blue-400: #168aad;
+  --color-bondi-blue-500: #126d89;
+  --color-bondi-blue-600: #0d5267;
+  --color-bondi-blue-700: #093745;
+  --color-bondi-blue-800: #041b22;
+
+  /* ocean-mist */
+  --color-ocean-mist-50: #dcf1eb;
+  --color-ocean-mist-100: #bae2d7;
+  --color-ocean-mist-200: #97d4c3;
+  --color-ocean-mist-300: #75c5ae;
+  --color-ocean-mist-400: #52b69a;
+  --color-ocean-mist-500: #3f967d;
+  --color-ocean-mist-600: #2f705e;
+  --color-ocean-mist-700: #1f4b3e;
+  --color-ocean-mist-800: #10251f;
+
+  /* lime-cream */
+  --color-lime-cream-50: #f7fbe9;
+  --color-lime-cream-100: #f0f8d3;
+  --color-lime-cream-200: #e8f4bd;
+  --color-lime-cream-300: #e1f1a7;
+  --color-lime-cream-400: #d9ed92;
+  --color-lime-cream-500: #c3e250;
+  --color-lime-cream-600: #a2c520;
+  --color-lime-cream-700: #6c8415;
+  --color-lime-cream-800: #36420b;
+
+  /* emerald (sobreescribe built-in Tailwind) */
+  --color-emerald-50: #e3f4e9;
+  --color-emerald-100: #c8e9d3;
+  --color-emerald-200: #acdebd;
+  --color-emerald-300: #90d3a7;
+  --color-emerald-400: #76c893;
+  --color-emerald-500: #48b56e;
+  --color-emerald-600: #368853;
+  --color-emerald-700: #245a37;
+  --color-emerald-800: #122d1c;
+
+  /* tropical-teal */
+  --color-tropical-teal-50: #d2f0f1;
+  --color-tropical-teal-100: #a5e1e3;
+  --color-tropical-teal-200: #78d1d4;
+  --color-tropical-teal-300: #4bc2c6;
+  --color-tropical-teal-400: #34a0a4;
+  --color-tropical-teal-500: #297f82;
+  --color-tropical-teal-600: #1f5f62;
+  --color-tropical-teal-700: #154041;
+  --color-tropical-teal-800: #0a2021;
+
+  /* light-green */
+  --color-light-green-50: #ebf7e8;
+  --color-light-green-100: #d6f0d1;
+  --color-light-green-200: #c2e8ba;
+  --color-light-green-300: #ade0a3;
+  --color-light-green-400: #99d98c;
+  --color-light-green-500: #69c757;
+  --color-light-green-600: #47a136;
+  --color-light-green-700: #306b24;
+  --color-light-green-800: #183612;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -38,7 +104,7 @@ input, textarea, select {
 
 /* 2.4.7 Focus Visible — visible focus ring on all interactive elements */
 :focus-visible {
-  outline: 3px solid #2563eb; /* blue-600 */
+  outline: 3px solid #168aad; /* bondi-blue-400 */
   outline-offset: 2px;
 }
 

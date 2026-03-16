@@ -88,8 +88,8 @@ export function JoinGroupForm({ groupId, groupName, inviteCode }: JoinGroupFormP
   if (success) {
     return (
       <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
-        <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-          <CheckCircle className="w-8 h-8 text-green-600" />
+        <div className="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+          <CheckCircle className="w-8 h-8 text-emerald-500" />
         </div>
         <h2 className="text-2xl font-bold text-gray-900 mb-2">
           ¡Te has unido al grupo!
@@ -125,7 +125,7 @@ export function JoinGroupForm({ groupId, groupName, inviteCode }: JoinGroupFormP
             {...register('familyName')}
             placeholder="ej: Familia García"
             maxLength={50}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent"
             disabled={isSubmitting}
           />
           {errors.familyName && (

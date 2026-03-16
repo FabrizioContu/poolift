@@ -104,8 +104,8 @@ function StepCard({ step, onAction }: { step: Step; onAction?: () => void }) {
     <div
       className={`
         flex items-start gap-4 p-4 rounded-lg border transition
-        ${isActive ? 'border-blue-300 bg-blue-50' : ''}
-        ${isCompleted ? 'border-green-200 bg-green-50' : ''}
+        ${isActive ? 'border-bondi-blue-200 bg-bondi-blue-50' : ''}
+        ${isCompleted ? 'border-emerald-200 bg-emerald-50' : ''}
         ${isLocked ? 'border-gray-200 bg-gray-50 opacity-60' : ''}
       `}
     >
@@ -113,8 +113,8 @@ function StepCard({ step, onAction }: { step: Step; onAction?: () => void }) {
       <div
         className={`
           flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center
-          ${isCompleted ? 'bg-green-500 text-white' : ''}
-          ${isActive ? 'bg-blue-500 text-white' : ''}
+          ${isCompleted ? 'bg-emerald-400 text-white' : ''}
+          ${isActive ? 'bg-bondi-blue-400 text-white' : ''}
           ${isLocked ? 'bg-gray-200 text-gray-400' : ''}
         `}
       >
@@ -145,7 +145,7 @@ function StepCard({ step, onAction }: { step: Step; onAction?: () => void }) {
         {isCompleted && step.number === 1 && onAction && (
           <button
             onClick={onAction}
-            className="mt-2 text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1 transition"
+            className="mt-2 text-sm text-bondi-blue-500 hover:text-bondi-blue-600 font-medium flex items-center gap-1 transition"
           >
             Añadir otro
             <ChevronRight size={14} />

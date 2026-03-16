@@ -13,8 +13,8 @@ export function Alert({
 }: AlertProps) {
   const variantStyles = {
     success: {
-      container: "bg-green-50 border-green-200 text-green-700",
-      icon: <CheckCircle size={16} className="text-green-600" />,
+      container: "bg-emerald-50 border-emerald-200 text-emerald-700",
+      icon: <CheckCircle size={16} className="text-emerald-500" />,
     },
     error: {
       container: "bg-red-50 border-red-200 text-red-700",
@@ -25,8 +25,8 @@ export function Alert({
       icon: <AlertTriangle size={16} className="text-yellow-600" />,
     },
     info: {
-      container: "bg-blue-50 border-blue-200 text-blue-700",
-      icon: <Info size={16} className="text-blue-600" />,
+      container: "bg-bondi-blue-50 border-bondi-blue-200 text-bondi-blue-600",
+      icon: <Info size={16} className="text-bondi-blue-400" />,
     },
   };
 

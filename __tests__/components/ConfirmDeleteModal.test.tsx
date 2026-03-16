@@ -132,7 +132,7 @@ describe("ConfirmDeleteModal", () => {
   it("usa estilo naranja cuando dangerous es false", () => {
     const { container } = render(<ConfirmDeleteModal {...defaultProps} dangerous={false} />);
 
-    const iconContainer = container.querySelector(".bg-orange-100");
+    const iconContainer = container.querySelector(".bg-tropical-teal-100");
     expect(iconContainer).toBeInTheDocument();
   });
 });

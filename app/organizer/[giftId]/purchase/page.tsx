@@ -172,7 +172,7 @@ export default function DirectGiftPurchasePage({
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500 mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-ocean-mist-400 mx-auto"></div>
           <p className="text-gray-700 mt-4">Cargando...</p>
         </div>
       </div>
@@ -203,13 +203,13 @@ export default function DirectGiftPurchasePage({
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center px-4">
-          <CheckCircle className="mx-auto text-green-500 mb-4" size={64} />
+          <CheckCircle className="mx-auto text-emerald-500 mb-4" size={64} />
           <h1 className="text-2xl font-bold text-gray-900 mb-2">
             Regalo ya finalizado
           </h1>
           <p className="text-gray-700 mb-4">Este regalo ya fue comprado.</p>
           <Link href={`/gifts/${shareCode}`}>
-            <Button className="bg-green-600 hover:bg-green-700">
+            <Button className="bg-ocean-mist-400 hover:bg-ocean-mist-500">
               Ver Regalo
             </Button>
           </Link>
@@ -223,7 +223,7 @@ export default function DirectGiftPurchasePage({
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center px-4">
-          <ShoppingCart className="mx-auto text-orange-500 mb-4" size={64} />
+          <ShoppingCart className="mx-auto text-tropical-teal-400 mb-4" size={64} />
           <h1 className="text-2xl font-bold text-gray-900 mb-2">
             Participación aún abierta
           </h1>
@@ -253,14 +253,14 @@ export default function DirectGiftPurchasePage({
       <>
         <div className="min-h-screen bg-gray-50 flex items-center justify-center">
           <div className="text-center px-4">
-            <CheckCircle className="mx-auto text-green-500 mb-4" size={64} />
+            <CheckCircle className="mx-auto text-emerald-500 mb-4" size={64} />
             <h1 className="text-2xl font-bold text-gray-900 mb-2">
               ¡Regalo Finalizado!
             </h1>
             <p className="text-gray-700 mb-4">
               Los participantes podrán ver el precio final.
             </p>
-            <p className="text-lg font-semibold text-green-600">
+            <p className="text-lg font-semibold text-ocean-mist-400">
               Precio por persona: {estimatedPricePerPerson}€
             </p>
           </div>
@@ -290,7 +290,7 @@ export default function DirectGiftPurchasePage({
 
         <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
           <div className="flex items-center gap-3 mb-6">
-            <ShoppingCart className="text-green-500" size={32} />
+            <ShoppingCart className="text-emerald-500" size={32} />
             <div>
               <h1 className="text-2xl font-bold">Finalizar Compra</h1>
               <p className="text-gray-700">Regalo para {gift.recipient_name}</p>
@@ -298,7 +298,7 @@ export default function DirectGiftPurchasePage({
           </div>
 
           {/* Summary */}
-          <div className="bg-green-50 p-4 rounded-lg mb-6">
+          <div className="bg-ocean-mist-50 p-4 rounded-lg mb-6">
             {gift.gift_idea && (
               <p className="font-semibold text-lg mb-2">{gift.gift_idea}</p>
             )}
@@ -326,7 +326,7 @@ export default function DirectGiftPurchasePage({
                   value={finalPrice}
                   onChange={(e) => setFinalPrice(e.target.value)}
                   placeholder="ej: 75.98"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent pr-12"
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-mist-400 focus:border-transparent pr-12"
                   required
                 />
                 <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-700">
@@ -336,7 +336,7 @@ export default function DirectGiftPurchasePage({
               {finalPrice &&
                 parseFloat(finalPrice) > 0 &&
                 participantCount > 0 && (
-                  <p className="mt-2 text-sm text-green-600">
+                  <p className="mt-2 text-sm text-ocean-mist-400">
                     Precio por persona:{" "}
                     <strong>{estimatedPricePerPerson}€</strong>
                   </p>
@@ -353,7 +353,7 @@ export default function DirectGiftPurchasePage({
                 type="file"
                 accept="image/*,application/pdf"
                 onChange={handleFileChange}
-                className="w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-green-50 file:text-green-700 hover:file:bg-green-100"
+                className="w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-ocean-mist-50 file:text-ocean-mist-600 hover:file:bg-ocean-mist-100"
               />
 
               {preview && (
@@ -385,7 +385,7 @@ export default function DirectGiftPurchasePage({
                 onChange={(e) => setComment(e.target.value)}
                 placeholder="ej: Comprado en Amazon con descuento del 20%"
                 rows={3}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-mist-400 focus:border-transparent resize-none"
               />
             </div>
 
@@ -406,7 +406,7 @@ export default function DirectGiftPurchasePage({
               <Button
                 type="submit"
                 disabled={submitting}
-                className="flex-1 bg-green-600 hover:bg-green-700"
+                className="flex-1 bg-ocean-mist-400 hover:bg-ocean-mist-500"
               >
                 {submitting ? "Finalizando..." : "Finalizar Compra"}
               </Button>

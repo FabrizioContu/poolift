@@ -150,8 +150,8 @@ export function DirectGiftParticipation({
       return (
         <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
           <div className="text-center">
-            <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <CheckCircle className="text-green-600" size={32} />
+            <div className="bg-ocean-mist-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <CheckCircle className="text-ocean-mist-400" size={32} />
             </div>
             <h3 className="text-xl font-bold mb-2 text-gray-900">
               Estás participando
@@ -179,8 +179,8 @@ export function DirectGiftParticipation({
     return (
       <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
         <div className="text-center">
-          <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-            <CheckCircle className="text-green-600" size={32} />
+          <div className="bg-ocean-mist-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <CheckCircle className="text-ocean-mist-400" size={32} />
           </div>
           <h3 className="text-xl font-bold mb-2 text-gray-900">
             {isOrganizer ? "Eres el organizador" : "Tu familia está apuntada"}
@@ -212,8 +212,8 @@ export function DirectGiftParticipation({
     return (
       <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
         <div className="text-center">
-          <div className="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Users className="text-green-600" size={32} />
+          <div className="bg-ocean-mist-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Users className="text-ocean-mist-400" size={32} />
           </div>
           <h3 className="text-xl font-bold mb-2 text-gray-900">
             Tu familia ya está representada
@@ -245,7 +245,7 @@ export function DirectGiftParticipation({
               <button
                 key={p.id}
                 onClick={() => handleClaimRepresentation(p.participant_name)}
-                className="text-xs bg-white border border-gray-200 rounded-full px-3 py-1 text-gray-700 hover:border-green-400 hover:text-green-700 transition-colors"
+                className="text-xs bg-white border border-gray-200 rounded-full px-3 py-1 text-gray-700 hover:border-ocean-mist-300 hover:text-ocean-mist-600 transition-colors"
               >
                 Soy de {p.participant_name} →
               </button>
@@ -264,7 +264,7 @@ export function DirectGiftParticipation({
             value={participantName}
             onChange={(e) => setParticipantName(e.target.value)}
             placeholder="Ej: Familia García"
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-mist-400 focus:border-transparent"
             disabled={loading}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
@@ -281,7 +281,7 @@ export function DirectGiftParticipation({
         <Button
           onClick={handleJoin}
           disabled={loading || !participantName.trim()}
-          className="w-full py-3 bg-green-600 hover:bg-green-700"
+          className="w-full py-3 bg-ocean-mist-400 hover:bg-ocean-mist-500"
         >
           <UserPlus size={20} className="mr-2" />
           {loading ? "Apuntando..." : "Apuntarme"}

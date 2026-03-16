@@ -63,7 +63,7 @@ export function SelectProposalButton({
     return (
       <div className="mt-4 pt-4 border-t border-gray-200">
         <div className="flex items-center justify-between">
-          <span className="inline-flex items-center gap-1 bg-green-100 text-green-800 text-sm px-3 py-1.5 rounded-full font-medium">
+          <span className="inline-flex items-center gap-1 bg-emerald-100 text-emerald-700 text-sm px-3 py-1.5 rounded-full font-medium">
             <Check size={16} />
             Propuesta Seleccionada
           </span>

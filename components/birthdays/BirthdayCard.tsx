@@ -40,11 +40,11 @@ export function BirthdayCard({ birthday }: BirthdayCardProps) {
           </div>
 
           {daysUntil <= 30 ? (
-            <p className="text-sm text-orange-600 font-medium">
+            <p className="text-sm text-tropical-teal-500 font-medium">
               Cumple en {daysUntil} {daysUntil === 1 ? 'dia' : 'dias'}
             </p>
           ) : birthday.nextPartyDate ? (
-            <p className="text-sm text-blue-600">
+            <p className="text-sm text-bondi-blue-500">
               Proxima fiesta: {formatDate(birthday.nextPartyDate)}
             </p>
           ) : (
