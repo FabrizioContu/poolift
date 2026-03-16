@@ -47,10 +47,15 @@ export function DirectGiftOrganizerActions({
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showCancelModal, setShowCancelModal] = useState(false);
+  const [showMergeModal, setShowMergeModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [cancelLoading, setCancelLoading] = useState(false);
+  const [mergeLoading, setMergeLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [cancelError, setCancelError] = useState<string | null>(null);
+  const [mergeError, setMergeError] = useState<string | null>(null);
+  const [mergeKeep, setMergeKeep] = useState("");
+  const [mergeRemove, setMergeRemove] = useState("");
   const [copied, setCopied] = useState(false);
   const [finalPricePerPerson, setFinalPricePerPerson] = useState<string | null>(
     null,
@@ -91,6 +96,38 @@ export function DirectGiftOrganizerActions({
       }
     }
   }, [giftId, shareCode]);
+
+  const handleMerge = async () => {
+    if (!mergeKeep || !mergeRemove || mergeKeep === mergeRemove) return;
+
+    setMergeLoading(true);
+    setMergeError(null);
+
+    try {
+      const response = await fetch(
+        `/api/gifts/direct/${giftId}/participants/merge`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ keep: mergeKeep, remove: mergeRemove }),
+        },
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setMergeError(data.error || "Error al fusionar");
+        return;
+      }
+
+      setShowMergeModal(false);
+      window.location.reload();
+    } catch {
+      setMergeError("Error al fusionar participantes");
+    } finally {
+      setMergeLoading(false);
+    }
+  };
 
   const handleClose = async () => {
     setLoading(true);
@@ -242,6 +279,23 @@ La participación está cerrada. Mas info: ${giftUrl}`;
             </p>
           )}
 
+          {/* Merge Button - only when open and 2+ participants */}
+          {isOpen && participantCount >= 2 && (
+            <Button
+              onClick={() => {
+                setMergeKeep(participantNames[0] || "");
+                setMergeRemove(participantNames[1] || "");
+                setMergeError(null);
+                setShowMergeModal(true);
+              }}
+              variant="secondary"
+              className="w-full"
+            >
+              <Users size={18} className="mr-2" />
+              Fusionar participantes duplicados
+            </Button>
+          )}
+
           {/* Cancel Button - only show if not purchased */}
           <div className="pt-3 border-t border-green-200">
             <Button
@@ -266,7 +320,7 @@ La participación está cerrada. Mas info: ${giftUrl}`;
           <div className="space-y-4">
             <div className="flex items-start gap-3 p-4 bg-yellow-50 rounded-lg">
               <AlertTriangle
-                className="text-yellow-600 flex-shrink-0 mt-0.5"
+                className="text-yellow-600 shrink-0 mt-0.5"
                 size={20}
               />
               <div>
@@ -280,9 +334,7 @@ La participación está cerrada. Mas info: ${giftUrl}`;
             <div className="p-4 bg-green-50 rounded-lg">
               <div className="flex items-center gap-2 text-green-800 mb-2">
                 <Users size={18} />
-                <span className="font-medium">
-                  {participantCount} familias
-                </span>
+                <span className="font-medium">{participantCount} familias</span>
               </div>
               {estimatedPrice && (
                 <>
@@ -334,7 +386,7 @@ La participación está cerrada. Mas info: ${giftUrl}`;
         >
           <div className="space-y-4">
             <div className="flex items-center gap-3 p-4 bg-green-50 rounded-lg">
-              <Check className="text-green-600 flex-shrink-0" size={24} />
+              <Check className="text-green-600 shrink-0" size={24} />
               <div>
                 <p className="font-medium text-green-800">
                   La participación ha sido cerrada
@@ -453,10 +505,7 @@ La participación está cerrada. Mas info: ${giftUrl}`;
         >
           <div className="space-y-4">
             <div className="flex items-start gap-3 p-4 bg-red-50 rounded-lg">
-              <XCircle
-                className="text-red-600 flex-shrink-0 mt-0.5"
-                size={20}
-              />
+              <XCircle className="text-red-600 shrink-0 mt-0.5" size={20} />
               <div>
                 <p className="font-medium text-red-800">¿Estás seguro?</p>
                 <p className="text-sm text-red-700 mt-1">
@@ -468,11 +517,14 @@ La participación está cerrada. Mas info: ${giftUrl}`;
 
             <div className="p-4 bg-gray-50 rounded-lg">
               <p className="text-sm text-gray-700 mb-2">
-                <span className="font-medium">Regalo para:</span> {recipientName}
+                <span className="font-medium">Regalo para:</span>{" "}
+                {recipientName}
               </p>
               {participantCount > 0 && (
                 <p className="text-sm text-orange-600">
-                  Hay {participantCount} participante{participantCount > 1 ? "s" : ""} apuntado{participantCount > 1 ? "s" : ""}.
+                  Hay {participantCount} participante
+                  {participantCount > 1 ? "s" : ""} apuntado
+                  {participantCount > 1 ? "s" : ""}.
                 </p>
               )}
             </div>
@@ -494,6 +546,87 @@ La participación está cerrada. Mas info: ${giftUrl}`;
                 className="flex-1 bg-red-600 hover:bg-red-700"
               >
                 {cancelLoading ? "Cancelando..." : "Sí, Cancelar Regalo"}
+              </Button>
+            </div>
+          </div>
+        </Modal>
+      )}
+
+      {/* Merge Participants Modal */}
+      {showMergeModal && (
+        <Modal
+          isOpen={showMergeModal}
+          onClose={() => setShowMergeModal(false)}
+          title="Fusionar participantes duplicados"
+        >
+          <div className="space-y-4">
+            <p className="text-sm text-gray-700">
+              Selecciona el participante a mantener y el duplicado a eliminar.
+              Esta acción no se puede deshacer.
+            </p>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Mantener
+              </label>
+              <select
+                value={mergeKeep}
+                onChange={(e) => setMergeKeep(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              >
+                {participantNames.map((name) => (
+                  <option key={name} value={name}>
+                    {name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Eliminar (duplicado)
+              </label>
+              <select
+                value={mergeRemove}
+                onChange={(e) => setMergeRemove(e.target.value)}
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+              >
+                {participantNames.map((name) => (
+                  <option key={name} value={name}>
+                    {name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {mergeKeep === mergeRemove && (
+              <p className="text-sm text-orange-600">
+                Selecciona dos participantes distintos
+              </p>
+            )}
+
+            {mergeError && <Alert variant="error">{mergeError}</Alert>}
+
+            <div className="flex gap-3 pt-2">
+              <Button
+                onClick={() => setShowMergeModal(false)}
+                variant="secondary"
+                className="flex-1"
+                disabled={mergeLoading}
+              >
+                Cancelar
+              </Button>
+              <Button
+                onClick={handleMerge}
+                disabled={
+                  mergeLoading ||
+                  !mergeKeep ||
+                  !mergeRemove ||
+                  mergeKeep === mergeRemove
+                }
+                className="flex-1 bg-green-600 hover:bg-green-700"
+              >
+                {mergeLoading ? "Fusionando..." : "Fusionar"}
               </Button>
             </div>
           </div>
