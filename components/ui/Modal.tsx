@@ -14,12 +14,12 @@ export function Modal({ isOpen, onClose, title, children }: ModalProps) {
   
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-lg max-w-md w-full p-6 max-h-[90vh] overflow-y-auto">
+      <div className="bg-white dark:bg-bondi-blue-700 rounded-lg max-w-md w-full p-6 max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-bold text-gray-900">{title}</h2>
-          <button 
-            onClick={onClose} 
-            className="text-gray-700 hover:text-gray-900 transition"
+          <h2 className="text-xl font-bold text-gray-900 dark:text-bondi-blue-50">{title}</h2>
+          <button
+            onClick={onClose}
+            className="text-gray-700 hover:text-gray-900 dark:text-bondi-blue-300 dark:hover:text-bondi-blue-100 transition"
             aria-label="Cerrar"
           >
             <X size={24} />

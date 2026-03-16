@@ -14,7 +14,7 @@ export function EmptyState({
   action,
 }: EmptyStateProps) {
   return (
-    <div className="text-center py-8 text-gray-700">
+    <div className="text-center py-8 text-gray-700 dark:text-bondi-blue-300">
       <Icon size={48} className="mx-auto mb-3 opacity-50" />
       <p className="font-medium">{title}</p>
       {description && <p className="text-sm mt-1">{description}</p>}

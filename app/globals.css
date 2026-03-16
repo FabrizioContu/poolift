@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Class-based dark mode (Tailwind v4) */
+@variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -80,9 +83,15 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #041b22; /* bondi-blue-800 */
+    --foreground: #c7ecf8; /* bondi-blue-50 */
   }
+}
+
+/* Manual dark class (overrides media query) */
+.dark {
+  --background: #041b22; /* bondi-blue-800 */
+  --foreground: #c7ecf8; /* bondi-blue-50 */
 }
 
 body {
@@ -100,6 +109,10 @@ body {
 /* Ensure input text is readable */
 input, textarea, select {
   color: #111827; /* gray-900 */
+}
+
+.dark input, .dark textarea, .dark select {
+  color: #c7ecf8; /* bondi-blue-50 */
 }
 
 /* 2.4.7 Focus Visible — visible focus ring on all interactive elements */

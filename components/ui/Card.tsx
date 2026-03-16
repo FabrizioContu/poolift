@@ -21,12 +21,12 @@ export function Card({
     lg: "p-6",
   };
 
-  const baseStyles = "bg-white border rounded-lg";
+  const baseStyles = "bg-white dark:bg-bondi-blue-700 border rounded-lg";
   const borderStyles = selected
-    ? "border-emerald-400 bg-emerald-50"
-    : "border-gray-200";
+    ? "border-emerald-400 bg-emerald-50 dark:border-ocean-mist-400 dark:bg-ocean-mist-800"
+    : "border-gray-200 dark:border-bondi-blue-600";
   const hoverStyles = hover
-    ? "hover:shadow-lg hover:border-bondi-blue-200 transition cursor-pointer"
+    ? "hover:shadow-lg hover:border-bondi-blue-200 dark:hover:border-bondi-blue-400 transition cursor-pointer"
     : "";
 
   return (
