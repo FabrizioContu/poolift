@@ -16,23 +16,23 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label
             htmlFor={inputId}
-            className="block text-sm font-medium text-gray-700 mb-1"
+            className="block text-sm font-medium text-gray-700 dark:text-bondi-blue-100 mb-1"
           >
-            {label} {required && <span className="text-red-500">*</span>}
+            {label} {required && <span className="text-red-500 dark:text-red-400">*</span>}
           </label>
         )}
         <input
           ref={ref}
           id={inputId}
-          className={`w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-50 disabled:text-gray-700 ${
-            error ? "border-red-500" : ""
+          className={`w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:bg-gray-50 disabled:text-gray-700 dark:bg-bondi-blue-700 dark:border-bondi-blue-600 dark:placeholder-bondi-blue-400 dark:disabled:bg-bondi-blue-800 dark:disabled:text-bondi-blue-400 ${
+            error ? "border-red-500 dark:border-red-500" : ""
           } ${className}`}
           {...props}
         />
         {hint && !error && (
-          <p className="text-xs text-gray-700 mt-1">{hint}</p>
+          <p className="text-xs text-gray-700 dark:text-bondi-blue-300 mt-1">{hint}</p>
         )}
-        {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
+        {error && <p className="text-red-500 dark:text-red-400 text-sm mt-1">{error}</p>}
       </div>
     );
   }

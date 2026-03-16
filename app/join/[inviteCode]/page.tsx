@@ -1,24 +1,24 @@
-import { supabase } from '@/lib/supabase'
-import Link from 'next/link'
-import { ArrowLeft, AlertCircle } from 'lucide-react'
-import { JoinGroupForm } from '@/components/groups/JoinGroupForm'
+import { supabase } from "@/lib/supabase";
+import Link from "next/link";
+import { ArrowLeft, AlertCircle } from "lucide-react";
+import { JoinGroupForm } from "@/components/groups/JoinGroupForm";
 
 interface JoinGroupPageProps {
-  params: Promise<{ inviteCode: string }>
+  params: Promise<{ inviteCode: string }>;
 }
 
 export default async function JoinGroupPage({ params }: JoinGroupPageProps) {
-  const { inviteCode } = await params
+  const { inviteCode } = await params;
 
   const { data: group, error } = await supabase
-    .from('groups')
-    .select('id, name')
-    .eq('invite_code', inviteCode)
-    .single()
+    .from("groups")
+    .select("id, name")
+    .eq("invite_code", inviteCode)
+    .single();
 
   if (error || !group) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-bondi-blue-50 to-white py-12 px-4">
+      <div className="min-h-screen bg-linear-to-b from-bondi-blue-50 to-white py-12 px-4">
         <div className="max-w-md mx-auto">
           <Link
             href="/join"
@@ -36,10 +36,13 @@ export default async function JoinGroupPage({ params }: JoinGroupPageProps) {
               Código inválido
             </h1>
             <p className="text-gray-700 mb-6">
-              El código <span className="font-mono font-bold">{inviteCode}</span> no corresponde a ningún grupo.
+              El código{" "}
+              <span className="font-mono font-bold">{inviteCode}</span> no
+              corresponde a ningún grupo.
             </p>
             <p className="text-sm text-gray-700 mb-6">
-              Verifica que el código esté bien escrito o pide a quien te lo envió que lo comparta de nuevo.
+              Verifica que el código esté bien escrito o pide a quien te lo
+              envió que lo comparta de nuevo.
             </p>
             <Link
               href="/join"
@@ -50,11 +53,11 @@ export default async function JoinGroupPage({ params }: JoinGroupPageProps) {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white py-12 px-4">
+    <div className="min-h-screen bg-linear-to-b from-blue-50 to-white py-12 px-4">
       <div className="max-w-md mx-auto">
         <Link
           href="/join"
@@ -64,8 +67,12 @@ export default async function JoinGroupPage({ params }: JoinGroupPageProps) {
           <span>Volver</span>
         </Link>
 
-        <JoinGroupForm groupId={group.id} groupName={group.name} inviteCode={inviteCode} />
+        <JoinGroupForm
+          groupId={group.id}
+          groupName={group.name}
+          inviteCode={inviteCode}
+        />
       </div>
     </div>
-  )
+  );
 }

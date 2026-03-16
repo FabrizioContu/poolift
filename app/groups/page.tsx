@@ -18,7 +18,7 @@ import { Button } from "@/components/ui/Button";
 import { OCCASION_LABELS, type OccasionType } from "@/lib/types";
 
 const AuthModal = dynamic(() =>
-  import("@/components/auth/AuthModal").then((m) => ({ default: m.AuthModal }))
+  import("@/components/auth/AuthModal").then((m) => ({ default: m.AuthModal })),
 );
 
 interface GroupWithCounts {
@@ -44,8 +44,9 @@ export default function GroupsPage() {
   const [allGroups, setAllGroups] = useState<GroupWithCounts[]>([]);
   const [showAll, setShowAll] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [directGifts, setDirectGifts] =
-    useState<DirectGiftSession[]>(getInitialDirectGifts);
+  const [directGifts, setDirectGifts] = useState<DirectGiftSession[]>(
+    getInitialDirectGifts,
+  );
   const [showAuthModal, setShowAuthModal] = useState(false);
 
   useEffect(() => {
@@ -66,7 +67,7 @@ export default function GroupsPage() {
           .neq("status", "cancelled");
 
         const validShareCodes = new Set(
-          validGifts?.map((g) => g.share_code) || []
+          validGifts?.map((g) => g.share_code) || [],
         );
 
         savedDirectGifts.forEach((gift) => {
@@ -76,7 +77,7 @@ export default function GroupsPage() {
         });
 
         savedDirectGifts = savedDirectGifts.filter((g) =>
-          validShareCodes.has(g.shareCode)
+          validShareCodes.has(g.shareCode),
         );
       }
 
@@ -94,7 +95,7 @@ export default function GroupsPage() {
           invite_code,
           families!families_group_id_fkey(id),
           parties(id)
-        `
+        `,
         )
         .order("created_at", { ascending: false })
         .limit(20);
@@ -107,7 +108,7 @@ export default function GroupsPage() {
             invite_code: g.invite_code,
             familyCount: g.families?.length || 0,
             partyCount: g.parties?.length || 0,
-          }))
+          })),
         );
       }
 
@@ -137,7 +138,7 @@ export default function GroupsPage() {
               invite_code,
               families!families_group_id_fkey(id),
               parties(id)
-            `
+            `,
             )
             .in("id", groupIds);
 
@@ -150,7 +151,7 @@ export default function GroupsPage() {
                 familyCount: g.families?.length || 0,
                 partyCount: g.parties?.length || 0,
                 isCreator: familyMap.get(g.id)?.is_creator || false,
-              }))
+              })),
             );
           }
         } else if (isMounted && savedDirectGifts.length === 0) {
@@ -181,7 +182,7 @@ export default function GroupsPage() {
       : myGroups;
 
   const filteredGroups = displayedGroups.filter((g) =>
-    g.name.toLowerCase().includes(searchTerm.toLowerCase())
+    g.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   return (
@@ -206,12 +207,18 @@ export default function GroupsPage() {
             </p>
           </div>
           <div className="flex gap-3">
-            <Link href="/" className="flex items-center gap-2 px-4 py-2 rounded-lg font-bold transition bg-gray-200 text-gray-800 hover:bg-gray-300">
+            <Link
+              href="/"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg font-bold transition bg-gray-200 text-gray-800 hover:bg-gray-300"
+            >
               <Home size={18} />
               Inicio
             </Link>
             {!isAnonymous && (
-              <Link href="/create-group" className="flex items-center gap-2 px-4 py-2 rounded-lg font-bold transition bg-bondi-blue-400 text-white hover:bg-bondi-blue-500">
+              <Link
+                href="/create-group"
+                className="flex items-center gap-2 px-4 py-2 rounded-lg font-bold transition bg-bondi-blue-400 text-white hover:bg-bondi-blue-500"
+              >
                 <Plus size={18} />
                 Crear Grupo
               </Link>
@@ -223,14 +230,14 @@ export default function GroupsPage() {
         {!authLoading && isAnonymous && (
           <div className="bg-bondi-blue-50 border border-bondi-blue-200 rounded-lg p-4 mb-6 flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <Lock className="text-bondi-blue-500 flex-shrink-0" size={20} />
+              <Lock className="text-bondi-blue-500 shrink-0" size={20} />
               <p className="text-bondi-blue-700 text-sm">
                 Inicia sesión para ver si tienes acceso a estos grupos
               </p>
             </div>
             <Button
               onClick={() => setShowAuthModal(true)}
-              className="flex items-center gap-2 flex-shrink-0"
+              className="flex items-center gap-2 shrink-0"
             >
               <LogIn size={16} />
               Entrar
@@ -268,8 +275,15 @@ export default function GroupsPage() {
 
         {/* Content */}
         {loading || authLoading ? (
-          <div role="status" aria-label="Cargando grupos" className="text-center py-12">
-            <div aria-hidden="true" className="animate-spin rounded-full h-12 w-12 border-b-2 border-bondi-blue-400 mx-auto"></div>
+          <div
+            role="status"
+            aria-label="Cargando grupos"
+            className="text-center py-12"
+          >
+            <div
+              aria-hidden="true"
+              className="animate-spin rounded-full h-12 w-12 border-b-2 border-bondi-blue-400 mx-auto"
+            ></div>
             <p className="text-gray-700 mt-4">Cargando grupos...</p>
           </div>
         ) : isAnonymous ? (
@@ -314,7 +328,7 @@ export default function GroupsPage() {
                         </div>
                       </div>
                     </div>
-                    <Lock className="text-gray-400 flex-shrink-0" size={18} />
+                    <Lock className="text-gray-400 shrink-0" size={18} />
                   </div>
                   <button
                     onClick={() => setShowAuthModal(true)}
@@ -365,10 +379,16 @@ export default function GroupsPage() {
                   Crea un grupo nuevo o únete a uno existente
                 </p>
                 <div className="flex gap-3 justify-center mt-4">
-                  <Link href="/create-group" className="px-4 py-2 rounded-lg font-bold transition bg-bondi-blue-400 text-white hover:bg-bondi-blue-500">
+                  <Link
+                    href="/create-group"
+                    className="px-4 py-2 rounded-lg font-bold transition bg-bondi-blue-400 text-white hover:bg-bondi-blue-500"
+                  >
                     Crear Grupo
                   </Link>
-                  <Link href="/join" className="px-4 py-2 rounded-lg font-bold transition bg-gray-200 text-gray-800 hover:bg-gray-300">
+                  <Link
+                    href="/join"
+                    className="px-4 py-2 rounded-lg font-bold transition bg-gray-200 text-gray-800 hover:bg-gray-300"
+                  >
                     Unirse a Grupo
                   </Link>
                 </div>
@@ -420,7 +440,7 @@ export default function GroupsPage() {
                         </p>
                       )}
                     </div>
-                    <Gift size={20} className="text-ocean-mist-400 flex-shrink-0" />
+                    <Gift size={20} className="text-ocean-mist-400 shrink-0" />
                   </div>
                   <p className="text-xs text-gray-700 mt-2">
                     Organizado por {gift.organizerName}
