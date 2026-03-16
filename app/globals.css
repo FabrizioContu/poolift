@@ -100,9 +100,14 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Improve placeholder visibility on mobile */
+/* Placeholder text — dark enough to read, light enough to distinguish from typed value */
 ::placeholder {
-  color: #6b7280; /* gray-500 instead of default lighter gray */
+  color: #111827; /* gray-900 */
+  opacity: 1;
+}
+
+.dark ::placeholder {
+  color: #57c7e9; /* bondi-blue-200 — readable on bondi-blue-800 bg */
   opacity: 1;
 }
 
