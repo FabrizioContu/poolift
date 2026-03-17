@@ -1,54 +1,62 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { Button } from '@/components/ui/Button'
-import { Modal } from '@/components/ui/Modal'
-import { Alert } from '@/components/ui/Alert'
-import { CloseParticipationButton } from '@/components/gifts/CloseParticipationButton'
-import { ShoppingCart, Settings, Users } from 'lucide-react'
-import Link from 'next/link'
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/Button";
+import { Modal } from "@/components/ui/Modal";
+import { Alert } from "@/components/ui/Alert";
+import { CloseParticipationButton } from "@/components/gifts/CloseParticipationButton";
+import { ShoppingCart, Settings, Users } from "lucide-react";
+import Link from "next/link";
 
 interface CoordinatorActionsProps {
-  giftId: string
-  shareCode: string
-  giftName: string
-  celebrantNames: string[]
-  coordinatorId: string | null
-  groupId: string | null
-  participationOpen: boolean
-  isPurchased: boolean
-  participantCount: number
-  participantNames: string[]
-  totalPrice: number
+  giftId: string;
+  shareCode: string;
+  giftName: string;
+  celebrantNames: string[];
+  coordinatorId: string | null;
+  groupId: string | null;
+  participationOpen: boolean;
+  isPurchased: boolean;
+  participantCount: number;
+  participantNames: string[];
+  totalPrice: number;
 }
 
-function checkIsCoordinator(giftId: string, coordinatorId: string | null, groupId: string | null): boolean {
-  if (typeof window === 'undefined') return false
-  if (!coordinatorId || !groupId) return false
+function checkIsCoordinator(
+  giftId: string,
+  coordinatorId: string | null,
+  groupId: string | null,
+): boolean {
+  if (typeof window === "undefined") return false;
+  if (!coordinatorId || !groupId) return false;
 
   // Check if user's family in the group matches the coordinator
-  const sessions = localStorage.getItem('poolift_groups')
+  const sessions = localStorage.getItem("poolift_groups");
   if (sessions) {
-    const groupSessions = JSON.parse(sessions)
+    const groupSessions = JSON.parse(sessions);
     const session = groupSessions.find(
-      (s: { groupId: string; familyId: string }) => s.groupId === groupId
-    )
+      (s: { groupId: string; familyId: string }) => s.groupId === groupId,
+    );
     if (session && session.familyId === coordinatorId) {
-      return true
+      return true;
     }
   }
 
-  return false
+  return false;
 }
 
-function useIsCoordinator(giftId: string, coordinatorId: string | null, groupId: string | null): boolean {
-  const [isCoordinator, setIsCoordinator] = useState(false)
+function useIsCoordinator(
+  giftId: string,
+  coordinatorId: string | null,
+  groupId: string | null,
+): boolean {
+  const [isCoordinator, setIsCoordinator] = useState(false);
 
   useEffect(() => {
-    setIsCoordinator(checkIsCoordinator(giftId, coordinatorId, groupId))
-  }, [giftId, coordinatorId, groupId])
+    setIsCoordinator(checkIsCoordinator(giftId, coordinatorId, groupId));
+  }, [giftId, coordinatorId, groupId]);
 
-  return isCoordinator
+  return isCoordinator;
 }
 
 export function CoordinatorActions({
@@ -62,46 +70,46 @@ export function CoordinatorActions({
   isPurchased,
   participantCount,
   participantNames,
-  totalPrice
+  totalPrice,
 }: CoordinatorActionsProps) {
-  const isCoordinator = useIsCoordinator(giftId, coordinatorId, groupId)
-  const [showMergeModal, setShowMergeModal] = useState(false)
-  const [mergeLoading, setMergeLoading] = useState(false)
-  const [mergeError, setMergeError] = useState<string | null>(null)
-  const [mergeKeep, setMergeKeep] = useState('')
-  const [mergeRemove, setMergeRemove] = useState('')
+  const isCoordinator = useIsCoordinator(giftId, coordinatorId, groupId);
+  const [showMergeModal, setShowMergeModal] = useState(false);
+  const [mergeLoading, setMergeLoading] = useState(false);
+  const [mergeError, setMergeError] = useState<string | null>(null);
+  const [mergeKeep, setMergeKeep] = useState("");
+  const [mergeRemove, setMergeRemove] = useState("");
 
   const handleMerge = async () => {
-    if (!mergeKeep || !mergeRemove || mergeKeep === mergeRemove) return
+    if (!mergeKeep || !mergeRemove || mergeKeep === mergeRemove) return;
 
-    setMergeLoading(true)
-    setMergeError(null)
+    setMergeLoading(true);
+    setMergeError(null);
 
     try {
       const response = await fetch(`/api/gifts/${giftId}/participants/merge`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ keep: mergeKeep, remove: mergeRemove }),
-      })
+      });
 
-      const data = await response.json()
+      const data = await response.json();
 
       if (!response.ok) {
-        setMergeError(data.error || 'Error al fusionar')
-        return
+        setMergeError(data.error || "Error al fusionar");
+        return;
       }
 
-      setShowMergeModal(false)
-      window.location.reload()
+      setShowMergeModal(false);
+      window.location.reload();
     } catch {
-      setMergeError('Error al fusionar participantes')
+      setMergeError("Error al fusionar participantes");
     } finally {
-      setMergeLoading(false)
+      setMergeLoading(false);
     }
-  }
+  };
 
   if (!isCoordinator) {
-    return null
+    return null;
   }
 
   if (isPurchased) {
@@ -115,7 +123,7 @@ export function CoordinatorActions({
           El regalo ha sido comprado y finalizado.
         </p>
       </div>
-    )
+    );
   }
 
   return (
@@ -139,9 +147,9 @@ export function CoordinatorActions({
             />
           ) : (
             <Link href={`/coordinator/${giftId}/purchase`}>
-              <Button className="w-full">
+              <Button className="w-full flex items-center justify-center ">
                 <ShoppingCart size={18} className="mr-2" />
-                Finalizar Compra
+                <span className="mx-auto">Finalizar Compra</span>
               </Button>
             </Link>
           )}
@@ -156,10 +164,10 @@ export function CoordinatorActions({
           {participationOpen && participantCount >= 2 && (
             <Button
               onClick={() => {
-                setMergeKeep(participantNames[0] || '')
-                setMergeRemove(participantNames[1] || '')
-                setMergeError(null)
-                setShowMergeModal(true)
+                setMergeKeep(participantNames[0] || "");
+                setMergeRemove(participantNames[1] || "");
+                setMergeError(null);
+                setShowMergeModal(true);
               }}
               variant="secondary"
               className="w-full"
@@ -180,8 +188,8 @@ export function CoordinatorActions({
         >
           <div className="space-y-4">
             <p className="text-sm text-gray-700">
-              Selecciona la familia a mantener y el duplicado a eliminar.
-              Esta acción no se puede deshacer.
+              Selecciona la familia a mantener y el duplicado a eliminar. Esta
+              acción no se puede deshacer.
             </p>
 
             <div>
@@ -194,7 +202,9 @@ export function CoordinatorActions({
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent"
               >
                 {participantNames.map((name) => (
-                  <option key={name} value={name}>{name}</option>
+                  <option key={name} value={name}>
+                    {name}
+                  </option>
                 ))}
               </select>
             </div>
@@ -209,7 +219,9 @@ export function CoordinatorActions({
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent"
               >
                 {participantNames.map((name) => (
-                  <option key={name} value={name}>{name}</option>
+                  <option key={name} value={name}>
+                    {name}
+                  </option>
                 ))}
               </select>
             </div>
@@ -233,15 +245,20 @@ export function CoordinatorActions({
               </Button>
               <Button
                 onClick={handleMerge}
-                disabled={mergeLoading || !mergeKeep || !mergeRemove || mergeKeep === mergeRemove}
+                disabled={
+                  mergeLoading ||
+                  !mergeKeep ||
+                  !mergeRemove ||
+                  mergeKeep === mergeRemove
+                }
                 className="flex-1 bg-bondi-blue-500 hover:bg-bondi-blue-600"
               >
-                {mergeLoading ? 'Fusionando...' : 'Fusionar'}
+                {mergeLoading ? "Fusionando..." : "Fusionar"}
               </Button>
             </div>
           </div>
         </Modal>
       )}
     </>
-  )
+  );
 }

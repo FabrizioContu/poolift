@@ -227,8 +227,8 @@ La participación está cerrada. Mas info: ${giftUrl}`;
 
   if (isPurchased) {
     return (
-      <div className="bg-ocean-mist-50 rounded-2xl p-6 mb-6">
-        <div className="flex items-center gap-2 text-ocean-mist-700 mb-2">
+      <div className="bg-ocean-mist-100 rounded-2xl p-6 mb-6">
+        <div className="flex items-center gap-2  text-ocean-mist-700 mb-2">
           <Settings size={20} />
           <span className="font-semibold">Panel de Organizador</span>
         </div>
@@ -251,18 +251,18 @@ La participación está cerrada. Mas info: ${giftUrl}`;
           {isOpen ? (
             <Button
               onClick={() => setShowConfirmModal(true)}
-              variant="secondary"
-              className="w-full"
+              variant="primary"
+              className="w-full flex items-center"
               disabled={participantCount === 0}
             >
               <Lock size={18} className="mr-2" />
-              Cerrar Participación
+              <span className="mx-auto">Cerrar Participación</span>
             </Button>
           ) : (
             <Link href={`/organizer/${giftId}/purchase?shareCode=${shareCode}`}>
-              <Button className="w-full bg-ocean-mist-400 hover:bg-ocean-mist-500">
+              <Button className="w-full flex  items-center  bg-ocean-mist-400 hover:bg-ocean-mist-500">
                 <ShoppingCart size={18} className="mr-2" />
-                Finalizar Compra
+                <span className="mx-auto">Finalizar Compra</span>
               </Button>
             </Link>
           )}
@@ -300,11 +300,11 @@ La participación está cerrada. Mas info: ${giftUrl}`;
           <div className="pt-3 border-t border-ocean-mist-200">
             <Button
               onClick={() => setShowCancelModal(true)}
-              variant="secondary"
-              className="w-full text-red-600 hover:bg-red-50 border-red-200"
+              variant="danger"
+              className="w-full flex items-center text-red-600 hover:bg-red-50 border-red-200"
             >
               <Trash2 size={18} className="mr-2" />
-              Cancelar Regalo
+              <span className="mx-auto">Cancelar Regalo</span>
             </Button>
           </div>
         </div>
@@ -427,7 +427,7 @@ La participación está cerrada. Mas info: ${giftUrl}`;
 
                   <div className="flex justify-between items-center pt-2 border-t border-gray-200">
                     <span className="text-gray-700">Precio por familia:</span>
-                    <span className="font-bold text-ocean-mist-400 text-xl">
+                    <span className="font-bold text-ocean-mist-6  00 text-xl">
                       {finalPricePerPerson || estimatedPricePerPerson}€
                     </span>
                   </div>
@@ -438,7 +438,9 @@ La participación está cerrada. Mas info: ${giftUrl}`;
             {/* Participants List */}
             {participantNames.length > 0 && (
               <div>
-                <p className="text-xs text-gray-700 mb-2">Familias:</p>
+                <p className="text-xs text-gray-700 dark:text-gray-300 mb-2">
+                  Familias:
+                </p>
                 <div className="flex flex-wrap gap-1">
                   {participantNames.map((name, index) => (
                     <span
@@ -454,11 +456,13 @@ La participación está cerrada. Mas info: ${giftUrl}`;
 
             {/* Share Buttons */}
             <div className="space-y-2 pt-2">
-              <p className="text-sm font-medium text-gray-700">Compartir:</p>
+              <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                Compartir:
+              </p>
 
               <Button
                 onClick={handleShareWhatsApp}
-                className="w-full bg-ocean-mist-500 hover:bg-green-600"
+                className="w-full gap-2 bg-ocean-mist-500 hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-500 flex items-center justify-center"
               >
                 <Share2 size={18} className="mr-2" />
                 Compartir por WhatsApp
@@ -466,8 +470,8 @@ La participación está cerrada. Mas info: ${giftUrl}`;
 
               <Button
                 onClick={handleCopyLink}
-                variant="secondary"
-                className="w-full"
+                variant="primary"
+                className="w-full gap-2 flex items-center justify-center "
               >
                 {copied ? (
                   <>
@@ -534,7 +538,7 @@ La participación está cerrada. Mas info: ${giftUrl}`;
             <div className="flex gap-3 pt-2">
               <Button
                 onClick={() => setShowCancelModal(false)}
-                variant="secondary"
+                variant="primary"
                 className="flex-1"
                 disabled={cancelLoading}
               >
@@ -543,7 +547,8 @@ La participación está cerrada. Mas info: ${giftUrl}`;
               <Button
                 onClick={handleCancel}
                 disabled={cancelLoading}
-                className="flex-1 bg-red-600 hover:bg-red-700"
+                variant="danger"
+                className="flex-1"
               >
                 {cancelLoading ? "Cancelando..." : "Sí, Cancelar Regalo"}
               </Button>

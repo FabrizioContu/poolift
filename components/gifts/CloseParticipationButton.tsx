@@ -279,10 +279,11 @@ export function CloseParticipationButton({
 
               <Button
                 onClick={handleShareWhatsApp}
-                className="w-full bg-ocean-mist-400 hover:bg-ocean-mist-500"
+                variant="danger"
+                className="w-full flex items-center"
               >
                 <Share2 size={18} className="mr-2" />
-                Compartir por WhatsApp
+                <span className=" mx-auto">Compartir por WhatsApp</span>
               </Button>
 
               <Button

@@ -276,7 +276,7 @@ export default async function GiftPage({
           <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-xl font-bold flex items-center gap-2 text-gray-900">
-                <Users size={24} />
+                <Users size={20} />
                 Familias participantes
               </h2>
               <span className="bg-ocean-mist-50 text-ocean-mist-700 px-3 py-1 rounded-full font-semibold">
@@ -295,8 +295,10 @@ export default async function GiftPage({
                     key={p.id}
                     className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
                   >
-                    <span className="font-medium">{p.participant_name}</span>
-                    <span className="text-sm text-gray-700">
+                    <span className="font-medium text-gray-900">
+                      {p.participant_name}
+                    </span>
+                    <span className="text-sm text-gray-900">
                       {new Date(p.joined_at).toLocaleDateString("es-ES")}
                     </span>
                   </li>

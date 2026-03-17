@@ -33,27 +33,36 @@ export function CreateDirectGiftModal({
     if (!el) return;
 
     const focusable = el.querySelectorAll<HTMLElement>(
-      'button, input, select, textarea, [tabindex]:not([tabindex="-1"])'
+      'button, input, select, textarea, [tabindex]:not([tabindex="-1"])',
     );
     focusable[0]?.focus();
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') { onClose(); return; }
-      if (e.key !== 'Tab') return;
+      if (e.key === "Escape") {
+        onClose();
+        return;
+      }
+      if (e.key !== "Tab") return;
       const els = el.querySelectorAll<HTMLElement>(
-        'button, input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        'button, input, select, textarea, [tabindex]:not([tabindex="-1"])',
       );
       const first = els[0];
       const last = els[els.length - 1];
       if (e.shiftKey) {
-        if (document.activeElement === first) { e.preventDefault(); last?.focus(); }
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last?.focus();
+        }
       } else {
-        if (document.activeElement === last) { e.preventDefault(); first?.focus(); }
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first?.focus();
+        }
       }
     };
 
-    el.addEventListener('keydown', handleKeyDown);
-    return () => el.removeEventListener('keydown', handleKeyDown);
+    el.addEventListener("keydown", handleKeyDown);
+    return () => el.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, onClose]);
 
   // Success state
@@ -149,11 +158,19 @@ Apuntate aqui: ${getGiftLink()}`;
   // Success screen
   if (created && shareCode) {
     return (
-      <div role="dialog" aria-modal="true" aria-labelledby="gift-created-title" className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="gift-created-title"
+        className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+      >
         <div className="bg-white rounded-xl max-w-md w-full p-5 max-h-[85vh] overflow-y-auto dark:bg-bondi-blue-700">
           <div className="text-center">
             <CheckCircle className="mx-auto text-emerald-400 mb-3" size={40} />
-            <h2 id="gift-created-title" className="text-xl font-bold mb-1 text-gray-900 dark:text-bondi-blue-50">
+            <h2
+              id="gift-created-title"
+              className="text-xl font-bold mb-1 text-gray-900 dark:text-bondi-blue-50"
+            >
               Regalo Creado!
             </h2>
             <p className="text-gray-900 text-sm mb-4 dark:text-bondi-blue-200">
@@ -168,7 +185,7 @@ Apuntate aqui: ${getGiftLink()}`;
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-4">
               <Button
                 onClick={handleViewGift}
                 className="w-full bg-emerald-500 hover:bg-emerald-700"
@@ -188,8 +205,7 @@ Apuntate aqui: ${getGiftLink()}`;
 
                 <Button
                   onClick={handleShareWhatsApp}
-                  variant="secondary"
-                  className="flex-1 flex justify-center items-center gap-2"
+                  className="flex-1 flex justify-center items-center gap-2 bg-emerald-400 hover:bg-emerald-500 dark:bg-emerald-600 dark:hover:bg-emerald-500"
                 >
                   <MessageCircle size={16} />
                   WhatsApp
@@ -198,7 +214,7 @@ Apuntate aqui: ${getGiftLink()}`;
 
               <button
                 onClick={handleViewGift}
-                className="text-sm text-gray-700 hover:text-gray-900 mt-1 dark:text-bondi-blue-300 dark:hover:text-bondi-blue-50"
+                className="text-sm border-2 py-2 w-48 mx-auto rounded-md text-gray-700 hover:text-gray-900 mt-3 dark:text-bondi-blue-300 dark:hover:text-bondi-blue-50"
               >
                 Cerrar
               </button>
@@ -211,7 +227,13 @@ Apuntate aqui: ${getGiftLink()}`;
 
   // Form screen
   return (
-    <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="direct-gift-title" className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <div
+      ref={dialogRef}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="direct-gift-title"
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+    >
       <div className="bg-white rounded-xl max-w-md w-full p-6 max-h-[90vh] overflow-y-auto dark:bg-bondi-blue-700">
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
@@ -219,7 +241,12 @@ Apuntate aqui: ${getGiftLink()}`;
             <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center">
               <Gift className="text-emerald-500" size={20} />
             </div>
-            <h2 id="direct-gift-title" className="text-xl font-bold text-gray-900 dark:text-bondi-blue-50">Regalo Directo</h2>
+            <h2
+              id="direct-gift-title"
+              className="text-xl font-bold text-gray-900 dark:text-bondi-blue-50"
+            >
+              Regalo Directo
+            </h2>
           </div>
           <button
             onClick={onClose}
@@ -237,7 +264,10 @@ Apuntate aqui: ${getGiftLink()}`;
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Para quien */}
           <div>
-            <label htmlFor="recipient-name" className="block text-sm font-medium text-gray-700 mb-2 dark:text-bondi-blue-200">
+            <label
+              htmlFor="recipient-name"
+              className="block text-sm font-medium text-gray-700 mb-2 dark:text-bondi-blue-200"
+            >
               Para quien es el regalo? *
             </label>
             <input
@@ -253,7 +283,10 @@ Apuntate aqui: ${getGiftLink()}`;
 
           {/* Tipo de ocasion */}
           <div>
-            <label htmlFor="occasion-type" className="block text-sm font-medium text-gray-700 mb-2 dark:text-bondi-blue-200">
+            <label
+              htmlFor="occasion-type"
+              className="block text-sm font-medium text-gray-700 mb-2 dark:text-bondi-blue-200"
+            >
               Tipo de ocasion *
             </label>
             <select
@@ -273,7 +306,10 @@ Apuntate aqui: ${getGiftLink()}`;
 
           {/* Que regalo propones (opcional) */}
           <div>
-            <label htmlFor="gift-idea" className="block text-sm font-medium text-gray-700 mb-2 dark:text-bondi-blue-200">
+            <label
+              htmlFor="gift-idea"
+              className="block text-sm font-medium text-gray-700 mb-2 dark:text-bondi-blue-200"
+            >
               Que regalo propones? (opcional)
             </label>
             <input
@@ -288,11 +324,16 @@ Apuntate aqui: ${getGiftLink()}`;
 
           {/* Precio estimado (opcional) */}
           <div>
-            <label htmlFor="estimated-price" className="block text-sm font-medium text-gray-700 mb-2 dark:text-bondi-blue-200">
+            <label
+              htmlFor="estimated-price"
+              className="block text-sm font-medium text-gray-700 mb-2 dark:text-bondi-blue-200"
+            >
               Precio estimado (opcional)
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-2.5 text-gray-700 dark:text-bondi-blue-300">€</span>
+              <span className="absolute left-3 top-2.5 text-gray-700 dark:text-bondi-blue-300">
+                €
+              </span>
               <input
                 id="estimated-price"
                 type="number"
@@ -308,7 +349,10 @@ Apuntate aqui: ${getGiftLink()}`;
 
           {/* Tu nombre */}
           <div>
-            <label htmlFor="organizer-name" className="block text-sm font-medium text-gray-700 mb-2 dark:text-bondi-blue-200">
+            <label
+              htmlFor="organizer-name"
+              className="block text-sm font-medium text-gray-700 mb-2 dark:text-bondi-blue-200"
+            >
               Tu nombre *
             </label>
             <input
@@ -327,7 +371,10 @@ Apuntate aqui: ${getGiftLink()}`;
 
           {/* Error */}
           {error && (
-            <div role="alert" className="bg-red-50 border border-red-200 rounded-lg p-3 dark:bg-red-900 dark:border-red-700">
+            <div
+              role="alert"
+              className="bg-red-50 border border-red-200 rounded-lg p-3 dark:bg-red-900 dark:border-red-700"
+            >
               <p className="text-sm text-red-700 dark:text-red-300">{error}</p>
             </div>
           )}
