@@ -17,7 +17,7 @@ import Image from "next/image";
 import { useAuth } from "@/lib/auth";
 
 const AuthModal = dynamic(() =>
-  import("@/components/auth/AuthModal").then((m) => ({ default: m.AuthModal }))
+  import("@/components/auth/AuthModal").then((m) => ({ default: m.AuthModal })),
 );
 
 interface DirectGiftData {
@@ -223,7 +223,10 @@ export default function DirectGiftPurchasePage({
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center px-4">
-          <ShoppingCart className="mx-auto text-tropical-teal-400 mb-4" size={64} />
+          <ShoppingCart
+            className="mx-auto text-tropical-teal-400 mb-4"
+            size={64}
+          />
           <h1 className="text-2xl font-bold text-gray-900 mb-2">
             Participación aún abierta
           </h1>
@@ -292,7 +295,9 @@ export default function DirectGiftPurchasePage({
           <div className="flex items-center gap-3 mb-6">
             <ShoppingCart className="text-emerald-500" size={32} />
             <div>
-              <h1 className="text-2xl font-bold">Finalizar Compra</h1>
+              <h1 className="text-2xl font-bold text-bondi-blue-500">
+                Finalizar Compra
+              </h1>
               <p className="text-gray-700">Regalo para {gift.recipient_name}</p>
             </div>
           </div>
@@ -300,12 +305,14 @@ export default function DirectGiftPurchasePage({
           {/* Summary */}
           <div className="bg-ocean-mist-50 p-4 rounded-lg mb-6">
             {gift.gift_idea && (
-              <p className="font-semibold text-lg mb-2">{gift.gift_idea}</p>
+              <p className="font-semibold text-bondi-blue-500 text-lg">
+                {gift.gift_idea}
+              </p>
             )}
             {gift.estimated_price && (
-              <div className="flex justify-between text-sm text-gray-700">
+              <div className="flex justify-between  text-sm text-gray-700">
                 <span>Precio estimado:</span>
-                <span className="font-medium">
+                <span className="font-medium text-bondi-blue-600">
                   {formatPrice(gift.estimated_price)}
                 </span>
               </div>
@@ -326,7 +333,7 @@ export default function DirectGiftPurchasePage({
                   value={finalPrice}
                   onChange={(e) => setFinalPrice(e.target.value)}
                   placeholder="ej: 75.98"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-mist-400 focus:border-transparent pr-12"
+                  className="w-full text-gray-700 dark:text-gray-900 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-mist-400 focus:border-transparent pr-12"
                   required
                 />
                 <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-700">

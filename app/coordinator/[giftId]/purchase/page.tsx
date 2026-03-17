@@ -212,7 +212,10 @@ export default function PurchasePage({
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center px-4">
-          <ShoppingCart className="mx-auto text-tropical-teal-400 mb-4" size={64} />
+          <ShoppingCart
+            className="mx-auto text-tropical-teal-400 mb-4"
+            size={64}
+          />
           <h1 className="text-2xl font-bold text-gray-900 mb-2">
             Participación aún abierta
           </h1>
@@ -283,9 +286,11 @@ export default function PurchasePage({
           <div className="flex items-center gap-3 mb-6">
             <ShoppingCart className="text-bondi-blue-400" size={32} />
             <div>
-              <h1 className="text-2xl font-bold">Finalizar Compra</h1>
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-bondi-blue-700">
+                Finalizar Compra
+              </h1>
               {celebrantNames.length > 0 && (
-                <p className="text-gray-700">
+                <p className="text-gray-900">
                   Regalo para {celebrantNames.join(" y ")}
                 </p>
               )}
