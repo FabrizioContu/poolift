@@ -162,7 +162,9 @@ describe('DirectGiftParticipation', () => {
       await user.click(screen.getByRole('button', { name: 'Apuntarme' }))
 
       await waitFor(() => {
-        expect(localStorage.getItem('direct_gift_gift-123_participant')).toBe('María')
+        expect(localStorage.getItem('direct_gift_gift-123_participant')).toBe(
+          JSON.stringify({ name: 'María', status: 'joined' })
+        )
       })
     })
 
@@ -304,8 +306,8 @@ describe('DirectGiftParticipation', () => {
 
   describe('Detección "ya representado"', () => {
     const participantsWithFamilies = [
-      { id: 'p-1', participant_name: 'Familia García' },
-      { id: 'p-2', participant_name: 'Familia López' },
+      { id: 'p-1', participant_name: 'Familia García', status: 'joined' as const },
+      { id: 'p-2', participant_name: 'Familia López', status: 'joined' as const },
     ]
 
     it('muestra links "Soy de esta familia" cuando hay participantes y no está unido', () => {

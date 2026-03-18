@@ -7,7 +7,7 @@ export async function POST(
 ) {
   try {
     const { id } = await params
-    const { participantName } = await request.json()
+    const { participantName, declined } = await request.json()
 
     if (!participantName) {
       return NextResponse.json(
@@ -44,39 +44,22 @@ export async function POST(
       )
     }
 
-    // Check for existing participant (case-insensitive)
-    const { data: existing } = await supabase
-      .from('direct_gift_participants')
-      .select('id')
-      .eq('direct_gift_id', id)
-      .ilike('participant_name', participantName.trim())
-      .single()
-
-    if (existing) {
-      return NextResponse.json(
-        { error: 'Ya estás participando en este regalo' },
-        { status: 409 }
-      )
-    }
+    const status = declined ? 'declined' : 'joined'
 
     const { data: participant, error } = await supabase
       .from('direct_gift_participants')
-      .insert({
-        direct_gift_id: id,
-        participant_name: participantName.trim(),
-      })
+      .upsert(
+        {
+          direct_gift_id: id,
+          participant_name: participantName.trim(),
+          status,
+        },
+        { onConflict: 'direct_gift_id,participant_name' }
+      )
       .select()
       .single()
 
-    if (error) {
-      if (error.code === '23505') {
-        return NextResponse.json(
-          { error: 'Ya estás participando en este regalo' },
-          { status: 409 }
-        )
-      }
-      throw error
-    }
+    if (error) throw error
 
     return NextResponse.json({ participant })
   } catch (error) {

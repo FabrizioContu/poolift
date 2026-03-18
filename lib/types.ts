@@ -135,4 +135,5 @@ export interface Participant {
   gift_id: string
   family_name: string
   joined_at: string
+  status: 'joined' | 'declined'
 }

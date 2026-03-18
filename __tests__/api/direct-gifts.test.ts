@@ -6,6 +6,7 @@ const mockSupabase = {
   from: vi.fn(() => mockSupabase),
   select: vi.fn(() => mockSupabase),
   insert: vi.fn(() => mockSupabase),
+  upsert: vi.fn(() => mockSupabase),
   update: vi.fn(() => mockSupabase),
   delete: vi.fn(() => mockSupabase),
   eq: vi.fn(() => mockSupabase),
@@ -209,14 +210,9 @@ describe('Direct Gifts API', () => {
           data: { id: 'gift-123', status: 'open' },
           error: null,
         })
-        // Mock ilike check - no existing participant found
+        // Mock upsert returns new participant
         .mockResolvedValueOnce({
-          data: null,
-          error: { code: 'PGRST116' }, // Not found is expected
-        })
-        // Mock insert returns new participant
-        .mockResolvedValueOnce({
-          data: { id: 'participant-1', participant_name: 'Juan' },
+          data: { id: 'participant-1', participant_name: 'Juan', status: 'joined' },
           error: null,
         })
 
@@ -304,15 +300,15 @@ describe('Direct Gifts API', () => {
       expect(response.status).toBe(400)
     })
 
-    it('retorna error 409 si ya está participando', async () => {
+    it('permite declinar participación con declined:true', async () => {
       mockSupabase.single
         .mockResolvedValueOnce({
           data: { id: 'gift-123', status: 'open' },
           error: null,
         })
-        // Mock ilike check - participant already exists
+        // Mock upsert returns declined participant
         .mockResolvedValueOnce({
-          data: { id: 'existing-participant' },
+          data: { id: 'participant-1', participant_name: 'Juan', status: 'declined' },
           error: null,
         })
 
@@ -320,14 +316,16 @@ describe('Direct Gifts API', () => {
 
       const request = createMockRequest('http://localhost/api/gifts/direct/gift-123/participate', {
         method: 'POST',
-        body: JSON.stringify({ participantName: 'Juan' }),
+        body: JSON.stringify({ participantName: 'Juan', declined: true }),
       })
 
       const response = await POST(request, {
         params: Promise.resolve({ id: 'gift-123' }),
       })
+      const data = await response.json()
 
-      expect(response.status).toBe(409)
+      expect(response.status).toBe(200)
+      expect(data.participant.status).toBe('declined')
     })
   })
 
