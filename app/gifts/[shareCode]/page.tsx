@@ -24,6 +24,7 @@ interface DirectGiftParticipant {
   id: string;
   participant_name: string;
   joined_at: string;
+  status: "joined" | "declined";
 }
 
 interface DirectGift {
@@ -96,7 +97,8 @@ async function getGift(shareCode: string) {
       participants(
         id,
         family_name,
-        joined_at
+        joined_at,
+        status
       )
     `,
     )
@@ -148,7 +150,13 @@ export default async function GiftPage({
 
     const isClosed = directGift.status === "closed";
     const isPurchased = directGift.status === "purchased";
-    const participantCount = directGift.participants.length;
+    const joinedParticipants = directGift.participants.filter(
+      (p) => p.status === "joined",
+    );
+    const declinedParticipants = directGift.participants.filter(
+      (p) => p.status === "declined",
+    );
+    const participantCount = joinedParticipants.length;
     const pricePerPerson =
       participantCount > 0 && directGift.estimated_price
         ? calculatePricePerFamily(directGift.estimated_price, participantCount)
@@ -266,7 +274,7 @@ export default async function GiftPage({
             giftIdea={directGift.gift_idea}
             status={directGift.status}
             participantCount={participantCount}
-            participantNames={directGift.participants.map(
+            participantNames={joinedParticipants.map(
               (p) => p.participant_name,
             )}
             estimatedPrice={directGift.estimated_price}
@@ -290,7 +298,7 @@ export default async function GiftPage({
               </p>
             ) : (
               <ul className="space-y-2">
-                {directGift.participants.map((p) => (
+                {joinedParticipants.map((p) => (
                   <li
                     key={p.id}
                     className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
@@ -304,6 +312,26 @@ export default async function GiftPage({
                   </li>
                 ))}
               </ul>
+            )}
+
+            {declinedParticipants.length > 0 && (
+              <div className="mt-4 pt-4 border-t border-gray-100">
+                <p className="text-xs font-medium text-gray-500 mb-2">
+                  No pueden participar
+                </p>
+                <ul className="space-y-1">
+                  {declinedParticipants.map((p) => (
+                    <li
+                      key={p.id}
+                      className="flex items-center justify-between p-2 rounded-lg"
+                    >
+                      <span className="text-sm text-gray-400 line-through">
+                        {p.participant_name}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             )}
           </div>
 
@@ -352,7 +380,15 @@ export default async function GiftPage({
 
   const isClosed = !gift.participation_open;
   const isPurchased = !!gift.purchased_at;
-  const participantCount = gift.participants?.length || 0;
+  const joinedGiftParticipants =
+    gift.participants?.filter(
+      (p: { status: string }) => p.status === "joined",
+    ) || [];
+  const declinedGiftParticipants =
+    gift.participants?.filter(
+      (p: { status: string }) => p.status === "declined",
+    ) || [];
+  const participantCount = joinedGiftParticipants.length;
   const totalPrice = gift.proposal?.total_price || 0;
 
   // Calculate price per family
@@ -550,7 +586,7 @@ export default async function GiftPage({
             </p>
           ) : (
             <ul className="space-y-2">
-              {gift.participants?.map(
+              {joinedGiftParticipants.map(
                 (p: { id: string; family_name: string; joined_at: string }) => (
                   <li
                     key={p.id}
@@ -565,6 +601,25 @@ export default async function GiftPage({
               )}
             </ul>
           )}
+
+          {declinedGiftParticipants.length > 0 && (
+            <div className="mt-4 pt-4 border-t border-gray-100">
+              <p className="text-xs font-medium text-gray-500 mb-2">
+                No pueden participar
+              </p>
+              <ul className="space-y-1">
+                {declinedGiftParticipants.map(
+                  (p: { id: string; family_name: string }) => (
+                    <li key={p.id} className="flex items-center p-2 rounded-lg">
+                      <span className="text-sm text-gray-400 line-through">
+                        {p.family_name}
+                      </span>
+                    </li>
+                  ),
+                )}
+              </ul>
+            </div>
+          )}
         </div>
 
         {/* Coordinator Actions */}
@@ -578,11 +633,9 @@ export default async function GiftPage({
           participationOpen={gift.participation_open}
           isPurchased={isPurchased}
           participantCount={participantCount}
-          participantNames={
-            gift.participants?.map(
-              (p: { family_name: string }) => p.family_name,
-            ) || []
-          }
+          participantNames={joinedGiftParticipants.map(
+            (p: { family_name: string }) => p.family_name,
+          )}
           totalPrice={totalPrice}
         />
 
@@ -593,7 +646,11 @@ export default async function GiftPage({
           isPurchased={isPurchased}
           coordinatorName={gift.party?.coordinator?.name || null}
           groupId={gift.party?.group_id || null}
-          participants={gift.participants || []}
+          participants={gift.participants?.map((p: { id: string; family_name: string; status: string }) => ({
+            id: p.id,
+            family_name: p.family_name,
+            status: (p.status ?? 'joined') as 'joined' | 'declined',
+          })) || []}
         />
       </div>
     </div>

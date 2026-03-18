@@ -2,11 +2,12 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/Button";
-import { UserPlus, UserMinus, CheckCircle, Users } from "lucide-react";
+import { UserPlus, UserMinus, CheckCircle, Users, XCircle } from "lucide-react";
 
 interface DirectGiftParticipant {
   id: string;
   participant_name: string;
+  status: "joined" | "declined";
 }
 
 interface DirectGiftParticipationProps {
@@ -17,6 +18,19 @@ interface DirectGiftParticipationProps {
   participants?: DirectGiftParticipant[];
 }
 
+type ParticipantStatus = "joined" | "declined" | "notAnswered";
+
+function saveToStorage(
+  giftId: string,
+  name: string,
+  status: "joined" | "declined",
+) {
+  localStorage.setItem(
+    `direct_gift_${giftId}_participant`,
+    JSON.stringify({ name, status }),
+  );
+}
+
 export function DirectGiftParticipation({
   giftId,
   shareCode,
@@ -25,8 +39,9 @@ export function DirectGiftParticipation({
   participants = [],
 }: DirectGiftParticipationProps) {
   const [participantName, setParticipantName] = useState("");
+  const [participantStatus, setParticipantStatus] =
+    useState<ParticipantStatus>("notAnswered");
   const [loading, setLoading] = useState(false);
-  const [joined, setJoined] = useState(false);
   const [isOrganizer, setIsOrganizer] = useState(false);
   const [error, setError] = useState("");
   const [representedBy, setRepresentedBy] = useState<string | null>(null);
@@ -40,30 +55,40 @@ export function DirectGiftParticipation({
     if (directGifts) {
       const gifts = JSON.parse(directGifts);
       const isCreator = gifts.some(
-        (g: { shareCode: string }) => g.shareCode === shareCode
+        (g: { shareCode: string }) => g.shareCode === shareCode,
       );
       if (isCreator) {
         setIsOrganizer(true);
-        setJoined(true);
+        setParticipantStatus("joined");
         setParticipantName(organizerName);
         return;
       }
     }
 
-    // Check if already participating
+    // Check if already participated (joined or declined)
     const saved = localStorage.getItem(`direct_gift_${giftId}_participant`);
     if (saved) {
-      setParticipantName(saved);
-      setJoined(true);
+      try {
+        const parsed = JSON.parse(saved);
+        if (typeof parsed === "object" && parsed !== null && parsed.name) {
+          setParticipantName(parsed.name);
+          setParticipantStatus(parsed.status ?? "joined");
+        } else {
+          // Legacy plain string
+          setParticipantName(saved);
+          setParticipantStatus("joined");
+        }
+      } catch {
+        // Legacy plain string
+        setParticipantName(saved);
+        setParticipantStatus("joined");
+      }
       return;
     }
 
-    // Check if represented by an existing participant (family claim)
-    // This covers the case where parent B opens the link after parent A already joined
-    // and parent A set localStorage on this device (e.g. same phone)
-    // OR parent B previously clicked "Soy de esta familia"
+    // Check if represented by an existing participant
     const claimedFamily = localStorage.getItem(
-      `direct_gift_${giftId}_represented_by`
+      `direct_gift_${giftId}_represented_by`,
     );
     if (claimedFamily) {
       setRepresentedBy(claimedFamily);
@@ -80,7 +105,6 @@ export function DirectGiftParticipation({
       setError("Ingresa el nombre de tu familia");
       return;
     }
-
     if (participantName.trim().length < 2) {
       setError("El nombre debe tener al menos 2 caracteres");
       return;
@@ -103,11 +127,103 @@ export function DirectGiftParticipation({
         return;
       }
 
-      setJoined(true);
-      localStorage.setItem(
-        `direct_gift_${giftId}_participant`,
-        participantName.trim(),
-      );
+      setParticipantStatus("joined");
+      saveToStorage(giftId, participantName.trim(), "joined");
+      window.location.reload();
+    } catch {
+      setError("Error al apuntarse");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDecline = async () => {
+    if (!participantName.trim()) {
+      setError("Ingresa el nombre de tu familia");
+      return;
+    }
+    if (participantName.trim().length < 2) {
+      setError("El nombre debe tener al menos 2 caracteres");
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch(`/api/gifts/direct/${giftId}/participate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          participantName: participantName.trim(),
+          declined: true,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.error || "Error al registrar respuesta");
+        return;
+      }
+
+      setParticipantStatus("declined");
+      saveToStorage(giftId, participantName.trim(), "declined");
+    } catch {
+      setError("Error al registrar respuesta");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSwitchToDeclined = async () => {
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch(`/api/gifts/direct/${giftId}/participate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          participantName,
+          declined: true,
+        }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        setError(data.error || "Error al registrar respuesta");
+        return;
+      }
+
+      setParticipantStatus("declined");
+      saveToStorage(giftId, participantName, "declined");
+    } catch {
+      setError("Error al registrar respuesta");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSwitchToJoined = async () => {
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch(`/api/gifts/direct/${giftId}/participate`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ participantName }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        setError(data.error || "Error al apuntarse");
+        return;
+      }
+
+      setParticipantStatus("joined");
+      saveToStorage(giftId, participantName, "joined");
       window.location.reload();
     } catch {
       setError("Error al apuntarse");
@@ -133,7 +249,7 @@ export function DirectGiftParticipation({
         return;
       }
 
-      setJoined(false);
+      setParticipantStatus("notAnswered");
       setParticipantName("");
       localStorage.removeItem(`direct_gift_${giftId}_participant`);
       window.location.reload();
@@ -144,9 +260,37 @@ export function DirectGiftParticipation({
     }
   };
 
-  // Show closed message if participation is closed
+  const handleRemoveResponse = async () => {
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch(`/api/gifts/direct/${giftId}/participate`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ participantName }),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        setError(data.error || "Error al quitar respuesta");
+        return;
+      }
+
+      setParticipantStatus("notAnswered");
+      setParticipantName("");
+      localStorage.removeItem(`direct_gift_${giftId}_participant`);
+      window.location.reload();
+    } catch {
+      setError("Error al quitar respuesta");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Participation closed
   if (!isOpen) {
-    if (joined) {
+    if (participantStatus === "joined") {
       return (
         <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
           <div className="text-center">
@@ -174,8 +318,8 @@ export function DirectGiftParticipation({
     );
   }
 
-  // Show joined state
-  if (joined) {
+  // Joined state
+  if (participantStatus === "joined") {
     return (
       <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
         <div className="text-center">
@@ -192,22 +336,73 @@ export function DirectGiftParticipation({
           {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
 
           {!isOrganizer && (
-            <Button
-              onClick={handleLeave}
-              disabled={loading}
-              variant="secondary"
-              className="text-red-600 hover:bg-red-50"
-            >
-              <UserMinus size={18} className="mr-2" />
-              {loading ? "Saliendo..." : "Salirme del regalo"}
-            </Button>
+            <div className="flex flex-col gap-2">
+              <Button
+                onClick={handleLeave}
+                disabled={loading}
+                variant="secondary"
+                className="text-red-600 hover:bg-red-50"
+              >
+                <UserMinus size={18} className="mr-2" />
+                {loading ? "Saliendo..." : "Salirme del regalo"}
+              </Button>
+              <Button
+                onClick={handleSwitchToDeclined}
+                disabled={loading}
+                variant="secondary"
+                className="text-gray-500 hover:bg-gray-50 text-sm"
+              >
+                <XCircle size={16} className="mr-2" />
+                {loading ? "..." : "Ya no puedo participar"}
+              </Button>
+            </div>
           )}
         </div>
       </div>
     );
   }
 
-  // Show "already represented" state — family claim via localStorage without a new DB row
+  // Declined state
+  if (participantStatus === "declined") {
+    return (
+      <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
+        <div className="text-center">
+          <div className="bg-gray-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <XCircle className="text-gray-400" size={32} />
+          </div>
+          <h3 className="text-xl font-bold mb-2 text-gray-900">
+            No vas a participar
+          </h3>
+          <p className="text-gray-700 mb-6">
+            Como: <strong>{participantName}</strong>
+          </p>
+
+          {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
+
+          <div className="flex flex-col gap-2">
+            <Button
+              onClick={handleSwitchToJoined}
+              disabled={loading}
+              className="bg-ocean-mist-400 hover:bg-ocean-mist-500"
+            >
+              <UserPlus size={18} className="mr-2" />
+              {loading ? "..." : "Cambié de opinión — Unirme"}
+            </Button>
+            <Button
+              onClick={handleRemoveResponse}
+              disabled={loading}
+              variant="secondary"
+              className="text-gray-500 hover:bg-gray-50 text-sm"
+            >
+              {loading ? "..." : "Quitar mi respuesta"}
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Already represented state
   if (representedBy) {
     return (
       <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
@@ -229,19 +424,22 @@ export function DirectGiftParticipation({
     );
   }
 
-  // Show join form
+  // Join form (notAnswered state)
+  const joinedParticipants = participants.filter((p) => p.status === "joined");
+
   return (
     <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
       <h3 className="text-xl font-bold mb-4 text-center text-gray-900">
         Apúntate al Regalo
       </h3>
 
-      {/* "Already represented" links — show when there are existing participants */}
-      {participants.length > 0 && (
+      {joinedParticipants.length > 0 && (
         <div className="mb-4 p-3 bg-gray-50 rounded-lg">
-          <p className="text-xs text-gray-500 mb-2">¿Tu familia ya está apuntada?</p>
+          <p className="text-xs text-gray-500 mb-2">
+            ¿Tu familia ya está apuntada?
+          </p>
           <div className="flex flex-wrap gap-2">
-            {participants.map((p) => (
+            {joinedParticipants.map((p) => (
               <button
                 key={p.id}
                 onClick={() => handleClaimRepresentation(p.participant_name)}
@@ -264,7 +462,7 @@ export function DirectGiftParticipation({
             value={participantName}
             onChange={(e) => setParticipantName(e.target.value)}
             placeholder="Ej: Familia García"
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-mist-400 focus:border-transparent"
+            className="w-full text-gray-700 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-mist-400 focus:border-transparent"
             disabled={loading}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
@@ -273,19 +471,32 @@ export function DirectGiftParticipation({
               }
             }}
           />
-          <p className="text-xs text-gray-500 mt-1">Una participación por familia</p>
+          <p className="text-xs text-gray-500 mt-1">
+            Una participación por familia
+          </p>
         </div>
 
         {error && <p className="text-red-500 text-sm">{error}</p>}
 
-        <Button
-          onClick={handleJoin}
-          disabled={loading || !participantName.trim()}
-          className="w-full py-3 bg-ocean-mist-400 hover:bg-ocean-mist-500"
-        >
-          <UserPlus size={20} className="mr-2" />
-          {loading ? "Apuntando..." : "Apuntarme"}
-        </Button>
+        <div className="flex flex-col gap-2">
+          <Button
+            onClick={handleJoin}
+            disabled={loading || !participantName.trim()}
+            className="w-full py-3 bg-ocean-mist-400 hover:bg-ocean-mist-500"
+          >
+            <UserPlus size={20} className="mr-2" />
+            {loading ? "Apuntando..." : "Apuntarme"}
+          </Button>
+          <Button
+            onClick={handleDecline}
+            disabled={loading || !participantName.trim()}
+            variant="secondary"
+            className="w-full py-2 text-gray-500 hover:bg-gray-50 text-sm"
+          >
+            <XCircle size={16} className="mr-2" />
+            {loading ? "..." : "No voy a participar"}
+          </Button>
+        </div>
       </div>
     </div>
   );

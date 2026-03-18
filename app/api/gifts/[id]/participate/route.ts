@@ -7,7 +7,7 @@ export async function POST(
 ) {
   try {
     const { id } = await params
-    const { familyName } = await request.json()
+    const { familyName, declined } = await request.json()
 
     if (!familyName) {
       return NextResponse.json(
@@ -44,40 +44,23 @@ export async function POST(
       )
     }
 
-    // Check for existing participant (case-insensitive)
-    const { data: existing } = await supabase
-      .from('participants')
-      .select('id')
-      .eq('gift_id', id)
-      .ilike('family_name', familyName.trim())
-      .single()
-
-    if (existing) {
-      return NextResponse.json(
-        { error: 'Ya estás participando en este regalo' },
-        { status: 409 }
-      )
-    }
+    const status = declined ? 'declined' : 'joined'
 
     const { data: participant, error } = await supabase
       .from('participants')
-      .insert({
-        gift_id: id,
-        family_name: familyName.trim(),
-      })
+      .upsert(
+        {
+          gift_id: id,
+          family_name: familyName.trim(),
+          status,
+        },
+        { onConflict: 'gift_id,family_name' }
+      )
       .select()
       .single()
 
-    if (error) {
-      if (error.code === '23505') {
-        return NextResponse.json(
-          { error: 'Ya estás participando en este regalo' },
-          { status: 409 }
-        )
-      }
-      throw error
-    }
-    
+    if (error) throw error
+
     return NextResponse.json({ participant })
   } catch (error) {
     console.error('Error participating:', error)
