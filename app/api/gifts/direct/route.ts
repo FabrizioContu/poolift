@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
       data: { user },
     } = await serverClient.auth.getUser();
 
-    const { recipientName, occasion, giftIdea, estimatedPrice, organizerName } =
+    const { recipientName, occasion, giftIdea, estimatedPrice, organizerName, organizerEmail } =
       await request.json();
 
     // Validate required fields
@@ -83,6 +83,7 @@ export async function POST(request: NextRequest) {
         share_code: shareCode,
         status: "open",
         ...(user ? { organizer_user_id: user.id } : {}),
+        ...(organizerEmail?.trim() ? { organizer_email: organizerEmail.trim().toLowerCase() } : {}),
       })
       .select()
       .single();

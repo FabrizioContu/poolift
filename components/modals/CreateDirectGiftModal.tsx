@@ -23,6 +23,7 @@ export function CreateDirectGiftModal({
   const [giftIdea, setGiftIdea] = useState("");
   const [estimatedPrice, setEstimatedPrice] = useState("");
   const [organizerName, setOrganizerName] = useState("");
+  const [organizerEmail, setOrganizerEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -87,6 +88,7 @@ export function CreateDirectGiftModal({
           giftIdea: giftIdea.trim() || null,
           estimatedPrice: estimatedPrice ? parseFloat(estimatedPrice) : null,
           organizerName: organizerName.trim(),
+          organizerEmail: organizerEmail.trim() || null,
         }),
       });
 
@@ -366,6 +368,27 @@ Apuntate aqui: ${getGiftLink()}`;
             />
             <p className="text-xs text-gray-700 mt-1 dark:text-bondi-blue-300">
               Para que te identifiquen como organizador
+            </p>
+          </div>
+
+          {/* Tu email (opcional) */}
+          <div>
+            <label
+              htmlFor="organizer-email"
+              className="block text-sm font-medium text-gray-700 mb-2 dark:text-bondi-blue-200"
+            >
+              Tu email (opcional)
+            </label>
+            <input
+              id="organizer-email"
+              type="email"
+              value={organizerEmail}
+              onChange={(e) => setOrganizerEmail(e.target.value)}
+              placeholder="ej: maria@email.com"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent dark:border-bondi-blue-600 dark:bg-bondi-blue-800"
+            />
+            <p className="text-xs text-gray-700 mt-1 dark:text-bondi-blue-300">
+              Te avisamos cuando alguien se apunte o decline
             </p>
           </div>
 

@@ -7,7 +7,7 @@ export async function POST(
 ) {
   try {
     const { id } = await params
-    const { familyName, declined } = await request.json()
+    const { familyName, declined, email } = await request.json()
 
     if (!familyName) {
       return NextResponse.json(
@@ -53,6 +53,7 @@ export async function POST(
           gift_id: id,
           family_name: familyName.trim(),
           status,
+          ...(email?.trim() ? { email: email.trim().toLowerCase() } : {}),
         },
         { onConflict: 'gift_id,family_name' }
       )
