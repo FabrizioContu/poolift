@@ -8,7 +8,7 @@ export async function PUT(
 ) {
   try {
     const { id } = await params
-    const { finalPrice, organizerComment } = await request.json()
+    const { finalPrice, organizerComment, receiptImageUrl } = await request.json()
 
     if (!finalPrice || finalPrice <= 0) {
       return NextResponse.json(
@@ -77,6 +77,7 @@ export async function PUT(
         status: 'purchased',
         estimated_price: finalPrice, // Update with final price
         organizer_comment: organizerComment || null,
+        receipt_image_url: receiptImageUrl || null,
         updated_at: new Date().toISOString()
       })
       .eq('id', id)
