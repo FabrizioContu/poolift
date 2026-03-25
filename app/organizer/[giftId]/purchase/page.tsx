@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, use } from "react";
+import { uploadReceipt } from "@/lib/uploadReceipt";
 import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/Button";
 import {
@@ -133,13 +134,18 @@ export default function DirectGiftPurchasePage({
     setError(null);
 
     try {
+      let receiptImageUrl: string | null = null
+      if (receipt) {
+        receiptImageUrl = await uploadReceipt(receipt, giftId)
+      }
+
       const response = await fetch(`/api/gifts/direct/${giftId}/finalize`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           finalPrice: parseFloat(finalPrice),
           organizerComment: comment || null,
-          receiptImageUrl: null,
+          receiptImageUrl,
         }),
       });
 

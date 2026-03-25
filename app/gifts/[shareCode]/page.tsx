@@ -35,6 +35,7 @@ interface DirectGift {
   estimated_price: number | null;
   organizer_name: string;
   organizer_comment: string | null;
+  receipt_image_url: string | null;
   share_code: string;
   status: string;
   created_at: string;
@@ -262,6 +263,20 @@ export default async function GiftPage({
                 <p className="text-gray-800 italic">
                   &quot;{directGift.organizer_comment}&quot;
                 </p>
+              </div>
+            )}
+
+            {/* Receipt Link */}
+            {directGift.receipt_image_url && (
+              <div className="mt-4 p-3 bg-gray-50 rounded-lg dark:bg-bondi-blue-800">
+                <a
+                  href={directGift.receipt_image_url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-bondi-blue-500 hover:text-bondi-blue-700 text-sm font-medium"
+                >
+                  📎 Ver recibo de compra
+                </a>
               </div>
             )}
           </div>

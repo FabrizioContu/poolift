@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, use } from "react";
+import { uploadReceipt } from "@/lib/uploadReceipt";
 import dynamic from "next/dynamic";
 import { Button } from "@/components/ui/Button";
 import {
@@ -121,15 +122,18 @@ export default function PurchasePage({
     setError(null);
 
     try {
-      // For now, we'll use the JSON API since we don't have storage setup
-      // In production, you'd upload the receipt to Supabase Storage first
+      let receiptImageUrl: string | null = null
+      if (receipt) {
+        receiptImageUrl = await uploadReceipt(receipt, giftId)
+      }
+
       const response = await fetch(`/api/gifts/${giftId}/finalize`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           finalPrice: parseFloat(finalPrice),
           coordinatorComment: comment || null,
-          receiptImageUrl: null, // Would be the uploaded URL
+          receiptImageUrl,
         }),
       });
 
