@@ -119,6 +119,7 @@ describe('CreateDirectGiftModal', () => {
           giftIdea: 'Vale Amazon 50',
           estimatedPrice: 50,
           organizerName: 'Maria',
+          organizerEmail: null,
         }),
       })
     })

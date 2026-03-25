@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
+import { notifyParticipantsClosed } from '@/lib/email'
 
 export async function PUT(
   request: NextRequest,
@@ -13,10 +14,15 @@ export async function PUT(
       .from('gifts')
       .select(`
         id,
+        share_code,
         participation_open,
         purchased_at,
-        proposal:proposals(total_price),
-        participants(id)
+        proposal:proposals(total_price, name),
+        participants(id, email, status),
+        party:parties(
+          party_date,
+          party_celebrants(birthday:birthdays(child_name))
+        )
       `)
       .eq('id', id)
       .single()
@@ -42,7 +48,8 @@ export async function PUT(
       )
     }
 
-    const participantCount = gift.participants?.length || 0
+    const joinedParticipants = gift.participants?.filter((p: { status: string }) => p.status === 'joined') ?? []
+    const participantCount = joinedParticipants.length
 
     if (participantCount === 0) {
       return NextResponse.json(
@@ -69,6 +76,24 @@ export async function PUT(
       .single()
 
     if (updateError) throw updateError
+
+    const emails = joinedParticipants.map((p: { email: string | null }) => p.email).filter(Boolean) as string[]
+    if (emails.length > 0) {
+      const proposal = Array.isArray(gift.proposal) ? gift.proposal[0] : gift.proposal
+      const party = Array.isArray(gift.party) ? gift.party[0] : gift.party
+      const celebrants = party?.party_celebrants?.map(
+        (pc: { birthday: { child_name: string }[] }) =>
+          Array.isArray(pc.birthday) ? pc.birthday[0]?.child_name : (pc.birthday as unknown as { child_name: string } | null)?.child_name
+      ).filter(Boolean) as string[] ?? []
+      void notifyParticipantsClosed({
+        emails,
+        recipientName: celebrants.length > 0 ? celebrants.join(' y ') : 'los celebrantes',
+        giftIdea: proposal?.name ?? null,
+        pricePerParticipant: pricePerFamily,
+        participantCount,
+        shareCode: gift.share_code,
+      })
+    }
 
     return NextResponse.json({
       gift: updatedGift,

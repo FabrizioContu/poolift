@@ -41,6 +41,7 @@ export function GiftParticipation({
   participants = [],
 }: GiftParticipationProps) {
   const [familyName, setFamilyName] = useState("");
+  const [email, setEmail] = useState("");
   const [participantStatus, setParticipantStatus] =
     useState<ParticipantStatus>("notAnswered");
   const [loading, setLoading] = useState(false);
@@ -120,7 +121,7 @@ export function GiftParticipation({
       const response = await fetch(`/api/gifts/${giftId}/participate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ familyName: familyName.trim() }),
+        body: JSON.stringify({ familyName: familyName.trim(), email: email.trim() || undefined }),
       });
 
       const data = await response.json();
@@ -157,7 +158,7 @@ export function GiftParticipation({
       const response = await fetch(`/api/gifts/${giftId}/participate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ familyName: familyName.trim(), declined: true }),
+        body: JSON.stringify({ familyName: familyName.trim(), declined: true, email: email.trim() || undefined }),
       });
 
       const data = await response.json();
@@ -468,6 +469,23 @@ export function GiftParticipation({
               }
             }}
           />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Tu email (opcional)
+          </label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="ej: familia@email.com"
+            className="w-full px-4 py-3 text-gray-700 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent"
+            disabled={loading}
+          />
+          <p className="text-xs text-gray-500 mt-1">
+            Para avisarte cuando la participación se cierre o el regalo se compre
+          </p>
         </div>
 
         {error && <p className="text-red-500 text-sm">{error}</p>}

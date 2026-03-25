@@ -39,6 +39,7 @@ export function DirectGiftParticipation({
   participants = [],
 }: DirectGiftParticipationProps) {
   const [participantName, setParticipantName] = useState("");
+  const [email, setEmail] = useState("");
   const [participantStatus, setParticipantStatus] =
     useState<ParticipantStatus>("notAnswered");
   const [loading, setLoading] = useState(false);
@@ -117,7 +118,10 @@ export function DirectGiftParticipation({
       const response = await fetch(`/api/gifts/direct/${giftId}/participate`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ participantName: participantName.trim() }),
+        body: JSON.stringify({
+          participantName: participantName.trim(),
+          email: email.trim() || undefined,
+        }),
       });
 
       const data = await response.json();
@@ -157,6 +161,7 @@ export function DirectGiftParticipation({
         body: JSON.stringify({
           participantName: participantName.trim(),
           declined: true,
+          email: email.trim() || undefined,
         }),
       });
 
@@ -473,6 +478,23 @@ export function DirectGiftParticipation({
           />
           <p className="text-xs text-gray-500 mt-1">
             Una participación por familia
+          </p>
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            Tu email (opcional)
+          </label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="ej: juan@email.com"
+            className="w-full text-gray-700 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-mist-400 focus:border-transparent"
+            disabled={loading}
+          />
+          <p className="text-xs text-gray-500 mt-1">
+            Para avisarte cuando la participación se cierre o el regalo se compre
           </p>
         </div>
 

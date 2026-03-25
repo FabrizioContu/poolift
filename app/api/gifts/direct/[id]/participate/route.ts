@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
+import { notifyOrganizerJoined, notifyOrganizerDeclined } from '@/lib/email'
 
 export async function POST(
   request: NextRequest,
@@ -7,7 +8,7 @@ export async function POST(
 ) {
   try {
     const { id } = await params
-    const { participantName, declined } = await request.json()
+    const { participantName, declined, email } = await request.json()
 
     if (!participantName) {
       return NextResponse.json(
@@ -26,7 +27,7 @@ export async function POST(
     // Check if direct gift exists and is open
     const { data: gift, error: giftError } = await supabase
       .from('direct_gifts')
-      .select('status')
+      .select('status, organizer_email, recipient_name, gift_idea, share_code')
       .eq('id', id)
       .single()
 
@@ -53,6 +54,7 @@ export async function POST(
           direct_gift_id: id,
           participant_name: participantName.trim(),
           status,
+          ...(email?.trim() ? { email: email.trim().toLowerCase() } : {}),
         },
         { onConflict: 'direct_gift_id,participant_name' }
       )
@@ -60,6 +62,24 @@ export async function POST(
       .single()
 
     if (error) throw error
+
+    if (gift.organizer_email) {
+      if (status === 'joined') {
+        void notifyOrganizerJoined({
+          organizerEmail: gift.organizer_email,
+          participantName: participantName.trim(),
+          recipientName: gift.recipient_name,
+          shareCode: gift.share_code,
+        })
+      } else {
+        void notifyOrganizerDeclined({
+          organizerEmail: gift.organizer_email,
+          participantName: participantName.trim(),
+          recipientName: gift.recipient_name,
+          shareCode: gift.share_code,
+        })
+      }
+    }
 
     return NextResponse.json({ participant })
   } catch (error) {

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { notifyParticipantsClosed } from '@/lib/email'
 
 export async function PUT(
   request: NextRequest,
@@ -44,11 +45,12 @@ export async function PUT(
       )
     }
 
-    // Get participant count
+    // Get joined participants (with emails for notifications)
     const { data: participants } = await serverClient
       .from('direct_gift_participants')
-      .select('id')
+      .select('email')
       .eq('direct_gift_id', id)
+      .eq('status', 'joined')
 
     const participantCount = participants?.length || 0
 
@@ -74,6 +76,18 @@ export async function PUT(
       .single()
 
     if (updateError) throw updateError
+
+    const emails = participants?.map((p) => p.email).filter(Boolean) as string[] ?? []
+    if (emails.length > 0) {
+      void notifyParticipantsClosed({
+        emails,
+        recipientName: gift.recipient_name,
+        giftIdea: gift.gift_idea,
+        pricePerParticipant,
+        participantCount,
+        shareCode: gift.share_code,
+      })
+    }
 
     return NextResponse.json({
       gift: updatedGift,
