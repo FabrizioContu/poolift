@@ -3,8 +3,8 @@ import { render, screen, waitFor, fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { AddBirthdayModal } from '@/components/modals/AddBirthdayModal'
 
-vi.mock('@/components/ui', async () => {
-  const actual = await vi.importActual<typeof import('@/components/ui')>('@/components/ui')
+vi.mock('@/components/ui-custom', async () => {
+  const actual = await vi.importActual<typeof import('@/components/ui-custom')>('@/components/ui-custom')
   return {
     ...actual,
     DatePickerInput: ({ value, onChange, max, min, placeholder, disabled }: {
