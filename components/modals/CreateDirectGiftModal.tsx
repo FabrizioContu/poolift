@@ -166,7 +166,7 @@ Apuntate aqui: ${getGiftLink()}`;
         aria-labelledby="gift-created-title"
         className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
       >
-        <div className="bg-background rounded-xl max-w-md w-full p-5 max-h-[85vh] overflow-y-auto">
+        <div className="force-light bg-background rounded-xl max-w-md w-full p-5 max-h-[85vh] overflow-y-auto">
           <div className="text-center">
             <CheckCircle className="mx-auto text-emerald-400 mb-3" size={40} />
             <h2
@@ -207,7 +207,7 @@ Apuntate aqui: ${getGiftLink()}`;
 
                 <Button
                   onClick={handleShareWhatsApp}
-                  className="flex-1 flex justify-center items-center gap-2 bg-emerald-400 hover:bg-emerald-500 dark:bg-emerald-600 dark:hover:bg-emerald-500"
+                  className="flex-1 flex justify-center items-center gap-2 bg-emerald-400 hover:bg-emerald-500"
                 >
                   <MessageCircle size={16} />
                   WhatsApp
@@ -236,7 +236,7 @@ Apuntate aqui: ${getGiftLink()}`;
       aria-labelledby="direct-gift-title"
       className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
     >
-      <div className="bg-background rounded-xl max-w-md w-full p-6 max-h-[90vh] overflow-y-auto">
+      <div className="force-light bg-background rounded-xl max-w-md w-full p-6 max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
@@ -279,7 +279,7 @@ Apuntate aqui: ${getGiftLink()}`;
               value={recipientName}
               onChange={(e) => setRecipientName(e.target.value)}
               placeholder="ej: Laura (despedida) / Ana y Pedro (boda)"
-              className="w-full px-4 py-2 border border-border rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent "
+              className="w-full px-4 py-2 border border-border rounded-lg bg-white text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-emerald-400 focus:border-transparent"
             />
           </div>
 
@@ -296,7 +296,7 @@ Apuntate aqui: ${getGiftLink()}`;
               required
               value={occasion}
               onChange={(e) => setOccasion(e.target.value as OccasionType)}
-              className="w-full px-4 py-2 border border-border rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent "
+              className="w-full px-4 py-2 border border-border rounded-lg bg-white text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-emerald-400 focus:border-transparent"
             >
               {(Object.keys(OCCASION_LABELS) as OccasionType[]).map((type) => (
                 <option key={type} value={type}>
@@ -320,7 +320,7 @@ Apuntate aqui: ${getGiftLink()}`;
               value={giftIdea}
               onChange={(e) => setGiftIdea(e.target.value)}
               placeholder="ej: Experiencia spa, vale Amazon..."
-              className="w-full px-4 py-2 border border-border rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent "
+              className="w-full px-4 py-2 border border-border rounded-lg bg-white text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-emerald-400 focus:border-transparent"
             />
           </div>
 
@@ -364,7 +364,7 @@ Apuntate aqui: ${getGiftLink()}`;
               value={organizerName}
               onChange={(e) => setOrganizerName(e.target.value)}
               placeholder="ej: Maria"
-              className="w-full px-4 py-2 border border-border rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent "
+              className="w-full px-4 py-2 border border-border rounded-lg bg-white text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-emerald-400 focus:border-transparent"
             />
             <p className="text-xs text-muted-foreground mt-1">
               Para que te identifiquen como organizador
@@ -385,7 +385,7 @@ Apuntate aqui: ${getGiftLink()}`;
               value={organizerEmail}
               onChange={(e) => setOrganizerEmail(e.target.value)}
               placeholder="ej: maria@email.com"
-              className="w-full px-4 py-2 border border-border rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent "
+              className="w-full px-4 py-2 border border-border rounded-lg bg-white text-gray-900 placeholder:text-gray-400 focus:ring-2 focus:ring-emerald-400 focus:border-transparent"
             />
             <p className="text-xs text-muted-foreground mt-1">
               Te avisamos cuando alguien se apunte o decline
@@ -396,9 +396,9 @@ Apuntate aqui: ${getGiftLink()}`;
           {error && (
             <div
               role="alert"
-              className="bg-red-50 border border-red-200 rounded-lg p-3 dark:bg-red-900 dark:border-red-700"
+              className="bg-red-50 border border-red-200 rounded-lg p-3"
             >
-              <p className="text-sm text-red-700 dark:text-red-300">{error}</p>
+              <p className="text-sm text-red-700">{error}</p>
             </div>
           )}
 
