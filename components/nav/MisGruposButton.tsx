@@ -29,7 +29,7 @@ export function MisGruposButton() {
   return (
     <Link
       href="/groups"
-      className="relative px-4 py-2 rounded-lg font-bold transition bg-gray-200 text-gray-800 hover:bg-gray-300"
+      className="relative px-4 py-2 rounded-lg font-bold transition bg-muted text-foreground hover:bg-muted/80"
     >
       Mis Grupos
       {count > 0 && (

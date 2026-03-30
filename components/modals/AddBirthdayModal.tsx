@@ -127,7 +127,7 @@ export function AddBirthdayModal({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-bondi-blue-200">
+          <label className="block text-sm font-medium text-foreground mb-1">
             Nombre del niño <span className="text-red-500">*</span>
           </label>
           <input
@@ -136,16 +136,16 @@ export function AddBirthdayModal({
             onChange={(e) => setChildName(e.target.value)}
             placeholder="ej: Juan"
             maxLength={50}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:border-bondi-blue-600 dark:bg-bondi-blue-800"
+            className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent"
             disabled={isSubmitting}
           />
-          <p className="text-xs text-gray-700 mt-1 dark:text-bondi-blue-300">
+          <p className="text-xs text-muted-foreground mt-1">
             {childName.length}/50 caracteres
           </p>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-bondi-blue-200">
+          <label className="block text-sm font-medium text-foreground mb-1">
             Fecha de nacimiento <span className="text-red-500">*</span>
           </label>
           <DatePickerInput

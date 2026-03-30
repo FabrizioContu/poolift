@@ -126,19 +126,19 @@ export function SpoilerGuard({ celebrantNames, children }: SpoilerGuardProps) {
   if (isCelebrant) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-yellow-50 to-orange-50 p-4">
-        <div className="text-center p-8 bg-white rounded-lg shadow-lg max-w-md border border-gray-200">
+        <div className="text-center p-8 bg-background rounded-lg shadow-lg max-w-md border border-border">
           <Gift className="mx-auto text-yellow-500 mb-4" size={64} />
 
-          <h2 className="text-3xl font-bold mb-3 text-gray-900">Sorpresa!</h2>
+          <h2 className="text-3xl font-bold mb-3 text-foreground">Sorpresa!</h2>
 
-          <p className="text-lg text-gray-700 mb-4">
+          <p className="text-lg text-foreground mb-4">
             Este es tu regalo de cumpleanos.
             <br />
             <strong>No mires para que sea sorpresa!</strong>
           </p>
 
           <div className="bg-yellow-50 p-4 rounded-lg mb-6">
-            <p className="text-sm text-gray-700">
+            <p className="text-sm text-foreground">
               Detectamos que eres <strong>{userName}</strong>.
               <br />
               Espera al dia de tu fiesta para ver el regalo
@@ -151,7 +151,7 @@ export function SpoilerGuard({ celebrantNames, children }: SpoilerGuardProps) {
 
           <button
             onClick={handleNotMe}
-            className="text-sm text-gray-700 hover:text-gray-700"
+            className="text-sm text-muted-foreground hover:text-foreground"
           >
             No soy {userName}
           </button>

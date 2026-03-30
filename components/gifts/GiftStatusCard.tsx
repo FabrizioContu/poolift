@@ -85,15 +85,15 @@ export function GiftStatusCard({ gift, proposalName, totalPrice }: GiftStatusCar
     : priceToShow
 
   return (
-    <div className="bg-linear-to-br from-bondi-blue-50 to-bondi-blue-100 rounded-lg p-6 mb-6 border-2 border-bondi-blue-200 dark:bg-none dark:bg-bondi-blue-700 dark:border-bondi-blue-500">
+    <div className="bg-linear-to-br from-bondi-blue-50 to-bondi-blue-100 rounded-lg p-6 mb-6 border-2 border-bondi-blue-200 dark:bg-bondi-blue-700 dark:border-bondi-blue-500">
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-3">
           {statusInfo.icon}
           <div>
-            <h3 className="text-xl font-bold text-gray-900 dark:text-bondi-blue-50">
+            <h3 className="text-xl font-bold text-foreground dark:text-bondi-blue-50">
               {statusInfo.title}
             </h3>
-            <p className="text-sm text-gray-700 dark:text-bondi-blue-200">
+            <p className="text-sm text-muted-foreground dark:text-bondi-blue-200">
               {proposalName}
             </p>
           </div>
@@ -106,24 +106,24 @@ export function GiftStatusCard({ gift, proposalName, totalPrice }: GiftStatusCar
 
       {/* Info Grid */}
       <div className="grid grid-cols-2 gap-4 mb-4">
-        <div className="bg-white rounded-lg p-3 dark:bg-bondi-blue-600">
+        <div className="bg-background rounded-lg p-3 dark:bg-bondi-blue-600">
           <div className="flex items-center gap-2 mb-1">
-            <Users size={16} className="text-gray-700 dark:text-bondi-blue-300" />
-            <span className="text-xs text-gray-700 dark:text-bondi-blue-300">Participantes</span>
+            <Users size={16} className="text-muted-foreground dark:text-bondi-blue-300" />
+            <span className="text-xs text-muted-foreground dark:text-bondi-blue-300">Participantes</span>
           </div>
-          <p className="text-lg font-bold text-gray-900 dark:text-bondi-blue-50">
+          <p className="text-lg font-bold text-foreground dark:text-bondi-blue-50">
             {gift.participantCount} {gift.participantCount === 1 ? 'familia' : 'familias'}
           </p>
         </div>
 
-        <div className="bg-white rounded-lg p-3 dark:bg-bondi-blue-600">
+        <div className="bg-background rounded-lg p-3 dark:bg-bondi-blue-600">
           <div className="flex items-center gap-2 mb-1">
-            <Gift size={16} className="text-gray-700 dark:text-bondi-blue-300" />
-            <span className="text-xs text-gray-700 dark:text-bondi-blue-300">
+            <Gift size={16} className="text-muted-foreground dark:text-bondi-blue-300" />
+            <span className="text-xs text-muted-foreground dark:text-bondi-blue-300">
               {gift.purchased_at ? 'Por familia' : 'Precio est.'}
             </span>
           </div>
-          <p className="text-lg font-bold text-gray-900 dark:text-bondi-blue-50">
+          <p className="text-lg font-bold text-foreground dark:text-bondi-blue-50">
             {formatPrice(pricePerFamily)}
           </p>
         </div>
@@ -131,7 +131,7 @@ export function GiftStatusCard({ gift, proposalName, totalPrice }: GiftStatusCar
 
       {/* Description */}
       {statusInfo.description && (
-        <p className="text-sm text-gray-700 mb-4 dark:text-bondi-blue-200">
+        <p className="text-sm text-muted-foreground mb-4 dark:text-bondi-blue-200">
           {statusInfo.description}
         </p>
       )}
@@ -167,9 +167,9 @@ export function GiftStatusCard({ gift, proposalName, totalPrice }: GiftStatusCar
       </div>
 
       {/* Share Code */}
-      <div className="mt-4 p-2 bg-white rounded-lg dark:bg-bondi-blue-600">
-        <p className="text-xs text-gray-700 text-center dark:text-bondi-blue-200">
-          Codigo: <code className="font-mono text-gray-700 dark:text-bondi-blue-200">{gift.share_code}</code>
+      <div className="mt-4 p-2 bg-background rounded-lg dark:bg-bondi-blue-600">
+        <p className="text-xs text-muted-foreground text-center dark:text-bondi-blue-200">
+          Codigo: <code className="font-mono text-muted-foreground dark:text-bondi-blue-200">{gift.share_code}</code>
         </p>
       </div>
     </div>

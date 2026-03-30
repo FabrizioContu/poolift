@@ -173,7 +173,7 @@ export function CloseParticipationButton({
                 </span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-gray-700">Total del regalo:</span>
+                <span className="text-muted-foreground">Total del regalo:</span>
                 <span className="font-bold text-bondi-blue-500">
                   {formatPrice(totalPrice)}
                 </span>
@@ -230,24 +230,24 @@ export function CloseParticipationButton({
             </div>
 
             {/* Summary */}
-            <div className="p-4 bg-gray-50 rounded-lg space-y-3">
+            <div className="p-4 bg-muted rounded-lg space-y-3">
               <div>
-                <p className="text-xs text-gray-700 mb-1">Regalo:</p>
+                <p className="text-xs text-muted-foreground mb-1">Regalo:</p>
                 <p className="font-medium">{giftName}</p>
               </div>
 
-              <div className="flex justify-between items-center pt-2 border-t border-gray-200">
-                <span className="text-gray-900">Familias participantes:</span>
+              <div className="flex justify-between items-center pt-2 border-t border-border">
+                <span className="text-foreground">Familias participantes:</span>
                 <span className="font-bold">{participantCount}</span>
               </div>
 
               <div className="flex justify-between items-center">
-                <span className="text-gray-700">Total:</span>
+                <span className="text-muted-foreground">Total:</span>
                 <span className="font-bold">{formatPrice(totalPrice)}</span>
               </div>
 
-              <div className="flex justify-between items-center pt-2 border-t border-gray-200">
-                <span className="text-gray-700">Precio por familia:</span>
+              <div className="flex justify-between items-center pt-2 border-t border-border">
+                <span className="text-muted-foreground">Precio por familia:</span>
                 <span className="font-bold text-ocean-mist-400 text-xl">
                   {finalPricePerFamily || estimatedPricePerFamily}€
                 </span>
@@ -257,7 +257,7 @@ export function CloseParticipationButton({
             {/* Participants List */}
             {participantNames.length > 0 && (
               <div>
-                <p className="text-xs text-gray-700 mb-2">Participantes:</p>
+                <p className="text-xs text-muted-foreground mb-2">Participantes:</p>
                 <div className="flex flex-wrap gap-1">
                   {participantNames.map((name, index) => (
                     <span
@@ -273,7 +273,7 @@ export function CloseParticipationButton({
 
             {/* Share Buttons */}
             <div className="space-y-2 pt-2">
-              <p className="text-sm font-medium text-gray-700">
+              <p className="text-sm font-medium text-foreground">
                 Compartir con las familias:
               </p>
 

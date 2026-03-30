@@ -173,21 +173,21 @@ export default async function PartyDetailPage({
       {/* Back Link */}
       <Link
         href={`/dashboard/${groupId}`}
-        className="inline-flex items-center gap-1 text-gray-700 hover:text-gray-900 mb-6"
+        className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground mb-6"
       >
         <ArrowLeft size={18} />
         <span>Volver al calendario</span>
       </Link>
 
       {/* Header */}
-      <header className="bg-white border border-gray-200 rounded-lg p-6 mb-6">
+      <header className="bg-background border border-border rounded-lg p-6 mb-6">
         <div className="flex items-start justify-between mb-4">
           <div>
-            <div className="flex items-center gap-2 text-gray-700 text-sm mb-2">
+            <div className="flex items-center gap-2 text-muted-foreground text-sm mb-2">
               <Calendar size={16} />
               <span>{formatDate(party.party_date)}</span>
             </div>
-            <h1 className="text-2xl font-bold text-gray-900">
+            <h1 className="text-2xl font-bold text-foreground">
               Fiesta de {formatCelebrants(celebrantNames)}
             </h1>
           </div>
@@ -196,7 +196,7 @@ export default async function PartyDetailPage({
           </span>
         </div>
 
-        <div className="flex flex-wrap gap-4 text-sm text-gray-700">
+        <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
             <Users size={16} />
             <span>

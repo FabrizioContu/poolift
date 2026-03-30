@@ -18,29 +18,29 @@ export default async function JoinGroupPage({ params }: JoinGroupPageProps) {
 
   if (error || !group) {
     return (
-      <div className="min-h-screen bg-linear-to-b from-bondi-blue-50 to-white py-12 px-4">
+      <div className="min-h-screen bg-linear-to-b from-bondi-blue-50 to-background py-12 px-4">
         <div className="max-w-md mx-auto">
           <Link
             href="/join"
-            className="inline-flex items-center gap-1 text-gray-700 hover:text-gray-900 mb-6"
+            className="inline-flex items-center gap-1 text-muted-foreground hover:text-foreground mb-6"
           >
             <ArrowLeft size={18} />
             <span>Volver</span>
           </Link>
 
-          <div className="bg-white rounded-lg shadow-lg p-8 text-center">
+          <div className="bg-background rounded-lg shadow-lg p-8 text-center">
             <div className="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
               <AlertCircle className="w-8 h-8 text-red-600" />
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">
+            <h1 className="text-2xl font-bold text-foreground mb-2">
               Código inválido
             </h1>
-            <p className="text-gray-700 mb-6">
+            <p className="text-muted-foreground mb-6">
               El código{" "}
               <span className="font-mono font-bold">{inviteCode}</span> no
               corresponde a ningún grupo.
             </p>
-            <p className="text-sm text-gray-700 mb-6">
+            <p className="text-sm text-muted-foreground mb-6">
               Verifica que el código esté bien escrito o pide a quien te lo
               envió que lo comparta de nuevo.
             </p>
@@ -57,7 +57,7 @@ export default async function JoinGroupPage({ params }: JoinGroupPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-blue-50 to-white py-12 px-4">
+    <div className="min-h-screen bg-linear-to-b from-bondi-blue-50 to-background py-12 px-4">
       <div className="max-w-md mx-auto">
         <Link
           href="/join"

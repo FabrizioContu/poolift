@@ -78,10 +78,10 @@ export function OnboardingGuide({
   return (
     <div className="max-w-xl mx-auto">
       <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold text-gray-900 mb-2 dark:text-bondi-blue-50">
+        <h2 className="text-2xl font-bold text-foreground mb-2 dark:text-bondi-blue-50">
           ¡Grupo creado! ¿Qué sigue?
         </h2>
-        <p className="text-gray-600 dark:text-bondi-blue-200">
+        <p className="text-muted-foreground dark:text-bondi-blue-200">
           Sigue estos pasos para organizar la primera fiesta.
         </p>
       </div>
@@ -125,7 +125,7 @@ function StepCard({ step, onAction }: { step: Step; onAction?: () => void }) {
         flex items-start gap-4 p-4 rounded-lg border transition
         ${isActive ? "border-bondi-blue-200 bg-bondi-blue-50 dark:border-bondi-blue-600 dark:bg-bondi-blue-700" : ""}
         ${isCompleted ? "border-emerald-200 bg-emerald-50 dark:border-ocean-mist-400 dark:bg-ocean-mist-800" : ""}
-        ${isLocked ? "border-gray-200 bg-gray-50 opacity-60 dark:border-bondi-blue-700 dark:bg-bondi-blue-800" : ""}
+        ${isLocked ? "border-border bg-muted opacity-60 dark:border-bondi-blue-700 dark:bg-bondi-blue-800" : ""}
       `}
     >
       {/* Step indicator */}
@@ -134,7 +134,7 @@ function StepCard({ step, onAction }: { step: Step; onAction?: () => void }) {
           shrink-0 w-10 h-10 rounded-full flex items-center justify-center
           ${isCompleted ? "bg-emerald-400 text-white" : ""}
           ${isActive ? "bg-bondi-blue-400 text-white dark:bg-bondi-blue-300 dark:text-bondi-blue-800" : ""}
-          ${isLocked ? "bg-gray-200 text-gray-400 dark:bg-bondi-blue-700 dark:text-bondi-blue-400" : ""}
+          ${isLocked ? "bg-muted text-muted-foreground/60 dark:bg-bondi-blue-700 dark:text-bondi-blue-400" : ""}
         `}
       >
         {isCompleted ? <Check size={20} /> : <Icon size={20} />}
@@ -143,12 +143,12 @@ function StepCard({ step, onAction }: { step: Step; onAction?: () => void }) {
       {/* Content */}
       <div className="flex-1 min-w-0">
         <h3
-          className={`font-semibold ${isLocked ? "text-gray-400 dark:text-bondi-blue-500" : "text-gray-900 dark:text-bondi-blue-50"}`}
+          className={`font-semibold ${isLocked ? "text-muted-foreground/60 dark:text-bondi-blue-500" : "text-foreground dark:text-bondi-blue-50"}`}
         >
           {step.title}
         </h3>
         <p
-          className={`text-sm mt-0.5 ${isLocked ? "text-gray-400 dark:text-bondi-blue-500" : "text-gray-600 dark:text-bondi-blue-200"}`}
+          className={`text-sm mt-0.5 ${isLocked ? "text-muted-foreground/60 dark:text-bondi-blue-500" : "text-muted-foreground dark:text-bondi-blue-200"}`}
         >
           {step.description}
         </p>

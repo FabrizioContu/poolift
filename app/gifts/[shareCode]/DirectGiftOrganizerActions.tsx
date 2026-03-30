@@ -268,13 +268,13 @@ La participación está cerrada. Mas info: ${giftUrl}`;
           )}
 
           {participantCount === 0 && isOpen && (
-            <p className="text-sm text-gray-700 text-center">
+            <p className="text-sm text-muted-foreground text-center">
               Espera a que haya participantes para cerrar
             </p>
           )}
 
           {!isOpen && (
-            <p className="text-sm text-gray-700 text-center">
+            <p className="text-sm text-muted-foreground text-center">
               Participación cerrada. Procede a finalizar la compra.
             </p>
           )}
@@ -339,13 +339,13 @@ La participación está cerrada. Mas info: ${giftUrl}`;
               {estimatedPrice && (
                 <>
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-700">Total estimado:</span>
+                    <span className="text-muted-foreground">Total estimado:</span>
                     <span className="font-bold text-ocean-mist-400">
                       {formatPrice(totalPrice)}
                     </span>
                   </div>
                   <div className="flex justify-between items-center mt-2 pt-2 border-t border-ocean-mist-200">
-                    <span className="text-gray-700">Precio por familia:</span>
+                    <span className="text-muted-foreground">Precio por familia:</span>
                     <span className="font-bold text-ocean-mist-400 text-lg">
                       {estimatedPricePerPerson}€
                     </span>
@@ -398,35 +398,35 @@ La participación está cerrada. Mas info: ${giftUrl}`;
             </div>
 
             {/* Summary */}
-            <div className="p-4 bg-gray-50 rounded-lg space-y-3">
+            <div className="p-4 bg-muted rounded-lg space-y-3">
               <div>
-                <p className="text-xs text-gray-700 mb-1">Regalo para:</p>
-                <p className="font-medium text-gray-700">{recipientName}</p>
+                <p className="text-xs text-muted-foreground mb-1">Regalo para:</p>
+                <p className="font-medium text-muted-foreground">{recipientName}</p>
               </div>
 
               {giftIdea && (
                 <div>
-                  <p className="text-xs text-gray-700 mb-1">Regalo:</p>
-                  <p className="font-medium text-gray-700">{giftIdea}</p>
+                  <p className="text-xs text-muted-foreground mb-1">Regalo:</p>
+                  <p className="font-medium text-muted-foreground">{giftIdea}</p>
                 </div>
               )}
 
-              <div className="flex justify-between items-center pt-2 border-t border-gray-200">
-                <span className="text-gray-700">Familias:</span>
+              <div className="flex justify-between items-center pt-2 border-t border-border">
+                <span className="text-muted-foreground">Familias:</span>
                 <span className="font-bold">{participantCount}</span>
               </div>
 
               {estimatedPrice && (
                 <>
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-700">Total:</span>
-                    <span className="font-bold text-gray-700">
+                    <span className="text-muted-foreground">Total:</span>
+                    <span className="font-bold text-muted-foreground">
                       {formatPrice(totalPrice)}
                     </span>
                   </div>
 
-                  <div className="flex justify-between items-center pt-2 border-t border-gray-200">
-                    <span className="text-gray-700">Precio por familia:</span>
+                  <div className="flex justify-between items-center pt-2 border-t border-border">
+                    <span className="text-muted-foreground">Precio por familia:</span>
                     <span className="font-bold text-ocean-mist-6  00 text-xl">
                       {finalPricePerPerson || estimatedPricePerPerson}€
                     </span>
@@ -438,7 +438,7 @@ La participación está cerrada. Mas info: ${giftUrl}`;
             {/* Participants List */}
             {participantNames.length > 0 && (
               <div>
-                <p className="text-xs text-gray-700 dark:text-gray-300 mb-2">
+                <p className="text-xs text-muted-foreground  mb-2">
                   Familias:
                 </p>
                 <div className="flex flex-wrap gap-1">
@@ -456,7 +456,7 @@ La participación está cerrada. Mas info: ${giftUrl}`;
 
             {/* Share Buttons */}
             <div className="space-y-2 pt-2">
-              <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              <p className="text-sm font-medium text-muted-foreground ">
                 Compartir:
               </p>
 
@@ -519,8 +519,8 @@ La participación está cerrada. Mas info: ${giftUrl}`;
               </div>
             </div>
 
-            <div className="p-4 bg-gray-50 rounded-lg">
-              <p className="text-sm text-gray-700 mb-2">
+            <div className="p-4 bg-muted rounded-lg">
+              <p className="text-sm text-muted-foreground mb-2">
                 <span className="font-medium">Regalo para:</span>{" "}
                 {recipientName}
               </p>
@@ -565,19 +565,19 @@ La participación está cerrada. Mas info: ${giftUrl}`;
           title="Fusionar participantes duplicados"
         >
           <div className="space-y-4">
-            <p className="text-sm text-gray-700">
+            <p className="text-sm text-muted-foreground">
               Selecciona el participante a mantener y el duplicado a eliminar.
               Esta acción no se puede deshacer.
             </p>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-muted-foreground mb-1">
                 Mantener
               </label>
               <select
                 value={mergeKeep}
                 onChange={(e) => setMergeKeep(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-mist-400 focus:border-transparent"
+                className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-ocean-mist-400 focus:border-transparent"
               >
                 {participantNames.map((name) => (
                   <option key={name} value={name}>
@@ -588,13 +588,13 @@ La participación está cerrada. Mas info: ${giftUrl}`;
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-muted-foreground mb-1">
                 Eliminar (duplicado)
               </label>
               <select
                 value={mergeRemove}
                 onChange={(e) => setMergeRemove(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-mist-400 focus:border-transparent"
+                className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-ocean-mist-400 focus:border-transparent"
               >
                 {participantNames.map((name) => (
                   <option key={name} value={name}>

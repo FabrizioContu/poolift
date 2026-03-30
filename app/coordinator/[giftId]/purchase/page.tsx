@@ -165,10 +165,10 @@ export default function PurchasePage({
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-muted/30 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-bondi-blue-400 mx-auto"></div>
-          <p className="text-gray-700 mt-4">Cargando...</p>
+          <p className="text-muted-foreground mt-4">Cargando...</p>
         </div>
       </div>
     );
@@ -176,10 +176,10 @@ export default function PurchasePage({
 
   if (error && !gift) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-muted/30 flex items-center justify-center">
         <div className="text-center px-4">
-          <ShoppingCart className="mx-auto text-gray-700 mb-4" size={64} />
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">{error}</h1>
+          <ShoppingCart className="mx-auto text-muted-foreground mb-4" size={64} />
+          <h1 className="text-2xl font-bold text-foreground mb-2">{error}</h1>
           <Link href="/">
             <Button variant="secondary" className="mt-4">
               <ArrowLeft size={18} className="mr-2" />
@@ -196,13 +196,13 @@ export default function PurchasePage({
   // Check if already purchased
   if (gift.purchased_at) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-muted/30 flex items-center justify-center">
         <div className="text-center px-4">
           <CheckCircle className="mx-auto text-emerald-500 mb-4" size={64} />
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">
+          <h1 className="text-2xl font-bold text-foreground mb-2">
             Regalo ya finalizado
           </h1>
-          <p className="text-gray-700 mb-4">Este regalo ya fue comprado.</p>
+          <p className="text-muted-foreground mb-4">Este regalo ya fue comprado.</p>
           <Link href={`/gifts/${gift.share_code}`}>
             <Button>Ver Regalo</Button>
           </Link>
@@ -214,16 +214,16 @@ export default function PurchasePage({
   // Check if participation is still open
   if (gift.participation_open) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-muted/30 flex items-center justify-center">
         <div className="text-center px-4">
           <ShoppingCart
             className="mx-auto text-tropical-teal-400 mb-4"
             size={64}
           />
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">
+          <h1 className="text-2xl font-bold text-foreground mb-2">
             Participación aún abierta
           </h1>
-          <p className="text-gray-700 mb-4">
+          <p className="text-muted-foreground mb-4">
             Primero debes cerrar la participación antes de finalizar la compra.
           </p>
           <Link href={`/gifts/${gift.share_code}`}>
@@ -249,13 +249,13 @@ export default function PurchasePage({
   if (success) {
     return (
       <>
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="min-h-screen bg-muted/30 flex items-center justify-center">
           <div className="text-center px-4">
             <CheckCircle className="mx-auto text-emerald-500 mb-4" size={64} />
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">
+            <h1 className="text-2xl font-bold text-foreground mb-2">
               ¡Regalo Finalizado!
             </h1>
-            <p className="text-gray-700 mb-4">
+            <p className="text-muted-foreground mb-4">
               Las familias serán notificadas del precio final.
             </p>
             <p className="text-lg font-semibold text-emerald-500">
@@ -275,26 +275,26 @@ export default function PurchasePage({
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
+    <div className="min-h-screen bg-muted/30 py-8 px-4">
       <div className="container mx-auto max-w-2xl">
         {/* Back link */}
         <Link
           href={`/gifts/${gift.share_code}`}
-          className="inline-flex items-center text-gray-700 hover:text-gray-900 mb-6"
+          className="inline-flex items-center text-muted-foreground hover:text-foreground mb-6"
         >
           <ArrowLeft size={18} className="mr-2" />
           Volver al regalo
         </Link>
 
-        <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
+        <div className="bg-background rounded-2xl shadow-xl p-6 md:p-8">
           <div className="flex items-center gap-3 mb-6">
             <ShoppingCart className="text-bondi-blue-400" size={32} />
             <div>
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-bondi-blue-700">
+              <h1 className="text-2xl font-bold text-foreground ">
                 Finalizar Compra
               </h1>
               {celebrantNames.length > 0 && (
-                <p className="text-gray-900">
+                <p className="text-foreground">
                   Regalo para {celebrantNames.join(" y ")}
                 </p>
               )}
@@ -304,13 +304,13 @@ export default function PurchasePage({
           {/* Summary */}
           <div className="bg-bondi-blue-50 p-4 rounded-lg mb-6">
             <p className="font-semibold text-lg mb-2">{gift.proposal?.name}</p>
-            <div className="flex justify-between text-sm text-gray-700">
+            <div className="flex justify-between text-sm text-muted-foreground">
               <span>Precio propuesto:</span>
               <span className="font-medium">
                 {formatPrice(gift.proposal?.total_price || 0)}
               </span>
             </div>
-            <div className="flex justify-between text-sm text-gray-900 mt-1">
+            <div className="flex justify-between text-sm text-foreground mt-1">
               <span>Familias participantes:</span>
               <span className="font-medium">{participantCount}</span>
             </div>
@@ -319,7 +319,7 @@ export default function PurchasePage({
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Final Price */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-muted-foreground mb-2">
                 Precio Final Pagado <span className="text-red-500">*</span>
               </label>
               <div className="relative">
@@ -330,10 +330,10 @@ export default function PurchasePage({
                   value={finalPrice}
                   onChange={(e) => setFinalPrice(e.target.value)}
                   placeholder="ej: 75.98"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent pr-12"
+                  className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent pr-12"
                   required
                 />
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-700">
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground">
                   €
                 </span>
               </div>
@@ -347,7 +347,7 @@ export default function PurchasePage({
 
             {/* Receipt Upload */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-muted-foreground mb-2">
                 <Upload size={18} className="inline mr-1" />
                 Subir Recibo (opcional)
               </label>
@@ -355,7 +355,7 @@ export default function PurchasePage({
                 type="file"
                 accept="image/*,application/pdf"
                 onChange={handleFileChange}
-                className="w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-bondi-blue-50 file:text-bondi-blue-600 hover:file:bg-bondi-blue-100"
+                className="w-full text-sm text-muted-foreground file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-bondi-blue-50 file:text-bondi-blue-600 hover:file:bg-bondi-blue-100"
               />
 
               {preview && (
@@ -370,7 +370,7 @@ export default function PurchasePage({
               )}
 
               {receipt && !preview && (
-                <p className="mt-2 text-sm text-gray-700 flex items-center gap-2">
+                <p className="mt-2 text-sm text-muted-foreground flex items-center gap-2">
                   <FileText size={16} />
                   Archivo: {receipt.name}
                 </p>
@@ -379,7 +379,7 @@ export default function PurchasePage({
 
             {/* Comment */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-muted-foreground mb-2">
                 <FileText size={18} className="inline mr-1" />
                 Comentario (opcional)
               </label>
@@ -388,7 +388,7 @@ export default function PurchasePage({
                 onChange={(e) => setComment(e.target.value)}
                 placeholder="ej: Comprado en Amazon con descuento del 20%"
                 rows={3}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent resize-none"
+                className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent resize-none"
               />
             </div>
 

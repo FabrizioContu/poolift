@@ -297,18 +297,18 @@ export function DirectGiftParticipation({
   if (!isOpen) {
     if (participantStatus === "joined") {
       return (
-        <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
+        <div className="bg-background rounded-2xl shadow-xl p-6 md:p-8">
           <div className="text-center">
             <div className="bg-ocean-mist-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
               <CheckCircle className="text-ocean-mist-400" size={32} />
             </div>
-            <h3 className="text-xl font-bold mb-2 text-gray-900">
+            <h3 className="text-xl font-bold mb-2 text-foreground">
               Estás participando
             </h3>
-            <p className="text-gray-700">
+            <p className="text-muted-foreground">
               Como: <strong>{participantName}</strong>
             </p>
-            <p className="text-sm text-gray-700 mt-4">
+            <p className="text-sm text-muted-foreground mt-4">
               La participación está cerrada
             </p>
           </div>
@@ -317,8 +317,8 @@ export function DirectGiftParticipation({
     }
 
     return (
-      <div className="bg-gray-100 rounded-2xl p-6 text-center">
-        <p className="text-gray-700">La participación está cerrada</p>
+      <div className="bg-muted rounded-2xl p-6 text-center">
+        <p className="text-muted-foreground">La participación está cerrada</p>
       </div>
     );
   }
@@ -326,15 +326,15 @@ export function DirectGiftParticipation({
   // Joined state
   if (participantStatus === "joined") {
     return (
-      <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
+      <div className="bg-background rounded-2xl shadow-xl p-6 md:p-8">
         <div className="text-center">
           <div className="bg-ocean-mist-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
             <CheckCircle className="text-ocean-mist-400" size={32} />
           </div>
-          <h3 className="text-xl font-bold mb-2 text-gray-900">
+          <h3 className="text-xl font-bold mb-2 text-foreground">
             {isOrganizer ? "Eres el organizador" : "Tu familia está apuntada"}
           </h3>
-          <p className="text-gray-700 mb-6">
+          <p className="text-muted-foreground mb-6">
             Como: <strong>{participantName}</strong>
           </p>
 
@@ -355,7 +355,7 @@ export function DirectGiftParticipation({
                 onClick={handleSwitchToDeclined}
                 disabled={loading}
                 variant="secondary"
-                className="text-gray-500 hover:bg-gray-50 text-sm"
+                className="text-muted-foreground hover:bg-gray-50 text-sm"
               >
                 <XCircle size={16} className="mr-2" />
                 {loading ? "..." : "Ya no puedo participar"}
@@ -370,15 +370,15 @@ export function DirectGiftParticipation({
   // Declined state
   if (participantStatus === "declined") {
     return (
-      <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
+      <div className="bg-background rounded-2xl shadow-xl p-6 md:p-8">
         <div className="text-center">
-          <div className="bg-gray-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-            <XCircle className="text-gray-400" size={32} />
+          <div className="bg-muted w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <XCircle className="text-muted-foreground/60" size={32} />
           </div>
-          <h3 className="text-xl font-bold mb-2 text-gray-900">
+          <h3 className="text-xl font-bold mb-2 text-foreground">
             No vas a participar
           </h3>
-          <p className="text-gray-700 mb-6">
+          <p className="text-muted-foreground mb-6">
             Como: <strong>{participantName}</strong>
           </p>
 
@@ -397,7 +397,7 @@ export function DirectGiftParticipation({
               onClick={handleRemoveResponse}
               disabled={loading}
               variant="secondary"
-              className="text-gray-500 hover:bg-gray-50 text-sm"
+              className="text-muted-foreground hover:bg-gray-50 text-sm"
             >
               {loading ? "..." : "Quitar mi respuesta"}
             </Button>
@@ -410,18 +410,18 @@ export function DirectGiftParticipation({
   // Already represented state
   if (representedBy) {
     return (
-      <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
+      <div className="bg-background rounded-2xl shadow-xl p-6 md:p-8">
         <div className="text-center">
           <div className="bg-ocean-mist-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
             <Users className="text-ocean-mist-400" size={32} />
           </div>
-          <h3 className="text-xl font-bold mb-2 text-gray-900">
+          <h3 className="text-xl font-bold mb-2 text-foreground">
             Tu familia ya está representada
           </h3>
-          <p className="text-gray-700">
+          <p className="text-muted-foreground">
             Representado por: <strong>{representedBy}</strong>
           </p>
-          <p className="text-sm text-gray-500 mt-2">
+          <p className="text-sm text-muted-foreground mt-2">
             No necesitas apuntarte de nuevo
           </p>
         </div>
@@ -433,14 +433,14 @@ export function DirectGiftParticipation({
   const joinedParticipants = participants.filter((p) => p.status === "joined");
 
   return (
-    <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
-      <h3 className="text-xl font-bold mb-4 text-center text-gray-900">
+    <div className="bg-background rounded-2xl shadow-xl p-6 md:p-8">
+      <h3 className="text-xl font-bold mb-4 text-center text-foreground">
         Apúntate al Regalo
       </h3>
 
       {joinedParticipants.length > 0 && (
-        <div className="mb-4 p-3 bg-gray-50 rounded-lg">
-          <p className="text-xs text-gray-500 mb-2">
+        <div className="mb-4 p-3 bg-muted rounded-lg">
+          <p className="text-xs text-muted-foreground mb-2">
             ¿Tu familia ya está apuntada?
           </p>
           <div className="flex flex-wrap gap-2">
@@ -448,7 +448,7 @@ export function DirectGiftParticipation({
               <button
                 key={p.id}
                 onClick={() => handleClaimRepresentation(p.participant_name)}
-                className="text-xs bg-white border border-gray-200 rounded-full px-3 py-1 text-gray-700 hover:border-ocean-mist-300 hover:text-ocean-mist-600 transition-colors"
+                className="text-xs bg-background border border-border rounded-full px-3 py-1 text-muted-foreground hover:border-ocean-mist-300 hover:text-ocean-mist-600 transition-colors"
               >
                 Soy de {p.participant_name} →
               </button>
@@ -459,7 +459,7 @@ export function DirectGiftParticipation({
 
       <div className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-muted-foreground mb-2">
             Nombre de tu familia
           </label>
           <input
@@ -467,7 +467,7 @@ export function DirectGiftParticipation({
             value={participantName}
             onChange={(e) => setParticipantName(e.target.value)}
             placeholder="Ej: Familia García"
-            className="w-full text-gray-700 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-mist-400 focus:border-transparent"
+            className="w-full text-muted-foreground px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-ocean-mist-400 focus:border-transparent"
             disabled={loading}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
@@ -476,13 +476,13 @@ export function DirectGiftParticipation({
               }
             }}
           />
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-muted-foreground mt-1">
             Una participación por familia
           </p>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-muted-foreground mb-2">
             Tu email (opcional)
           </label>
           <input
@@ -490,10 +490,10 @@ export function DirectGiftParticipation({
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="ej: juan@email.com"
-            className="w-full text-gray-700 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-mist-400 focus:border-transparent"
+            className="w-full text-muted-foreground px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-ocean-mist-400 focus:border-transparent"
             disabled={loading}
           />
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-muted-foreground mt-1">
             Para avisarte cuando la participación se cierre o el regalo se compre
           </p>
         </div>
@@ -513,7 +513,7 @@ export function DirectGiftParticipation({
             onClick={handleDecline}
             disabled={loading || !participantName.trim()}
             variant="secondary"
-            className="w-full py-2 text-gray-500 hover:bg-gray-50 text-sm"
+            className="w-full py-2 text-muted-foreground hover:bg-gray-50 text-sm"
           >
             <XCircle size={16} className="mr-2" />
             {loading ? "..." : "No voy a participar"}

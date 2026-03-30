@@ -128,13 +128,13 @@ export default async function GiftPage({
     // Handle cancelled direct gifts
     if (directGift.status === "cancelled") {
       return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="min-h-screen flex items-center justify-center bg-muted/30">
           <div className="text-center px-4">
-            <Gift className="mx-auto text-gray-400 mb-4" size={64} />
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">
+            <Gift className="mx-auto text-muted-foreground/60 mb-4" size={64} />
+            <h1 className="text-2xl font-bold text-foreground mb-2">
               Regalo Cancelado
             </h1>
-            <p className="text-gray-700 mb-4">
+            <p className="text-muted-foreground mb-4">
               Este regalo ha sido cancelado por el organizador
             </p>
             <Link
@@ -170,14 +170,14 @@ export default async function GiftPage({
           {/* Navigation */}
           <Link
             href="/groups"
-            className="inline-flex items-center gap-2 text-gray-700 hover:text-gray-900 mb-4 transition-colors"
+            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-4 transition-colors"
           >
             <ArrowLeft size={20} />
             <span className="text-sm font-medium">Mis Grupos</span>
           </Link>
 
           {/* Header Card */}
-          <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-6">
+          <div className="bg-background rounded-2xl shadow-xl p-6 md:p-8 mb-6">
             <div className="text-center">
               <div className="mb-4">
                 {isPurchased ? (
@@ -193,7 +193,7 @@ export default async function GiftPage({
                 {OCCASION_LABELS[directGift.occasion]}
               </span>
 
-              <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+              <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
                 Regalo para {directGift.recipient_name}
               </h1>
 
@@ -211,7 +211,7 @@ export default async function GiftPage({
                 </span>
               )}
 
-              <p className="text-gray-700 text-sm">
+              <p className="text-muted-foreground text-sm">
                 Organizado por {directGift.organizer_name}
               </p>
             </div>
@@ -219,10 +219,10 @@ export default async function GiftPage({
             {/* Gift Idea */}
             {directGift.gift_idea && (
               <div className="mt-6 p-4 bg-ocean-mist-50 rounded-lg">
-                <h3 className="font-semibold text-lg mb-2 text-gray-900">
+                <h3 className="font-semibold text-lg mb-2 text-foreground">
                   Regalo propuesto
                 </h3>
-                <p className="text-gray-700">{directGift.gift_idea}</p>
+                <p className="text-muted-foreground">{directGift.gift_idea}</p>
                 {directGift.estimated_price && (
                   <p className="mt-2 text-2xl font-bold text-ocean-mist-400">
                     {formatPrice(directGift.estimated_price)}
@@ -234,7 +234,7 @@ export default async function GiftPage({
             {/* Only price if no idea */}
             {!directGift.gift_idea && directGift.estimated_price && (
               <div className="mt-6 p-4 bg-ocean-mist-50 rounded-lg text-center">
-                <p className="text-sm text-gray-700 mb-1">Precio estimado</p>
+                <p className="text-sm text-muted-foreground mb-1">Precio estimado</p>
                 <p className="text-3xl font-bold text-ocean-mist-400">
                   {formatPrice(directGift.estimated_price)}
                 </p>
@@ -244,11 +244,11 @@ export default async function GiftPage({
             {/* Price Per Person - when closed or purchased */}
             {(isClosed || isPurchased) && pricePerPerson && (
               <div className="mt-4 p-4 bg-linear-to-br from-ocean-mist-50 to-lime-cream-50 rounded-xl text-center">
-                <p className="text-sm text-gray-700 mb-1">Precio por familia</p>
+                <p className="text-sm text-muted-foreground mb-1">Precio por familia</p>
                 <p className="text-3xl font-bold text-ocean-mist-400">
                   {pricePerPerson}€
                 </p>
-                <p className="text-xs text-gray-700 mt-1">
+                <p className="text-xs text-muted-foreground mt-1">
                   ({participantCount} familias)
                 </p>
               </div>
@@ -257,10 +257,10 @@ export default async function GiftPage({
             {/* Organizer Comment */}
             {directGift.organizer_comment && (
               <div className="mt-4 p-4 bg-ocean-mist-50 rounded-lg border-l-4 border-ocean-mist-400">
-                <p className="text-sm font-medium text-gray-700 mb-1">
+                <p className="text-sm font-medium text-muted-foreground mb-1">
                   Comentario del organizador:
                 </p>
-                <p className="text-gray-800 italic">
+                <p className="text-foreground italic">
                   &quot;{directGift.organizer_comment}&quot;
                 </p>
               </div>
@@ -268,7 +268,7 @@ export default async function GiftPage({
 
             {/* Receipt Link */}
             {directGift.receipt_image_url && (
-              <div className="mt-4 p-3 bg-gray-50 rounded-lg dark:bg-bondi-blue-800">
+              <div className="mt-4 p-3 bg-muted rounded-lg">
                 <a
                   href={directGift.receipt_image_url}
                   target="_blank"
@@ -296,9 +296,9 @@ export default async function GiftPage({
           />
 
           {/* Participants Card */}
-          <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-6">
+          <div className="bg-background rounded-2xl shadow-xl p-6 md:p-8 mb-6">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold flex items-center gap-2 text-gray-900">
+              <h2 className="text-xl font-bold flex items-center gap-2 text-foreground">
                 <Users size={20} />
                 Familias participantes
               </h2>
@@ -308,7 +308,7 @@ export default async function GiftPage({
             </div>
 
             {participantCount === 0 ? (
-              <p className="text-gray-700 text-center py-6">
+              <p className="text-muted-foreground text-center py-6">
                 Sé la primera familia en apuntarse
               </p>
             ) : (
@@ -316,12 +316,12 @@ export default async function GiftPage({
                 {joinedParticipants.map((p) => (
                   <li
                     key={p.id}
-                    className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                    className="flex items-center justify-between p-3 bg-muted rounded-lg"
                   >
-                    <span className="font-medium text-gray-900">
+                    <span className="font-medium text-foreground">
                       {p.participant_name}
                     </span>
-                    <span className="text-sm text-gray-900">
+                    <span className="text-sm text-foreground">
                       {new Date(p.joined_at).toLocaleDateString("es-ES")}
                     </span>
                   </li>
@@ -330,8 +330,8 @@ export default async function GiftPage({
             )}
 
             {declinedParticipants.length > 0 && (
-              <div className="mt-4 pt-4 border-t border-gray-100">
-                <p className="text-xs font-medium text-gray-500 mb-2">
+              <div className="mt-4 pt-4 border-t border-border">
+                <p className="text-xs font-medium text-muted-foreground mb-2">
                   No pueden participar
                 </p>
                 <ul className="space-y-1">
@@ -340,7 +340,7 @@ export default async function GiftPage({
                       key={p.id}
                       className="flex items-center justify-between p-2 rounded-lg"
                     >
-                      <span className="text-sm text-gray-400 line-through">
+                      <span className="text-sm text-muted-foreground/60 line-through">
                         {p.participant_name}
                       </span>
                     </li>
@@ -367,13 +367,13 @@ export default async function GiftPage({
 
   if (!gift) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-muted/30">
         <div className="text-center px-4">
-          <Gift className="mx-auto text-gray-700 mb-4" size={64} />
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">
+          <Gift className="mx-auto text-muted-foreground/60 mb-4" size={64} />
+          <h1 className="text-2xl font-bold text-foreground mb-2">
             Regalo no encontrado
           </h1>
-          <p className="text-gray-700 mb-4">
+          <p className="text-muted-foreground mb-4">
             Verifica el enlace e intenta nuevamente
           </p>
           <Link
@@ -421,7 +421,7 @@ export default async function GiftPage({
         {/* Navigation */}
         <Link
           href="/groups"
-          className="inline-flex items-center gap-2 text-gray-700 hover:text-gray-900 mb-4 transition-colors"
+          className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-4 transition-colors"
         >
           <ArrowLeft size={20} />
           <span className="text-sm font-medium">Mis Grupos</span>
@@ -440,7 +440,7 @@ export default async function GiftPage({
               )}
             </div>
 
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+            <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
               Regalo para {formatCelebrants(celebrantNames)}
             </h1>
 
@@ -460,7 +460,7 @@ export default async function GiftPage({
 
             {/* Party Date */}
             {gift.party?.party_date && (
-              <div className="flex items-center justify-center gap-2 text-gray-700 mt-4">
+              <div className="flex items-center justify-center gap-2 text-muted-foreground mt-4">
                 <Calendar size={18} />
                 <span>{formatDate(gift.party.party_date)}</span>
               </div>
@@ -470,7 +470,7 @@ export default async function GiftPage({
           {/* Selected Proposal */}
           {gift.proposal && (
             <div className="mt-6 p-4 bg-bondi-blue-50 rounded-lg">
-              <h3 className="font-semibold text-lg mb-3 text-gray-900">
+              <h3 className="font-semibold text-lg mb-3 text-foreground">
                 {gift.proposal.name}
               </h3>
               {gift.proposal.proposal_items?.length > 0 && (
@@ -487,7 +487,7 @@ export default async function GiftPage({
                         className="flex justify-between text-sm"
                       >
                         <span className="flex items-center gap-2">
-                          <span className="text-gray-700">•</span>
+                          <span className="text-muted-foreground">•</span>
                           {item.item_name}
                           {item.product_link && (
                             <a
@@ -501,7 +501,7 @@ export default async function GiftPage({
                           )}
                         </span>
                         {item.item_price && (
-                          <span className="font-medium text-gray-700">
+                          <span className="font-medium text-muted-foreground">
                             {formatPrice(item.item_price)}
                           </span>
                         )}
@@ -522,18 +522,18 @@ export default async function GiftPage({
           {/* Price Per Family - Finalized (with real price) */}
           {isPurchased && (
             <div className="mt-4 p-4 bg-linear-to-br from-emerald-50 to-bondi-blue-50 rounded-xl text-center">
-              <p className="text-sm text-gray-700 mb-1">Precio final pagado:</p>
+              <p className="text-sm text-muted-foreground mb-1">Precio final pagado:</p>
               <p className="text-3xl font-bold text-emerald-500 mb-3">
                 {formatPrice(gift.final_price || totalPrice)}
               </p>
               <div className="pt-3 border-t border-emerald-200">
-                <p className="text-xs text-gray-700 mb-1">
+                <p className="text-xs text-muted-foreground mb-1">
                   Precio por familia:
                 </p>
                 <p className="text-2xl font-bold text-bondi-blue-500">
                   {pricePerFamily}€
                 </p>
-                <p className="text-xs text-gray-900 mt-1">
+                <p className="text-xs text-foreground mt-1">
                   ({participantCount} familias participantes)
                 </p>
               </div>
@@ -543,11 +543,11 @@ export default async function GiftPage({
           {/* Price Per Family - Closed but not purchased (estimated) */}
           {isClosed && !isPurchased && pricePerFamily && (
             <div className="mt-4 p-4 bg-bondi-blue-50 rounded-lg text-center">
-              <p className="text-sm text-gray-700 mb-1">Precio por familia:</p>
+              <p className="text-sm text-muted-foreground mb-1">Precio por familia:</p>
               <p className="text-3xl font-bold text-bondi-blue-500">
                 {pricePerFamily}€
               </p>
-              <p className="text-xs text-gray-900 mt-1">
+              <p className="text-xs text-foreground mt-1">
                 ({participantCount} familias participantes)
               </p>
               <p className="text-xs text-tropical-teal-500 mt-2">
@@ -559,10 +559,10 @@ export default async function GiftPage({
           {/* Coordinator Comment */}
           {gift.coordinator_comment && (
             <div className="mt-4 p-4 bg-bondi-blue-50 rounded-lg border-l-4 border-bondi-blue-400">
-              <p className="text-sm font-medium text-gray-700 mb-1">
+              <p className="text-sm font-medium text-muted-foreground mb-1">
                 💬 Comentario del coordinador:
               </p>
-              <p className="text-gray-800 italic">
+              <p className="text-foreground italic">
                 &quot;{gift.coordinator_comment}&quot;
               </p>
             </div>
@@ -570,7 +570,7 @@ export default async function GiftPage({
 
           {/* Receipt Link */}
           {gift.receipt_image_url && (
-            <div className="mt-4 p-3 bg-gray-50 rounded-lg">
+            <div className="mt-4 p-3 bg-muted rounded-lg">
               <a
                 href={gift.receipt_image_url}
                 target="_blank"
@@ -586,7 +586,7 @@ export default async function GiftPage({
         {/* Participants Card */}
         <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold flex items-center gap-2 text-gray-900">
+            <h2 className="text-xl font-bold flex items-center gap-2 text-foreground">
               <Users size={24} />
               Familias Participantes
             </h2>
@@ -596,7 +596,7 @@ export default async function GiftPage({
           </div>
 
           {participantCount === 0 ? (
-            <p className="text-gray-700 text-center py-6">
+            <p className="text-muted-foreground text-center py-6">
               Sé la primera familia en apuntarte
             </p>
           ) : (
@@ -605,10 +605,10 @@ export default async function GiftPage({
                 (p: { id: string; family_name: string; joined_at: string }) => (
                   <li
                     key={p.id}
-                    className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                    className="flex items-center justify-between p-3 bg-muted rounded-lg"
                   >
                     <span className="font-medium">{p.family_name}</span>
-                    <span className="text-sm text-gray-700">
+                    <span className="text-sm text-muted-foreground">
                       {new Date(p.joined_at).toLocaleDateString("es-ES")}
                     </span>
                   </li>
@@ -618,15 +618,15 @@ export default async function GiftPage({
           )}
 
           {declinedGiftParticipants.length > 0 && (
-            <div className="mt-4 pt-4 border-t border-gray-100">
-              <p className="text-xs font-medium text-gray-500 mb-2">
+            <div className="mt-4 pt-4 border-t border-border">
+              <p className="text-xs font-medium text-muted-foreground mb-2">
                 No pueden participar
               </p>
               <ul className="space-y-1">
                 {declinedGiftParticipants.map(
                   (p: { id: string; family_name: string }) => (
                     <li key={p.id} className="flex items-center p-2 rounded-lg">
-                      <span className="text-sm text-gray-400 line-through">
+                      <span className="text-sm text-muted-foreground/60 line-through">
                         {p.family_name}
                       </span>
                     </li>

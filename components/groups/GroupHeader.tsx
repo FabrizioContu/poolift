@@ -50,11 +50,11 @@ export function GroupHeader({
   };
 
   return (
-    <div className="border-b border-gray-200 pb-6 mb-6 dark:border-bondi-blue-600">
+    <div className="border-b border-border pb-6 mb-6">
       {/* Back navigation */}
       <Link
         href="/groups"
-        className="inline-flex items-center gap-1 text-sm text-gray-700 hover:text-bondi-blue-500 mb-4 transition dark:text-bondi-blue-300 dark:hover:text-bondi-blue-100"
+        className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-bondi-blue-500 mb-4 transition"
       >
         <ArrowLeft size={16} />
         Volver a Grupos
@@ -66,15 +66,15 @@ export function GroupHeader({
             <Users className="w-6 h-6 text-bondi-blue-500 dark:text-bondi-blue-200" />
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-bondi-blue-50">{groupName}</h2>
+            <h2 className="text-2xl font-bold text-foreground">{groupName}</h2>
             <div className="flex items-center gap-2 mt-1">
-              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-gray-100 text-gray-700 dark:bg-bondi-blue-600 dark:text-bondi-blue-200">
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-sm font-medium bg-muted text-muted-foreground">
                 {familyCount} {familyCount === 1 ? "familia" : "familias"}
               </span>
-              <span className="text-gray-700 dark:text-bondi-blue-300">·</span>
+              <span className="text-muted-foreground">·</span>
               <button
                 onClick={handleCopyCode}
-                className="inline-flex items-center gap-1 text-sm text-gray-700 hover:text-bondi-blue-500 transition dark:text-bondi-blue-300 dark:hover:text-bondi-blue-100"
+                className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-bondi-blue-500 transition"
                 title="Copiar código"
               >
                 <span className="font-mono font-medium">{inviteCode}</span>

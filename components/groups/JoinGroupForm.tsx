@@ -87,14 +87,14 @@ export function JoinGroupForm({ groupId, groupName, inviteCode }: JoinGroupFormP
 
   if (success) {
     return (
-      <div className="bg-white rounded-lg border border-gray-200 p-8 text-center">
+      <div className="bg-background rounded-lg border border-border p-8 text-center">
         <div className="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
           <CheckCircle className="w-8 h-8 text-emerald-500" />
         </div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">
+        <h2 className="text-2xl font-bold text-foreground mb-2">
           ¡Te has unido al grupo!
         </h2>
-        <p className="text-gray-700">
+        <p className="text-muted-foreground">
           Redirigiendo al dashboard...
         </p>
       </div>
@@ -102,22 +102,22 @@ export function JoinGroupForm({ groupId, groupName, inviteCode }: JoinGroupFormP
   }
 
   return (
-    <div className="bg-white rounded-lg border border-gray-200 p-8">
+    <div className="bg-background rounded-lg border border-border p-8">
       <div className="text-center mb-6">
         <div className="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
           <Users className="w-8 h-8 text-purple-600" />
         </div>
-        <h1 className="text-2xl font-bold text-gray-900">
+        <h1 className="text-2xl font-bold text-foreground">
           Únete a {groupName}
         </h1>
-        <p className="text-gray-700 mt-2">
+        <p className="text-muted-foreground mt-2">
           Introduce el nombre de tu familia para unirte
         </p>
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-foreground mb-1">
             Nombre de tu familia <span className="text-red-500">*</span>
           </label>
           <input
@@ -125,7 +125,7 @@ export function JoinGroupForm({ groupId, groupName, inviteCode }: JoinGroupFormP
             {...register('familyName')}
             placeholder="ej: Familia García"
             maxLength={50}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent"
+            className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent"
             disabled={isSubmitting}
           />
           {errors.familyName && (

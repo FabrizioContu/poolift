@@ -118,7 +118,7 @@ export function AddProposalModal({
     <Modal isOpen={isOpen} onClose={onClose} title="Nueva Propuesta">
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-bondi-blue-200">
+          <label className="block text-sm font-medium text-foreground mb-1">
             Nombre de la propuesta
           </label>
           <input
@@ -126,19 +126,19 @@ export function AddProposalModal({
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Ej: Set de LEGO + Peluche"
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent dark:border-bondi-blue-600 dark:bg-bondi-blue-800"
+            className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent "
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2 dark:text-bondi-blue-200">
+          <label className="block text-sm font-medium text-foreground mb-2">
             Items
           </label>
           <div className="space-y-3">
             {items.map((item, index) => (
-              <div key={index} className="border border-gray-200 rounded-lg p-3 dark:border-bondi-blue-600">
+              <div key={index} className="border border-border rounded-lg p-3">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs text-gray-700 dark:text-bondi-blue-300">Item {index + 1}</span>
+                  <span className="text-xs text-muted-foreground">Item {index + 1}</span>
                   {items.length > 1 && (
                     <button
                       type="button"
@@ -157,7 +157,7 @@ export function AddProposalModal({
                       updateItem(index, "itemName", e.target.value)
                     }
                     placeholder="Nombre del producto"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent dark:border-bondi-blue-600 dark:bg-bondi-blue-800"
+                    className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent "
                   />
                   <div className="flex gap-2">
                     <input
@@ -168,7 +168,7 @@ export function AddProposalModal({
                         updateItem(index, "itemPrice", e.target.value)
                       }
                       placeholder="Precio"
-                      className="w-24 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent dark:border-bondi-blue-600 dark:bg-bondi-blue-800"
+                      className="w-24 px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent "
                     />
                     <input
                       type="url"
@@ -177,7 +177,7 @@ export function AddProposalModal({
                         updateItem(index, "productLink", e.target.value)
                       }
                       placeholder="Link (opcional)"
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent dark:border-bondi-blue-600 dark:bg-bondi-blue-800"
+                      className="flex-1 px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent "
                     />
                   </div>
                 </div>
@@ -195,9 +195,9 @@ export function AddProposalModal({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1 dark:text-bondi-blue-200">
+          <label className="block text-sm font-medium text-foreground mb-1">
             Fecha límite de votación
-            <span className="text-gray-700 font-normal dark:text-bondi-blue-300"> (opcional)</span>
+            <span className="text-muted-foreground font-normal"> (opcional)</span>
           </label>
           <DatePickerInput
             value={votingDeadline}
@@ -207,9 +207,9 @@ export function AddProposalModal({
           />
         </div>
 
-        <div className="bg-gray-50 p-3 rounded-lg dark:bg-bondi-blue-800">
+        <div className="bg-muted p-3 rounded-lg">
           <div className="flex justify-between items-center">
-            <span className="text-sm text-gray-700 dark:text-bondi-blue-200">Total:</span>
+            <span className="text-sm text-muted-foreground">Total:</span>
             <span className="text-lg font-bold text-bondi-blue-500">
               {calculateTotal().toFixed(2)}€
             </span>

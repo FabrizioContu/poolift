@@ -176,10 +176,10 @@ export default function DirectGiftPurchasePage({
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-muted/30 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-ocean-mist-400 mx-auto"></div>
-          <p className="text-gray-700 mt-4">Cargando...</p>
+          <p className="text-muted-foreground mt-4">Cargando...</p>
         </div>
       </div>
     );
@@ -187,10 +187,10 @@ export default function DirectGiftPurchasePage({
 
   if (error && !gift) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-muted/30 flex items-center justify-center">
         <div className="text-center px-4">
-          <ShoppingCart className="mx-auto text-gray-700 mb-4" size={64} />
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">{error}</h1>
+          <ShoppingCart className="mx-auto text-muted-foreground mb-4" size={64} />
+          <h1 className="text-2xl font-bold text-foreground mb-2">{error}</h1>
           <Link href="/groups">
             <Button variant="secondary" className="mt-4">
               <ArrowLeft size={18} className="mr-2" />
@@ -207,13 +207,13 @@ export default function DirectGiftPurchasePage({
   // Check if already purchased
   if (gift.status === "purchased") {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-muted/30 flex items-center justify-center">
         <div className="text-center px-4">
           <CheckCircle className="mx-auto text-emerald-500 mb-4" size={64} />
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">
+          <h1 className="text-2xl font-bold text-foreground mb-2">
             Regalo ya finalizado
           </h1>
-          <p className="text-gray-700 mb-4">Este regalo ya fue comprado.</p>
+          <p className="text-muted-foreground mb-4">Este regalo ya fue comprado.</p>
           <Link href={`/gifts/${shareCode}`}>
             <Button className="bg-ocean-mist-400 hover:bg-ocean-mist-500">
               Ver Regalo
@@ -227,16 +227,16 @@ export default function DirectGiftPurchasePage({
   // Check if participation is still open
   if (gift.status === "open") {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-muted/30 flex items-center justify-center">
         <div className="text-center px-4">
           <ShoppingCart
             className="mx-auto text-tropical-teal-400 mb-4"
             size={64}
           />
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">
+          <h1 className="text-2xl font-bold text-foreground mb-2">
             Participación aún abierta
           </h1>
-          <p className="text-gray-700 mb-4">
+          <p className="text-muted-foreground mb-4">
             Primero debes cerrar la participación antes de finalizar la compra.
           </p>
           <Link href={`/gifts/${shareCode}`}>
@@ -260,13 +260,13 @@ export default function DirectGiftPurchasePage({
   if (success) {
     return (
       <>
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="min-h-screen bg-muted/30 flex items-center justify-center">
           <div className="text-center px-4">
             <CheckCircle className="mx-auto text-emerald-500 mb-4" size={64} />
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">
+            <h1 className="text-2xl font-bold text-foreground mb-2">
               ¡Regalo Finalizado!
             </h1>
-            <p className="text-gray-700 mb-4">
+            <p className="text-muted-foreground mb-4">
               Los participantes podrán ver el precio final.
             </p>
             <p className="text-lg font-semibold text-ocean-mist-400">
@@ -286,25 +286,25 @@ export default function DirectGiftPurchasePage({
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
+    <div className="min-h-screen bg-muted/30 py-8 px-4">
       <div className="container mx-auto max-w-2xl">
         {/* Back link */}
         <Link
           href={`/gifts/${shareCode}`}
-          className="inline-flex items-center text-gray-700 hover:text-gray-900 mb-6"
+          className="inline-flex items-center text-muted-foreground hover:text-foreground mb-6"
         >
           <ArrowLeft size={18} className="mr-2" />
           Volver al regalo
         </Link>
 
-        <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
+        <div className="bg-background rounded-2xl shadow-xl p-6 md:p-8">
           <div className="flex items-center gap-3 mb-6">
             <ShoppingCart className="text-emerald-500" size={32} />
             <div>
               <h1 className="text-2xl font-bold text-bondi-blue-500">
                 Finalizar Compra
               </h1>
-              <p className="text-gray-700">Regalo para {gift.recipient_name}</p>
+              <p className="text-muted-foreground">Regalo para {gift.recipient_name}</p>
             </div>
           </div>
 
@@ -316,7 +316,7 @@ export default function DirectGiftPurchasePage({
               </p>
             )}
             {gift.estimated_price && (
-              <div className="flex justify-between  text-sm text-gray-700">
+              <div className="flex justify-between  text-sm text-muted-foreground">
                 <span>Precio estimado:</span>
                 <span className="font-medium text-bondi-blue-600">
                   {formatPrice(gift.estimated_price)}
@@ -328,7 +328,7 @@ export default function DirectGiftPurchasePage({
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Final Price */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-muted-foreground mb-2">
                 Precio Final Pagado <span className="text-red-500">*</span>
               </label>
               <div className="relative">
@@ -339,10 +339,10 @@ export default function DirectGiftPurchasePage({
                   value={finalPrice}
                   onChange={(e) => setFinalPrice(e.target.value)}
                   placeholder="ej: 75.98"
-                  className="w-full text-gray-700 dark:text-gray-900 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-mist-400 focus:border-transparent pr-12"
+                  className="w-full text-muted-foreground dark:text-foreground px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-ocean-mist-400 focus:border-transparent pr-12"
                   required
                 />
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-700">
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground">
                   €
                 </span>
               </div>
@@ -358,7 +358,7 @@ export default function DirectGiftPurchasePage({
 
             {/* Receipt Upload */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-muted-foreground mb-2">
                 <Upload size={18} className="inline mr-1" />
                 Subir Recibo (opcional)
               </label>
@@ -366,7 +366,7 @@ export default function DirectGiftPurchasePage({
                 type="file"
                 accept="image/*,application/pdf"
                 onChange={handleFileChange}
-                className="w-full text-sm text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-ocean-mist-50 file:text-ocean-mist-600 hover:file:bg-ocean-mist-100"
+                className="w-full text-sm text-muted-foreground file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-ocean-mist-50 file:text-ocean-mist-600 hover:file:bg-ocean-mist-100"
               />
 
               {preview && (
@@ -380,7 +380,7 @@ export default function DirectGiftPurchasePage({
               )}
 
               {receipt && !preview && (
-                <p className="mt-2 text-sm text-gray-700 flex items-center gap-2">
+                <p className="mt-2 text-sm text-muted-foreground flex items-center gap-2">
                   <FileText size={16} />
                   Archivo: {receipt.name}
                 </p>
@@ -389,7 +389,7 @@ export default function DirectGiftPurchasePage({
 
             {/* Comment */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-muted-foreground mb-2">
                 <FileText size={18} className="inline mr-1" />
                 Comentario (opcional)
               </label>
@@ -398,7 +398,7 @@ export default function DirectGiftPurchasePage({
                 onChange={(e) => setComment(e.target.value)}
                 placeholder="ej: Comprado en Amazon con descuento del 20%"
                 rows={3}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-ocean-mist-400 focus:border-transparent resize-none"
+                className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-ocean-mist-400 focus:border-transparent resize-none"
               />
             </div>
 
