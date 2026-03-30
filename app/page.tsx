@@ -17,7 +17,7 @@ const UserMenu = dynamic(() =>
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-linear-to-b from-bondi-blue-50 to-background dark:from-bondi-blue-900/20 dark:to-background">
+    <div className="force-light min-h-screen bg-linear-to-b from-bondi-blue-50 to-slate-50">
       {/* Header */}
       <header className="container mx-auto px-4 py-6 ">
         <nav className="flex items-center justify-between">
@@ -90,8 +90,8 @@ export default function LandingPage() {
           <div className="grid md:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto">
             {/* Rapidez */}
             <div className="bg-card p-6 md:p-8 rounded-xl shadow-sm border border-border hover:shadow-md transition">
-              <div className="w-14 h-14 md:w-16 md:h-16 bg-yellow-100 dark:bg-yellow-900/30 rounded-full flex items-center justify-center mb-4">
-                <Zap className="text-yellow-600 dark:text-yellow-400" size={28} />
+              <div className="w-14 h-14 md:w-16 md:h-16 bg-yellow-100 rounded-full flex items-center justify-center mb-4">
+                <Zap className="text-yellow-600" size={28} />
               </div>
               <h3 className="text-lg md:text-xl font-semibold mb-2 text-foreground">
                 Rapido
@@ -104,8 +104,8 @@ export default function LandingPage() {
 
             {/* Coordinacion */}
             <div className="bg-card p-6 md:p-8 rounded-xl shadow-sm border border-border hover:shadow-md transition">
-              <div className="w-14 h-14 md:w-16 md:h-16 bg-bondi-blue-100 dark:bg-bondi-blue-900/30 rounded-full flex items-center justify-center mb-4">
-                <Users className="text-bondi-blue-500 dark:text-bondi-blue-300" size={28} />
+              <div className="w-14 h-14 md:w-16 md:h-16 bg-bondi-blue-100 rounded-full flex items-center justify-center mb-4">
+                <Users className="text-bondi-blue-500" size={28} />
               </div>
               <h3 className="text-lg md:text-xl font-semibold mb-2 text-foreground">
                 Coordinado
@@ -118,8 +118,8 @@ export default function LandingPage() {
 
             {/* Compartir */}
             <div className="bg-card p-6 md:p-8 rounded-xl shadow-sm border border-border hover:shadow-md transition">
-              <div className="w-14 h-14 md:w-16 md:h-16 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mb-4">
-                <Share2 className="text-emerald-500 dark:text-emerald-400" size={28} />
+              <div className="w-14 h-14 md:w-16 md:h-16 bg-emerald-100 rounded-full flex items-center justify-center mb-4">
+                <Share2 className="text-emerald-500" size={28} />
               </div>
               <h3 className="text-lg md:text-xl font-semibold mb-2 text-foreground">
                 Facil de compartir
@@ -192,7 +192,7 @@ export default function LandingPage() {
               </div>
 
               {/* Fork: two options */}
-              <div className="mt-12 p-6 bg-card rounded-xl border-2 border-bondi-blue-100 dark:border-bondi-blue-800">
+              <div className="mt-12 p-6 bg-card rounded-xl border-2 border-bondi-blue-100">
                 <div className="flex items-center gap-2 mb-4">
                   <Sparkles className="text-bondi-blue-500" size={24} />
                   <h3 className="text-lg font-semibold text-foreground">
@@ -202,7 +202,7 @@ export default function LandingPage() {
 
                 <div className="grid sm:grid-cols-2 gap-4">
                   <Link href="/create-direct-gift" className="block">
-                    <div className="p-4 border border-border rounded-lg hover:border-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 transition group">
+                    <div className="p-4 border border-border rounded-lg hover:border-emerald-400 hover:bg-emerald-50 transition group">
                       <div className="flex items-center gap-2 mb-2">
                         <Gift className="text-emerald-500" size={20} />
                         <span className="font-medium text-foreground">
@@ -216,7 +216,7 @@ export default function LandingPage() {
                   </Link>
 
                   <Link href="/create-group" className="block">
-                    <div className="p-4 border border-border rounded-lg hover:border-bondi-blue-300 hover:bg-bondi-blue-50 dark:hover:bg-bondi-blue-900/20 transition group">
+                    <div className="p-4 border border-border rounded-lg hover:border-bondi-blue-300 hover:bg-bondi-blue-50 transition group">
                       <div className="flex items-center gap-2 mb-2">
                         <Users className="text-bondi-blue-500" size={20} />
                         <span className="font-medium text-foreground">
@@ -274,13 +274,13 @@ export default function LandingPage() {
           </div>
           <p className="text-muted-foreground">Organiza regalos en grupo</p>
           <div className="mx-auto pt-1">
-            <p className="text-sm text-white/80 text-center">
+            <p className="text-sm text-muted-foreground text-center">
               Desarrollado por{" "}
               <a
                 href="https://fabriziocontu.dev"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline hover:text-white transition"
+                className="underline hover:text-foreground transition"
                 aria-label="Web desarrollada por FabriDev"
               >
                 FabriDev
