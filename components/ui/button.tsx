@@ -10,7 +10,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground [a]:hover:bg-primary/80",
+        default: "bg-primary text-primary-foreground hover:bg-primary/80",
         outline:
           "border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50",
         secondary:
@@ -42,7 +42,8 @@ const buttonVariants = cva(
   }
 )
 
-function Button({
+/** Shadcn base Button with full variant/size API */
+function ButtonBase({
   className,
   variant = "default",
   size = "default",
@@ -57,4 +58,29 @@ function Button({
   )
 }
 
-export { Button, buttonVariants }
+/** App-level Button — primary/secondary/danger API mapping to shadcn variants */
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: "primary" | "secondary" | "danger"
+  children: React.ReactNode
+}
+
+function Button({ variant = "primary", className, children, ...props }: ButtonProps) {
+  const variantMap = {
+    primary: "default",
+    secondary: "secondary",
+    danger: "destructive",
+  } as const
+
+  return (
+    <ButtonBase
+      variant={variantMap[variant]}
+      size="lg"
+      className={cn("font-bold px-4 py-2", className)}
+      {...props}
+    >
+      {children}
+    </ButtonBase>
+  )
+}
+
+export { Button, ButtonBase, buttonVariants }

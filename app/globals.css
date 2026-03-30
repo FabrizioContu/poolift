@@ -202,25 +202,6 @@
   }
 }
 
-/* ─── Input text & placeholder (eliminado después de migrar Input) ─────────  */
-::placeholder {
-  color: #111827;
-  opacity: 1;
-}
-
-.dark ::placeholder {
-  color: #57c7e9;
-  opacity: 1;
-}
-
-input, textarea, select {
-  color: #111827;
-}
-
-.dark input, .dark textarea, .dark select {
-  color: #c7ecf8;
-}
-
 /* ─── Accessibility ───────────────────────────────────────────────────────── */
 :focus-visible {
   outline: 3px solid var(--ring);
