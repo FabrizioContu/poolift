@@ -13,7 +13,7 @@ export const metadata: Metadata = { title: "Empezar | Poolift" };
 
 export default function StartPage() {
   return (
-    <div className="min-h-screen bg-linear-to-b from-bondi-blue-50 to-background">
+    <div className="force-light min-h-screen bg-linear-to-b from-bondi-blue-50 to-slate-50">
       {/* Header */}
       <header className="container mx-auto px-4 py-6">
         <nav className="flex items-center justify-between">
@@ -23,7 +23,7 @@ export default function StartPage() {
           </Link>
           <Link
             href="/"
-            className="text-muted-foreground hover:text-foreground flex items-center gap-1"
+            className="text-foreground/70 hover:text-foreground flex items-center gap-1"
           >
             <ArrowLeft size={18} />
             Volver
@@ -40,7 +40,7 @@ export default function StartPage() {
           <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             Desde donde quieres empezar?
           </h1>
-          <p className="text-muted-foreground text-lg">
+          <p className="text-foreground/60 text-lg">
             Elige la opcion que mejor se adapte a tu situacion.
           </p>
         </div>
