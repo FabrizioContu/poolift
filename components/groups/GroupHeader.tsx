@@ -4,7 +4,7 @@ import { useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { Users, Copy, Check, UserPlus, ArrowLeft } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui-custom/Button";
 
 const UserMenu = dynamic(() =>
   import("@/components/auth/UserMenu").then((m) => ({ default: m.UserMenu }))

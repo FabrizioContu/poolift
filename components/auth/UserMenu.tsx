@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { LogIn, LogOut, ChevronDown, User } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui-custom/Button";
 import { useAuth } from "@/lib/auth";
 
 const AuthModal = dynamic(() =>

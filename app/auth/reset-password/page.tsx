@@ -6,9 +6,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
-import { Input } from '@/components/ui/Input'
-import { Button } from '@/components/ui/Button'
-import { Alert } from '@/components/ui/Alert'
+import { Input } from '@/components/ui-custom/Input'
+import { Button } from '@/components/ui-custom/Button'
+import { Alert } from '@/components/ui-custom/Alert'
 import { Mail } from 'lucide-react'
 
 const schema = z.object({

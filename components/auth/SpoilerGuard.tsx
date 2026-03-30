@@ -4,7 +4,7 @@
 import { useEffect, useRef, useCallback, useSyncExternalStore } from "react";
 import { useRouter } from "next/navigation";
 import { Gift } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui-custom/Button";
 import { useAuth } from "@/lib/auth";
 import { anonymousStorage } from "@/lib/storage";
 

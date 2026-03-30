@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { Gift, Users, Lock, CheckCircle, ExternalLink, Copy } from 'lucide-react'
-import { Button } from '@/components/ui/Button'
+import { Button } from '@/components/ui-custom/Button'
 import { formatPrice } from '@/lib/utils'
 import Link from 'next/link'
 

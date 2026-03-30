@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { BirthdayCard } from './BirthdayCard'
-import { Button } from '@/components/ui/Button'
+import { Button } from '@/components/ui-custom/Button'
 import { Plus, Cake } from 'lucide-react'
 import dynamic from 'next/dynamic'
 

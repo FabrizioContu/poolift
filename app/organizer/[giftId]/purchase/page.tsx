@@ -3,7 +3,7 @@
 import { useState, useEffect, use } from "react";
 import { uploadReceipt } from "@/lib/uploadReceipt";
 import dynamic from "next/dynamic";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui-custom/Button";
 import {
   ShoppingCart,
   Upload,

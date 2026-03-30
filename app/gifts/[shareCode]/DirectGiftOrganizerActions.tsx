@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/Button";
-import { Modal } from "@/components/ui/Modal";
-import { Alert } from "@/components/ui/Alert";
+import { Button } from "@/components/ui-custom/Button";
+import { Modal } from "@/components/ui-custom/Modal";
+import { Alert } from "@/components/ui-custom/Alert";
 import {
   Settings,
   Lock,

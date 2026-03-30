@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import dynamic from "next/dynamic";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui-custom/Button";
 
 const CreatePartyModal = dynamic(
   () => import("@/components/modals/CreatePartyModal"),

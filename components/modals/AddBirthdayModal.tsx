@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Modal, Button, Alert, DatePickerInput } from "@/components/ui";
+import { Modal, Button, Alert, DatePickerInput } from "@/components/ui-custom";
 import { Cake } from "lucide-react";
 
 interface AddBirthdayModalProps {

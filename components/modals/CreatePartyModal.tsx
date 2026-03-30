@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Modal } from "@/components/ui/Modal";
-import { Button } from "@/components/ui/Button";
-import { Alert } from "@/components/ui/Alert";
-import { DatePickerInput } from "@/components/ui/DatePickerInput";
+import { Modal } from "@/components/ui-custom/Modal";
+import { Button } from "@/components/ui-custom/Button";
+import { Alert } from "@/components/ui-custom/Alert";
+import { DatePickerInput } from "@/components/ui-custom/DatePickerInput";
 import { Users, PartyPopper } from "lucide-react";
 
 interface BirthdayOption {

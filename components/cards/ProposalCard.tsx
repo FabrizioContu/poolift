@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ThumbsUp, ExternalLink, Check, Trash2 } from "lucide-react";
-import { Button, Badge, IconButton } from "@/components/ui";
+import { Button, Badge, IconButton } from "@/components/ui-custom";
 import { formatPrice } from "@/lib/utils";
 import dynamic from "next/dynamic";
 import { SelectProposalButton } from "@/components/proposals/SelectProposalButton";

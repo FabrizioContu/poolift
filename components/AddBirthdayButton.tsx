@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui-custom/Button";
 
 const AddBirthdayModal = dynamic(
   () => import("@/components/modals/AddBirthdayModal"),

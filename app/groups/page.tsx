@@ -14,7 +14,7 @@ import {
 } from "@/lib/auth";
 import { migrateAnonData } from "@/lib/migrate";
 import { GroupCard } from "@/components/groups/GroupCard";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui-custom/Button";
 import { OCCASION_LABELS, type OccasionType } from "@/lib/types";
 
 const AuthModal = dynamic(() =>

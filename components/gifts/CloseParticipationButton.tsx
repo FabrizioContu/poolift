@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import dynamic from "next/dynamic";
-import { Button } from "@/components/ui/Button";
-import { Modal } from "@/components/ui/Modal";
+import { Button } from "@/components/ui-custom/Button";
+import { Modal } from "@/components/ui-custom/Modal";
 import { Lock, AlertTriangle, Users, Check, Copy, Share2 } from "lucide-react";
 import { formatPrice, calculatePricePerFamily } from "@/lib/utils";
 import { generateParticipationClosedMessage } from "@/lib/messages";

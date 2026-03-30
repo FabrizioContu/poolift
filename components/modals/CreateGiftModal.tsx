@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { Modal } from "@/components/ui/Modal";
-import { Button } from "@/components/ui/Button";
+import { Modal } from "@/components/ui-custom/Modal";
+import { Button } from "@/components/ui-custom/Button";
 import { Gift, CheckCircle, Copy, MessageCircle } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
 

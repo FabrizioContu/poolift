@@ -1,10 +1,10 @@
 'use client'
 
 import { Calendar, Cake, PartyPopper } from 'lucide-react'
-import { Tabs } from '@/components/ui/Tabs'
+import { Tabs } from '@/components/ui-custom/Tabs'
 import { PartyCard } from '@/components/cards/PartyCard'
 import { BirthdayList } from '@/components/birthdays/BirthdayList'
-import { EmptyState } from '@/components/ui/EmptyState'
+import { EmptyState } from '@/components/ui-custom/EmptyState'
 
 interface Party {
   id: string

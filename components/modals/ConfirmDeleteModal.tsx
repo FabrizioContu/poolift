@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Modal } from "@/components/ui/Modal";
-import { Button } from "@/components/ui/Button";
-import { Alert } from "@/components/ui/Alert";
+import { Modal } from "@/components/ui-custom/Modal";
+import { Button } from "@/components/ui-custom/Button";
+import { Alert } from "@/components/ui-custom/Alert";
 import { AlertTriangle } from "lucide-react";
 
 interface ConfirmDeleteModalProps {

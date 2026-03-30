@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { X, Gift, Copy, MessageCircle, CheckCircle } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui-custom/Button";
 import type { OccasionType } from "@/lib/types";
 import { OCCASION_LABELS } from "@/lib/types";
 import { addDirectGiftSession } from "@/lib/auth";

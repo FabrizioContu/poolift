@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui-custom/Button";
 import { UserPlus, UserMinus, CheckCircle, Users, XCircle } from "lucide-react";
 
 interface GiftParticipant {

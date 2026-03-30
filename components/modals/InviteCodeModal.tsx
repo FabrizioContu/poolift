@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Modal } from "@/components/ui/Modal";
-import { Button } from "@/components/ui/Button";
+import { Modal } from "@/components/ui-custom/Modal";
+import { Button } from "@/components/ui-custom/Button";
 import { Check, Copy, Link as LinkIcon, MessageCircle, PartyPopper } from "lucide-react";
 
 interface InviteCodeModalProps {

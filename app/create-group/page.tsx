@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Users, ArrowLeft } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui-custom/Button";
 import { addGroupToSession } from "@/lib/auth";
 import { anonymousStorage } from "@/lib/storage";
 import dynamic from "next/dynamic";

@@ -4,7 +4,7 @@ import { useState } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { Users, Copy, Check, MessageCircle, Trash2, CheckCircle } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui-custom/Button";
 import { removeGroupSession } from "@/lib/auth";
 
 const ConfirmDeleteModal = dynamic(
