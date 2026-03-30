@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { X, Gift, Copy, MessageCircle, CheckCircle } from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui-custom/Button";
 import type { OccasionType } from "@/lib/types";
 import { OCCASION_LABELS } from "@/lib/types";
 import { addDirectGiftSession } from "@/lib/auth";
@@ -166,22 +166,22 @@ Apuntate aqui: ${getGiftLink()}`;
         aria-labelledby="gift-created-title"
         className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
       >
-        <div className="bg-white rounded-xl max-w-md w-full p-5 max-h-[85vh] overflow-y-auto dark:bg-bondi-blue-700">
+        <div className="bg-background rounded-xl max-w-md w-full p-5 max-h-[85vh] overflow-y-auto">
           <div className="text-center">
             <CheckCircle className="mx-auto text-emerald-400 mb-3" size={40} />
             <h2
               id="gift-created-title"
-              className="text-xl font-bold mb-1 text-gray-900 dark:text-bondi-blue-50"
+              className="text-xl font-bold mb-1 text-foreground"
             >
               Regalo Creado!
             </h2>
-            <p className="text-gray-900 text-sm mb-4 dark:text-bondi-blue-200">
+            <p className="text-muted-foreground text-sm mb-4">
               Comparte el enlace para que otros participen
             </p>
 
             {/* Link to copy */}
-            <div className="p-3 bg-gray-50 rounded-lg mb-4 dark:bg-bondi-blue-800">
-              <code className="text-sm text-gray-700 break-all dark:text-bondi-blue-200">
+            <div className="p-3 bg-muted rounded-lg mb-4">
+              <code className="text-sm text-muted-foreground break-all">
                 {getGiftLink()}
               </code>
             </div>
@@ -216,7 +216,7 @@ Apuntate aqui: ${getGiftLink()}`;
 
               <button
                 onClick={handleViewGift}
-                className="text-sm border-2 py-2 w-48 mx-auto rounded-md text-gray-700 hover:text-gray-900 mt-3 dark:text-bondi-blue-300 dark:hover:text-bondi-blue-50"
+                className="text-sm border-2 py-2 w-48 mx-auto rounded-md text-muted-foreground hover:text-foreground mt-3"
               >
                 Cerrar
               </button>
@@ -236,7 +236,7 @@ Apuntate aqui: ${getGiftLink()}`;
       aria-labelledby="direct-gift-title"
       className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
     >
-      <div className="bg-white rounded-xl max-w-md w-full p-6 max-h-[90vh] overflow-y-auto dark:bg-bondi-blue-700">
+      <div className="bg-background rounded-xl max-w-md w-full p-6 max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-3">
@@ -245,7 +245,7 @@ Apuntate aqui: ${getGiftLink()}`;
             </div>
             <h2
               id="direct-gift-title"
-              className="text-xl font-bold text-gray-900 dark:text-bondi-blue-50"
+              className="text-xl font-bold text-foreground"
             >
               Regalo Directo
             </h2>
@@ -253,13 +253,13 @@ Apuntate aqui: ${getGiftLink()}`;
           <button
             onClick={onClose}
             aria-label="Cerrar"
-            className="text-gray-700 hover:text-gray-900 dark:text-bondi-blue-300 dark:hover:text-bondi-blue-50"
+            className="text-muted-foreground hover:text-foreground"
           >
             <X size={24} />
           </button>
         </div>
 
-        <p className="text-gray-700 mb-6 dark:text-bondi-blue-200">
+        <p className="text-muted-foreground mb-6">
           Organiza un regalo puntual sin necesidad de crear un grupo
         </p>
 
@@ -268,7 +268,7 @@ Apuntate aqui: ${getGiftLink()}`;
           <div>
             <label
               htmlFor="recipient-name"
-              className="block text-sm font-medium text-gray-700 mb-2 dark:text-bondi-blue-200"
+              className="block text-sm font-medium text-foreground mb-2"
             >
               Para quien es el regalo? *
             </label>
@@ -279,7 +279,7 @@ Apuntate aqui: ${getGiftLink()}`;
               value={recipientName}
               onChange={(e) => setRecipientName(e.target.value)}
               placeholder="ej: Laura (despedida) / Ana y Pedro (boda)"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent dark:border-bondi-blue-600 dark:bg-bondi-blue-800"
+              className="w-full px-4 py-2 border border-border rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent "
             />
           </div>
 
@@ -287,7 +287,7 @@ Apuntate aqui: ${getGiftLink()}`;
           <div>
             <label
               htmlFor="occasion-type"
-              className="block text-sm font-medium text-gray-700 mb-2 dark:text-bondi-blue-200"
+              className="block text-sm font-medium text-foreground mb-2"
             >
               Tipo de ocasion *
             </label>
@@ -296,7 +296,7 @@ Apuntate aqui: ${getGiftLink()}`;
               required
               value={occasion}
               onChange={(e) => setOccasion(e.target.value as OccasionType)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent dark:border-bondi-blue-600 dark:bg-bondi-blue-800"
+              className="w-full px-4 py-2 border border-border rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent "
             >
               {(Object.keys(OCCASION_LABELS) as OccasionType[]).map((type) => (
                 <option key={type} value={type}>
@@ -310,7 +310,7 @@ Apuntate aqui: ${getGiftLink()}`;
           <div>
             <label
               htmlFor="gift-idea"
-              className="block text-sm font-medium text-gray-700 mb-2 dark:text-bondi-blue-200"
+              className="block text-sm font-medium text-foreground mb-2"
             >
               Que regalo propones? (opcional)
             </label>
@@ -320,7 +320,7 @@ Apuntate aqui: ${getGiftLink()}`;
               value={giftIdea}
               onChange={(e) => setGiftIdea(e.target.value)}
               placeholder="ej: Experiencia spa, vale Amazon..."
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent dark:border-bondi-blue-600 dark:bg-bondi-blue-800"
+              className="w-full px-4 py-2 border border-border rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent "
             />
           </div>
 
@@ -328,12 +328,12 @@ Apuntate aqui: ${getGiftLink()}`;
           <div>
             <label
               htmlFor="estimated-price"
-              className="block text-sm font-medium text-gray-700 mb-2 dark:text-bondi-blue-200"
+              className="block text-sm font-medium text-foreground mb-2"
             >
               Precio estimado (opcional)
             </label>
             <div className="relative">
-              <span className="absolute left-3 top-2.5 text-gray-700 dark:text-bondi-blue-300">
+              <span className="absolute left-3 top-2.5 text-muted-foreground">
                 €
               </span>
               <input
@@ -344,7 +344,7 @@ Apuntate aqui: ${getGiftLink()}`;
                 value={estimatedPrice}
                 onChange={(e) => setEstimatedPrice(e.target.value)}
                 placeholder="50"
-                className="w-full px-4 py-2 pl-8 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent dark:border-bondi-blue-600 dark:bg-bondi-blue-800"
+                className="w-full px-4 py-2 pl-8 border border-border rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent "
               />
             </div>
           </div>
@@ -353,7 +353,7 @@ Apuntate aqui: ${getGiftLink()}`;
           <div>
             <label
               htmlFor="organizer-name"
-              className="block text-sm font-medium text-gray-700 mb-2 dark:text-bondi-blue-200"
+              className="block text-sm font-medium text-foreground mb-2"
             >
               Tu nombre *
             </label>
@@ -364,9 +364,9 @@ Apuntate aqui: ${getGiftLink()}`;
               value={organizerName}
               onChange={(e) => setOrganizerName(e.target.value)}
               placeholder="ej: Maria"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent dark:border-bondi-blue-600 dark:bg-bondi-blue-800"
+              className="w-full px-4 py-2 border border-border rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent "
             />
-            <p className="text-xs text-gray-700 mt-1 dark:text-bondi-blue-300">
+            <p className="text-xs text-muted-foreground mt-1">
               Para que te identifiquen como organizador
             </p>
           </div>
@@ -375,7 +375,7 @@ Apuntate aqui: ${getGiftLink()}`;
           <div>
             <label
               htmlFor="organizer-email"
-              className="block text-sm font-medium text-gray-700 mb-2 dark:text-bondi-blue-200"
+              className="block text-sm font-medium text-foreground mb-2"
             >
               Tu email (opcional)
             </label>
@@ -385,9 +385,9 @@ Apuntate aqui: ${getGiftLink()}`;
               value={organizerEmail}
               onChange={(e) => setOrganizerEmail(e.target.value)}
               placeholder="ej: maria@email.com"
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent dark:border-bondi-blue-600 dark:bg-bondi-blue-800"
+              className="w-full px-4 py-2 border border-border rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent "
             />
-            <p className="text-xs text-gray-700 mt-1 dark:text-bondi-blue-300">
+            <p className="text-xs text-muted-foreground mt-1">
               Te avisamos cuando alguien se apunte o decline
             </p>
           </div>

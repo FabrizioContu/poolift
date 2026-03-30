@@ -23,16 +23,16 @@ export function BirthdayCard({ birthday }: BirthdayCardProps) {
   const daysUntil = Math.ceil((thisYearBirthday.getTime() - today.getTime()) / (1000 * 60 * 60 * 24))
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-4 hover:shadow-md transition">
+    <div className="bg-background border border-border rounded-lg p-4 hover:shadow-md transition">
       <div className="flex items-start justify-between">
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-2">
             <Cake className="text-pink-500" size={24} />
-            <h3 className="text-lg font-bold text-gray-900">{birthday.child_name}</h3>
-            <span className="text-sm text-gray-700">({age} anos)</span>
+            <h3 className="text-lg font-bold text-foreground">{birthday.child_name}</h3>
+            <span className="text-sm text-muted-foreground">({age} anos)</span>
           </div>
 
-          <div className="flex items-center gap-4 text-sm text-gray-700 mb-3">
+          <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
             <div className="flex items-center gap-1">
               <Calendar size={16} />
               {formatDate(birthday.birth_date)}
@@ -48,7 +48,7 @@ export function BirthdayCard({ birthday }: BirthdayCardProps) {
               Proxima fiesta: {formatDate(birthday.nextPartyDate)}
             </p>
           ) : (
-            <p className="text-sm text-gray-700">
+            <p className="text-sm text-muted-foreground">
               Sin fiesta programada
             </p>
           )}

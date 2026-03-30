@@ -4,7 +4,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { CreatePartyModal } from "@/components/modals/CreatePartyModal";
 
-vi.mock("@/components/ui/DatePickerInput", () => ({
+vi.mock("@/components/ui-custom/DatePickerInput", () => ({
   DatePickerInput: ({ value, onChange, max, min, placeholder, disabled }: {
     value: string
     onChange: (v: string) => void

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui-custom/Button";
 import { UserPlus, UserMinus, CheckCircle, Users, XCircle } from "lucide-react";
 
 interface GiftParticipant {
@@ -290,18 +290,18 @@ export function GiftParticipation({
   if (!participationOpen || isPurchased) {
     if (participantStatus === "joined") {
       return (
-        <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
+        <div className="bg-background rounded-2xl shadow-xl p-6 md:p-8">
           <div className="text-center">
             <div className="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
               <CheckCircle className="text-emerald-500" size={32} />
             </div>
-            <h3 className="text-xl font-bold mb-2 text-gray-900">
+            <h3 className="text-xl font-bold mb-2 text-foreground">
               ¡Estás participando!
             </h3>
-            <p className="text-gray-700">
+            <p className="text-muted-foreground">
               Familia: <strong>{familyName}</strong>
             </p>
-            <p className="text-sm text-gray-700 mt-4">
+            <p className="text-sm text-muted-foreground mt-4">
               La participación está cerrada
             </p>
           </div>
@@ -310,8 +310,8 @@ export function GiftParticipation({
     }
 
     return (
-      <div className="bg-gray-100 rounded-2xl p-6 text-center">
-        <p className="text-gray-700">La participación está cerrada</p>
+      <div className="bg-muted rounded-2xl p-6 text-center">
+        <p className="text-muted-foreground">La participación está cerrada</p>
       </div>
     );
   }
@@ -319,15 +319,15 @@ export function GiftParticipation({
   // Joined state
   if (participantStatus === "joined") {
     return (
-      <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
+      <div className="bg-background rounded-2xl shadow-xl p-6 md:p-8">
         <div className="text-center">
           <div className="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
             <CheckCircle className="text-emerald-500" size={32} />
           </div>
-          <h3 className="text-xl font-bold mb-2 text-gray-900">
+          <h3 className="text-xl font-bold mb-2 text-foreground">
             {isCoordinator ? "Eres el coordinador" : "¡Estás apuntado!"}
           </h3>
-          <p className="text-gray-700 mb-6">
+          <p className="text-muted-foreground mb-6">
             Familia: <strong>{familyName}</strong>
           </p>
 
@@ -348,7 +348,7 @@ export function GiftParticipation({
                 onClick={handleSwitchToDeclined}
                 disabled={loading}
                 variant="secondary"
-                className="text-gray-500 hover:bg-gray-50 text-sm"
+                className="text-muted-foreground hover:bg-gray-50 text-sm"
               >
                 <XCircle size={16} className="mr-2" />
                 {loading ? "..." : "Ya no puedo participar"}
@@ -363,15 +363,15 @@ export function GiftParticipation({
   // Declined state
   if (participantStatus === "declined") {
     return (
-      <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
+      <div className="bg-background rounded-2xl shadow-xl p-6 md:p-8">
         <div className="text-center">
-          <div className="bg-gray-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-            <XCircle className="text-gray-400" size={32} />
+          <div className="bg-muted w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <XCircle className="text-muted-foreground/60" size={32} />
           </div>
-          <h3 className="text-xl font-bold mb-2 text-gray-900">
+          <h3 className="text-xl font-bold mb-2 text-foreground">
             No vas a participar
           </h3>
-          <p className="text-gray-700 mb-6">
+          <p className="text-muted-foreground mb-6">
             Familia: <strong>{familyName}</strong>
           </p>
 
@@ -390,7 +390,7 @@ export function GiftParticipation({
               onClick={handleRemoveResponse}
               disabled={loading}
               variant="secondary"
-              className="text-gray-500 hover:bg-gray-50 text-sm"
+              className="text-muted-foreground hover:bg-gray-50 text-sm"
             >
               {loading ? "..." : "Quitar mi respuesta"}
             </Button>
@@ -403,18 +403,18 @@ export function GiftParticipation({
   // Already represented state
   if (representedBy) {
     return (
-      <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
+      <div className="bg-background rounded-2xl shadow-xl p-6 md:p-8">
         <div className="text-center">
           <div className="bg-bondi-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
             <Users className="text-bondi-blue-500" size={32} />
           </div>
-          <h3 className="text-xl font-bold mb-2 text-gray-900">
+          <h3 className="text-xl font-bold mb-2 text-foreground">
             Tu familia ya está representada
           </h3>
-          <p className="text-gray-700">
+          <p className="text-muted-foreground">
             Representado por: <strong>{representedBy}</strong>
           </p>
-          <p className="text-sm text-gray-500 mt-2">
+          <p className="text-sm text-muted-foreground mt-2">
             No necesitas apuntarte de nuevo
           </p>
         </div>
@@ -426,14 +426,14 @@ export function GiftParticipation({
   const joinedParticipants = participants.filter((p) => p.status === "joined");
 
   return (
-    <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8">
-      <h3 className="text-xl font-bold mb-4 text-center text-gray-900">
+    <div className="bg-background rounded-2xl shadow-xl p-6 md:p-8">
+      <h3 className="text-xl font-bold mb-4 text-center text-foreground">
         Apúntate al Regalo
       </h3>
 
       {joinedParticipants.length > 0 && (
-        <div className="mb-4 p-3 bg-gray-50 rounded-lg">
-          <p className="text-xs text-gray-500 mb-2">
+        <div className="mb-4 p-3 bg-muted rounded-lg">
+          <p className="text-xs text-muted-foreground mb-2">
             ¿Tu familia ya está apuntada?
           </p>
           <div className="flex flex-wrap gap-2">
@@ -441,7 +441,7 @@ export function GiftParticipation({
               <button
                 key={p.id}
                 onClick={() => handleClaimRepresentation(p.family_name)}
-                className="text-xs bg-white border border-gray-200 rounded-full px-3 py-1 text-gray-700 hover:border-bondi-blue-300 hover:text-bondi-blue-600 transition-colors"
+                className="text-xs bg-background border border-border rounded-full px-3 py-1 text-muted-foreground hover:border-bondi-blue-300 hover:text-bondi-blue-600 transition-colors"
               >
                 Soy de {p.family_name} →
               </button>
@@ -452,7 +452,7 @@ export function GiftParticipation({
 
       <div className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-muted-foreground mb-2">
             Nombre de tu familia
           </label>
           <input
@@ -460,7 +460,7 @@ export function GiftParticipation({
             value={familyName}
             onChange={(e) => setFamilyName(e.target.value)}
             placeholder="ej: Familia García"
-            className="w-full px-4 py-3 text-gray-700 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent"
+            className="w-full px-4 py-3 text-muted-foreground border border-border rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent"
             disabled={loading}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
@@ -472,7 +472,7 @@ export function GiftParticipation({
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="block text-sm font-medium text-muted-foreground mb-2">
             Tu email (opcional)
           </label>
           <input
@@ -480,10 +480,10 @@ export function GiftParticipation({
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="ej: familia@email.com"
-            className="w-full px-4 py-3 text-gray-700 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent"
+            className="w-full px-4 py-3 text-muted-foreground border border-border rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent"
             disabled={loading}
           />
-          <p className="text-xs text-gray-500 mt-1">
+          <p className="text-xs text-muted-foreground mt-1">
             Para avisarte cuando la participación se cierre o el regalo se compre
           </p>
         </div>
@@ -503,7 +503,7 @@ export function GiftParticipation({
             onClick={handleDecline}
             disabled={loading || !familyName.trim()}
             variant="secondary"
-            className="w-full py-2 text-gray-500 hover:bg-gray-50 text-sm"
+            className="w-full py-2 text-muted-foreground hover:bg-gray-50 text-sm"
           >
             <XCircle size={16} className="mr-2" />
             {loading ? "..." : "No voy a participar"}

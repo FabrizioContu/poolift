@@ -77,10 +77,10 @@ export function AccessGuard({ groupId, children }: AccessGuardProps) {
   // Loading state
   if (checking || loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-muted">
         <div className="text-center">
           <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-bondi-blue-500 mb-4"></div>
-          <p className="text-gray-700">Verificando acceso...</p>
+          <p className="text-foreground">Verificando acceso...</p>
         </div>
       </div>
     )

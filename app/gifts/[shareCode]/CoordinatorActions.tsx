@@ -1,9 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/Button";
-import { Modal } from "@/components/ui/Modal";
-import { Alert } from "@/components/ui/Alert";
+import { Button } from "@/components/ui-custom/Button";
+import { Modal } from "@/components/ui-custom/Modal";
+import { Alert } from "@/components/ui-custom/Alert";
 import { CloseParticipationButton } from "@/components/gifts/CloseParticipationButton";
 import { ShoppingCart, Settings, Users } from "lucide-react";
 import Link from "next/link";
@@ -155,7 +155,7 @@ export function CoordinatorActions({
           )}
 
           {!participationOpen && (
-            <p className="text-sm text-gray-700 text-center">
+            <p className="text-sm text-muted-foreground text-center">
               Participación cerrada. Procede a finalizar la compra.
             </p>
           )}
@@ -187,19 +187,19 @@ export function CoordinatorActions({
           title="Fusionar participantes duplicados"
         >
           <div className="space-y-4">
-            <p className="text-sm text-gray-700">
+            <p className="text-sm text-muted-foreground">
               Selecciona la familia a mantener y el duplicado a eliminar. Esta
               acción no se puede deshacer.
             </p>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-muted-foreground mb-1">
                 Mantener
               </label>
               <select
                 value={mergeKeep}
                 onChange={(e) => setMergeKeep(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent"
+                className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent"
               >
                 {participantNames.map((name) => (
                   <option key={name} value={name}>
@@ -210,13 +210,13 @@ export function CoordinatorActions({
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-muted-foreground mb-1">
                 Eliminar (duplicado)
               </label>
               <select
                 value={mergeRemove}
                 onChange={(e) => setMergeRemove(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent"
+                className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent"
               >
                 {participantNames.map((name) => (
                   <option key={name} value={name}>

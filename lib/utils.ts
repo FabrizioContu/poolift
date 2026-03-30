@@ -1,3 +1,10 @@
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+
 /**
  * Calcula el precio por familia
  */
@@ -35,7 +42,7 @@ export function formatCelebrants(names: string[]): string {
   if (names.length === 0) return ''
   if (names.length === 1) return names[0]
   if (names.length === 2) return `${names[0]} y ${names[1]}`
-  
+
   const lastIndex = names.length - 1
   return names.slice(0, lastIndex).join(', ') + ' y ' + names[lastIndex]
 }

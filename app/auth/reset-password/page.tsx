@@ -6,9 +6,9 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
-import { Input } from '@/components/ui/Input'
-import { Button } from '@/components/ui/Button'
-import { Alert } from '@/components/ui/Alert'
+import { Input } from '@/components/ui-custom/Input'
+import { Button } from '@/components/ui-custom/Button'
+import { Alert } from '@/components/ui-custom/Alert'
 import { Mail } from 'lucide-react'
 
 const schema = z.object({
@@ -44,15 +44,15 @@ export default function ResetPasswordPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
-      <div className="w-full max-w-md bg-white rounded-xl shadow-sm border border-gray-200 p-8">
+    <div className="min-h-screen flex items-center justify-center bg-muted/30 px-4">
+      <div className="w-full max-w-md bg-background rounded-xl shadow-sm border border-border p-8">
         {sent ? (
           <div className="text-center space-y-4">
             <div className="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto">
               <Mail size={32} className="text-emerald-500" />
             </div>
-            <h1 className="text-xl font-bold text-gray-900">Revisa tu email</h1>
-            <p className="text-gray-600 text-sm">
+            <h1 className="text-xl font-bold text-foreground">Revisa tu email</h1>
+            <p className="text-muted-foreground text-sm">
               Si existe una cuenta con ese email, recibirás un enlace para
               restablecer tu contraseña.
             </p>
@@ -66,10 +66,10 @@ export default function ResetPasswordPage() {
         ) : (
           <>
             <div className="mb-6">
-              <h1 className="text-xl font-bold text-gray-900">
+              <h1 className="text-xl font-bold text-foreground">
                 Restablecer contraseña
               </h1>
-              <p className="text-sm text-gray-500 mt-1">
+              <p className="text-sm text-muted-foreground mt-1">
                 Introduce tu email y te enviaremos un enlace para crear una
                 nueva contraseña.
               </p>
@@ -93,7 +93,7 @@ export default function ResetPasswordPage() {
               </Button>
             </form>
 
-            <p className="mt-4 text-center text-sm text-gray-500">
+            <p className="mt-4 text-center text-sm text-muted-foreground">
               ¿Recuerdas tu contraseña?{' '}
               <Link href="/" className="text-bondi-blue-500 hover:underline">
                 Volver al inicio

@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Modal } from "@/components/ui/Modal";
-import { Button } from "@/components/ui/Button";
-import { Alert } from "@/components/ui/Alert";
+import { Modal } from "@/components/ui-custom/Modal";
+import { Button } from "@/components/ui-custom/Button";
+import { Alert } from "@/components/ui-custom/Alert";
 import { AlertTriangle } from "lucide-react";
 
 interface ConfirmDeleteModalProps {
@@ -62,7 +62,7 @@ export function ConfirmDeleteModal({
           />
         </div>
 
-        <p className="text-gray-700 mb-4 dark:text-bondi-blue-200">{message}</p>
+        <p className="text-muted-foreground mb-4">{message}</p>
 
         {displayError && <Alert variant="error">{displayError}</Alert>}
 

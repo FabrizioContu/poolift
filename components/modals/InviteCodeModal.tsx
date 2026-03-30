@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Modal } from "@/components/ui/Modal";
-import { Button } from "@/components/ui/Button";
+import { Modal } from "@/components/ui-custom/Modal";
+import { Button } from "@/components/ui-custom/Button";
 import { Check, Copy, Link as LinkIcon, MessageCircle, PartyPopper } from "lucide-react";
 
 interface InviteCodeModalProps {
@@ -66,13 +66,13 @@ export function InviteCodeModal({
           <PartyPopper className="w-8 h-8 text-emerald-500 dark:text-emerald-300" />
         </div>
 
-        <p className="text-gray-700 mb-6 dark:text-bondi-blue-200">
+        <p className="text-muted-foreground mb-6">
           Tu grupo <span className="font-semibold">{groupName}</span> ha sido creado.
           Comparte el código con las familias del grupo.
         </p>
 
-        <div className="bg-gray-50 rounded-lg p-4 mb-6 dark:bg-bondi-blue-800">
-          <p className="text-sm text-gray-700 mb-2 dark:text-bondi-blue-200">Código de invitación</p>
+        <div className="bg-muted rounded-lg p-4 mb-6">
+          <p className="text-sm text-muted-foreground mb-2">Código de invitación</p>
           <p className="text-3xl font-mono font-bold text-bondi-blue-500 tracking-wider">
             {inviteCode}
           </p>

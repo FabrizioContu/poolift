@@ -17,19 +17,12 @@ export function IconButton({
   ...props
 }: IconButtonProps) {
   const variantStyles = {
-    default: "text-gray-700 hover:text-gray-700 hover:bg-gray-100 dark:text-bondi-blue-300 dark:hover:text-bondi-blue-100 dark:hover:bg-bondi-blue-700",
-    danger: "text-gray-700 hover:text-red-500 hover:bg-red-50 dark:text-bondi-blue-300 dark:hover:text-red-400 dark:hover:bg-red-900",
+    default: "text-muted-foreground hover:text-foreground hover:bg-muted",
+    danger: "text-muted-foreground hover:text-destructive hover:bg-destructive/10",
   };
 
-  const sizeStyles = {
-    sm: "p-1",
-    md: "p-1.5",
-  };
-
-  const iconSize = {
-    sm: 14,
-    md: 16,
-  };
+  const sizeStyles = { sm: "p-1", md: "p-1.5" };
+  const iconSize = { sm: 14, md: 16 };
 
   return (
     <button

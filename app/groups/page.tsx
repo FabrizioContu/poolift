@@ -14,7 +14,7 @@ import {
 } from "@/lib/auth";
 import { migrateAnonData } from "@/lib/migrate";
 import { GroupCard } from "@/components/groups/GroupCard";
-import { Button } from "@/components/ui/Button";
+import { Button } from "@/components/ui-custom/Button";
 import { OCCASION_LABELS, type OccasionType } from "@/lib/types";
 
 const AuthModal = dynamic(() =>
@@ -186,19 +186,19 @@ export default function GroupsPage() {
   );
 
   return (
-    <main id="main-content" className="min-h-screen bg-gray-50">
+    <main id="main-content" className="min-h-screen bg-muted/30">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">
+            <h1 className="text-3xl font-bold text-foreground">
               {isAnonymous
                 ? "Grupos"
                 : showAll
                   ? "Todos los Grupos"
                   : "Mis Grupos"}
             </h1>
-            <p className="text-gray-700 mt-1">
+            <p className="text-muted-foreground mt-1">
               {isAnonymous
                 ? "Inicia sesión para acceder a tus grupos"
                 : showAll
@@ -209,7 +209,7 @@ export default function GroupsPage() {
           <div className="flex gap-3">
             <Link
               href="/"
-              className="flex items-center gap-2 px-4 py-2 rounded-lg font-bold transition bg-gray-200 text-gray-800 hover:bg-gray-300"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg font-bold transition bg-muted text-foreground hover:bg-muted/80"
             >
               <Home size={18} />
               Inicio
@@ -249,7 +249,7 @@ export default function GroupsPage() {
         <div className="flex flex-col sm:flex-row gap-4 mb-6">
           <div className="relative flex-1">
             <Search
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-700"
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
               size={20}
             />
             <input
@@ -258,7 +258,7 @@ export default function GroupsPage() {
               placeholder="Buscar grupos..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2 border border-border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent"
             />
           </div>
           {!isAnonymous && myGroups.length > 0 && (
@@ -284,14 +284,14 @@ export default function GroupsPage() {
               aria-hidden="true"
               className="animate-spin rounded-full h-12 w-12 border-b-2 border-bondi-blue-400 mx-auto"
             ></div>
-            <p className="text-gray-700 mt-4">Cargando grupos...</p>
+            <p className="text-muted-foreground mt-4">Cargando grupos...</p>
           </div>
         ) : isAnonymous ? (
           // Anonymous: locked group cards
           filteredGroups.length === 0 ? (
-            <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
-              <Users size={48} className="mx-auto text-gray-300 mb-4" />
-              <p className="text-gray-700 font-medium">
+            <div className="text-center py-12 bg-background rounded-lg border border-border">
+              <Users size={48} className="mx-auto text-muted-foreground/40 mb-4" />
+              <p className="text-muted-foreground font-medium">
                 No hay grupos disponibles
               </p>
             </div>
@@ -300,20 +300,20 @@ export default function GroupsPage() {
               {filteredGroups.map((group) => (
                 <div
                   key={group.id}
-                  className="border border-gray-200 rounded-lg p-6 bg-white"
+                  className="border border-border rounded-lg p-6 bg-background"
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-3">
-                      <div className="p-2 rounded-lg bg-gray-100">
-                        <Users className="text-gray-400" size={28} />
+                      <div className="p-2 rounded-lg bg-muted">
+                        <Users className="text-muted-foreground/60" size={28} />
                       </div>
                       <div>
-                        <h3 className="text-xl font-bold text-gray-900">
+                        <h3 className="text-xl font-bold text-foreground">
                           {group.name}
                         </h3>
                         <div className="flex gap-2 mt-1 flex-wrap">
                           {group.familyCount !== undefined && (
-                            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
+                            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-muted text-muted-foreground">
                               {group.familyCount}{" "}
                               {group.familyCount === 1 ? "familia" : "familias"}
                             </span>
@@ -328,7 +328,7 @@ export default function GroupsPage() {
                         </div>
                       </div>
                     </div>
-                    <Lock className="text-gray-400 shrink-0" size={18} />
+                    <Lock className="text-muted-foreground/60 shrink-0" size={18} />
                   </div>
                   <button
                     onClick={() => setShowAuthModal(true)}
@@ -341,41 +341,41 @@ export default function GroupsPage() {
             </div>
           )
         ) : filteredGroups.length === 0 ? (
-          <div className="text-center py-12 bg-white rounded-lg border border-gray-200">
-            <Users size={48} className="mx-auto text-gray-300 mb-4" />
+          <div className="text-center py-12 bg-background rounded-lg border border-border">
+            <Users size={48} className="mx-auto text-muted-foreground/40 mb-4" />
             {searchTerm ? (
               <>
-                <p className="text-gray-700 font-medium">
+                <p className="text-muted-foreground font-medium">
                   No se encontraron grupos
                 </p>
-                <p className="text-gray-700 text-sm mt-1">
+                <p className="text-muted-foreground text-sm mt-1">
                   Intenta con otro término de búsqueda
                 </p>
               </>
             ) : showAll ? (
               <>
-                <p className="text-gray-700 font-medium">
+                <p className="text-muted-foreground font-medium">
                   No hay grupos disponibles
                 </p>
-                <p className="text-gray-700 text-sm mt-1">
+                <p className="text-muted-foreground text-sm mt-1">
                   ¡Sé el primero en crear uno!
                 </p>
               </>
             ) : directGifts.length > 0 ? (
               <>
-                <p className="text-gray-700 font-medium">
+                <p className="text-muted-foreground font-medium">
                   No tienes grupos aún
                 </p>
-                <p className="text-gray-700 text-sm mt-1">
+                <p className="text-muted-foreground text-sm mt-1">
                   Pero tienes regalos directos abajo
                 </p>
               </>
             ) : (
               <>
-                <p className="text-gray-700 font-medium">
+                <p className="text-muted-foreground font-medium">
                   No tienes grupos aún
                 </p>
-                <p className="text-gray-700 text-sm mt-1">
+                <p className="text-muted-foreground text-sm mt-1">
                   Crea un grupo nuevo o únete a uno existente
                 </p>
                 <div className="flex gap-3 justify-center mt-4">
@@ -387,7 +387,7 @@ export default function GroupsPage() {
                   </Link>
                   <Link
                     href="/join"
-                    className="px-4 py-2 rounded-lg font-bold transition bg-gray-200 text-gray-800 hover:bg-gray-300"
+                    className="px-4 py-2 rounded-lg font-bold transition bg-muted text-foreground hover:bg-muted/80"
                   >
                     Unirse a Grupo
                   </Link>
@@ -415,7 +415,7 @@ export default function GroupsPage() {
         {/* Direct Gifts Section */}
         {directGifts.length > 0 && !showAll && (
           <div className="mt-10">
-            <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+            <h2 className="text-xl font-bold text-foreground mb-4 flex items-center gap-2">
               <Gift size={24} className="text-ocean-mist-400" />
               Mis Regalos Directos
             </h2>
@@ -424,25 +424,25 @@ export default function GroupsPage() {
                 <Link
                   key={gift.shareCode}
                   href={`/gifts/${gift.shareCode}`}
-                  className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition-shadow"
+                  className="bg-background rounded-lg border border-border p-4 hover:shadow-md transition-shadow"
                 >
                   <div className="flex items-start justify-between">
                     <div>
                       <span className="inline-block bg-ocean-mist-50 text-ocean-mist-700 text-xs px-2 py-0.5 rounded-full mb-2">
                         {OCCASION_LABELS[gift.occasion as OccasionType]}
                       </span>
-                      <h3 className="font-semibold text-gray-900">
+                      <h3 className="font-semibold text-foreground">
                         Regalo para {gift.recipientName}
                       </h3>
                       {gift.giftIdea && (
-                        <p className="text-sm text-gray-700 mt-1 line-clamp-1">
+                        <p className="text-sm text-muted-foreground mt-1 line-clamp-1">
                           {gift.giftIdea}
                         </p>
                       )}
                     </div>
                     <Gift size={20} className="text-ocean-mist-400 shrink-0" />
                   </div>
-                  <p className="text-xs text-gray-700 mt-2">
+                  <p className="text-xs text-muted-foreground mt-2">
                     Organizado por {gift.organizerName}
                   </p>
                 </Link>
@@ -454,7 +454,7 @@ export default function GroupsPage() {
         {/* Join link (only for authenticated users with groups) */}
         {!isAnonymous && !showAll && myGroups.length > 0 && (
           <div className="mt-8 text-center">
-            <p className="text-gray-700 text-sm">
+            <p className="text-muted-foreground text-sm">
               ¿Tienes un código de invitación?{" "}
               <Link
                 href="/join"

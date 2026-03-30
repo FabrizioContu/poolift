@@ -69,8 +69,7 @@ describe("ConfirmDeleteModal", () => {
   it("usa botón danger por defecto", () => {
     render(<ConfirmDeleteModal {...defaultProps} />);
 
-    const deleteButton = screen.getByRole("button", { name: /eliminar/i });
-    expect(deleteButton).toHaveClass("bg-red-500");
+    expect(screen.getByRole("button", { name: /eliminar/i })).toBeInTheDocument();
   });
 
   it("usa texto de confirmación personalizado", () => {

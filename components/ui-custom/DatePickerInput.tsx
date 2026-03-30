@@ -72,20 +72,20 @@ export function DatePickerInput({
         className={[
           "w-full flex items-center justify-between gap-2 px-3 py-2.5 border rounded-lg text-left transition text-sm",
           disabled
-            ? "bg-gray-50 text-gray-400 cursor-not-allowed border-gray-200"
-            : "bg-white border-gray-300 hover:border-bondi-blue-300",
-          isOpen ? "ring-2 ring-bondi-blue-400 border-transparent" : "",
-          !displayValue ? "text-gray-400" : "text-gray-900",
+            ? "bg-muted text-muted-foreground cursor-not-allowed border-border"
+            : "bg-background border-border hover:border-primary/40",
+          isOpen ? "ring-2 ring-ring border-transparent" : "",
+          !displayValue ? "text-muted-foreground" : "text-foreground",
         ]
           .filter(Boolean)
           .join(" ")}
       >
         <span>{displayValue ?? placeholder}</span>
-        <CalendarIcon size={16} className="text-gray-400 shrink-0" />
+        <CalendarIcon size={16} className="text-muted-foreground shrink-0" />
       </button>
 
       {isOpen && (
-        <div className="mt-1.5 border border-gray-200 rounded-lg shadow-md bg-white overflow-hidden">
+        <div className="mt-1.5 border border-border rounded-lg shadow-md bg-popover overflow-hidden">
           <DayPicker
             mode="single"
             selected={selected}
@@ -107,31 +107,31 @@ export function DatePickerInput({
               month_caption: "flex items-center justify-between px-1 mb-3",
               caption_label: showDropdownNav
                 ? "hidden"
-                : "font-semibold text-gray-800 text-sm capitalize",
+                : "font-semibold text-foreground text-sm capitalize",
               dropdowns: "flex items-center gap-1",
               dropdown:
-                "border border-gray-200 rounded-lg px-2 py-1 text-sm font-semibold text-gray-800 bg-white cursor-pointer focus:outline-none focus:ring-2 focus:ring-bondi-blue-400 capitalize",
+                "border border-border rounded-lg px-2 py-1 text-sm font-semibold text-foreground bg-background cursor-pointer focus:outline-none focus:ring-2 focus:ring-ring capitalize",
               nav: "flex items-center gap-1",
               button_previous:
-                "p-1.5 rounded-lg hover:bg-gray-100 transition text-gray-600",
+                "p-1.5 rounded-lg hover:bg-muted transition text-muted-foreground",
               button_next:
-                "p-1.5 rounded-lg hover:bg-gray-100 transition text-gray-600",
+                "p-1.5 rounded-lg hover:bg-muted transition text-muted-foreground",
               month_grid: "w-full table-fixed border-collapse",
               weekdays: "",
               weekday:
-                "text-center text-xs font-medium text-gray-500 capitalize pb-1",
+                "text-center text-xs font-medium text-muted-foreground capitalize pb-1",
               weeks: "",
               week: "",
               day: "text-center p-0.5",
               day_button:
-                "w-full h-9 flex items-center justify-center rounded-lg text-sm transition hover:bg-bondi-blue-50 hover:text-bondi-blue-500",
-              today: "font-bold text-bondi-blue-400",
+                "w-full h-9 flex items-center justify-center rounded-lg text-sm transition hover:bg-primary/10 hover:text-primary",
+              today: "font-bold text-primary",
               selected:
-                "bg-bondi-blue-400 text-white rounded-lg hover:bg-bondi-blue-500 hover:text-white",
-              outside: "text-gray-300 opacity-50",
+                "bg-primary text-primary-foreground rounded-lg hover:bg-primary/80 hover:text-primary-foreground",
+              outside: "text-muted-foreground opacity-40",
               disabled:
-                "text-gray-300 opacity-40 cursor-not-allowed hover:bg-transparent hover:text-gray-300",
-              chevron: "fill-gray-500",
+                "text-muted-foreground opacity-40 cursor-not-allowed hover:bg-transparent",
+              chevron: "fill-muted-foreground",
             }}
           />
         </div>

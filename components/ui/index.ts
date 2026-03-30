@@ -1,11 +1,13 @@
-export { Alert } from "./Alert";
-export { DatePickerInput } from "./DatePickerInput";
-export { Badge } from "./Badge";
-export { Button } from "./Button";
-export { Card } from "./Card";
-export { EmptyState } from "./EmptyState";
-export { IconButton } from "./IconButton";
-export { Input } from "./Input";
-export { Modal } from "./Modal";
-export { Tabs } from "./Tabs";
-export { ThemeToggle } from "./ThemeToggle";
+// Bridge barrel — re-exports from ui-custom during shadcn migration.
+// Each component gets replaced here as it's migrated to shadcn.
+export { Alert } from "@/components/ui/alert";
+export { DatePickerInput } from "@/components/ui-custom/DatePickerInput";
+export { Badge } from "@/components/ui/badge";
+export { Button } from "@/components/ui/button";
+export { Card } from "@/components/ui/card";
+export { EmptyState } from "@/components/ui-custom/EmptyState";
+export { IconButton } from "@/components/ui-custom/IconButton";
+export { Input } from "@/components/ui/input";
+export { Modal } from "@/components/ui/dialog";
+export { Tabs } from "@/components/ui/tabs";
+export { ThemeToggle } from "@/components/ui-custom/ThemeToggle";
