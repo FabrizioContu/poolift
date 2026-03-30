@@ -228,10 +228,10 @@ export default function GroupsPage() {
 
         {/* Auth banner for anonymous users */}
         {!authLoading && isAnonymous && (
-          <div className="bg-bondi-blue-50 border border-bondi-blue-200 rounded-lg p-4 mb-6 flex items-center justify-between gap-4">
+          <div className="bg-primary/10 border border-primary/20 rounded-lg p-4 mb-6 flex items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <Lock className="text-bondi-blue-500 shrink-0" size={20} />
-              <p className="text-bondi-blue-700 text-sm">
+              <Lock className="text-primary shrink-0" size={20} />
+              <p className="text-foreground text-sm">
                 Inicia sesión para ver si tienes acceso a estos grupos
               </p>
             </div>
@@ -258,7 +258,7 @@ export default function GroupsPage() {
               placeholder="Buscar grupos..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2 border border-border rounded-lg bg-background text-foreground placeholder:text-muted-foreground focus:ring-2 focus:ring-ring focus:border-transparent"
             />
           </div>
           {!isAnonymous && myGroups.length > 0 && (
@@ -320,7 +320,7 @@ export default function GroupsPage() {
                           )}
                           {group.partyCount !== undefined &&
                             group.partyCount > 0 && (
-                              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                              <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300">
                                 {group.partyCount}{" "}
                                 {group.partyCount === 1 ? "fiesta" : "fiestas"}
                               </span>
@@ -332,7 +332,7 @@ export default function GroupsPage() {
                   </div>
                   <button
                     onClick={() => setShowAuthModal(true)}
-                    className="mt-4 w-full text-sm text-bondi-blue-500 hover:text-bondi-blue-600 text-center py-2 border border-bondi-blue-200 rounded-lg hover:bg-bondi-blue-50 transition"
+                    className="mt-4 w-full text-sm text-primary hover:text-primary/80 text-center py-2 border border-primary/30 rounded-lg hover:bg-primary/10 transition"
                   >
                     Inicia sesión para ver si tienes acceso
                   </button>
@@ -428,7 +428,7 @@ export default function GroupsPage() {
                 >
                   <div className="flex items-start justify-between">
                     <div>
-                      <span className="inline-block bg-ocean-mist-50 text-ocean-mist-700 text-xs px-2 py-0.5 rounded-full mb-2">
+                      <span className="inline-block bg-primary/10 text-primary text-xs px-2 py-0.5 rounded-full mb-2">
                         {OCCASION_LABELS[gift.occasion as OccasionType]}
                       </span>
                       <h3 className="font-semibold text-foreground">
