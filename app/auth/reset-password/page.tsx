@@ -58,7 +58,7 @@ export default function ResetPasswordPage() {
             </p>
             <Link
               href="/"
-              className="inline-block text-sm text-bondi-blue-500 hover:underline"
+              className="inline-block text-sm text-primary hover:underline"
             >
               Volver al inicio
             </Link>
@@ -95,7 +95,7 @@ export default function ResetPasswordPage() {
 
             <p className="mt-4 text-center text-sm text-muted-foreground">
               ¿Recuerdas tu contraseña?{' '}
-              <Link href="/" className="text-bondi-blue-500 hover:underline">
+              <Link href="/" className="text-primary hover:underline">
                 Volver al inicio
               </Link>
             </p>

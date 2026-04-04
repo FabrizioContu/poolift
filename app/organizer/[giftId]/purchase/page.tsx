@@ -230,7 +230,7 @@ export default function DirectGiftPurchasePage({
       <div className="min-h-screen bg-muted/30 flex items-center justify-center">
         <div className="text-center px-4">
           <ShoppingCart
-            className="mx-auto text-tropical-teal-400 mb-4"
+            className="mx-auto text-muted-foreground mb-4"
             size={64}
           />
           <h1 className="text-2xl font-bold text-foreground mb-2">
@@ -301,7 +301,7 @@ export default function DirectGiftPurchasePage({
           <div className="flex items-center gap-3 mb-6">
             <ShoppingCart className="text-emerald-500" size={32} />
             <div>
-              <h1 className="text-2xl font-bold text-bondi-blue-500">
+              <h1 className="text-2xl font-bold text-primary">
                 Finalizar Compra
               </h1>
               <p className="text-muted-foreground">Regalo para {gift.recipient_name}</p>
@@ -309,16 +309,16 @@ export default function DirectGiftPurchasePage({
           </div>
 
           {/* Summary */}
-          <div className="bg-ocean-mist-50 p-4 rounded-lg mb-6">
+          <div className="bg-primary/10 p-4 rounded-lg mb-6">
             {gift.gift_idea && (
-              <p className="font-semibold text-bondi-blue-500 text-lg">
+              <p className="font-semibold text-primary text-lg">
                 {gift.gift_idea}
               </p>
             )}
             {gift.estimated_price && (
-              <div className="flex justify-between  text-sm text-muted-foreground">
+              <div className="flex justify-between text-sm text-muted-foreground">
                 <span>Precio estimado:</span>
-                <span className="font-medium text-bondi-blue-600">
+                <span className="font-medium text-primary">
                   {formatPrice(gift.estimated_price)}
                 </span>
               </div>

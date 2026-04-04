@@ -13,12 +13,12 @@ export const metadata: Metadata = { title: "Empezar | Poolift" };
 
 export default function StartPage() {
   return (
-    <div className="force-light min-h-screen bg-linear-to-b from-bondi-blue-50 to-slate-50">
+    <div className="force-light min-h-screen bg-linear-to-b from-primary/10 to-slate-50">
       {/* Header */}
       <header className="container mx-auto px-4 py-6">
         <nav className="flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <Gift className="text-bondi-blue-500" size={32} />
+            <Gift className="text-primary" size={32} />
             <span className="text-2xl font-bold text-foreground">Poolift</span>
           </Link>
           <Link
@@ -35,7 +35,7 @@ export default function StartPage() {
       <main className="container mx-auto px-4 py-12 md:py-20">
         <div className="max-w-2xl mx-auto text-center mb-12">
           <div className="flex items-center justify-center gap-2 mb-4">
-            <Sparkles className="text-bondi-blue-500" size={28} />
+            <Sparkles className="text-primary" size={28} />
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             Desde donde quieres empezar?
@@ -82,9 +82,9 @@ export default function StartPage() {
 
           {/* Option 2: Crear grupo */}
           <Link href="/create-group" className="block group">
-            <div className="h-full bg-background p-8 rounded-2xl border-2 border-border hover:border-bondi-blue-300 hover:shadow-lg transition-all">
-              <div className="w-16 h-16 bg-bondi-blue-100 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <Users className="text-bondi-blue-500" size={32} />
+            <div className="h-full bg-background p-8 rounded-2xl border-2 border-border hover:border-primary/40 hover:shadow-lg transition-all">
+              <div className="w-16 h-16 bg-primary/15 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <Users className="text-primary" size={32} />
               </div>
 
               <h2 className="text-xl font-bold text-foreground mb-3">
@@ -107,7 +107,7 @@ export default function StartPage() {
                 </div>
               </div>
 
-              <span className="block w-full px-4 py-2 rounded-lg font-bold transition bg-bondi-blue-400 text-white text-center">
+              <span className="block w-full px-4 py-2 rounded-lg font-bold transition bg-primary text-primary-foreground text-center">
                 Crear grupo
               </span>
             </div>
@@ -120,7 +120,7 @@ export default function StartPage() {
             Ya tienes un codigo de invitacion?{" "}
             <Link
               href="/join"
-              className="text-bondi-blue-500 hover:underline font-medium"
+              className="text-primary hover:underline font-medium"
             >
               Unirse a un grupo
             </Link>

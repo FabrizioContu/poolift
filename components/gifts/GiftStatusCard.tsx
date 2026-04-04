@@ -21,8 +21,8 @@ interface GiftStatusCardProps {
 
 const STATUS_BADGE_CLASSES = {
   finalized: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-800 dark:text-emerald-200',
-  closed:    'bg-tropical-teal-50 text-tropical-teal-700 dark:bg-tropical-teal-700 dark:text-tropical-teal-200',
-  active:    'bg-bondi-blue-100 text-bondi-blue-700 dark:bg-bondi-blue-600 dark:text-bondi-blue-100',
+  closed:    'bg-muted text-muted-foreground',
+  active:    'bg-primary/15 text-primary',
 } as const
 
 export function GiftStatusCard({ gift, proposalName, totalPrice }: GiftStatusCardProps) {
@@ -62,7 +62,7 @@ export function GiftStatusCard({ gift, proposalName, totalPrice }: GiftStatusCar
     }
     if (!gift.participation_open) {
       return {
-        icon: <Lock className="text-tropical-teal-400" size={32} />,
+        icon: <Lock className="text-muted-foreground" size={32} />,
         title: 'Participación Cerrada',
         badge: 'Cerrado',
         badgeKey: 'closed' as const,
@@ -70,7 +70,7 @@ export function GiftStatusCard({ gift, proposalName, totalPrice }: GiftStatusCar
       }
     }
     return {
-      icon: <Gift className="text-bondi-blue-400" size={32} />,
+      icon: <Gift className="text-primary" size={32} />,
       title: 'Regalo Activo',
       badge: 'Abierto',
       badgeKey: 'active' as const,
@@ -85,15 +85,15 @@ export function GiftStatusCard({ gift, proposalName, totalPrice }: GiftStatusCar
     : priceToShow
 
   return (
-    <div className="bg-linear-to-br from-bondi-blue-50 to-bondi-blue-100 rounded-lg p-6 mb-6 border-2 border-bondi-blue-200 dark:bg-bondi-blue-700 dark:border-bondi-blue-500">
+    <div className="bg-linear-to-br from-primary/10 to-primary/20 rounded-lg p-6 mb-6 border-2 border-primary/30">
       <div className="flex items-start justify-between mb-4">
         <div className="flex items-center gap-3">
           {statusInfo.icon}
           <div>
-            <h3 className="text-xl font-bold text-foreground dark:text-bondi-blue-50">
+            <h3 className="text-xl font-bold text-foreground ">
               {statusInfo.title}
             </h3>
-            <p className="text-sm text-muted-foreground dark:text-bondi-blue-200">
+            <p className="text-sm text-muted-foreground ">
               {proposalName}
             </p>
           </div>
@@ -106,24 +106,24 @@ export function GiftStatusCard({ gift, proposalName, totalPrice }: GiftStatusCar
 
       {/* Info Grid */}
       <div className="grid grid-cols-2 gap-4 mb-4">
-        <div className="bg-background rounded-lg p-3 dark:bg-bondi-blue-600">
+        <div className="bg-background rounded-lg p-3 ">
           <div className="flex items-center gap-2 mb-1">
-            <Users size={16} className="text-muted-foreground dark:text-bondi-blue-300" />
-            <span className="text-xs text-muted-foreground dark:text-bondi-blue-300">Participantes</span>
+            <Users size={16} className="text-muted-foreground " />
+            <span className="text-xs text-muted-foreground ">Participantes</span>
           </div>
-          <p className="text-lg font-bold text-foreground dark:text-bondi-blue-50">
+          <p className="text-lg font-bold text-foreground ">
             {gift.participantCount} {gift.participantCount === 1 ? 'familia' : 'familias'}
           </p>
         </div>
 
-        <div className="bg-background rounded-lg p-3 dark:bg-bondi-blue-600">
+        <div className="bg-background rounded-lg p-3 ">
           <div className="flex items-center gap-2 mb-1">
-            <Gift size={16} className="text-muted-foreground dark:text-bondi-blue-300" />
-            <span className="text-xs text-muted-foreground dark:text-bondi-blue-300">
+            <Gift size={16} className="text-muted-foreground " />
+            <span className="text-xs text-muted-foreground ">
               {gift.purchased_at ? 'Por familia' : 'Precio est.'}
             </span>
           </div>
-          <p className="text-lg font-bold text-foreground dark:text-bondi-blue-50">
+          <p className="text-lg font-bold text-foreground ">
             {formatPrice(pricePerFamily)}
           </p>
         </div>
@@ -131,7 +131,7 @@ export function GiftStatusCard({ gift, proposalName, totalPrice }: GiftStatusCar
 
       {/* Description */}
       {statusInfo.description && (
-        <p className="text-sm text-muted-foreground mb-4 dark:text-bondi-blue-200">
+        <p className="text-sm text-muted-foreground mb-4 ">
           {statusInfo.description}
         </p>
       )}
@@ -167,9 +167,9 @@ export function GiftStatusCard({ gift, proposalName, totalPrice }: GiftStatusCar
       </div>
 
       {/* Share Code */}
-      <div className="mt-4 p-2 bg-background rounded-lg dark:bg-bondi-blue-600">
-        <p className="text-xs text-muted-foreground text-center dark:text-bondi-blue-200">
-          Codigo: <code className="font-mono text-muted-foreground dark:text-bondi-blue-200">{gift.share_code}</code>
+      <div className="mt-4 p-2 bg-background rounded-lg ">
+        <p className="text-xs text-muted-foreground text-center ">
+          Codigo: <code className="font-mono text-muted-foreground ">{gift.share_code}</code>
         </p>
       </div>
     </div>

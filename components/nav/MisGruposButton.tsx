@@ -33,7 +33,7 @@ export function MisGruposButton() {
     >
       Mis Grupos
       {count > 0 && (
-        <span className="absolute -top-1.5 -right-1.5 bg-bondi-blue-500 text-white text-xs font-bold rounded-full min-w-5 h-5 flex items-center justify-center px-1.5">
+        <span className="absolute -top-1.5 -right-1.5 bg-primary text-primary-foreground text-xs font-bold rounded-full min-w-5 h-5 flex items-center justify-center px-1.5">
           {count}
         </span>
       )}

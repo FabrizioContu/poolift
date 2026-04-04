@@ -138,7 +138,7 @@ export function CreatePartyModal({
                   key={birthday.id}
                   className={`flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition ${
                     selectedCelebrants.includes(birthday.id)
-                      ? "border-bondi-blue-400 bg-bondi-blue-50 dark:border-bondi-blue-300 dark:bg-bondi-blue-700"
+                      ? "border-primary bg-primary/10"
                       : "border-border hover:border-border"
                   }`}
                 >
@@ -146,7 +146,7 @@ export function CreatePartyModal({
                     type="checkbox"
                     checked={selectedCelebrants.includes(birthday.id)}
                     onChange={() => handleCelebrantToggle(birthday.id)}
-                    className="w-4 h-4 text-bondi-blue-400 rounded focus:ring-bondi-blue-400"
+                    className="w-4 h-4 text-primary rounded focus:ring-ring"
                   />
                   <div className="flex-1">
                     <p className="font-medium text-foreground">
@@ -175,7 +175,7 @@ export function CreatePartyModal({
             <select
               value={coordinatorId}
               onChange={(e) => setCoordinatorId(e.target.value)}
-              className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent"
+              className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent"
             >
               <option value="">Asignar automáticamente</option>
               {families.map((family) => (

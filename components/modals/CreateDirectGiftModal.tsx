@@ -344,7 +344,7 @@ Apuntate aqui: ${getGiftLink()}`;
                 value={estimatedPrice}
                 onChange={(e) => setEstimatedPrice(e.target.value)}
                 placeholder="50"
-                className="w-full px-4 py-2 pl-8 border border-border rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent "
+                className="w-full px-4 py-2 pl-8 text-gray-900 border border-border rounded-lg focus:ring-2 focus:ring-emerald-400 focus:border-transparent "
               />
             </div>
           </div>

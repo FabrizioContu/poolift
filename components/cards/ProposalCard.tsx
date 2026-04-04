@@ -114,12 +114,12 @@ export function ProposalCard({
         className={`border rounded-lg p-4 ${
           proposal.is_selected
             ? "border-emerald-400 bg-emerald-50 dark:border-ocean-mist-400 dark:bg-ocean-mist-800"
-            : "border-border bg-background dark:border-bondi-blue-600 dark:bg-bondi-blue-700"
+            : "border-border bg-card"
         }`}
       >
         <div className="flex items-start justify-between mb-3">
           <div className="flex-1">
-            <h3 className="font-semibold text-lg flex items-center gap-2 text-foreground dark:text-bondi-blue-50">
+            <h3 className="font-semibold text-lg flex items-center gap-2 text-foreground">
               {proposal.name}
               {proposal.is_selected && (
                 <Badge variant="green" size="sm" className="bg-emerald-400 text-white">
@@ -128,12 +128,12 @@ export function ProposalCard({
                 </Badge>
               )}
             </h3>
-            <p className="text-bondi-blue-500 font-medium dark:text-bondi-blue-200">
+            <p className="text-primary font-medium">
               {formatPrice(proposal.total_price)}
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1 text-muted-foreground dark:text-bondi-blue-200">
+            <div className="flex items-center gap-1 text-muted-foreground">
               <ThumbsUp size={16} />
               <span className="text-sm font-medium">
                 {proposal.votes.length}
@@ -155,7 +155,7 @@ export function ProposalCard({
 
         {proposal.proposal_items.length > 0 && (
           <div className="mb-4">
-            <p className="text-xs text-muted-foreground mb-2 dark:text-bondi-blue-300">Items:</p>
+            <p className="text-xs text-muted-foreground mb-2 ">Items:</p>
             <ul className="space-y-1">
               {proposal.proposal_items.map((item) => (
                 <li
@@ -169,14 +169,14 @@ export function ProposalCard({
                         href={item.product_link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="text-bondi-blue-400 hover:text-bondi-blue-600"
+                        className="text-primary hover:text-primary/70"
                       >
                         <ExternalLink size={14} />
                       </a>
                     )}
                   </span>
                   {item.item_price && (
-                    <span className="text-muted-foreground dark:text-bondi-blue-200">
+                    <span className="text-muted-foreground ">
                       {formatPrice(item.item_price)}
                     </span>
                   )}
@@ -188,7 +188,7 @@ export function ProposalCard({
 
         {proposal.votes.length > 0 && (
           <div className="mb-4">
-            <p className="text-xs text-muted-foreground mb-1 dark:text-bondi-blue-300">Votos:</p>
+            <p className="text-xs text-muted-foreground mb-1 ">Votos:</p>
             <div className="flex flex-wrap gap-1">
               {proposal.votes.map((vote) => (
                 <Badge key={vote.id} variant="gray" size="sm">
@@ -208,7 +208,7 @@ export function ProposalCard({
                   placeholder="Tu nombre"
                   value={voterName}
                   onChange={(e) => setVoterName(e.target.value)}
-                  className="w-full px-3 py-2 border border-border rounded-lg text-sm focus:ring-2 focus:ring-ring focus:border-transparent dark:bg-bondi-blue-800 dark:border-bondi-blue-600 dark:text-bondi-blue-50"
+                  className="w-full px-3 py-2 border border-input rounded-lg text-sm focus:ring-2 focus:ring-ring focus:border-transparent bg-background text-foreground placeholder:text-muted-foreground"
                 />
                 {error && <p className="text-red-500 text-xs">{error}</p>}
                 <div className="flex gap-4">

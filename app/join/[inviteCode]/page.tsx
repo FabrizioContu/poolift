@@ -18,7 +18,7 @@ export default async function JoinGroupPage({ params }: JoinGroupPageProps) {
 
   if (error || !group) {
     return (
-      <div className="min-h-screen bg-linear-to-b from-bondi-blue-50 to-background py-12 px-4">
+      <div className="min-h-screen bg-linear-to-b from-primary/10 to-background py-12 px-4">
         <div className="max-w-md mx-auto">
           <Link
             href="/join"
@@ -46,7 +46,7 @@ export default async function JoinGroupPage({ params }: JoinGroupPageProps) {
             </p>
             <Link
               href="/join"
-              className="inline-block bg-bondi-blue-400 text-white px-6 py-3 rounded-lg font-semibold hover:bg-bondi-blue-500 transition"
+              className="inline-block bg-primary text-primary-foreground px-6 py-3 rounded-lg font-semibold hover:bg-primary/90 transition"
             >
               Intentar con otro código
             </Link>
@@ -57,7 +57,7 @@ export default async function JoinGroupPage({ params }: JoinGroupPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-bondi-blue-50 to-background py-12 px-4">
+    <div className="min-h-screen bg-linear-to-b from-primary/10 to-background py-12 px-4">
       <div className="max-w-md mx-auto">
         <Link
           href="/join"
