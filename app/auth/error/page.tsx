@@ -15,7 +15,7 @@ export default function AuthErrorPage() {
         </p>
         <Link
           href="/"
-          className="inline-block px-6 py-2 bg-bondi-blue-500 text-white rounded-lg hover:bg-bondi-blue-600 transition-colors"
+          className="inline-block px-6 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
         >
           Volver al inicio
         </Link>

@@ -180,7 +180,7 @@ export default function CreateGroupPage() {
   return (
     <main
       id="main-content"
-      className="min-h-screen bg-linear-to-b from-bondi-blue-50 to-background py-12 px-4"
+      className="min-h-screen bg-linear-to-b from-primary/10 to-background py-12 px-4"
     >
       <div className="max-w-md mx-auto">
         <Link
@@ -194,8 +194,8 @@ export default function CreateGroupPage() {
         <div className="bg-background rounded-lg shadow-lg p-8">
           {/* Header */}
           <div className="text-center mb-6">
-            <div className="bg-bondi-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Users className="w-8 h-8 text-bondi-blue-500" />
+            <div className="bg-primary/15 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Users className="w-8 h-8 text-primary" />
             </div>
             <h1 className="text-2xl font-bold text-foreground">Crear Grupo</h1>
             <p className="text-muted-foreground mt-2">
@@ -214,13 +214,13 @@ export default function CreateGroupPage() {
             <div
               aria-current={step === 1 ? "step" : undefined}
               className={`w-3 h-3 rounded-full ${
-                step === 1 ? "bg-bondi-blue-500" : "bg-muted"
+                step === 1 ? "bg-primary" : "bg-muted"
               }`}
             />
             <div
               aria-current={step === 2 ? "step" : undefined}
               className={`w-3 h-3 rounded-full ${
-                step === 2 ? "bg-bondi-blue-500" : "bg-muted"
+                step === 2 ? "bg-primary" : "bg-muted"
               }`}
             />
             <span className="sr-only">Paso {step} de 2</span>
@@ -236,7 +236,7 @@ export default function CreateGroupPage() {
                     setGroupType(type);
                     setStep(2);
                   }}
-                  className="w-full p-4 border rounded-lg text-left hover:bg-muted hover:border-bondi-blue-200 transition flex items-start gap-3"
+                  className="w-full p-4 border rounded-lg text-left hover:bg-muted hover:border-primary/40 transition flex items-start gap-3"
                 >
                   <span className="text-2xl">{GROUP_TYPE_ICONS[type]}</span>
                   <div>
@@ -264,11 +264,11 @@ export default function CreateGroupPage() {
           {step === 2 && (
             <form onSubmit={handleSubmit} className="space-y-5">
               {/* Examples box */}
-              <div className="bg-bondi-blue-50 border border-bondi-blue-200 rounded-lg p-4">
-                <p className="text-sm font-medium text-bondi-blue-700 mb-2">
+              <div className="bg-primary/10 border border-primary/30 rounded-lg p-4">
+                <p className="text-sm font-medium text-primary mb-2">
                   Ejemplos de nombres:
                 </p>
-                <ul className="text-sm text-bondi-blue-600 space-y-1">
+                <ul className="text-sm text-primary/80 space-y-1">
                   {GROUP_TYPE_EXAMPLES[groupType].map((example) => (
                     <li key={example}>{example}</li>
                   ))}
@@ -290,7 +290,7 @@ export default function CreateGroupPage() {
                   onChange={(e) => setGroupName(e.target.value)}
                   placeholder={copy.groupPlaceholder}
                   maxLength={50}
-                  className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent"
                   disabled={isSubmitting}
                   autoFocus
                 />
@@ -314,7 +314,7 @@ export default function CreateGroupPage() {
                   onChange={(e) => setFamilyName(e.target.value)}
                   placeholder={copy.userPlaceholder}
                   maxLength={50}
-                  className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent"
+                  className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent"
                   disabled={isSubmitting}
                 />
                 <p className="text-xs text-muted-foreground mt-1">
@@ -357,7 +357,7 @@ export default function CreateGroupPage() {
               Ya tienes un codigo de invitacion?{" "}
               <Link
                 href="/join"
-                className="text-bondi-blue-400 hover:underline"
+                className="text-primary hover:underline"
               >
                 Unirse a grupo
               </Link>

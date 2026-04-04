@@ -54,7 +54,7 @@ export function GroupHeader({
       {/* Back navigation */}
       <Link
         href="/groups"
-        className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-bondi-blue-500 mb-4 transition"
+        className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary mb-4 transition"
       >
         <ArrowLeft size={16} />
         Volver a Grupos
@@ -62,8 +62,8 @@ export function GroupHeader({
 
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="bg-bondi-blue-100 p-2 rounded-lg dark:bg-bondi-blue-600">
-            <Users className="w-6 h-6 text-bondi-blue-500 dark:text-bondi-blue-200" />
+          <div className="bg-primary/15 p-2 rounded-lg">
+            <Users className="w-6 h-6 text-primary" />
           </div>
           <div>
             <h2 className="text-2xl font-bold text-foreground">{groupName}</h2>
@@ -74,7 +74,7 @@ export function GroupHeader({
               <span className="text-muted-foreground">·</span>
               <button
                 onClick={handleCopyCode}
-                className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-bondi-blue-500 transition"
+                className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition"
                 title="Copiar código"
               >
                 <span className="font-mono font-medium">{inviteCode}</span>

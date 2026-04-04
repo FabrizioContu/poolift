@@ -38,7 +38,7 @@ export default function JoinPage() {
   return (
     <main
       id="main-content"
-      className="min-h-screen bg-linear-to-b from-bondi-blue-50 to-background py-12 px-4"
+      className="min-h-screen bg-linear-to-b from-primary/10 to-background py-12 px-4"
     >
       <div className="max-w-md mx-auto">
         <Link
@@ -98,7 +98,7 @@ export default function JoinPage() {
             ¿No tienes código?{" "}
             <Link
               href="/create-group"
-              className="text-bondi-blue-400 hover:underline"
+              className="text-primary hover:underline"
             >
               Crear un grupo nuevo
             </Link>

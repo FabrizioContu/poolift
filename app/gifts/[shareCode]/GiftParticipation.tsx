@@ -405,8 +405,8 @@ export function GiftParticipation({
     return (
       <div className="bg-background rounded-2xl shadow-xl p-6 md:p-8">
         <div className="text-center">
-          <div className="bg-bondi-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Users className="text-bondi-blue-500" size={32} />
+          <div className="bg-primary/15 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Users className="text-primary" size={32} />
           </div>
           <h3 className="text-xl font-bold mb-2 text-foreground">
             Tu familia ya está representada
@@ -441,7 +441,7 @@ export function GiftParticipation({
               <button
                 key={p.id}
                 onClick={() => handleClaimRepresentation(p.family_name)}
-                className="text-xs bg-background border border-border rounded-full px-3 py-1 text-muted-foreground hover:border-bondi-blue-300 hover:text-bondi-blue-600 transition-colors"
+                className="text-xs bg-background border border-border rounded-full px-3 py-1 text-muted-foreground hover:border-primary/50 hover:text-primary transition-colors"
               >
                 Soy de {p.family_name} →
               </button>
@@ -460,7 +460,7 @@ export function GiftParticipation({
             value={familyName}
             onChange={(e) => setFamilyName(e.target.value)}
             placeholder="ej: Familia García"
-            className="w-full px-4 py-3 text-muted-foreground border border-border rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent"
+            className="w-full px-4 py-3 text-muted-foreground border border-border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent"
             disabled={loading}
             onKeyDown={(e) => {
               if (e.key === "Enter") {
@@ -480,7 +480,7 @@ export function GiftParticipation({
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="ej: familia@email.com"
-            className="w-full px-4 py-3 text-muted-foreground border border-border rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent"
+            className="w-full px-4 py-3 text-muted-foreground border border-border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent"
             disabled={loading}
           />
           <p className="text-xs text-muted-foreground mt-1">

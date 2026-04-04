@@ -12,11 +12,11 @@ export function Badge({
   className = "",
 }: BadgeProps) {
   const variantStyles = {
-    gray: "bg-gray-100 text-gray-700 dark:bg-bondi-blue-700 dark:text-bondi-blue-200",
+    gray: "bg-secondary text-secondary-foreground",
     yellow: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-300",
     green: "bg-emerald-100 text-emerald-800 dark:bg-emerald-800 dark:text-emerald-300",
     red: "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300",
-    blue: "bg-bondi-blue-100 text-bondi-blue-700 dark:bg-bondi-blue-600 dark:text-bondi-blue-100",
+    blue: "bg-primary/15 text-primary",
     purple: "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300",
   };
 

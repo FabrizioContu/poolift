@@ -78,10 +78,10 @@ export function OnboardingGuide({
   return (
     <div className="max-w-xl mx-auto">
       <div className="text-center mb-8">
-        <h2 className="text-2xl font-bold text-foreground mb-2 dark:text-bondi-blue-50">
+        <h2 className="text-2xl font-bold text-foreground mb-2">
           ¡Grupo creado! ¿Qué sigue?
         </h2>
-        <p className="text-muted-foreground dark:text-bondi-blue-200">
+        <p className="text-muted-foreground">
           Sigue estos pasos para organizar la primera fiesta.
         </p>
       </div>
@@ -123,9 +123,9 @@ function StepCard({ step, onAction }: { step: Step; onAction?: () => void }) {
     <div
       className={`
         flex items-start gap-4 p-4 rounded-lg border transition
-        ${isActive ? "border-bondi-blue-200 bg-bondi-blue-50 dark:border-bondi-blue-600 dark:bg-bondi-blue-700" : ""}
+        ${isActive ? "border-primary/40 bg-primary/10" : ""}
         ${isCompleted ? "border-emerald-200 bg-emerald-50 dark:border-ocean-mist-400 dark:bg-ocean-mist-800" : ""}
-        ${isLocked ? "border-border bg-muted opacity-60 dark:border-bondi-blue-700 dark:bg-bondi-blue-800" : ""}
+        ${isLocked ? "border-border bg-muted opacity-60" : ""}
       `}
     >
       {/* Step indicator */}
@@ -133,8 +133,8 @@ function StepCard({ step, onAction }: { step: Step; onAction?: () => void }) {
         className={`
           shrink-0 w-10 h-10 rounded-full flex items-center justify-center
           ${isCompleted ? "bg-emerald-400 text-white" : ""}
-          ${isActive ? "bg-bondi-blue-400 text-white dark:bg-bondi-blue-300 dark:text-bondi-blue-800" : ""}
-          ${isLocked ? "bg-muted text-muted-foreground/60 dark:bg-bondi-blue-700 dark:text-bondi-blue-400" : ""}
+          ${isActive ? "bg-primary text-primary-foreground" : ""}
+          ${isLocked ? "bg-muted text-muted-foreground/60" : ""}
         `}
       >
         {isCompleted ? <Check size={20} /> : <Icon size={20} />}
@@ -143,12 +143,12 @@ function StepCard({ step, onAction }: { step: Step; onAction?: () => void }) {
       {/* Content */}
       <div className="flex-1 min-w-0">
         <h3
-          className={`font-semibold ${isLocked ? "text-muted-foreground/60 dark:text-bondi-blue-500" : "text-foreground dark:text-bondi-blue-50"}`}
+          className={`font-semibold ${isLocked ? "text-muted-foreground/60" : "text-foreground"}`}
         >
           {step.title}
         </h3>
         <p
-          className={`text-sm mt-0.5 ${isLocked ? "text-muted-foreground/60 dark:text-bondi-blue-500" : "text-muted-foreground dark:text-bondi-blue-200"}`}
+          className={`text-sm mt-0.5 ${isLocked ? "text-muted-foreground/60" : "text-muted-foreground"}`}
         >
           {step.description}
         </p>
@@ -164,7 +164,7 @@ function StepCard({ step, onAction }: { step: Step; onAction?: () => void }) {
         {isCompleted && step.number === 1 && onAction && (
           <button
             onClick={onAction}
-            className="mt-2 text-sm text-bondi-blue-500 hover:text-bondi-blue-600 font-medium flex items-center gap-1 transition dark:text-bondi-blue-200 dark:hover:text-bondi-blue-50"
+            className="mt-2 text-sm text-primary hover:text-primary/70 font-medium flex items-center gap-1 transition"
           >
             Añadir otro
             <ChevronRight size={14} />

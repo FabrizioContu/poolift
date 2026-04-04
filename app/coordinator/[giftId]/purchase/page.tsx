@@ -167,7 +167,7 @@ export default function PurchasePage({
     return (
       <div className="min-h-screen bg-muted/30 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-bondi-blue-400 mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
           <p className="text-muted-foreground mt-4">Cargando...</p>
         </div>
       </div>
@@ -217,7 +217,7 @@ export default function PurchasePage({
       <div className="min-h-screen bg-muted/30 flex items-center justify-center">
         <div className="text-center px-4">
           <ShoppingCart
-            className="mx-auto text-tropical-teal-400 mb-4"
+            className="mx-auto text-muted-foreground mb-4"
             size={64}
           />
           <h1 className="text-2xl font-bold text-foreground mb-2">
@@ -288,7 +288,7 @@ export default function PurchasePage({
 
         <div className="bg-background rounded-2xl shadow-xl p-6 md:p-8">
           <div className="flex items-center gap-3 mb-6">
-            <ShoppingCart className="text-bondi-blue-400" size={32} />
+            <ShoppingCart className="text-primary" size={32} />
             <div>
               <h1 className="text-2xl font-bold text-foreground ">
                 Finalizar Compra
@@ -302,7 +302,7 @@ export default function PurchasePage({
           </div>
 
           {/* Summary */}
-          <div className="bg-bondi-blue-50 p-4 rounded-lg mb-6">
+          <div className="bg-primary/10 p-4 rounded-lg mb-6">
             <p className="font-semibold text-lg mb-2">{gift.proposal?.name}</p>
             <div className="flex justify-between text-sm text-muted-foreground">
               <span>Precio propuesto:</span>
@@ -330,7 +330,7 @@ export default function PurchasePage({
                   value={finalPrice}
                   onChange={(e) => setFinalPrice(e.target.value)}
                   placeholder="ej: 75.98"
-                  className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent pr-12"
+                  className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent pr-12"
                   required
                 />
                 <span className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground">
@@ -355,7 +355,7 @@ export default function PurchasePage({
                 type="file"
                 accept="image/*,application/pdf"
                 onChange={handleFileChange}
-                className="w-full text-sm text-muted-foreground file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-bondi-blue-50 file:text-bondi-blue-600 hover:file:bg-bondi-blue-100"
+                className="w-full text-sm text-muted-foreground file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-primary/10 file:text-primary hover:file:bg-primary/20"
               />
 
               {preview && (
@@ -388,7 +388,7 @@ export default function PurchasePage({
                 onChange={(e) => setComment(e.target.value)}
                 placeholder="ej: Comprado en Amazon con descuento del 20%"
                 rows={3}
-                className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent resize-none"
+                className="w-full px-4 py-3 border border-border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent resize-none"
               />
             </div>
 

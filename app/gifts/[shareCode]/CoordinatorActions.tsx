@@ -128,8 +128,8 @@ export function CoordinatorActions({
 
   return (
     <>
-      <div className="bg-bondi-blue-50 rounded-2xl p-6 mb-6">
-        <div className="flex items-center gap-2 text-bondi-blue-700 mb-4">
+      <div className="bg-primary/10 rounded-2xl p-6 mb-6">
+        <div className="flex items-center gap-2 text-primary mb-4">
           <Settings size={20} />
           <span className="font-semibold">Panel de Coordinador</span>
         </div>
@@ -199,7 +199,7 @@ export function CoordinatorActions({
               <select
                 value={mergeKeep}
                 onChange={(e) => setMergeKeep(e.target.value)}
-                className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent"
+                className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent"
               >
                 {participantNames.map((name) => (
                   <option key={name} value={name}>
@@ -216,7 +216,7 @@ export function CoordinatorActions({
               <select
                 value={mergeRemove}
                 onChange={(e) => setMergeRemove(e.target.value)}
-                className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-bondi-blue-400 focus:border-transparent"
+                className="w-full px-3 py-2 border border-border rounded-lg focus:ring-2 focus:ring-ring focus:border-transparent"
               >
                 {participantNames.map((name) => (
                   <option key={name} value={name}>
@@ -227,7 +227,7 @@ export function CoordinatorActions({
             </div>
 
             {mergeKeep === mergeRemove && (
-              <p className="text-sm text-tropical-teal-500">
+              <p className="text-sm text-muted-foreground">
                 Selecciona dos participantes distintos
               </p>
             )}
@@ -251,7 +251,7 @@ export function CoordinatorActions({
                   !mergeRemove ||
                   mergeKeep === mergeRemove
                 }
-                className="flex-1 bg-bondi-blue-500 hover:bg-bondi-blue-600"
+                className="flex-1"
               >
                 {mergeLoading ? "Fusionando..." : "Fusionar"}
               </Button>
