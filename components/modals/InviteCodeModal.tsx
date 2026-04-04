@@ -73,7 +73,7 @@ export function InviteCodeModal({
 
         <div className="bg-muted rounded-lg p-4 mb-6">
           <p className="text-sm text-muted-foreground mb-2">Código de invitación</p>
-          <p className="text-3xl font-mono font-bold text-bondi-blue-500 tracking-wider">
+          <p className="text-3xl font-mono font-bold text-primary tracking-wider">
             {inviteCode}
           </p>
         </div>

@@ -24,7 +24,7 @@ function AuthCompleteContent() {
 
   return (
     <div className="text-center space-y-3">
-      <div className="w-8 h-8 border-4 border-bondi-blue-400 border-t-transparent rounded-full animate-spin mx-auto" />
+      <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto" />
       <p className="text-gray-600 text-sm">Preparando tu cuenta...</p>
     </div>
   )
@@ -36,7 +36,7 @@ export default function AuthCompletePage() {
       <Suspense
         fallback={
           <div className="text-center space-y-3">
-            <div className="w-8 h-8 border-4 border-bondi-blue-400 border-t-transparent rounded-full animate-spin mx-auto" />
+            <div className="w-8 h-8 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto" />
             <p className="text-gray-600 text-sm">Preparando tu cuenta...</p>
           </div>
         }

@@ -150,7 +150,7 @@ export default async function PartyDetailPage({
         <p className="text-red-500">Fiesta no encontrada</p>
         <Link
           href={`/dashboard/${groupId}`}
-          className="text-bondi-blue-400 hover:underline mt-4 inline-block"
+          className="text-primary hover:underline mt-4 inline-block"
         >
           Volver al dashboard
         </Link>

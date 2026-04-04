@@ -26,9 +26,9 @@ const variantStyles: Record<
     iconClass: "text-yellow-600 dark:text-yellow-400",
   },
   info: {
-    container: "bg-bondi-blue-50 border-bondi-blue-200 text-bondi-blue-600 dark:bg-bondi-blue-700 dark:border-bondi-blue-600 dark:text-bondi-blue-200",
+    container: "bg-primary/10 border-primary/30 text-primary",
     icon: Info,
-    iconClass: "text-bondi-blue-400 dark:text-bondi-blue-300",
+    iconClass: "text-primary",
   },
 };
 

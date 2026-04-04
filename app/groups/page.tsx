@@ -217,7 +217,7 @@ export default function GroupsPage() {
             {!isAnonymous && (
               <Link
                 href="/create-group"
-                className="flex items-center gap-2 px-4 py-2 rounded-lg font-bold transition bg-bondi-blue-400 text-white hover:bg-bondi-blue-500"
+                className="flex items-center gap-2 px-4 py-2 rounded-lg font-bold transition bg-primary text-primary-foreground hover:bg-primary/90"
               >
                 <Plus size={18} />
                 Crear Grupo
@@ -282,7 +282,7 @@ export default function GroupsPage() {
           >
             <div
               aria-hidden="true"
-              className="animate-spin rounded-full h-12 w-12 border-b-2 border-bondi-blue-400 mx-auto"
+              className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"
             ></div>
             <p className="text-muted-foreground mt-4">Cargando grupos...</p>
           </div>
@@ -381,7 +381,7 @@ export default function GroupsPage() {
                 <div className="flex gap-3 justify-center mt-4">
                   <Link
                     href="/create-group"
-                    className="px-4 py-2 rounded-lg font-bold transition bg-bondi-blue-400 text-white hover:bg-bondi-blue-500"
+                    className="px-4 py-2 rounded-lg font-bold transition bg-primary text-primary-foreground hover:bg-primary/90"
                   >
                     Crear Grupo
                   </Link>
@@ -458,7 +458,7 @@ export default function GroupsPage() {
               ¿Tienes un código de invitación?{" "}
               <Link
                 href="/join"
-                className="text-bondi-blue-500 hover:underline font-medium"
+                className="text-primary hover:underline font-medium"
               >
                 Únete a un grupo
               </Link>

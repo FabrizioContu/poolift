@@ -525,7 +525,7 @@ La participación está cerrada. Mas info: ${giftUrl}`;
                 {recipientName}
               </p>
               {participantCount > 0 && (
-                <p className="text-sm text-tropical-teal-500">
+                <p className="text-sm text-muted-foreground">
                   Hay {participantCount} participante
                   {participantCount > 1 ? "s" : ""} apuntado
                   {participantCount > 1 ? "s" : ""}.
@@ -605,7 +605,7 @@ La participación está cerrada. Mas info: ${giftUrl}`;
             </div>
 
             {mergeKeep === mergeRemove && (
-              <p className="text-sm text-tropical-teal-500">
+              <p className="text-sm text-muted-foreground">
                 Selecciona dos participantes distintos
               </p>
             )}

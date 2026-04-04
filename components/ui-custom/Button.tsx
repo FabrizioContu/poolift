@@ -14,9 +14,9 @@ export function Button({
 
   const variantStyles = {
     primary:
-      "bg-bondi-blue-400 text-white hover:bg-bondi-blue-500 dark:bg-bondi-blue-500 dark:hover:bg-bondi-blue-400",
+      "bg-primary text-primary-foreground hover:bg-primary/90",
     secondary:
-      "bg-gray-200 text-gray-800 hover:bg-gray-300 dark:bg-bondi-blue-800 dark:text-bondi-blue-100 dark:hover:bg-bondi-blue-600",
+      "bg-secondary text-secondary-foreground hover:bg-secondary/80",
     danger:
       "bg-red-500 text-white hover:bg-red-600 dark:bg-red-700 dark:hover:bg-red-600",
   };

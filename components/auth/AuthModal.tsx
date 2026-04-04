@@ -182,8 +182,8 @@ export function AuthModal({
   const tabClass = (tab: 'login' | 'register') =>
     `py-3 px-1 border-b-2 font-medium text-sm transition ${
       activeTab === tab
-        ? 'border-bondi-blue-400 text-bondi-blue-500 dark:border-bondi-blue-200 dark:text-bondi-blue-200'
-        : 'border-transparent text-muted-foreground hover:text-foreground hover:border-border dark:text-bondi-blue-300 dark:hover:text-bondi-blue-100 dark:hover:border-bondi-blue-500'
+        ? 'border-primary text-primary'
+        : 'border-transparent text-muted-foreground hover:text-foreground hover:border-border'
     }`
 
   const title = activeTab === 'login' ? 'Iniciar sesion' : 'Crear cuenta'
@@ -192,10 +192,10 @@ export function AuthModal({
     <Modal isOpen={isOpen} onClose={onClose} title={title}>
       {/* Headline (para nudge en Phase 2) */}
       {headline && (
-        <div className="mb-4 p-3 bg-bondi-blue-50 border border-bondi-blue-200 rounded-lg">
-          <p className="text-sm font-medium text-bondi-blue-700 dark:text-bondi-blue-200">{headline}</p>
+        <div className="mb-4 p-3 bg-primary/10 border border-primary/30 rounded-lg">
+          <p className="text-sm font-medium text-primary">{headline}</p>
           {subheadline && (
-            <p className="text-xs text-bondi-blue-500 mt-1 dark:text-bondi-blue-300">{subheadline}</p>
+            <p className="text-xs text-primary/70 mt-1">{subheadline}</p>
           )}
         </div>
       )}
@@ -273,7 +273,7 @@ export function AuthModal({
               <div className="text-center">
                 <Link
                   href="/auth/reset-password"
-                  className="text-sm text-bondi-blue-500 hover:underline"
+                  className="text-sm text-primary hover:underline"
                   onClick={onClose}
                 >
                   ¿Olvidaste tu contraseña?
@@ -339,7 +339,7 @@ export function AuthModal({
             type="button"
             onClick={handleGoogleLogin}
             disabled={isSubmitting}
-            className="w-full flex items-center justify-center gap-3 px-4 py-2 border border-border rounded-lg text-foreground hover:bg-muted transition font-medium disabled:opacity-50 disabled:cursor-not-allowed dark:border-bondi-blue-600 dark:text-bondi-blue-200 dark:hover:bg-bondi-blue-600"
+            className="w-full flex items-center justify-center gap-3 px-4 py-2 border border-border rounded-lg text-foreground hover:bg-muted transition font-medium disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24">
               <path

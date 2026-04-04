@@ -79,27 +79,27 @@ export function UserMenu() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setShowDropdown((prev) => !prev)}
-        className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-muted transition text-foreground dark:text-bondi-blue-200 dark:hover:bg-bondi-blue-700"
+        className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-muted transition text-foreground"
         aria-expanded={showDropdown}
         aria-haspopup="true"
         aria-label={name}
       >
-        <div className="w-7 h-7 rounded-full bg-bondi-blue-400 text-white flex items-center justify-center text-sm font-bold">
+        <div className="w-7 h-7 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-sm font-bold">
           {initial}
         </div>
         {/* <span className="text-sm font-medium hidden sm:inline">{name}</span> */}
-        <ChevronDown className="w-4 h-4 text-muted-foreground dark:text-bondi-blue-300" />
+        <ChevronDown className="w-4 h-4 text-muted-foreground" />
       </button>
 
       {showDropdown && (
-        <div className="absolute right-0 mt-1 w-48 bg-background border border-border rounded-lg shadow-lg z-50 py-1 dark:bg-bondi-blue-700 dark:border-bondi-blue-600">
-          <div className="px-4 py-2 border-b border-border dark:border-bondi-blue-600">
+        <div className="absolute right-0 mt-1 w-48 bg-card border border-border rounded-lg shadow-lg z-50 py-1">
+          <div className="px-4 py-2 border-b border-border">
             <div className="flex items-center gap-2">
-              <User className="w-4 h-4 text-muted-foreground dark:text-bondi-blue-300" />
-              <span className="text-sm text-foreground truncate dark:text-bondi-blue-200">{name}</span>
+              <User className="w-4 h-4 text-muted-foreground" />
+              <span className="text-sm text-foreground truncate">{name}</span>
             </div>
             {user?.email && name !== user.email && (
-              <p className="text-xs text-muted-foreground/60 mt-0.5 truncate dark:text-bondi-blue-400">
+              <p className="text-xs text-muted-foreground/60 mt-0.5 truncate">
                 {user.email}
               </p>
             )}
@@ -107,7 +107,7 @@ export function UserMenu() {
           <button
             onClick={handleSignOut}
             disabled={signingOut}
-            className="w-full flex items-center gap-2 px-4 py-2 text-sm text-foreground hover:bg-muted transition disabled:opacity-50 dark:text-bondi-blue-200 dark:hover:bg-bondi-blue-600"
+            className="w-full flex items-center gap-2 px-4 py-2 text-sm text-foreground hover:bg-muted transition disabled:opacity-50"
           >
             <LogOut className="w-4 h-4" />
             {signingOut ? "Cerrando sesión..." : "Cerrar sesión"}
