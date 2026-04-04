@@ -25,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" suppressHydrationWarning>
+    <html lang="es" suppressHydrationWarning className={`${poppins.variable} ${geistMono.variable}`}>
       <head>
         {/* Anti-FOUC: apply dark class before first paint */}
         <script
@@ -34,9 +34,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body
-        className={`${poppins.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className="antialiased">
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-4 focus:left-4 focus:px-4 focus:py-2 focus:bg-background focus:text-primary focus:rounded-lg focus:shadow-lg"
