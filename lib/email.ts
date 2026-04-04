@@ -1,6 +1,6 @@
 import { Resend } from 'resend'
 
-const FROM = 'Poolift <notificaciones@poolift.vercel.app>'
+const FROM = 'Poolift <hola@contact.poolift.app>'
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://poolift.vercel.app'
 
 // Internal helper — never throws, logs errors only
