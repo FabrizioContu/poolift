@@ -18,7 +18,6 @@ const UserMenu = dynamic(() =>
 export default function LandingPage() {
   return (
     <div className="force-light min-h-screen bg-white">
-    <div className="force-light min-h-screen bg-linear-to-b from-primary/10 to-slate-50">
       {/* Header */}
       <header className="container mx-auto px-4 py-6 ">
         <nav className="flex items-center justify-between">
