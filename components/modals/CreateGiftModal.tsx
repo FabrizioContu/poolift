@@ -121,9 +121,9 @@ Apúntate aquí: ${getGiftLink()}`;
           </p>
 
           {/* Share Code */}
-          <div className="bg-linear-to-r from-bondi-blue-50 to-purple-50 p-6 rounded-xl mb-4">
+          <div className="bg-linear-to-r from-primary/10 to-purple-50 p-6 rounded-xl mb-4">
             <p className="text-sm text-muted-foreground mb-2">Código del regalo:</p>
-            <code className="text-3xl font-mono font-bold text-bondi-blue-500">
+            <code className="text-3xl font-mono font-bold text-primary">
               {shareCode}
             </code>
           </div>
@@ -172,13 +172,13 @@ Apúntate aquí: ${getGiftLink()}`;
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Crear Regalo">
       <div className="text-center">
-        <Gift className="mx-auto text-bondi-blue-400 mb-4" size={48} />
+        <Gift className="mx-auto text-primary mb-4" size={48} />
         <h3 className="text-xl font-bold mb-2 text-foreground">Crear Regalo</h3>
         <p className="text-muted-foreground mb-4">Se creará un regalo basado en:</p>
 
-        <div className="bg-bondi-blue-50 p-4 rounded-lg mb-4 dark:bg-bondi-blue-700">
+        <div className="bg-primary/10 p-4 rounded-lg mb-4">
           <p className="font-semibold">{proposalName}</p>
-          <p className="text-2xl font-bold text-bondi-blue-500 mt-2">
+          <p className="text-2xl font-bold text-primary mt-2">
             {formatPrice(totalPrice)}
           </p>
         </div>

@@ -165,8 +165,8 @@ export function CloseParticipationButton({
               </div>
             </div>
 
-            <div className="p-4 bg-bondi-blue-50 rounded-lg">
-              <div className="flex items-center gap-2 text-bondi-blue-700 mb-2">
+            <div className="p-4 bg-primary/10 rounded-lg">
+              <div className="flex items-center gap-2 text-primary mb-2">
                 <Users size={18} />
                 <span className="font-medium">
                   {participantCount} familias participantes
@@ -174,11 +174,11 @@ export function CloseParticipationButton({
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-muted-foreground">Total del regalo:</span>
-                <span className="font-bold text-bondi-blue-500">
+                <span className="font-bold text-primary">
                   {formatPrice(totalPrice)}
                 </span>
               </div>
-              <div className="flex justify-between items-center mt-2 pt-2 border-t border-bondi-blue-200">
+              <div className="flex justify-between items-center mt-2 pt-2 border-t border-border">
                 <span className="text-gray-700">Precio por familia:</span>
                 <span className="font-bold text-ocean-mist-400 text-lg">
                   {estimatedPricePerFamily}€
@@ -262,7 +262,7 @@ export function CloseParticipationButton({
                   {participantNames.map((name, index) => (
                     <span
                       key={index}
-                      className="bg-bondi-blue-100 text-bondi-blue-700 text-xs px-2 py-1 rounded-full"
+                      className="bg-primary/15 text-primary text-xs px-2 py-1 rounded-full"
                     >
                       {name}
                     </span>

@@ -18,7 +18,7 @@ export function Tabs({ tabs, defaultTab, children }: TabsProps) {
 
   return (
     <div>
-      <div className="border-b border-gray-200 dark:border-bondi-blue-700">
+      <div className="border-b border-border">
         <nav className="flex gap-4">
           {tabs.map((tab) => (
             <button
@@ -26,8 +26,8 @@ export function Tabs({ tabs, defaultTab, children }: TabsProps) {
               onClick={() => setActiveTab(tab.id)}
               className={`py-3 px-1 border-b-2 font-medium text-sm transition ${
                 activeTab === tab.id
-                  ? "border-bondi-blue-400 text-bondi-blue-500 dark:border-bondi-blue-300 dark:text-bondi-blue-200"
-                  : "border-transparent text-gray-700 hover:text-gray-700 hover:border-gray-300 dark:text-bondi-blue-300 dark:hover:text-bondi-blue-100 dark:hover:border-bondi-blue-500"
+                  ? "border-primary text-primary"
+                  : "border-transparent text-muted-foreground hover:text-foreground hover:border-border"
               }`}
             >
               {tab.label}

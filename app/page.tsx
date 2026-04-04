@@ -18,11 +18,12 @@ const UserMenu = dynamic(() =>
 export default function LandingPage() {
   return (
     <div className="force-light min-h-screen bg-white">
+    <div className="force-light min-h-screen bg-linear-to-b from-primary/10 to-slate-50">
       {/* Header */}
       <header className="container mx-auto px-4 py-6 ">
         <nav className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Gift className="text-bondi-blue-500" size={32} />
+            <Gift className="text-primary" size={32} />
             <span className="text-2xl font-bold text-foreground">Poolift</span>
           </div>
           <div className="flex items-center gap-4">
@@ -55,7 +56,7 @@ export default function LandingPage() {
 
             <Link
               href="/start"
-              className="inline-flex items-center px-10 py-4 text-lg rounded-lg font-bold transition bg-bondi-blue-400 text-white hover:bg-bondi-blue-500"
+              className="inline-flex items-center px-10 py-4 text-lg rounded-lg font-bold transition bg-primary text-primary-foreground hover:bg-primary/90"
             >
               Organiza tu regalo
               <ArrowRight className="ml-2 inline" size={20} />
@@ -104,8 +105,8 @@ export default function LandingPage() {
 
             {/* Coordinacion */}
             <div className="bg-card p-6 md:p-8 rounded-xl shadow-sm border border-border hover:shadow-md transition">
-              <div className="w-14 h-14 md:w-16 md:h-16 bg-bondi-blue-100 rounded-full flex items-center justify-center mb-4">
-                <Users className="text-bondi-blue-500" size={28} />
+              <div className="w-14 h-14 md:w-16 md:h-16 bg-primary/15 rounded-full flex items-center justify-center mb-4">
+                <Users className="text-primary" size={28} />
               </div>
               <h3 className="text-lg md:text-xl font-semibold mb-2 text-foreground">
                 Coordinado
@@ -146,7 +147,7 @@ export default function LandingPage() {
               {/* Steps */}
               <div className="space-y-6">
                 <div className="flex gap-4 items-start bg-card p-6 rounded-xl shadow-sm border border-border">
-                  <span className="shrink-0 w-10 h-10 bg-bondi-blue-500 text-white rounded-full flex items-center justify-center text-lg font-bold">
+                  <span className="shrink-0 w-10 h-10 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-lg font-bold">
                     1
                   </span>
                   <div>
@@ -161,7 +162,7 @@ export default function LandingPage() {
                 </div>
 
                 <div className="flex gap-4 items-start bg-card p-6 rounded-xl shadow-sm border border-border">
-                  <span className="shrink-0 w-10 h-10 bg-bondi-blue-500 text-white rounded-full flex items-center justify-center text-lg font-bold">
+                  <span className="shrink-0 w-10 h-10 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-lg font-bold">
                     2
                   </span>
                   <div>
@@ -176,7 +177,7 @@ export default function LandingPage() {
                 </div>
 
                 <div className="flex gap-4 items-start bg-card p-6 rounded-xl shadow-sm border border-border">
-                  <span className="shrink-0 w-10 h-10 bg-bondi-blue-500 text-white rounded-full flex items-center justify-center text-lg font-bold">
+                  <span className="shrink-0 w-10 h-10 bg-primary text-primary-foreground rounded-full flex items-center justify-center text-lg font-bold">
                     3
                   </span>
                   <div>
@@ -192,9 +193,9 @@ export default function LandingPage() {
               </div>
 
               {/* Fork: two options */}
-              <div className="mt-12 p-6 bg-card rounded-xl border-2 border-bondi-blue-100">
+              <div className="mt-12 p-6 bg-card rounded-xl border-2 border-primary/20">
                 <div className="flex items-center gap-2 mb-4">
-                  <Sparkles className="text-bondi-blue-500" size={24} />
+                  <Sparkles className="text-primary" size={24} />
                   <h3 className="text-lg font-semibold text-foreground">
                     Desde donde quieres empezar?
                   </h3>
@@ -216,9 +217,9 @@ export default function LandingPage() {
                   </Link>
 
                   <Link href="/create-group" className="block">
-                    <div className="p-4 border border-border rounded-lg hover:border-bondi-blue-300 hover:bg-bondi-blue-50 transition group">
+                    <div className="p-4 border border-border rounded-lg hover:border-primary/40 hover:bg-primary/10 transition group">
                       <div className="flex items-center gap-2 mb-2">
-                        <Users className="text-bondi-blue-500" size={20} />
+                        <Users className="text-primary" size={20} />
                         <span className="font-medium text-foreground">
                           Crear un grupo
                         </span>
@@ -247,7 +248,7 @@ export default function LandingPage() {
 
             <Link
               href="/start"
-              className="inline-flex items-center px-10 py-4 text-lg rounded-lg font-bold transition bg-bondi-blue-400 text-white hover:bg-bondi-blue-500"
+              className="inline-flex items-center px-10 py-4 text-lg rounded-lg font-bold transition bg-primary text-primary-foreground hover:bg-primary/90"
             >
               Empezar
               <ArrowRight className="ml-2 inline" size={20} />
@@ -257,7 +258,7 @@ export default function LandingPage() {
               Ya tienes un codigo?{" "}
               <Link
                 href="/join"
-                className="text-bondi-blue-500 hover:underline"
+                className="text-primary hover:underline"
               >
                 Unirse a grupo
               </Link>

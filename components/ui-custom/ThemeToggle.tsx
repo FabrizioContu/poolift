@@ -19,7 +19,7 @@ export function ThemeToggle({ className = '' }: { className?: string }) {
     <button
       onClick={toggle}
       aria-label={dark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
-      className={`p-1.5 rounded transition text-gray-700 hover:bg-gray-100 dark:text-bondi-blue-200 dark:hover:bg-bondi-blue-700 ${className}`}
+      className={`p-1.5 rounded transition text-foreground hover:bg-muted ${className}`}
     >
       {dark ? <Sun size={18} /> : <Moon size={18} />}
     </button>
