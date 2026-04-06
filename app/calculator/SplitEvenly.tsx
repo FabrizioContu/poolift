@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui-custom";
-import { splitEvenly, type SplitResult } from "@/lib/calculadora";
+import { splitEvenly, type SplitResult } from "@/lib/calculator";
 
-export function SplitSimple() {
+export function SplitEvenly() {
   const [total, setTotal] = useState("");
   const [count, setCount] = useState("2");
   const [names, setNames] = useState<string[]>(["", ""]);

@@ -3,15 +3,15 @@
 import Link from "next/link";
 import { ArrowLeft, Calculator } from "lucide-react";
 import { Tabs } from "@/components/ui-custom";
-import { SplitSimple } from "./SplitSimple";
-import { LiquidacionGastos } from "./LiquidacionGastos";
+import { SplitEvenly } from "./SplitEvenly";
+import { ExpenseSettlement } from "./ExpenseSettlement";
 
 const TABS = [
   { id: "split", label: "Dividir gasto" },
   { id: "liquidar", label: "Liquidar gastos" },
 ];
 
-export default function CalculadoraPage() {
+export default function CalculatorPage() {
   return (
     <div className="force-light min-h-screen bg-white">
       <main className="container mx-auto px-4 py-12 max-w-lg">
@@ -39,8 +39,8 @@ export default function CalculadoraPage() {
           <Tabs tabs={TABS} defaultTab="split">
             {(activeTab) => (
               <>
-                {activeTab === "split" && <SplitSimple />}
-                {activeTab === "liquidar" && <LiquidacionGastos />}
+                {activeTab === "split" && <SplitEvenly />}
+                {activeTab === "liquidar" && <ExpenseSettlement />}
               </>
             )}
           </Tabs>
