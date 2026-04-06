@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Trash2, ArrowRight, CheckCircle } from "lucide-react";
 import { Button, IconButton } from "@/components/ui-custom";
-import { minimizeDebts, type Transaction } from "@/lib/calculadora";
+import { minimizeDebts, type Transaction } from "@/lib/calculator";
 
 interface Row {
   name: string;
@@ -15,7 +15,7 @@ const INITIAL_ROWS: Row[] = [
   { name: "", paid: "" },
 ];
 
-export function LiquidacionGastos() {
+export function ExpenseSettlement() {
   const [rows, setRows] = useState<Row[]>(INITIAL_ROWS);
   const [transactions, setTransactions] = useState<Transaction[] | null>(null);
   const [error, setError] = useState<string | null>(null);

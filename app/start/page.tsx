@@ -118,7 +118,7 @@ export default function StartPage() {
 
         {/* Calculator tool */}
         <div className="max-w-3xl mx-auto mt-6">
-          <Link href="/calculadora" className="block group">
+          <Link href="/calculator" className="block group">
             <div className="bg-background px-6 py-4 rounded-2xl border-2 border-border hover:border-orange-400 hover:shadow-lg transition-all flex items-center gap-4">
               <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
                 <Calculator className="text-orange-500" size={24} />
