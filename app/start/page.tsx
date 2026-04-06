@@ -4,16 +4,18 @@ import {
   Gift,
   Users,
   ArrowLeft,
+  ArrowRight,
   Sparkles,
   Calendar,
   Heart,
+  Calculator,
 } from "lucide-react";
 
 export const metadata: Metadata = { title: "Empezar | Poolift" };
 
 export default function StartPage() {
   return (
-    <div className="force-light min-h-screen bg-linear-to-b from-primary/10 to-slate-50">
+    <div className="force-light min-h-screen bg-white">
       {/* Header */}
       <header className="container mx-auto px-4 py-6">
         <nav className="flex items-center justify-between">
@@ -110,6 +112,29 @@ export default function StartPage() {
               <span className="block w-full px-4 py-2 rounded-lg font-bold transition bg-primary text-primary-foreground text-center">
                 Crear grupo
               </span>
+            </div>
+          </Link>
+        </div>
+
+        {/* Calculator tool */}
+        <div className="max-w-3xl mx-auto mt-6">
+          <Link href="/calculadora" className="block group">
+            <div className="bg-background px-6 py-4 rounded-2xl border-2 border-border hover:border-orange-400 hover:shadow-lg transition-all flex items-center gap-4">
+              <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                <Calculator className="text-orange-500" size={24} />
+              </div>
+              <div className="flex-1">
+                <h2 className="text-base font-bold text-foreground">
+                  Calculadora de gastos
+                </h2>
+                <p className="text-muted-foreground text-sm">
+                  Divide un gasto entre varios o liquida deudas entre el grupo.
+                </p>
+              </div>
+              <ArrowRight
+                size={18}
+                className="text-muted-foreground/40 group-hover:text-orange-400 transition shrink-0"
+              />
             </div>
           </Link>
         </div>
