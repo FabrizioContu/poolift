@@ -74,6 +74,16 @@ async function getParties(groupId: string): Promise<Party[]> {
   return data as Party[];
 }
 
+async function getFamilies(groupId: string): Promise<{ id: string; name: string }[]> {
+  const { data, error } = await supabase
+    .from("families")
+    .select("id, name")
+    .eq("group_id", groupId)
+    .order("name");
+  if (error) return [];
+  return data ?? [];
+}
+
 async function getBirthdays(groupId: string) {
   const { data, error } = await supabase
     .from("birthdays")
@@ -127,10 +137,11 @@ export default async function DashboardPage({
 }) {
   const { groupId } = await params;
 
-  const [group, parties, birthdays] = await Promise.all([
+  const [group, parties, birthdays, families] = await Promise.all([
     getGroupInfo(groupId),
     getParties(groupId),
     getBirthdays(groupId),
+    getFamilies(groupId),
   ]);
 
   if (!group) {
@@ -176,6 +187,7 @@ export default async function DashboardPage({
               parties={parties}
               birthdays={birthdays}
               groupId={groupId}
+              families={families}
             />
           </>
         )}
