@@ -5,11 +5,18 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui-custom";
 import { splitEvenly, type SplitResult } from "@/lib/calculator";
 
-export function SplitEvenly() {
+interface Props {
+  initialNames?: string[]
+}
+
+export function SplitEvenly({ initialNames }: Props = {}) {
+  const seedCount = initialNames?.length ?? 2
   const [total, setTotal] = useState("");
-  const [count, setCount] = useState("2");
-  const [names, setNames] = useState<string[]>(["", ""]);
-  const [showNames, setShowNames] = useState(false);
+  const [count, setCount] = useState(String(Math.max(seedCount, 2)));
+  const [names, setNames] = useState<string[]>(
+    initialNames?.length ? [...initialNames] : ["", ""]
+  );
+  const [showNames, setShowNames] = useState(!!initialNames?.length);
   const [result, setResult] = useState<SplitResult | null>(null);
   const [error, setError] = useState<string | null>(null);
 

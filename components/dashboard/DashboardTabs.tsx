@@ -1,10 +1,11 @@
 'use client'
 
-import { Calendar, Cake, PartyPopper } from 'lucide-react'
+import { Calendar, Cake, PartyPopper, Calculator } from 'lucide-react'
 import { Tabs } from '@/components/ui-custom/Tabs'
 import { PartyCard } from '@/components/cards/PartyCard'
 import { BirthdayList } from '@/components/birthdays/BirthdayList'
 import { EmptyState } from '@/components/ui-custom/EmptyState'
+import { GroupCalculator } from '@/components/dashboard/GroupCalculator'
 
 interface Party {
   id: string
@@ -27,9 +28,10 @@ interface DashboardTabsProps {
   parties: Party[]
   birthdays: Birthday[]
   groupId: string
+  families: { id: string; name: string }[]
 }
 
-export function DashboardTabs({ parties, birthdays, groupId }: DashboardTabsProps) {
+export function DashboardTabs({ parties, birthdays, groupId, families }: DashboardTabsProps) {
   const tabs = [
     {
       id: 'parties',
@@ -46,6 +48,15 @@ export function DashboardTabs({ parties, birthdays, groupId }: DashboardTabsProp
         <span className="flex items-center gap-2">
           <Cake size={18} />
           Cumpleanos ({birthdays.length})
+        </span>
+      ),
+    },
+    {
+      id: 'calculator',
+      label: (
+        <span className="flex items-center gap-2">
+          <Calculator size={18} />
+          Calculadora
         </span>
       ),
     },
@@ -73,6 +84,10 @@ export function DashboardTabs({ parties, birthdays, groupId }: DashboardTabsProp
 
           {activeTab === 'birthdays' && (
             <BirthdayList birthdays={birthdays} groupId={groupId} />
+          )}
+
+          {activeTab === 'calculator' && (
+            <GroupCalculator families={families} />
           )}
         </>
       )}

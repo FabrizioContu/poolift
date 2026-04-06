@@ -10,13 +10,17 @@ interface Row {
   paid: string;
 }
 
-const INITIAL_ROWS: Row[] = [
-  { name: "", paid: "" },
-  { name: "", paid: "" },
-];
+const buildRows = (names?: string[]): Row[] =>
+  names?.length
+    ? names.map((name) => ({ name, paid: "" }))
+    : [{ name: "", paid: "" }, { name: "", paid: "" }];
 
-export function ExpenseSettlement() {
-  const [rows, setRows] = useState<Row[]>(INITIAL_ROWS);
+interface Props {
+  initialParticipants?: string[]
+}
+
+export function ExpenseSettlement({ initialParticipants }: Props = {}) {
+  const [rows, setRows] = useState<Row[]>(() => buildRows(initialParticipants));
   const [transactions, setTransactions] = useState<Transaction[] | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -50,7 +54,7 @@ export function ExpenseSettlement() {
   };
 
   const handleReset = () => {
-    setRows(INITIAL_ROWS);
+    setRows(buildRows(initialParticipants));
     setTransactions(null);
     setError(null);
   };
