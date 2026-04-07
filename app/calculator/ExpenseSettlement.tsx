@@ -63,10 +63,10 @@ export function ExpenseSettlement({ initialParticipants }: Props = {}) {
     <div className="space-y-4">
       {/* Header labels */}
       <div className="flex gap-2 items-center px-1">
-        <span className="flex-1 text-xs font-medium text-muted-foreground">
+        <span className="flex-1 min-w-0 max-w-[45%] sm:max-w-none text-xs font-medium text-muted-foreground">
           Nombre
         </span>
-        <span className="w-28 text-xs font-medium text-muted-foreground">
+        <span className="w-28 shrink-0 text-xs font-medium text-muted-foreground">
           Lo que pagó
         </span>
         <span className="w-7" />
@@ -81,7 +81,7 @@ export function ExpenseSettlement({ initialParticipants }: Props = {}) {
               placeholder={`Persona ${i + 1}`}
               value={row.name}
               onChange={(e) => updateRow(i, "name", e.target.value)}
-              className="flex-1 px-3 py-2 border border-input rounded-lg text-sm focus:ring-2 focus:ring-ring focus:border-transparent bg-background text-foreground placeholder:text-muted-foreground"
+              className="flex-1 min-w-0 max-w-[45%] sm:max-w-none px-3 py-2 border border-input rounded-lg text-sm focus:ring-2 focus:ring-ring focus:border-transparent bg-background text-foreground placeholder:text-muted-foreground"
             />
             <input
               type="number"
@@ -90,7 +90,7 @@ export function ExpenseSettlement({ initialParticipants }: Props = {}) {
               step="0.01"
               value={row.paid}
               onChange={(e) => updateRow(i, "paid", e.target.value)}
-              className="w-28 px-3 py-2 border border-input rounded-lg text-sm focus:ring-2 focus:ring-ring focus:border-transparent bg-background text-foreground placeholder:text-muted-foreground"
+              className="w-28 shrink-0 px-3 py-2 border border-input rounded-lg text-sm focus:ring-2 focus:ring-ring focus:border-transparent bg-background text-foreground placeholder:text-muted-foreground"
             />
             <IconButton
               icon={Trash2}
