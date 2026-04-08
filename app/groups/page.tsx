@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 import { Plus, Home, Users, Search, Gift, Lock, LogIn } from "lucide-react";
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/client";
 import {
   getGroupSessions,
   getDirectGiftSessions,
@@ -55,6 +55,7 @@ export default function GroupsPage() {
     let isMounted = true;
 
     async function loadGroups() {
+      const supabase = createClient()
       let savedDirectGifts = getDirectGiftSessions();
 
       // Validate direct gifts against Supabase - remove cancelled/deleted ones

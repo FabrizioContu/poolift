@@ -289,8 +289,9 @@ describe('migrateAnonData', () => {
     expect(mockClearAllSessionsFn).toHaveBeenCalled()
   })
 
-  it('clears localStorage even when no family IDs to link', async () => {
-    // Only has anonymousStorage groups, no groupSessions → no family IDs
+  it('preserves anonymousStorage but clears sessions when no family IDs to link', async () => {
+    // Only has anonymousStorage groups, no groupSessions → no family IDs to link.
+    // anonymousStorage must be preserved as AccessGuard fallback.
     mockGetMigrationData.mockReturnValue({
       groups: ['g1'],
       userName: null,
@@ -301,7 +302,7 @@ describe('migrateAnonData', () => {
 
     await migrateAnonData()
 
-    expect(mockClear).toHaveBeenCalled()
+    expect(mockClear).not.toHaveBeenCalled()
     expect(mockClearAllSessionsFn).toHaveBeenCalled()
   })
 
