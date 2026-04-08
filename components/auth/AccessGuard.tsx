@@ -1,7 +1,7 @@
 // components/auth/AccessGuard.tsx
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useAuth } from '@/lib/auth'
 import { anonymousStorage } from '@/lib/storage'
@@ -19,16 +19,29 @@ interface AccessGuardProps {
  *   Fallback a localStorage para familias creadas antes de Phase 5
  *   o si la migración aún no ha corrido.
  * Anonymous: Verifica localStorage (hasAccess)
+ *
+ * Una vez que se concede acceso (grantedKey === currentKey), no se vuelve
+ * a redirigir aunque cambien auth events (TOKEN_REFRESHED, USER_UPDATED).
+ * Esto evita falsos redirects durante la migración anon→auth.
  */
 export function AccessGuard({ groupId, children }: AccessGuardProps) {
   const { user, loading } = useAuth()
   const router = useRouter()
   const [hasAccess, setHasAccess] = useState(false)
   const [checking, setChecking] = useState(true)
+  // Tracks the (userId|'anon'):groupId key for which access was granted.
+  // Prevents re-checking (and false redirects) on auth events like
+  // TOKEN_REFRESHED or USER_UPDATED that fire during/after migration.
+  const grantedKey = useRef<string>('')
 
   useEffect(() => {
     async function checkAccess() {
       if (loading) return
+
+      const currentKey = `${user?.id ?? 'anon'}:${groupId}`
+
+      // Already granted for this user+group — skip re-check.
+      if (grantedKey.current === currentKey) return
 
       if (user) {
         // Check DB: does this user have a linked family in this group?
@@ -42,6 +55,7 @@ export function AccessGuard({ groupId, children }: AccessGuardProps) {
             .maybeSingle()
 
           if (family) {
+            grantedKey.current = currentKey
             setHasAccess(true)
             setChecking(false)
             return
@@ -52,6 +66,7 @@ export function AccessGuard({ groupId, children }: AccessGuardProps) {
 
         // Fallback: localStorage (pre-Phase5 families or failed migration)
         if (anonymousStorage.hasAccess(groupId)) {
+          grantedKey.current = currentKey
           setHasAccess(true)
           setChecking(false)
           return
@@ -67,6 +82,7 @@ export function AccessGuard({ groupId, children }: AccessGuardProps) {
         return
       }
 
+      grantedKey.current = currentKey
       setHasAccess(true)
       setChecking(false)
     }
