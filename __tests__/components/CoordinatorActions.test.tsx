@@ -3,6 +3,12 @@ import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { CoordinatorActions } from '@/app/gifts/[shareCode]/CoordinatorActions'
 
+// Mock useAuth so createBrowserClient (which needs env vars) is never called.
+// The coordinator detection falls back to localStorage, which works in tests.
+vi.mock('@/lib/auth', () => ({
+  useAuth: () => ({ user: null, loading: false, isAnonymous: true }),
+}))
+
 // Mock next/link
 vi.mock('next/link', () => ({
   default: ({ href, children }: { href: string; children: React.ReactNode }) => (
