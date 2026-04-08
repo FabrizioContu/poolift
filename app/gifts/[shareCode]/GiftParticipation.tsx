@@ -292,7 +292,7 @@ export function GiftParticipation({
       return (
         <div className="bg-background rounded-2xl shadow-xl p-6 md:p-8">
           <div className="text-center">
-            <div className="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="bg-emerald-100 dark:bg-emerald-900/30 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
               <CheckCircle className="text-emerald-500" size={32} />
             </div>
             <h3 className="text-xl font-bold mb-2 text-foreground">
@@ -321,7 +321,7 @@ export function GiftParticipation({
     return (
       <div className="bg-background rounded-2xl shadow-xl p-6 md:p-8">
         <div className="text-center">
-          <div className="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+          <div className="bg-emerald-100 dark:bg-emerald-900/30 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
             <CheckCircle className="text-emerald-500" size={32} />
           </div>
           <h3 className="text-xl font-bold mb-2 text-foreground">
@@ -339,7 +339,7 @@ export function GiftParticipation({
                 onClick={handleLeave}
                 disabled={loading}
                 variant="secondary"
-                className="text-red-600 hover:bg-red-50"
+                className="text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"
               >
                 <UserMinus size={18} className="mr-2" />
                 {loading ? "Saliendo..." : "Salirme del regalo"}
@@ -348,7 +348,7 @@ export function GiftParticipation({
                 onClick={handleSwitchToDeclined}
                 disabled={loading}
                 variant="secondary"
-                className="text-muted-foreground hover:bg-gray-50 text-sm"
+                className="text-muted-foreground hover:bg-muted text-sm"
               >
                 <XCircle size={16} className="mr-2" />
                 {loading ? "..." : "Ya no puedo participar"}
@@ -390,7 +390,7 @@ export function GiftParticipation({
               onClick={handleRemoveResponse}
               disabled={loading}
               variant="secondary"
-              className="text-muted-foreground hover:bg-gray-50 text-sm"
+              className="text-muted-foreground hover:bg-muted text-sm"
             >
               {loading ? "..." : "Quitar mi respuesta"}
             </Button>
@@ -503,7 +503,7 @@ export function GiftParticipation({
             onClick={handleDecline}
             disabled={loading || !familyName.trim()}
             variant="secondary"
-            className="w-full py-2 text-muted-foreground hover:bg-gray-50 text-sm"
+            className="w-full py-2 text-muted-foreground hover:bg-muted text-sm"
           >
             <XCircle size={16} className="mr-2" />
             {loading ? "..." : "No voy a participar"}

@@ -114,12 +114,12 @@ export function CoordinatorActions({
 
   if (isPurchased) {
     return (
-      <div className="bg-emerald-50 rounded-2xl p-6 mb-6">
-        <div className="flex items-center gap-2 text-emerald-700 mb-2">
+      <div className="bg-emerald-50 dark:bg-emerald-900/20 rounded-2xl p-6 mb-6">
+        <div className="flex items-center gap-2 text-emerald-700 dark:text-emerald-300 mb-2">
           <Settings size={20} />
           <span className="font-semibold">Panel de Coordinador</span>
         </div>
-        <p className="text-emerald-600 text-sm">
+        <p className="text-emerald-600 dark:text-emerald-400 text-sm">
           El regalo ha sido comprado y finalizado.
         </p>
       </div>

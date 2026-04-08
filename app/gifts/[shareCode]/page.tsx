@@ -428,7 +428,7 @@ export default async function GiftPage({
         </Link>
 
         {/* Header Card */}
-        <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-6">
+        <div className="bg-background rounded-2xl shadow-xl p-6 md:p-8 mb-6">
           <div className="text-center">
             <div className="mb-4">
               {isPurchased ? (
@@ -446,7 +446,7 @@ export default async function GiftPage({
 
             {/* Status Badge */}
             {isPurchased && (
-              <span className="inline-flex items-center gap-1 bg-emerald-100 text-emerald-700 text-sm px-3 py-1 rounded-full font-medium mb-4">
+              <span className="inline-flex items-center gap-1 bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300 text-sm px-3 py-1 rounded-full font-medium mb-4">
                 <CheckCircle size={16} />
                 Comprado
               </span>
@@ -521,12 +521,12 @@ export default async function GiftPage({
 
           {/* Price Per Family - Finalized (with real price) */}
           {isPurchased && (
-            <div className="mt-4 p-4 bg-linear-to-br from-emerald-50 to-primary/10 rounded-xl text-center">
+            <div className="mt-4 p-4 bg-gradient-to-br from-emerald-50 to-primary/10 dark:from-emerald-900/20 dark:to-primary/10 rounded-xl text-center">
               <p className="text-sm text-muted-foreground mb-1">Precio final pagado:</p>
-              <p className="text-3xl font-bold text-emerald-500 mb-3">
+              <p className="text-3xl font-bold text-emerald-500 dark:text-emerald-400 mb-3">
                 {formatPrice(gift.final_price || totalPrice)}
               </p>
-              <div className="pt-3 border-t border-emerald-200">
+              <div className="pt-3 border-t border-emerald-200 dark:border-emerald-800">
                 <p className="text-xs text-muted-foreground mb-1">
                   Precio por familia:
                 </p>
@@ -584,7 +584,7 @@ export default async function GiftPage({
         </div>
 
         {/* Participants Card */}
-        <div className="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-6">
+        <div className="bg-background rounded-2xl shadow-xl p-6 md:p-8 mb-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-bold flex items-center gap-2 text-foreground">
               <Users size={24} />
