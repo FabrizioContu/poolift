@@ -116,8 +116,12 @@ export async function migrateAnonData(): Promise<void> {
     }
   }
 
-  // Limpiar localStorage ahora que todo está vinculado en BD
-  anonymousStorage.clear()
+  // Limpiar localStorage ahora que todo está vinculado en BD.
+  // Solo limpiamos anonymousStorage si teníamos familyIds para linkear (link exitoso).
+  // Si familyIds estaba vacío, preservamos anonymousStorage como fallback en AccessGuard.
+  if (familyIds.length > 0) {
+    anonymousStorage.clear()
+  }
   clearAllSessions()
   // Clear direct gift sessions too — user can now access them via user_id
   if (typeof window !== 'undefined') {
