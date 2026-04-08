@@ -4,15 +4,8 @@ import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { getGroupSessions, getDirectGiftSessions } from "@/lib/auth";
 
-function getInitialCount(): number {
-  if (typeof window === "undefined") return 0;
-  const groups = getGroupSessions();
-  const directGifts = getDirectGiftSessions();
-  return groups.length + directGifts.length;
-}
-
 export function MisGruposButton() {
-  const [count, setCount] = useState(getInitialCount);
+  const [count, setCount] = useState(0);
 
   const updateCount = useCallback(() => {
     const groups = getGroupSessions();
@@ -21,7 +14,7 @@ export function MisGruposButton() {
   }, []);
 
   useEffect(() => {
-    // Listen for storage changes (in case user opens multiple tabs)
+    updateCount();
     window.addEventListener("storage", updateCount);
     return () => window.removeEventListener("storage", updateCount);
   }, [updateCount]);
