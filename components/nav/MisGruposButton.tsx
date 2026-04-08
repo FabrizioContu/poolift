@@ -1,30 +1,24 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useSyncExternalStore } from "react";
 import Link from "next/link";
 import { getGroupSessions, getDirectGiftSessions } from "@/lib/auth";
 
-function getInitialCount(): number {
-  if (typeof window === "undefined") return 0;
-  const groups = getGroupSessions();
-  const directGifts = getDirectGiftSessions();
-  return groups.length + directGifts.length;
+function subscribe(callback: () => void) {
+  window.addEventListener("storage", callback);
+  return () => window.removeEventListener("storage", callback);
+}
+
+function getClientSnapshot() {
+  return getGroupSessions().length + getDirectGiftSessions().length;
+}
+
+function getServerSnapshot() {
+  return 0;
 }
 
 export function MisGruposButton() {
-  const [count, setCount] = useState(getInitialCount);
-
-  const updateCount = useCallback(() => {
-    const groups = getGroupSessions();
-    const directGifts = getDirectGiftSessions();
-    setCount(groups.length + directGifts.length);
-  }, []);
-
-  useEffect(() => {
-    // Listen for storage changes (in case user opens multiple tabs)
-    window.addEventListener("storage", updateCount);
-    return () => window.removeEventListener("storage", updateCount);
-  }, [updateCount]);
+  const count = useSyncExternalStore(subscribe, getClientSnapshot, getServerSnapshot);
 
   return (
     <Link
