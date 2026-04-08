@@ -521,7 +521,7 @@ export default async function GiftPage({
 
           {/* Price Per Family - Finalized (with real price) */}
           {isPurchased && (
-            <div className="mt-4 p-4 bg-gradient-to-br from-emerald-50 to-primary/10 dark:from-emerald-900/20 dark:to-primary/10 rounded-xl text-center">
+            <div className="mt-4 p-4 bg-linear-to-br from-emerald-50 to-primary/10 dark:from-emerald-900/20 dark:to-primary/10 rounded-xl text-center">
               <p className="text-sm text-muted-foreground mb-1">Precio final pagado:</p>
               <p className="text-3xl font-bold text-emerald-500 dark:text-emerald-400 mb-3">
                 {formatPrice(gift.final_price || totalPrice)}
