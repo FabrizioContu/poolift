@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui-custom/Button";
 import { Modal } from "@/components/ui-custom/Modal";
 import { Alert } from "@/components/ui-custom/Alert";
 import { CloseParticipationButton } from "@/components/gifts/CloseParticipationButton";
 import { ShoppingCart, Settings, Users } from "lucide-react";
 import Link from "next/link";
+import { useIsCoordinator } from "@/lib/hooks/useIsCoordinator";
 
 interface CoordinatorActionsProps {
   giftId: string;
@@ -22,43 +23,6 @@ interface CoordinatorActionsProps {
   totalPrice: number;
 }
 
-function checkIsCoordinator(
-  giftId: string,
-  coordinatorId: string | null,
-  groupId: string | null,
-): boolean {
-  if (typeof window === "undefined") return false;
-  if (!coordinatorId || !groupId) return false;
-
-  // Check if user's family in the group matches the coordinator
-  const sessions = localStorage.getItem("poolift_groups");
-  if (sessions) {
-    const groupSessions = JSON.parse(sessions);
-    const session = groupSessions.find(
-      (s: { groupId: string; familyId: string }) => s.groupId === groupId,
-    );
-    if (session && session.familyId === coordinatorId) {
-      return true;
-    }
-  }
-
-  return false;
-}
-
-function useIsCoordinator(
-  giftId: string,
-  coordinatorId: string | null,
-  groupId: string | null,
-): boolean {
-  const [isCoordinator, setIsCoordinator] = useState(false);
-
-  useEffect(() => {
-    setIsCoordinator(checkIsCoordinator(giftId, coordinatorId, groupId));
-  }, [giftId, coordinatorId, groupId]);
-
-  return isCoordinator;
-}
-
 export function CoordinatorActions({
   giftId,
   shareCode,
@@ -72,7 +36,7 @@ export function CoordinatorActions({
   participantNames,
   totalPrice,
 }: CoordinatorActionsProps) {
-  const isCoordinator = useIsCoordinator(giftId, coordinatorId, groupId);
+  const isCoordinator = useIsCoordinator(coordinatorId, groupId ?? "");
   const [showMergeModal, setShowMergeModal] = useState(false);
   const [mergeLoading, setMergeLoading] = useState(false);
   const [mergeError, setMergeError] = useState<string | null>(null);
