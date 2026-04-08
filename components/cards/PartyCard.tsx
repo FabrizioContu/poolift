@@ -19,6 +19,7 @@ interface PartyCardProps {
     party_celebrants: Array<{
       birthdays: { child_name: string };
     }>;
+    gifts?: Array<{ id: string; share_code: string }>;
   };
 }
 
@@ -28,6 +29,11 @@ export function PartyCard({ party }: PartyCardProps) {
   const celebrantNames = party.party_celebrants.map(
     (pc) => pc.birthdays.child_name
   );
+
+  const giftShareCode = party.gifts?.[0]?.share_code ?? null;
+  const partyHref = giftShareCode
+    ? `/gifts/${giftShareCode}`
+    : `/dashboard/${party.group_id}/parties/${party.id}`;
 
   const handleDeleteClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -57,7 +63,7 @@ export function PartyCard({ party }: PartyCardProps) {
   return (
     <>
       <Link
-        href={`/dashboard/${party.group_id}/parties/${party.id}`}
+        href={partyHref}
         className="block bg-background border border-border rounded-lg p-6 hover:shadow-lg hover:border-primary/40 transition"
       >
         <div className="flex items-start justify-between">
@@ -88,9 +94,15 @@ export function PartyCard({ party }: PartyCardProps) {
           </div>
 
           <div className="flex items-center gap-2">
-            <div className="bg-yellow-100 px-3 py-1 rounded-full dark:bg-yellow-900">
-              <span className="text-yellow-800 text-sm font-medium dark:text-yellow-300">Ideas</span>
-            </div>
+            {giftShareCode ? (
+              <div className="bg-green-100 px-3 py-1 rounded-full dark:bg-green-900">
+                <span className="text-green-800 text-sm font-medium dark:text-green-300">Regalo activo</span>
+              </div>
+            ) : (
+              <div className="bg-yellow-100 px-3 py-1 rounded-full dark:bg-yellow-900">
+                <span className="text-yellow-800 text-sm font-medium dark:text-yellow-300">Ideas</span>
+              </div>
+            )}
             <button
               onClick={handleDeleteClick}
               className="p-2 text-muted-foreground hover:text-red-500 hover:bg-red-50 rounded-lg transition dark:hover:text-red-400 dark:hover:bg-red-900"

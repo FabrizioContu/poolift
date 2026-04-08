@@ -14,6 +14,7 @@ interface Party {
   party_celebrants: Array<{
     birthdays: { child_name: string };
   }>;
+  gifts: Array<{ id: string; share_code: string }>;
 }
 
 interface GroupInfo {
@@ -60,7 +61,8 @@ async function getParties(groupId: string): Promise<Party[]> {
       party_celebrants(
         birthday_id,
         birthdays(id, child_name, birth_date)
-      )
+      ),
+      gifts(id, share_code)
     `,
     )
     .eq("group_id", groupId)

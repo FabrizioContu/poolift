@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { Modal } from "@/components/ui-custom/Modal";
 import { Button } from "@/components/ui-custom/Button";
-import { Gift, CheckCircle, Copy, MessageCircle } from "lucide-react";
+import { Gift, CheckCircle, Copy, MessageCircle, Settings } from "lucide-react";
 import { formatPrice } from "@/lib/utils";
 
 interface CreateGiftModalProps {
@@ -25,6 +26,7 @@ export function CreateGiftModal({
   partyId,
   celebrantNames = [],
 }: CreateGiftModalProps) {
+  const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [created, setCreated] = useState(false);
   const [shareCode, setShareCode] = useState<string | null>(null);
@@ -101,10 +103,11 @@ Apúntate aquí: ${getGiftLink()}`;
   };
 
   const handleClose = () => {
-    if (created) {
-      window.location.reload();
+    if (created && shareCode) {
+      router.push(`/gifts/${shareCode}`);
+    } else {
+      onClose();
     }
-    onClose();
   };
 
   // Success screen
@@ -139,7 +142,16 @@ Apúntate aquí: ${getGiftLink()}`;
           {/* Action Buttons */}
           <div className="flex flex-col gap-2">
             <Button
+              onClick={handleClose}
+              className="w-full flex justify-center gap-2"
+            >
+              <Settings size={18} />
+              Ir al Panel Coordinador
+            </Button>
+
+            <Button
               onClick={handleCopyLink}
+              variant="secondary"
               className="w-full flex justify-center gap-3"
             >
               <Copy size={18} className="mr-2" />
@@ -151,16 +163,8 @@ Apúntate aquí: ${getGiftLink()}`;
               variant="secondary"
               className="w-full flex justify-center gap-5 hover:bg-emerald-500 hover:text-white"
             >
-              <MessageCircle size={18} className="mr-2  " />
+              <MessageCircle size={18} className="mr-2" />
               Compartir por WhatsApp
-            </Button>
-
-            <Button
-              onClick={handleClose}
-              variant="secondary"
-              className="w-full hover:bg-red-600 hover:text-white"
-            >
-              Cerrar
             </Button>
           </div>
         </div>
