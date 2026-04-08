@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
-import { supabase } from '@/lib/supabase'
+import { createClient } from '@/lib/supabase/client'
 
 export function useRealtime(
   table: string,
@@ -11,6 +11,7 @@ export function useRealtime(
   onDelete?: (payload: unknown) => void
 ) {
   useEffect(() => {
+    const supabase = createClient()
     const channel = supabase
       .channel(`${table}-changes`)
       .on(
