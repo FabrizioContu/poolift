@@ -66,7 +66,6 @@ export function UserMenu() {
         <AuthModal
           isOpen={showAuthModal}
           onClose={() => setShowAuthModal(false)}
-          onSuccess={() => router.refresh()}
         />
       </>
     );
