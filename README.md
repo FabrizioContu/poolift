@@ -1,163 +1,51 @@
-# Poolift - Collaborative Gift Management
+# Poolift
 
-> Web platform for organizing shared birthday gifts among families in a simple and transparent way.
-
-
-
-**Quick Start for Development:**
+> Platform for coordinating group gifts among families — fast, transparent, and without registration.
 
 [![Next.js](https://img.shields.io/badge/Next.js-16-black)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue)](https://www.typescriptlang.org/)
 [![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-green)](https://supabase.com/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38bdf8)](https://tailwindcss.com/)
-[![Tests](https://img.shields.io/badge/Tests-77%2B%20passing-brightgreen)](https://vitest.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38bdf8)](https://tailwindcss.com/)
+[![Tests](https://img.shields.io/badge/Tests-372%2B%20passing-brightgreen)](https://vitest.dev/)
 
 ---
 
-## Description
+## What it does
 
-Poolift facilitates the organization of shared gifts for children's birthdays in groups such as school classes. It allows families to:
+Poolift solves the WhatsApp chaos of organizing group gifts. Families can coordinate shared birthday gifts, propose ideas, vote, and track contributions — all without mandatory registration.
 
-- Register group birthdays
-- Create parties (individual or joint)
-- Propose and vote on gift ideas
-- Participate in shared gifts
-- Split costs transparently
-- Share via WhatsApp
+**Two gift flows:**
+- **Direct gift** — one person organizes a single gift, shares a link, participants join
+- **Group gift** — families in a group coordinate gifts across multiple parties and birthdays
 
 ---
 
 ## Main Features
 
-### Group Management
-
-- Create groups for classes/teams
-- Invitation system by code
-- Multiple families per group
-- No complex authentication needed
-
-### Birthdays and Parties
-
-- Register children's birthdays
-- Create parties (one or multiple celebrants)
-- Automatic rotating coordinator assignment
-- Upcoming parties visualization
-
-### Ideas and Proposals
-
-- Add gift ideas for each child
-- Create formal proposals with items and prices
-- Family voting system
-- Winning proposal selection
-
-### Complete Gift Flow
-
-1. **Create Gift**: Generates shareable code
-2. **Participation**: Families sign up for the gift
-3. **Close**: Calculates price per family
-4. **Finalize**: Purchase record with receipt
-5. **Share**: Notification to participants
-
-### Transparency
-
-- Automatically calculated price per family
-- Coordinator comments
-- Visible purchase receipts
-- Real-time gift status
+- Anonymous-first: use the app fully without creating an account
+- Anonymous → Auth migration: data is preserved when a user registers later
+- Group management with invite codes (12-char shareable URL)
+- Birthday and party tracking (individual and joint parties)
+- Proposal system with family voting
+- Direct gifts with share-code-based participation
+- Participant status tracking (joined / declined)
+- Expense calculator for split cost scenarios
+- Dark mode support
 
 ---
 
 ## Tech Stack
 
-### Frontend
-
-| Technology      | Version | Purpose                |
-| --------------- | ------- | ---------------------- |
-| Next.js         | 16      | Framework (App Router) |
-| TypeScript      | 5.0     | Language               |
-| Tailwind CSS    | 4       | Styling                |
-| Lucide React    | -       | Icons                  |
-| React Hook Form | -       | Form handling          |
-| Zod             | -       | Validation             |
-
-### Backend
-
-| Technology             | Purpose               |
-| ---------------------- | --------------------- |
-| Supabase               | Database (PostgreSQL) |
-| Next.js API Routes     | REST API              |
-| Supabase Subscriptions | Real-time (optional)  |
-| Supabase Storage       | Receipt storage       |
-
-### Testing
-
-| Technology             | Purpose        |
-| ---------------------- | -------------- |
-| Vitest                 | Test framework |
-| @testing-library/react | UI testing     |
-| 77+ tests              | Coverage       |
-
----
-
-## Installation and Setup
-
-### Prerequisites
-
-```bash
-Node.js 18+
-npm or yarn
-Supabase account
-```
-
-### 1. Clone Repository
-
-```bash
-git clone <repository-url>
-cd poolift
-```
-
-### 2. Install Dependencies
-
-```bash
-npm install
-```
-
-### 3. Configure Environment Variables
-
-```bash
-cp .env.example .env.local
-```
-
-Edit `.env.local`:
-
-```env
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
-```
-
-### 4. Database Setup
-
-Run the SQL schema in Supabase. Required tables:
-
-- `groups`
-- `families`
-- `birthdays`
-- `parties`
-- `party_celebrants`
-- `ideas`
-- `proposals`
-- `proposal_items`
-- `votes`
-- `gifts`
-- `participants`
-
-### 5. Run in Development
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000)
+| Layer      | Technology                                      |
+| ---------- | ----------------------------------------------- |
+| Framework  | Next.js 16 (App Router, Turbopack)              |
+| Language   | TypeScript (strict)                             |
+| Database   | Supabase (PostgreSQL + Auth + RLS)              |
+| Styling    | Tailwind CSS v4                                 |
+| Forms      | react-hook-form + Zod                           |
+| Testing    | Vitest + React Testing Library (372+ tests)     |
+| Icons      | lucide-react                                    |
+| Date UI    | react-day-picker v9                             |
 
 ---
 
@@ -165,247 +53,167 @@ Open [http://localhost:3000](http://localhost:3000)
 
 ```
 poolift/
-├── app/                          # Next.js App Router
-│   ├── api/                      # API Routes
-│   │   ├── groups/              # CRUD groups
-│   │   ├── families/            # CRUD families
-│   │   ├── birthdays/           # CRUD birthdays
-│   │   ├── parties/             # CRUD parties
-│   │   ├── ideas/               # CRUD ideas
-│   │   ├── proposals/           # CRUD proposals + voting
-│   │   └── gifts/               # Gift flow APIs
-│   ├── dashboard/               # Main dashboard
-│   │   └── [groupId]/
-│   │       ├── page.tsx         # Tabs: Parties | Birthdays
-│   │       └── parties/
-│   │           └── [partyId]/   # Party detail
-│   ├── gifts/                   # Public gift view
-│   │   └── [shareCode]/
-│   ├── coordinator/             # Purchase flow
-│   ├── create-group/            # Onboarding: create
-│   └── join/                    # Onboarding: join
+├── app/
+│   ├── api/                        # 27 API routes
+│   │   ├── groups/
+│   │   ├── families/
+│   │   ├── birthdays/
+│   │   ├── parties/
+│   │   ├── proposals/
+│   │   ├── gifts/
+│   │   │   └── direct/             # Direct gift endpoints
+│   │   └── ideas/
+│   ├── dashboard/[groupId]/        # Group dashboard + party detail
+│   ├── gifts/[shareCode]/          # Public direct gift view
+│   ├── coordinator/[giftId]/       # Group gift purchase flow
+│   ├── organizer/[giftId]/         # Direct gift organizer flow
+│   ├── create-group/               # Group onboarding
+│   ├── create-direct-gift/         # Direct gift creation
+│   ├── calculadora/                # Expense calculator
+│   ├── start/                      # Entry point chooser
+│   ├── join/                       # Join via invite code
+│   └── auth/                       # Auth callbacks + password reset
 ├── components/
-│   ├── cards/                   # PartyCard, ProposalCard, IdeasByChild
-│   ├── modals/                  # All modals (7+)
-│   ├── ui/                      # Base components (Modal, Button, Tabs)
-│   ├── parties/                 # Party-specific components
-│   ├── proposals/               # Proposal components
-│   ├── gifts/                   # Gift components
-│   ├── groups/                  # Group components
-│   └── birthdays/               # Birthday components
+│   ├── modals/                     # All lazy-loaded modals
+│   ├── cards/                      # PartyCard, ProposalCard, etc.
+│   ├── ui/                         # Base components (Modal, Tabs, DatePickerInput…)
+│   ├── auth/                       # UserMenu, auth guards
+│   ├── nav/                        # Navigation components
+│   └── [domain]/                   # gifts/, groups/, birthdays/, parties/…
 ├── lib/
-│   ├── supabase.ts             # Supabase client
-│   ├── types.ts                # TypeScript interfaces
-│   ├── utils.ts                # Utility functions
-│   ├── validators.ts           # Zod schemas
-│   ├── messages.ts             # WhatsApp messages
-│   └── hooks/                  # Custom hooks
-│       ├── useParties.ts
-│       └── useRealtime.ts
-├── __tests__/                   # Vitest tests
-│   ├── components/             # Component tests
-│   └── lib/                    # Utility tests
-└── public/                      # Static assets
+│   ├── supabase/
+│   │   ├── client.ts               # Browser client
+│   │   └── server.ts               # Server / API routes client
+│   ├── auth.ts                     # useUser, signIn, signUp, signOut, magic link
+│   ├── migrate.ts                  # Anonymous → Auth data migration
+│   ├── storage.ts                  # localStorage session helpers
+│   ├── validators.ts               # Zod schemas
+│   └── types.ts                    # TypeScript interfaces
+└── __tests__/                      # 19 test files, 372+ cases
 ```
 
 ---
 
-## Available Scripts
+## Database (13 tables)
 
-```bash
-# Development
-npm run dev           # Start dev server with Turbopack
-npm run build         # Production build
-npm run start         # Start production server
-npm run lint          # ESLint check
-
-# Testing
-npm test              # Run tests in watch mode
-npm run test:run      # Run tests once
-npm run test:ui       # Open Vitest UI
-npm run coverage      # Run with coverage report
 ```
+groups ──── families ──── birthdays
+                │               └── [via party_celebrants]
+                │
+              parties ──── party_celebrants
+                │
+                ├── proposals ──── proposal_items
+                │         └── votes
+                │
+                └── gifts ──── participants
+
+direct_gifts ──── direct_gift_participants
+```
+
+**Security:** RLS enabled on all tables. Current policies are permissive (market validation phase). The migration to restrictive policies is documented in `supabase/migrations/`.
 
 ---
 
-## API Endpoints
+## API Reference
 
 ### Groups & Families
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/groups` | Create group |
+| GET | `/api/families?groupId=` | List families |
+| PUT | `/api/families/link` | Link families to auth user |
 
-| Method | Endpoint           | Description       |
-| ------ | ------------------ | ----------------- |
-| POST   | `/api/groups`      | Create group      |
-| GET    | `/api/groups/[id]` | Get group details |
-| GET    | `/api/families`    | List families     |
+### Birthdays & Parties
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/birthdays` | Add birthday |
+| GET | `/api/birthdays?groupId=` | List birthdays |
+| POST | `/api/parties` | Create party |
+| GET | `/api/parties?groupId=` | List parties |
 
-### Birthdays
+### Proposals & Voting
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/proposals` | Create proposal |
+| GET | `/api/proposals?partyId=` | List proposals |
+| POST | `/api/proposals/[id]/vote` | Vote on proposal |
+| PUT | `/api/proposals/[id]/select` | Select winning proposal |
 
-| Method | Endpoint              | Description     |
-| ------ | --------------------- | --------------- |
-| POST   | `/api/birthdays`      | Add birthday    |
-| GET    | `/api/birthdays`      | List birthdays  |
-| DELETE | `/api/birthdays/[id]` | Delete birthday |
+### Direct Gifts
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/gifts/direct` | Create direct gift |
+| GET | `/api/gifts/direct?shareCode=` | Get by share code |
+| POST | `/api/gifts/direct/[id]/participate` | Join or decline |
+| PUT | `/api/gifts/direct/[id]/close` | Close participation |
+| PUT | `/api/gifts/direct/[id]/finalize` | Finalize with price |
+| PUT | `/api/gifts/direct/[id]/cancel` | Cancel gift |
+| PUT | `/api/gifts/direct/link` | Link gifts to auth user |
 
-### Parties
-
-| Method | Endpoint                  | Description              |
-| ------ | ------------------------- | ------------------------ |
-| POST   | `/api/parties`            | Create party             |
-| GET    | `/api/parties`            | List parties             |
-| GET    | `/api/parties/[id]`       | Get party details        |
-| GET    | `/api/parties/celebrants` | Get available celebrants |
-
-### Ideas
-
-| Method | Endpoint          | Description   |
-| ------ | ----------------- | ------------- |
-| POST   | `/api/ideas`      | Add gift idea |
-| GET    | `/api/ideas`      | List ideas    |
-| DELETE | `/api/ideas/[id]` | Delete idea   |
-
-### Proposals
-
-| Method | Endpoint                     | Description             |
-| ------ | ---------------------------- | ----------------------- |
-| POST   | `/api/proposals`             | Create proposal         |
-| GET    | `/api/proposals`             | List proposals          |
-| GET    | `/api/proposals/[id]`        | Get proposal details    |
-| POST   | `/api/proposals/[id]/vote`   | Vote on proposal        |
-| PUT    | `/api/proposals/[id]/select` | Select winning proposal |
-
-### Gifts
-
-| Method | Endpoint                      | Description            |
-| ------ | ----------------------------- | ---------------------- |
-| POST   | `/api/gifts`                  | Create gift            |
-| GET    | `/api/gifts/[id]`             | Get gift by share code |
-| POST   | `/api/gifts/[id]/participate` | Join gift              |
-| PUT    | `/api/gifts/[id]/close`       | Close participation    |
-| PUT    | `/api/gifts/[id]/finalize`    | Finalize with receipt  |
+### Group Gifts
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/gifts/[id]/participate` | Join or decline group gift |
 
 ---
 
-## Data Model
+## Setup
+
+### Prerequisites
 
 ```
-Groups
-  └── Families (joined via invite_code)
-        └── Birthdays (children)
-              └── Ideas (gift suggestions)
-
-Parties (events with party_date)
-  └── PartyCelebrants (many-to-many with Birthdays)
-  └── Proposals (formal gift proposals)
-        └── ProposalItems (items in proposal)
-        └── Votes (family votes)
-  └── Gifts (created from selected proposal)
-        └── Participants (families contributing)
+Node.js 18+
+Supabase project
 ```
 
----
+### Install
 
-## Key Concepts
+```bash
+git clone <repository-url>
+cd poolift
+npm install
+```
 
-### Party Model
 
-- Parties are **separate entities** from Birthdays
-- A party can celebrate **multiple children** (joint parties)
-- Birthdays only store: `child_name`, `birth_date`
-- Parties store: `party_date`, `coordinator_id`
+### Run
 
-### Coordinator Assignment
-
-- Auto-assigned on rotation (family with fewest coordinations)
-- Can be manually selected when creating party
-- Tracked to ensure fair distribution
-
-### Invite System
-
-- Groups have unique `invite_code` (12 chars)
-- Share via WhatsApp link: `/join/[inviteCode]`
-- Family-based access (no authentication required)
+```bash
+npm run dev       # Dev server (Turbopack) → http://localhost:3000
+npm run build     # Production build
+npm run lint      # ESLint
+```
 
 ---
 
 ## Testing
 
-### Running Tests
-
 ```bash
-npm test              # Watch mode with hot reload
-npm run test:ui       # Visual UI (recommended)
-npm run test:run      # Single run (for CI)
-npm run coverage      # With coverage report
+npm test                              # Watch mode
+npm run test:run                      # Single run (CI)
+npm run test:ui                       # Browser UI
+npm run coverage                      # Coverage report
+
+# Run a specific file or test
+npm run test:run -- AddBirthdayModal
+npm run test:run -- --grep "envía formulario"
 ```
 
-### Test Coverage
-
-| Category         | Tests   | Status      |
-| ---------------- | ------- | ----------- |
-| AddBirthdayModal | 16      | Passing     |
-| CreatePartyModal | 16      | Passing     |
-| AddIdeaModal     | 14      | Passing     |
-| AddProposalModal | 8       | Passing     |
-| Utilities        | 6+      | Passing     |
-| Other components | 17+     | Passing     |
-| **Total**        | **77+** | **Passing** |
+372+ tests across components, API routes, and utilities.
 
 ---
 
 ## Deployment
 
-### Vercel (Recommended)
+Recommended: [Vercel](https://vercel.com)
 
 ```bash
-npm i -g vercel
-vercel
 vercel --prod
 ```
 
-### Environment Variables (Production)
-
-```env
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-NEXT_PUBLIC_APP_URL=https://your-domain.com
-```
-
----
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-### Commit Conventions
-
-```
-feat: Add new feature
-fix: Bug fix
-test: Add or update tests
-docs: Documentation changes
-refactor: Code refactoring
-chore: Maintenance tasks
-```
+Set the three environment variables listed above in the Vercel dashboard.
 
 ---
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## Support
-
-For questions or issues:
-
-- Open an issue on GitHub
-- Check the [CLAUDE.md](CLAUDE.md) for detailed development documentation
-
----
-
-**Built with Next.js 16, Supabase, and TypeScript**
+MIT
