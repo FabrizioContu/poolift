@@ -30,7 +30,7 @@ export default function LandingPage() {
               href="#como-funciona"
               className="text-muted-foreground hover:text-foreground hidden sm:block"
             >
-              Como funciona
+              Cómo funciona
             </Link>
             <MisGruposButton />
             <UserMenu />
@@ -45,7 +45,7 @@ export default function LandingPage() {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
               Regalos en grupo,
               <br />
-              facil y al instante
+              fácil y al instante
             </h1>
 
             <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
@@ -81,10 +81,10 @@ export default function LandingPage() {
         {/* Benefits Section */}
         <section className="container mx-auto px-4 py-16">
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-4 text-foreground">
-            Por que usar Poolift?
+            ¿Por qué usar Poolift?
           </h2>
           <p className="text-center text-muted-foreground mb-12 max-w-xl mx-auto">
-            Olvida los grupos de WhatsApp interminables y las hojas de calculo.
+            Olvida los grupos de WhatsApp interminables y las hojas de cálculo.
           </p>
 
           <div className="grid md:grid-cols-3 gap-6 md:gap-8 max-w-5xl mx-auto">
@@ -94,7 +94,7 @@ export default function LandingPage() {
                 <Zap className="text-yellow-600" size={28} />
               </div>
               <h3 className="text-lg md:text-xl font-semibold mb-2 text-foreground">
-                Rapido
+                Rápido
               </h3>
               <p className="text-muted-foreground">
                 Crea un regalo y comparte el link en segundos. Sin registros,
@@ -111,7 +111,7 @@ export default function LandingPage() {
                 Coordinado
               </h3>
               <p className="text-muted-foreground">
-                Todos ven quien participa y cuanto falta. Nada de preguntar uno
+                Todos ven quién participa y cuánto falta. Nada de preguntar uno
                 por uno.
               </p>
             </div>
@@ -122,7 +122,7 @@ export default function LandingPage() {
                 <Share2 className="text-emerald-500" size={28} />
               </div>
               <h3 className="text-lg md:text-xl font-semibold mb-2 text-foreground">
-                Facil de compartir
+                Fácil de compartir
               </h3>
               <p className="text-muted-foreground">
                 Un solo link por WhatsApp y listo. Quien quiera participar, se
@@ -136,10 +136,10 @@ export default function LandingPage() {
         <section id="como-funciona" className="bg-muted/30 py-16">
           <div className="container mx-auto px-4">
             <h2 className="text-2xl md:text-3xl font-bold text-center mb-4 text-foreground">
-              Como funciona
+              Cómo funciona
             </h2>
             <p className="text-center text-muted-foreground mb-12 max-w-xl mx-auto">
-              Tienes una idea de regalo? Compartela en 3 pasos.
+              ¿Tienes una idea de regalo? Compártela en 3 pasos.
             </p>
 
             <div className="max-w-3xl mx-auto">
@@ -154,7 +154,7 @@ export default function LandingPage() {
                       Describe el regalo
                     </h3>
                     <p className="text-muted-foreground">
-                      Para quien es, que ocasion, y si ya tienes una idea en
+                      Para quién es, qué ocasión, y si ya tienes una idea en
                       mente.
                     </p>
                   </div>
@@ -169,7 +169,7 @@ export default function LandingPage() {
                       Comparte el link
                     </h3>
                     <p className="text-muted-foreground">
-                      Envia el enlace por WhatsApp al grupo. Quien quiera
+                      Envía el enlace por WhatsApp al grupo. Quien quiera
                       participar, se apunta.
                     </p>
                   </div>
@@ -184,7 +184,7 @@ export default function LandingPage() {
                       Coordina y compra
                     </h3>
                     <p className="text-muted-foreground">
-                      Ve quien participa en tiempo real. Cuando estes listo,
+                      Ve quién participa en tiempo real. Cuando estés listo,
                       compra y cierra el regalo.
                     </p>
                   </div>
@@ -196,7 +196,7 @@ export default function LandingPage() {
                 <div className="flex items-center gap-2 mb-4">
                   <Sparkles className="text-primary" size={24} />
                   <h3 className="text-lg font-semibold text-foreground">
-                    Desde donde quieres empezar?
+                    ¿Desde dónde quieres empezar?
                   </h3>
                 </div>
 
@@ -210,7 +210,7 @@ export default function LandingPage() {
                         </span>
                       </div>
                       <p className="text-sm text-muted-foreground">
-                        Ya se que regalar. Quiero organizar este regalo ahora.
+                        Ya sé qué regalar. Quiero organizar este regalo ahora.
                       </p>
                     </div>
                   </Link>
@@ -224,7 +224,7 @@ export default function LandingPage() {
                         </span>
                       </div>
                       <p className="text-sm text-muted-foreground">
-                        Para coordinar multiples regalos con el mismo grupo de
+                        Para coordinar múltiples regalos con el mismo grupo de
                         personas.
                       </p>
                     </div>
@@ -239,7 +239,7 @@ export default function LandingPage() {
         <section className="container mx-auto px-4 py-16">
           <div className="max-w-2xl mx-auto text-center">
             <h2 className="text-2xl md:text-3xl font-bold mb-4 text-foreground">
-              Listo para organizar tu regalo?
+              ¿Listo para organizar tu regalo?
             </h2>
             <p className="text-muted-foreground mb-6">
               Empieza ahora, es gratis y sin registro.
@@ -254,7 +254,7 @@ export default function LandingPage() {
             </Link>
 
             <p className="mt-6 text-muted-foreground">
-              Ya tienes un codigo?{" "}
+              ¿Ya tienes un código?{" "}
               <Link
                 href="/join"
                 className="text-primary hover:underline"
