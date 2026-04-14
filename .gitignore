@@ -96,3 +96,6 @@ supabase/.branches/
 supabase/.temp/
 
 # MCP — .mcp.json is intentionally committed (no secrets; uses ${SUPABASE_ACCESS_TOKEN} env var)
+
+# Screenshots (local dev only)
+/screenshots/
