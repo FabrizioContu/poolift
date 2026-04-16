@@ -99,3 +99,6 @@ supabase/.temp/
 
 # Screenshots (local dev only)
 /screenshots/
+
+# Git Bash crash logs (Windows)
+bash.exe.stackdump
