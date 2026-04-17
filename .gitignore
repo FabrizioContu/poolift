@@ -3,6 +3,10 @@
 # Claude Code
 .claude/
 
+# Local artifacts
+screenshots/
+*.stackdump
+
 # dependencies
 /node_modules
 /.pnp
