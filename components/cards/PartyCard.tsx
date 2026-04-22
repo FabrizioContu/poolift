@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Calendar, Users, User, Trash2 } from "lucide-react";
 import { formatDate, formatCelebrants } from "@/lib/utils";
 import dynamic from "next/dynamic";
+import { anonymousStorage } from "@/lib/storage";
 
 const ConfirmDeleteModal = dynamic(
   () => import("@/components/modals/ConfirmDeleteModal")
@@ -43,8 +44,11 @@ export function PartyCard({ party }: PartyCardProps) {
 
   const handleConfirmDelete = async (): Promise<{ error?: string } | void> => {
     try {
+      const familyId = anonymousStorage.getFamilyId();
       const response = await fetch(`/api/parties/${party.id}`, {
         method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ familyId }),
       });
 
       const data = await response.json();

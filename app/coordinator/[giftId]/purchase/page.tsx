@@ -124,7 +124,7 @@ export default function PurchasePage({
     try {
       let receiptImageUrl: string | null = null
       if (receipt) {
-        receiptImageUrl = await uploadReceipt(receipt, giftId)
+        receiptImageUrl = await uploadReceipt(receipt, giftId, gift?.share_code)
       }
 
       const response = await fetch(`/api/gifts/${giftId}/finalize`, {

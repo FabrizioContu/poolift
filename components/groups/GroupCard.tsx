@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Users, Copy, Check, MessageCircle, Trash2, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui-custom/Button";
 import { removeGroupSession } from "@/lib/auth";
+import { anonymousStorage } from "@/lib/storage";
 
 const ConfirmDeleteModal = dynamic(
   () => import("@/components/modals/ConfirmDeleteModal")
@@ -63,8 +64,11 @@ export function GroupCard({
   };
 
   const handleDelete = async () => {
+    const familyId = anonymousStorage.getFamilyId();
     const response = await fetch(`/api/groups/${group.id}`, {
       method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ familyId }),
     });
 
     const data = await response.json();

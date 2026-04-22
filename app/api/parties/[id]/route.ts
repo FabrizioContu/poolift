@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/server";
 import { validatePartyDelete } from "@/lib/validators";
 
 export async function DELETE(
@@ -9,6 +10,26 @@ export async function DELETE(
   const { id } = await params;
 
   try {
+    const body = (await request.json().catch(() => null)) ?? {};
+    const familyId = (body as Record<string, unknown>).familyId as string | undefined;
+
+    const serverClient = await createClient();
+    const { data: { user } } = await serverClient.auth.getUser();
+    const { data: party } = await serverClient
+      .from('parties').select('coordinator_id').eq('id', id).single();
+
+    if (party?.coordinator_id) {
+      if (user) {
+        const { data: coordFamily } = await serverClient
+          .from('families').select('user_id').eq('id', party.coordinator_id).single();
+        if (!coordFamily || coordFamily.user_id !== user.id) {
+          return NextResponse.json({ error: 'No autorizado' }, { status: 403 });
+        }
+      } else if (!familyId || familyId !== party.coordinator_id) {
+        return NextResponse.json({ error: 'No autorizado' }, { status: 403 });
+      }
+    }
+
     // Validate before delete
     const validation = await validatePartyDelete(id);
 

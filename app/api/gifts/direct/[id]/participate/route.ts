@@ -97,7 +97,8 @@ export async function DELETE(
 ) {
   try {
     const { id } = await params
-    const { participantName } = await request.json()
+    const body = (await request.json().catch(() => null)) ?? {}
+    const { participantName, shareCode } = body as Record<string, string | undefined>
 
     if (!participantName) {
       return NextResponse.json(
@@ -109,7 +110,7 @@ export async function DELETE(
     // Check if direct gift exists and is open
     const { data: gift, error: giftError } = await supabase
       .from('direct_gifts')
-      .select('status')
+      .select('status, share_code, organizer_user_id')
       .eq('id', id)
       .single()
 
@@ -118,6 +119,11 @@ export async function DELETE(
         { error: 'Regalo no encontrado' },
         { status: 404 }
       )
+    }
+
+    // Verify caller has access to this gift via share_code
+    if (!shareCode || shareCode !== gift.share_code) {
+      return NextResponse.json({ error: 'No autorizado' }, { status: 403 })
     }
 
     if (gift.status !== 'open') {
