@@ -81,6 +81,7 @@ export interface Party {
   coordinator_id: string | null
   created_at: string
   updated_at: string
+  gifts?: Array<{ id: string; share_code: string }>
 }
 
 export interface PartyCelebrant {

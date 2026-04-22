@@ -107,7 +107,8 @@ export async function GET(request: NextRequest) {
         party_celebrants(
           birthday_id,
           birthdays(id, child_name, birth_date)
-        )
+        ),
+        gifts(id, share_code)
       `)
       .eq('group_id', groupId)
       .order('party_date', { ascending: true })
