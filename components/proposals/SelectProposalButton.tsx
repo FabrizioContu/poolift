@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Check, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui-custom/Button";
 import dynamic from "next/dynamic";
+import { anonymousStorage } from "@/lib/storage";
 
 const CreateGiftModal = dynamic(
   () => import("@/components/modals/CreateGiftModal"),
@@ -41,8 +42,11 @@ export function SelectProposalButton({
     setError(null);
 
     try {
+      const familyId = anonymousStorage.getFamilyId();
       const response = await fetch(`/api/proposals/${proposalId}/select`, {
         method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ familyId }),
       });
 
       if (!response.ok) {

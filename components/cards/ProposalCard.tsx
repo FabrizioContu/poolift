@@ -6,6 +6,7 @@ import { Button, Badge, IconButton } from "@/components/ui-custom";
 import { formatPrice } from "@/lib/utils";
 import dynamic from "next/dynamic";
 import { SelectProposalButton } from "@/components/proposals/SelectProposalButton";
+import { anonymousStorage } from "@/lib/storage";
 
 const ConfirmDeleteModal = dynamic(
   () => import("@/components/modals/ConfirmDeleteModal"),
@@ -88,8 +89,11 @@ export function ProposalCard({
 
   const handleConfirmDelete = async () => {
     try {
+      const familyId = anonymousStorage.getFamilyId();
       const response = await fetch(`/api/proposals/${proposal.id}`, {
         method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ familyId }),
       });
 
       const data = await response.json();

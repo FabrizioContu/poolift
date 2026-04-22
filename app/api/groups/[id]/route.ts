@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/server";
 import { validateGroupDelete } from "@/lib/validators";
 
 export async function DELETE(
@@ -9,6 +10,24 @@ export async function DELETE(
   const { id } = await params;
 
   try {
+    const body = (await request.json().catch(() => null)) ?? {};
+    const familyId = (body as Record<string, unknown>).familyId as string | undefined;
+
+    const serverClient = await createClient();
+    const { data: { user } } = await serverClient.auth.getUser();
+    const { data: creatorFamily } = await serverClient
+      .from('families').select('id, user_id').eq('group_id', id).eq('is_creator', true).single();
+
+    if (creatorFamily) {
+      if (user) {
+        if (creatorFamily.user_id !== user.id) {
+          return NextResponse.json({ error: 'No autorizado' }, { status: 403 });
+        }
+      } else if (!familyId || familyId !== creatorFamily.id) {
+        return NextResponse.json({ error: 'No autorizado' }, { status: 403 });
+      }
+    }
+
     // Validate before delete
     const validation = await validateGroupDelete(id);
 
