@@ -15,6 +15,7 @@ interface Party {
   party_celebrants: Array<{
     birthdays: { child_name: string }
   }>
+  gifts?: Array<{ id: string; share_code: string }>
 }
 
 interface Birthday {
