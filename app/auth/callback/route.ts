@@ -7,10 +7,16 @@ import type { NextRequest } from 'next/server'
  * Callback route para autenticación de Supabase
  * Maneja el código de autenticación después de signup/signin
  */
+function sanitizeRedirect(next: string | null): string {
+  if (!next) return '/'
+  if (!next.startsWith('/') || next.startsWith('//')) return '/'
+  return next
+}
+
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url)
   const code = requestUrl.searchParams.get('code')
-  const next = requestUrl.searchParams.get('next') ?? '/'
+  const next = sanitizeRedirect(requestUrl.searchParams.get('next'))
 
   if (code) {
     const supabase = await createClient()

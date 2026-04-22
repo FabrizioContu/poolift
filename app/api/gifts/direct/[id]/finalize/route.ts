@@ -8,7 +8,7 @@ export async function PUT(
 ) {
   try {
     const { id } = await params
-    const { finalPrice, organizerComment, receiptImageUrl } = await request.json()
+    const { finalPrice, organizerComment, receiptImageUrl, shareCode } = await request.json()
 
     if (!finalPrice || finalPrice <= 0) {
       return NextResponse.json(
@@ -36,13 +36,14 @@ export async function PUT(
       )
     }
 
-    // Validate organizer ownership when organizer_user_id is set
+    // Validate organizer ownership
     if (gift.organizer_user_id) {
       if (!user || user.id !== gift.organizer_user_id) {
-        return NextResponse.json(
-          { error: 'No autorizado' },
-          { status: 403 }
-        )
+        return NextResponse.json({ error: 'No autorizado' }, { status: 403 })
+      }
+    } else {
+      if (!shareCode || shareCode !== gift.share_code) {
+        return NextResponse.json({ error: 'No autorizado' }, { status: 403 })
       }
     }
 

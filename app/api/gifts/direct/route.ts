@@ -27,11 +27,9 @@ import { createClient } from "@/lib/supabase/server";
 
 function generateUniqueCode(length: number = 12): string {
   const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
-  let result = "";
-  for (let i = 0; i < length; i++) {
-    result += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  return result;
+  const bytes = new Uint8Array(length);
+  crypto.getRandomValues(bytes);
+  return Array.from(bytes).map(b => chars[b % chars.length]).join("");
 }
 
 export async function POST(request: NextRequest) {
