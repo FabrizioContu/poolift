@@ -372,7 +372,7 @@ describe('Direct Gifts API', () => {
 
     it('retorna error si ya está cerrado', async () => {
       mockSupabase.single.mockResolvedValueOnce({
-        data: { id: 'gift-123', status: 'closed', estimated_price: 50 },
+        data: { id: 'gift-123', status: 'closed', estimated_price: 50, share_code: 'test-code' },
         error: null,
       })
 
@@ -380,6 +380,7 @@ describe('Direct Gifts API', () => {
 
       const request = createMockRequest('http://localhost/api/gifts/direct/gift-123/close', {
         method: 'PUT',
+        body: JSON.stringify({ shareCode: 'test-code' }),
       })
 
       const response = await PUT(request, {
@@ -412,7 +413,7 @@ describe('Direct Gifts API', () => {
 
     it('retorna error si participación aún abierta', async () => {
       mockSupabase.single.mockResolvedValueOnce({
-        data: { id: 'gift-123', status: 'open' },
+        data: { id: 'gift-123', status: 'open', share_code: 'test-code' },
         error: null,
       })
 
@@ -420,7 +421,7 @@ describe('Direct Gifts API', () => {
 
       const request = createMockRequest('http://localhost/api/gifts/direct/gift-123/finalize', {
         method: 'PUT',
-        body: JSON.stringify({ finalPrice: 50 }),
+        body: JSON.stringify({ finalPrice: 50, shareCode: 'test-code' }),
       })
 
       const response = await PUT(request, {

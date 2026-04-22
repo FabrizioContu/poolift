@@ -9,6 +9,9 @@ export async function PUT(
   try {
     const { id } = await params
 
+    const body = (await request.json().catch(() => null)) ?? {}
+    const shareCode = (body as Record<string, unknown>).shareCode as string | undefined
+
     const serverClient = await createClient()
     const {
       data: { user },
@@ -28,13 +31,14 @@ export async function PUT(
       )
     }
 
-    // Validate organizer ownership when organizer_user_id is set
+    // Validate organizer ownership
     if (gift.organizer_user_id) {
       if (!user || user.id !== gift.organizer_user_id) {
-        return NextResponse.json(
-          { error: 'No autorizado' },
-          { status: 403 }
-        )
+        return NextResponse.json({ error: 'No autorizado' }, { status: 403 })
+      }
+    } else {
+      if (!shareCode || shareCode !== gift.share_code) {
+        return NextResponse.json({ error: 'No autorizado' }, { status: 403 })
       }
     }
 

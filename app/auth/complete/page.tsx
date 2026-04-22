@@ -4,6 +4,12 @@ import { Suspense, useEffect, useRef } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { migrateAnonData } from '@/lib/migrate'
 
+function sanitizeRedirect(next: string | null): string {
+  if (!next) return '/'
+  if (!next.startsWith('/') || next.startsWith('//')) return '/'
+  return next
+}
+
 function AuthCompleteContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -13,7 +19,7 @@ function AuthCompleteContent() {
     if (migrated.current) return
     migrated.current = true
 
-    const next = searchParams.get('next') || '/'
+    const next = sanitizeRedirect(searchParams.get('next'))
 
     migrateAnonData()
       .catch((e) => console.error('Migration error:', e))
