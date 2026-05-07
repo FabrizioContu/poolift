@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Trash2, ArrowRight, CheckCircle } from "lucide-react";
 import { Button, IconButton } from "@/components/ui-custom";
 import { minimizeDebts, type Transaction } from "@/lib/calculator";
+import { useLocalStorage } from "@/lib/hooks/useLocalStorage";
 
 interface Row {
   name: string;
@@ -20,7 +21,7 @@ interface Props {
 }
 
 export function ExpenseSettlement({ initialParticipants }: Props = {}) {
-  const [rows, setRows] = useState<Row[]>(() => buildRows(initialParticipants));
+  const [rows, setRows] = useLocalStorage<Row[]>("poolift:calc:settle:rows", buildRows(initialParticipants));
   const [transactions, setTransactions] = useState<Transaction[] | null>(null);
   const [error, setError] = useState<string | null>(null);
 

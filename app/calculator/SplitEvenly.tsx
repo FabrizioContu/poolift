@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui-custom";
 import { splitEvenly, type SplitResult } from "@/lib/calculator";
+import { useLocalStorage } from "@/lib/hooks/useLocalStorage";
 
 interface Props {
   initialNames?: string[]
@@ -11,12 +12,13 @@ interface Props {
 
 export function SplitEvenly({ initialNames }: Props = {}) {
   const seedCount = initialNames?.length ?? 2
-  const [total, setTotal] = useState("");
-  const [count, setCount] = useState(String(Math.max(seedCount, 2)));
-  const [names, setNames] = useState<string[]>(
+  const [total, setTotal] = useLocalStorage("poolift:calc:split:total", "");
+  const [count, setCount] = useLocalStorage("poolift:calc:split:count", String(Math.max(seedCount, 2)));
+  const [names, setNames] = useLocalStorage<string[]>(
+    "poolift:calc:split:names",
     initialNames?.length ? [...initialNames] : ["", ""]
   );
-  const [showNames, setShowNames] = useState(!!initialNames?.length);
+  const [showNames, setShowNames] = useLocalStorage("poolift:calc:split:showNames", !!initialNames?.length);
   const [result, setResult] = useState<SplitResult | null>(null);
   const [error, setError] = useState<string | null>(null);
 

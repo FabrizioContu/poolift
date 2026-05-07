@@ -11,6 +11,7 @@ const getCountInput = () => screen.getAllByRole("spinbutton")[1] as HTMLInputEle
 describe("SplitEvenly", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    localStorage.clear();
   });
 
   it("renderiza estado inicial correctamente", () => {

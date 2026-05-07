@@ -6,6 +6,7 @@ import { ExpenseSettlement } from "@/app/calculator/ExpenseSettlement";
 describe("ExpenseSettlement", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    localStorage.clear();
   });
 
   it("renderiza 2 filas iniciales con placeholders", () => {
