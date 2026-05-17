@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Check, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui-custom/Button";
 import dynamic from "next/dynamic";
-import { anonymousStorage } from "@/lib/storage";
+import { getGroupSession } from "@/lib/auth";
 
 const CreateGiftModal = dynamic(
   () => import("@/components/modals/CreateGiftModal"),
@@ -15,6 +15,7 @@ interface SelectProposalButtonProps {
   proposalName: string;
   totalPrice: number;
   partyId: string;
+  groupId: string;
   isSelected: boolean;
   isCoordinator: boolean;
   hasOtherSelected: boolean;
@@ -26,6 +27,7 @@ export function SelectProposalButton({
   proposalName,
   totalPrice,
   partyId,
+  groupId,
   isSelected,
   isCoordinator,
   hasOtherSelected,
@@ -42,7 +44,7 @@ export function SelectProposalButton({
     setError(null);
 
     try {
-      const familyId = anonymousStorage.getFamilyId();
+      const familyId = getGroupSession(groupId)?.familyId ?? null;
       const response = await fetch(`/api/proposals/${proposalId}/select`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },

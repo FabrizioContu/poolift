@@ -35,6 +35,7 @@ interface ProposalCardProps {
     party_id?: string;
   };
   partyId?: string;
+  groupId?: string;
   isCoordinator?: boolean;
   hasOtherSelected?: boolean;
   onVoteSuccess?: () => void;
@@ -43,6 +44,7 @@ interface ProposalCardProps {
 export function ProposalCard({
   proposal,
   partyId,
+  groupId = "",
   isCoordinator = false,
   hasOtherSelected = false,
   onVoteSuccess,
@@ -254,6 +256,7 @@ export function ProposalCard({
           proposalName={proposal.name}
           totalPrice={proposal.total_price}
           partyId={effectivePartyId}
+          groupId={groupId}
           isSelected={proposal.is_selected}
           isCoordinator={isCoordinator}
           hasOtherSelected={hasOtherSelected}

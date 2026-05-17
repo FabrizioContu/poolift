@@ -55,6 +55,7 @@ export function PartyDetailTabs({
               key={proposal.id}
               proposal={proposal}
               partyId={partyId}
+              groupId={groupId}
               isCoordinator={isCoordinator}
               hasOtherSelected={hasAnySelected && !proposal.is_selected}
             />
