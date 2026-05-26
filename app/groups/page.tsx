@@ -15,6 +15,7 @@ import {
 import { migrateAnonData } from "@/lib/migrate";
 import { GroupCard } from "@/components/groups/GroupCard";
 import { Button } from "@/components/ui-custom/Button";
+import { anonymousStorage } from "@/lib/storage";
 import { OCCASION_LABELS, type OccasionType } from "@/lib/types";
 
 const AuthModal = dynamic(() =>
@@ -337,14 +338,27 @@ export default function GroupsPage() {
                         </div>
                       </div>
                     </div>
-                    <Lock className="text-muted-foreground/60 shrink-0" size={18} />
+                    {anonymousStorage.hasAccess(group.id) ? (
+                      <Users className="text-emerald-500 shrink-0" size={18} />
+                    ) : (
+                      <Lock className="text-muted-foreground/60 shrink-0" size={18} />
+                    )}
                   </div>
-                  <button
-                    onClick={() => setShowAuthModal(true)}
-                    className="mt-4 w-full text-sm text-primary hover:text-primary/80 text-center py-2 border border-primary/30 rounded-lg hover:bg-primary/10 transition"
-                  >
-                    Inicia sesión para ver si tienes acceso
-                  </button>
+                  {anonymousStorage.hasAccess(group.id) ? (
+                    <Link
+                      href={`/dashboard/${group.id}`}
+                      className="mt-4 w-full inline-block text-sm text-emerald-700 font-medium text-center py-2 border border-emerald-300 rounded-lg hover:bg-emerald-50 transition dark:text-emerald-400 dark:border-emerald-700 dark:hover:bg-emerald-900/20"
+                    >
+                      Entrar al grupo
+                    </Link>
+                  ) : (
+                    <button
+                      onClick={() => setShowAuthModal(true)}
+                      className="mt-4 w-full text-sm text-primary hover:text-primary/80 text-center py-2 border border-primary/30 rounded-lg hover:bg-primary/10 transition"
+                    >
+                      Inicia sesión para ver si tienes acceso
+                    </button>
+                  )}
                 </div>
               ))}
             </div>
