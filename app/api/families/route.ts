@@ -2,6 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/lib/supabase";
 import { createClient } from "@/lib/supabase/server";
 
+function generateShareCode(): string {
+  const chars = "abcdefghijklmnopqrstuvwxyz0123456789";
+  const bytes = new Uint8Array(8);
+  crypto.getRandomValues(bytes);
+  return Array.from(bytes).map((b) => chars[b % chars.length]).join("");
+}
+
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   const groupId = searchParams.get("groupId");
@@ -98,6 +105,7 @@ export async function POST(request: NextRequest) {
         group_id: groupId,
         name: trimmedName,
         is_creator: false,
+        share_code: generateShareCode(),
         ...(user ? { user_id: user.id } : {}),
       })
       .select()

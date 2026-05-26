@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { Users, CheckCircle } from 'lucide-react'
+import { Users, CheckCircle, Copy, Check } from 'lucide-react'
 import { Button } from '@/components/ui-custom/Button'
 import { Alert } from '@/components/ui-custom/Alert'
 import { addGroupToSession } from '@/lib/auth'
@@ -31,6 +31,8 @@ export function JoinGroupForm({ groupId, groupName, inviteCode }: JoinGroupFormP
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
+  const [shareCode, setShareCode] = useState<string | null>(null)
+  const [copied, setCopied] = useState(false)
 
   const {
     register,
@@ -74,15 +76,25 @@ export function JoinGroupForm({ groupId, groupName, inviteCode }: JoinGroupFormP
       // Track grupo para usuario anónimo
       anonymousStorage.addGroup(groupId)
 
+      setShareCode(responseData.family.share_code ?? null)
       setSuccess(true)
       setTimeout(() => {
         router.push(`/dashboard/${groupId}`)
-      }, 1500)
+      }, 4000)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Error al unirse al grupo')
     } finally {
       setIsSubmitting(false)
     }
+  }
+
+  const handleCopy = async () => {
+    if (!shareCode) return
+    try {
+      await navigator.clipboard.writeText(shareCode)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch {}
   }
 
   if (success) {
@@ -94,9 +106,31 @@ export function JoinGroupForm({ groupId, groupName, inviteCode }: JoinGroupFormP
         <h2 className="text-2xl font-bold text-foreground mb-2">
           ¡Te has unido al grupo!
         </h2>
-        <p className="text-muted-foreground">
-          Redirigiendo al dashboard...
-        </p>
+
+        {shareCode && (
+          <div className="mt-4 mb-4 bg-amber-50 border border-amber-200 rounded-lg p-4">
+            <p className="text-sm font-medium text-amber-800 mb-2">
+              Guardá tu código de familia
+            </p>
+            <p className="text-xs text-amber-700 mb-3">
+              Con este código podés volver a acceder al grupo desde cualquier dispositivo sin necesidad de cuenta
+            </p>
+            <div className="flex items-center gap-2 justify-center">
+              <span className="font-mono font-bold text-lg tracking-widest text-amber-900">
+                {shareCode}
+              </span>
+              <button
+                onClick={handleCopy}
+                className="p-1.5 rounded-md hover:bg-amber-200 transition text-amber-700"
+                aria-label="Copiar código"
+              >
+                {copied ? <Check size={16} className="text-emerald-600" /> : <Copy size={16} />}
+              </button>
+            </div>
+          </div>
+        )}
+
+        <p className="text-muted-foreground text-sm">Redirigiendo al dashboard...</p>
       </div>
     )
   }

@@ -229,20 +229,28 @@ export default function GroupsPage() {
 
         {/* Auth banner for anonymous users */}
         {!authLoading && isAnonymous && (
-          <div className="bg-primary/10 border border-primary/20 rounded-lg p-4 mb-6 flex items-center justify-between gap-4">
-            <div className="flex items-center gap-3">
-              <Lock className="text-primary shrink-0" size={20} />
-              <p className="text-foreground text-sm">
-                Inicia sesión para ver si tienes acceso a estos grupos
-              </p>
+          <div className="bg-primary/10 border border-primary/20 rounded-lg p-4 mb-6">
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <Lock className="text-primary shrink-0" size={20} />
+                <p className="text-foreground text-sm">
+                  Inicia sesión para ver si tienes acceso a estos grupos
+                </p>
+              </div>
+              <Button
+                onClick={() => setShowAuthModal(true)}
+                className="flex items-center gap-2 shrink-0"
+              >
+                <LogIn size={16} />
+                Entrar
+              </Button>
             </div>
-            <Button
-              onClick={() => setShowAuthModal(true)}
-              className="flex items-center gap-2 shrink-0"
-            >
-              <LogIn size={16} />
-              Entrar
-            </Button>
+            <p className="text-sm text-muted-foreground mt-3 pl-8">
+              ¿Ya sos miembro y tenés tu código de familia?{" "}
+              <Link href="/join?tab=familia" className="text-primary hover:underline font-medium">
+                Recuperá tu acceso
+              </Link>
+            </p>
           </div>
         )}
 

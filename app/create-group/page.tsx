@@ -29,6 +29,7 @@ interface GroupResponse {
   family: {
     id: string;
     name: string;
+    share_code?: string;
   };
 }
 
@@ -373,6 +374,7 @@ export default function CreateGroupPage() {
           inviteCode={createdGroup.group.invite_code}
           groupId={createdGroup.group.id}
           groupName={createdGroup.group.name}
+          familyShareCode={createdGroup.family.share_code}
         />
       )}
     </main>
