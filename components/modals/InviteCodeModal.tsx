@@ -12,6 +12,7 @@ interface InviteCodeModalProps {
   inviteCode: string;
   groupId: string;
   groupName: string;
+  familyShareCode?: string;
 }
 
 export function InviteCodeModal({
@@ -20,10 +21,12 @@ export function InviteCodeModal({
   inviteCode,
   groupId,
   groupName,
+  familyShareCode,
 }: InviteCodeModalProps) {
   const router = useRouter();
   const [copiedCode, setCopiedCode] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
+  const [copiedShare, setCopiedShare] = useState(false);
 
   const inviteLink = typeof window !== "undefined"
     ? `${window.location.origin}/join/${inviteCode}`
@@ -46,6 +49,17 @@ export function InviteCodeModal({
       setTimeout(() => setCopiedLink(false), 2000);
     } catch (err) {
       console.error("Error copying link:", err);
+    }
+  };
+
+  const handleCopyShareCode = async () => {
+    if (!familyShareCode) return;
+    try {
+      await navigator.clipboard.writeText(familyShareCode);
+      setCopiedShare(true);
+      setTimeout(() => setCopiedShare(false), 2000);
+    } catch (err) {
+      console.error("Error copying share code:", err);
     }
   };
 
@@ -123,6 +137,33 @@ export function InviteCodeModal({
             <span>Compartir en WhatsApp</span>
           </Button>
         </div>
+
+        {familyShareCode && (
+          <div className="mt-4 mb-4 bg-amber-50 border border-amber-200 rounded-lg p-4 text-left dark:bg-amber-900/20 dark:border-amber-700">
+            <p className="text-sm font-medium text-amber-800 dark:text-amber-300 mb-1">
+              Tu código personal de acceso
+            </p>
+            <p className="text-xs text-amber-700 dark:text-amber-400 mb-3">
+              Guardalo — te permite volver a entrar al grupo desde cualquier dispositivo sin necesidad de cuenta
+            </p>
+            <div className="flex items-center justify-between bg-amber-100 dark:bg-amber-900/40 rounded-lg px-4 py-2">
+              <span className="font-mono font-bold tracking-widest text-amber-900 dark:text-amber-200">
+                {familyShareCode}
+              </span>
+              <button
+                onClick={handleCopyShareCode}
+                className="ml-3 p-1.5 rounded-md hover:bg-amber-200 dark:hover:bg-amber-800 transition text-amber-700 dark:text-amber-300"
+                aria-label="Copiar código de familia"
+              >
+                {copiedShare ? (
+                  <Check size={16} className="text-emerald-600" />
+                ) : (
+                  <Copy size={16} />
+                )}
+              </button>
+            </div>
+          </div>
+        )}
 
         <Button onClick={handleGoToDashboard} className="w-full py-3">
           Ir al Dashboard

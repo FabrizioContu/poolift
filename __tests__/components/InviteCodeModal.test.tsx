@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { InviteCodeModal } from '@/components/modals/InviteCodeModal'
 
@@ -25,6 +25,8 @@ describe('InviteCodeModal', () => {
 
   beforeEach(() => {
     vi.clearAllMocks()
+    // Re-apply implementation after clearAllMocks resets mock state
+    mockWriteText.mockResolvedValue(undefined)
 
     // Mock clipboard
     Object.defineProperty(navigator, 'clipboard', {
@@ -129,5 +131,63 @@ describe('InviteCodeModal', () => {
     expect(screen.getByText('Copiar Link')).toBeInTheDocument()
     expect(screen.getByText('Compartir en WhatsApp')).toBeInTheDocument()
     expect(screen.getByText('Ir al Dashboard')).toBeInTheDocument()
+  })
+
+  // ──────────────────────────────────────────────
+  // familyShareCode prop
+  // ──────────────────────────────────────────────
+
+  it('renders familyShareCode section when prop is provided', () => {
+    render(<InviteCodeModal {...defaultProps} familyShareCode="xyz789ab" />)
+
+    expect(screen.getByText('Tu código personal de acceso')).toBeInTheDocument()
+    expect(screen.getByText('xyz789ab')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /copiar código de familia/i })).toBeInTheDocument()
+  })
+
+  it('does NOT render personal code section when familyShareCode is absent', () => {
+    render(<InviteCodeModal {...defaultProps} />)
+
+    expect(screen.queryByText('Tu código personal de acceso')).not.toBeInTheDocument()
+  })
+
+  it('does NOT render personal code section when familyShareCode is undefined', () => {
+    render(<InviteCodeModal {...defaultProps} familyShareCode={undefined} />)
+
+    expect(screen.queryByText('Tu código personal de acceso')).not.toBeInTheDocument()
+  })
+
+  it('copy button for familyShareCode copies the code to clipboard', async () => {
+    render(<InviteCodeModal {...defaultProps} familyShareCode="xyz789ab" />)
+
+    // Ensure clipboard mock is set right before click (userEvent.setup in other tests can override it)
+    const localWriteSpy = vi.fn().mockResolvedValue(undefined)
+    Object.defineProperty(global.navigator, 'clipboard', {
+      value: { writeText: localWriteSpy },
+      writable: true,
+      configurable: true,
+    })
+
+    const copyShareButton = screen.getByRole('button', { name: /copiar código de familia/i })
+    fireEvent.click(copyShareButton)
+
+    await waitFor(() => {
+      expect(localWriteSpy).toHaveBeenCalledWith('xyz789ab')
+    })
+  })
+
+  it('familyShareCode copy button does not interfere with invite code copy state', async () => {
+    const user = userEvent.setup()
+    render(<InviteCodeModal {...defaultProps} familyShareCode="xyz789ab" />)
+
+    // Copy the invite code first
+    await user.click(screen.getByText('Copiar Código'))
+    await waitFor(() => {
+      expect(screen.getByText('¡Código copiado!')).toBeInTheDocument()
+    })
+
+    // The family code section should still be intact
+    expect(screen.getByText('xyz789ab')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /copiar código de familia/i })).toBeInTheDocument()
   })
 })

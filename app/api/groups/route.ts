@@ -53,6 +53,7 @@ export async function POST(request: NextRequest) {
         group_id: group.id,
         name: familyName,
         is_creator: true,
+        share_code: generateUniqueCode(8),
         ...(user ? { user_id: user.id } : {}),
       })
       .select()
