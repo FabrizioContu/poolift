@@ -56,7 +56,7 @@ export default function GroupsPage() {
     let isMounted = true;
 
     async function loadGroups() {
-      const supabase = createClient()
+      const supabase = createClient();
       let savedDirectGifts = getDirectGiftSessions();
 
       // Validate direct gifts against Supabase - remove cancelled/deleted ones
@@ -247,9 +247,12 @@ export default function GroupsPage() {
               </Button>
             </div>
             <p className="text-sm text-muted-foreground mt-3 pl-8">
-              ¿Ya sos miembro y tenés tu código de familia?{" "}
-              <Link href="/join?tab=familia" className="text-primary hover:underline font-medium">
-                Recuperá tu acceso
+              ¿Ya eres miembro y tienes tu código de familia?{" "}
+              <Link
+                href="/join?tab=familia"
+                className="text-primary hover:underline font-medium"
+              >
+                Recupera tu acceso
               </Link>
             </p>
           </div>
@@ -300,7 +303,10 @@ export default function GroupsPage() {
           // Anonymous: locked group cards
           filteredGroups.length === 0 ? (
             <div className="text-center py-12 bg-background rounded-lg border border-border">
-              <Users size={48} className="mx-auto text-muted-foreground/40 mb-4" />
+              <Users
+                size={48}
+                className="mx-auto text-muted-foreground/40 mb-4"
+              />
               <p className="text-muted-foreground font-medium">
                 No hay grupos disponibles
               </p>
@@ -341,7 +347,10 @@ export default function GroupsPage() {
                     {anonymousStorage.hasAccess(group.id) ? (
                       <Users className="text-emerald-500 shrink-0" size={18} />
                     ) : (
-                      <Lock className="text-muted-foreground/60 shrink-0" size={18} />
+                      <Lock
+                        className="text-muted-foreground/60 shrink-0"
+                        size={18}
+                      />
                     )}
                   </div>
                   {anonymousStorage.hasAccess(group.id) ? (
@@ -365,7 +374,10 @@ export default function GroupsPage() {
           )
         ) : filteredGroups.length === 0 ? (
           <div className="text-center py-12 bg-background rounded-lg border border-border">
-            <Users size={48} className="mx-auto text-muted-foreground/40 mb-4" />
+            <Users
+              size={48}
+              className="mx-auto text-muted-foreground/40 mb-4"
+            />
             {searchTerm ? (
               <>
                 <p className="text-muted-foreground font-medium">

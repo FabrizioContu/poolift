@@ -144,7 +144,7 @@ export function InviteCodeModal({
               Tu código personal de acceso
             </p>
             <p className="text-xs text-amber-700 dark:text-amber-400 mb-3">
-              Guardalo — te permite volver a entrar al grupo desde cualquier dispositivo sin necesidad de cuenta
+              Guárdalo — te permite volver a entrar al grupo desde cualquier dispositivo sin necesidad de cuenta
             </p>
             <div className="flex items-center justify-between bg-amber-100 dark:bg-amber-900/40 rounded-lg px-4 py-2">
               <span className="font-mono font-bold tracking-widest text-amber-900 dark:text-amber-200">

@@ -43,7 +43,7 @@ export function SplitEvenly({ initialNames }: Props = {}) {
     const countNum = parseInt(count);
 
     if (!total || isNaN(totalNum) || totalNum <= 0) {
-      setError("Ingresá un monto total válido mayor a 0.");
+      setError("Introduce un monto total válido mayor a 0.");
       return;
     }
     if (isNaN(countNum) || countNum < 2) {

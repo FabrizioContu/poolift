@@ -209,7 +209,7 @@ function JoinPageContent() {
                 </div>
                 <h1 className="text-2xl font-bold text-foreground">Recuperar Acceso</h1>
                 <p className="text-muted-foreground mt-2">
-                  Ingresá tu código personal de familia para volver a entrar al grupo
+                  Introduce tu código personal de familia para volver a entrar al grupo
                 </p>
               </div>
 
@@ -249,12 +249,12 @@ function JoinPageContent() {
               </form>
 
               <p className="text-center text-sm text-muted-foreground mt-6">
-                ¿No tenés tu código?{" "}
+                ¿No tienes tu código?{" "}
                 <button
                   onClick={() => setTab("invite")}
                   className="text-primary hover:underline"
                 >
-                  Unite con código de invitación
+                  Únete con código de invitación
                 </button>
               </p>
             </>
