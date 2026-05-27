@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, waitFor, fireEvent } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { JoinGroupForm } from '@/components/groups/JoinGroupForm'
 
@@ -18,9 +18,19 @@ const defaultProps = {
 }
 
 describe('JoinGroupForm', () => {
+  let writeTextSpy: ReturnType<typeof vi.fn>
+
   beforeEach(() => {
     vi.clearAllMocks()
     global.fetch = vi.fn()
+
+    // Set up clipboard mock fresh each test
+    writeTextSpy = vi.fn().mockResolvedValue(undefined)
+    Object.defineProperty(global.navigator, 'clipboard', {
+      value: { writeText: writeTextSpy },
+      writable: true,
+      configurable: true,
+    })
   })
 
   it('renderiza correctamente', () => {
@@ -207,5 +217,83 @@ describe('JoinGroupForm', () => {
     render(<JoinGroupForm {...defaultProps} />)
 
     expect(screen.getByText(/Introduce el nombre de tu familia/)).toBeInTheDocument()
+  })
+
+  // ──────────────────────────────────────────────
+  // share_code display in success state
+  // ──────────────────────────────────────────────
+
+  it('displays share_code from API response after successful join', async () => {
+    const user = userEvent.setup()
+
+    ;(global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+      ok: true,
+      json: () =>
+        Promise.resolve({ family: { id: 'fam-1', name: 'Familia López', share_code: 'xyz789ab' } }),
+    })
+
+    render(<JoinGroupForm {...defaultProps} />)
+
+    await user.type(screen.getByPlaceholderText('ej: Familia García'), 'Familia López')
+    await user.click(screen.getByRole('button', { name: /unirse al grupo/i }))
+
+    await waitFor(() => {
+      expect(screen.getByText('xyz789ab')).toBeInTheDocument()
+      expect(screen.getByText('Guardá tu código de familia')).toBeInTheDocument()
+    })
+  })
+
+  it('does NOT render share_code section when API response omits share_code', async () => {
+    const user = userEvent.setup()
+
+    ;(global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+      ok: true,
+      json: () => Promise.resolve({ family: { id: 'fam-1', name: 'Familia López' } }),
+    })
+
+    render(<JoinGroupForm {...defaultProps} />)
+
+    await user.type(screen.getByPlaceholderText('ej: Familia García'), 'Familia López')
+    await user.click(screen.getByRole('button', { name: /unirse al grupo/i }))
+
+    await waitFor(() => {
+      expect(screen.getByText('¡Te has unido al grupo!')).toBeInTheDocument()
+    })
+
+    expect(screen.queryByText('Guardá tu código de familia')).not.toBeInTheDocument()
+  })
+
+  it('copy button copies share_code to clipboard', async () => {
+    const user = userEvent.setup()
+
+    ;(global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+      ok: true,
+      json: () =>
+        Promise.resolve({ family: { id: 'fam-1', name: 'Familia López', share_code: 'xyz789ab' } }),
+    })
+
+    render(<JoinGroupForm {...defaultProps} />)
+
+    await user.type(screen.getByPlaceholderText('ej: Familia García'), 'Familia López')
+    await user.click(screen.getByRole('button', { name: /unirse al grupo/i }))
+
+    await waitFor(() => {
+      expect(screen.getByText('xyz789ab')).toBeInTheDocument()
+    })
+
+    // Re-apply clipboard mock after userEvent.setup() may have overridden it
+    const localWriteSpy = vi.fn().mockResolvedValue(undefined)
+    Object.defineProperty(global.navigator, 'clipboard', {
+      value: { writeText: localWriteSpy },
+      writable: true,
+      configurable: true,
+    })
+
+    const copyButton = screen.getByRole('button', { name: /copiar código/i })
+    fireEvent.click(copyButton)
+
+    await waitFor(() => {
+      expect(localWriteSpy).toHaveBeenCalledWith('xyz789ab')
+    })
   })
 })
