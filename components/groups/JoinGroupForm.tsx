@@ -110,10 +110,10 @@ export function JoinGroupForm({ groupId, groupName, inviteCode }: JoinGroupFormP
         {shareCode && (
           <div className="mt-4 mb-4 bg-amber-50 border border-amber-200 rounded-lg p-4">
             <p className="text-sm font-medium text-amber-800 mb-2">
-              Guardá tu código de familia
+              Guarda tu código de familia
             </p>
             <p className="text-xs text-amber-700 mb-3">
-              Con este código podés volver a acceder al grupo desde cualquier dispositivo sin necesidad de cuenta
+              Con este código puedes volver a acceder al grupo desde cualquier dispositivo sin necesidad de cuenta
             </p>
             <div className="flex items-center gap-2 justify-center">
               <span className="font-mono font-bold text-lg tracking-widest text-amber-900">

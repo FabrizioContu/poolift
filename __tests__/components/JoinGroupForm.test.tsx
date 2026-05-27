@@ -239,7 +239,7 @@ describe('JoinGroupForm', () => {
 
     await waitFor(() => {
       expect(screen.getByText('xyz789ab')).toBeInTheDocument()
-      expect(screen.getByText('Guardá tu código de familia')).toBeInTheDocument()
+      expect(screen.getByText('Guarda tu código de familia')).toBeInTheDocument()
     })
   })
 
@@ -260,7 +260,7 @@ describe('JoinGroupForm', () => {
       expect(screen.getByText('¡Te has unido al grupo!')).toBeInTheDocument()
     })
 
-    expect(screen.queryByText('Guardá tu código de familia')).not.toBeInTheDocument()
+    expect(screen.queryByText('Guarda tu código de familia')).not.toBeInTheDocument()
   })
 
   it('copy button copies share_code to clipboard', async () => {
