@@ -3,6 +3,7 @@ import { GiftParticipation } from "./GiftParticipation";
 import { DirectGiftParticipation } from "./DirectGiftParticipation";
 import { DirectGiftOrganizerActions } from "./DirectGiftOrganizerActions";
 import { CoordinatorActions } from "./CoordinatorActions";
+import { DirectGiftPaymentTracker, GroupGiftPaymentTracker } from "./PaymentTracker";
 import {
   formatDate,
   formatPrice,
@@ -25,6 +26,7 @@ interface DirectGiftParticipant {
   participant_name: string;
   joined_at: string;
   status: "joined" | "declined";
+  paid: boolean;
 }
 
 interface DirectGift {
@@ -99,7 +101,8 @@ async function getGift(shareCode: string) {
         id,
         family_name,
         joined_at,
-        status
+        status,
+        paid
       )
     `,
     )
@@ -312,21 +315,11 @@ export default async function GiftPage({
                 Sé la primera familia en apuntarse
               </p>
             ) : (
-              <ul className="space-y-2">
-                {joinedParticipants.map((p) => (
-                  <li
-                    key={p.id}
-                    className="flex items-center justify-between p-3 bg-muted rounded-lg"
-                  >
-                    <span className="font-medium text-foreground">
-                      {p.participant_name}
-                    </span>
-                    <span className="text-sm text-foreground">
-                      {new Date(p.joined_at).toLocaleDateString("es-ES")}
-                    </span>
-                  </li>
-                ))}
-              </ul>
+              <DirectGiftPaymentTracker
+                giftId={directGift.id}
+                participants={joinedParticipants}
+                isPurchased={isPurchased}
+              />
             )}
 
             {declinedParticipants.length > 0 && (
@@ -600,21 +593,13 @@ export default async function GiftPage({
               Sé la primera familia en apuntarte
             </p>
           ) : (
-            <ul className="space-y-2">
-              {joinedGiftParticipants.map(
-                (p: { id: string; family_name: string; joined_at: string }) => (
-                  <li
-                    key={p.id}
-                    className="flex items-center justify-between p-3 bg-muted rounded-lg"
-                  >
-                    <span className="font-medium">{p.family_name}</span>
-                    <span className="text-sm text-muted-foreground">
-                      {new Date(p.joined_at).toLocaleDateString("es-ES")}
-                    </span>
-                  </li>
-                ),
-              )}
-            </ul>
+            <GroupGiftPaymentTracker
+              giftId={gift.id}
+              participants={joinedGiftParticipants}
+              isPurchased={isPurchased}
+              coordinatorId={gift.party?.coordinator_id ?? null}
+              groupId={gift.party?.group_id ?? null}
+            />
           )}
 
           {declinedGiftParticipants.length > 0 && (
@@ -661,7 +646,7 @@ export default async function GiftPage({
           isPurchased={isPurchased}
           coordinatorName={gift.party?.coordinator?.name || null}
           groupId={gift.party?.group_id || null}
-          participants={gift.participants?.map((p: { id: string; family_name: string; status: string }) => ({
+          participants={gift.participants?.map((p: { id: string; family_name: string; status: string; paid: boolean }) => ({
             id: p.id,
             family_name: p.family_name,
             status: (p.status ?? 'joined') as 'joined' | 'declined',
