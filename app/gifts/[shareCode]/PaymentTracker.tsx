@@ -115,12 +115,9 @@ export function DirectGiftPaymentTracker({
   participants,
   isPurchased,
 }: DirectGiftPaymentTrackerProps) {
-  const [isOrganizer, setIsOrganizer] = useState(false);
-
-  useEffect(() => {
-    const saved = localStorage.getItem(`direct_gift_${giftId}_organizer`);
-    setIsOrganizer(!!saved);
-  }, [giftId]);
+  const [isOrganizer] = useState(
+    () => !!localStorage.getItem(`direct_gift_${giftId}_organizer`),
+  );
 
   const mapped = participants.map((p) => ({
     id: p.id,
