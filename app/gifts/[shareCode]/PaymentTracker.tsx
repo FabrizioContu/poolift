@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { CheckCircle2, Clock } from "lucide-react";
 import { useIsCoordinator } from "@/lib/hooks/useIsCoordinator";
 
