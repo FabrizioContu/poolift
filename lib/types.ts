@@ -137,4 +137,5 @@ export interface Participant {
   family_name: string
   joined_at: string
   status: 'joined' | 'declined'
+  paid: boolean
 }
