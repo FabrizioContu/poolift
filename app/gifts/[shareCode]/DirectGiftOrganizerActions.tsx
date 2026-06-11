@@ -136,6 +136,8 @@ export function DirectGiftOrganizerActions({
     try {
       const response = await fetch(`/api/gifts/direct/${giftId}/close`, {
         method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ shareCode }),
       });
 
       const data = await response.json();
@@ -199,6 +201,8 @@ La participación está cerrada. Mas info: ${giftUrl}`;
     try {
       const response = await fetch(`/api/gifts/direct/${giftId}/cancel`, {
         method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ shareCode }),
       });
 
       const data = await response.json();
