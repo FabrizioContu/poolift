@@ -18,8 +18,8 @@ vi.mock('next/link', () => ({
 
 // Mock CloseParticipationButton
 vi.mock('@/components/gifts/CloseParticipationButton', () => ({
-  CloseParticipationButton: ({ participantCount }: { participantCount: number }) => (
-    <button>Cerrar Participación ({participantCount})</button>
+  CloseParticipationButton: ({ participantCount, groupId }: { participantCount: number; groupId: string | null }) => (
+    <button data-group-id={groupId ?? ''}>Cerrar Participación ({participantCount})</button>
   ),
 }))
 

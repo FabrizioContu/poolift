@@ -7,7 +7,7 @@ import { Modal } from "@/components/ui-custom/Modal";
 import { Lock, AlertTriangle, Users, Check, Copy, Share2 } from "lucide-react";
 import { formatPrice, calculatePricePerFamily } from "@/lib/utils";
 import { generateParticipationClosedMessage } from "@/lib/messages";
-import { useAuth } from "@/lib/auth";
+import { useAuth, getGroupSession } from "@/lib/auth";
 
 const AuthModal = dynamic(() =>
   import("@/components/auth/AuthModal").then((m) => ({ default: m.AuthModal })),
@@ -21,6 +21,7 @@ interface CloseParticipationButtonProps {
   participantCount: number;
   participantNames: string[];
   totalPrice: number;
+  groupId: string | null;
   onSuccess?: () => void;
 }
 
@@ -32,6 +33,7 @@ export function CloseParticipationButton({
   participantCount,
   participantNames,
   totalPrice,
+  groupId,
   onSuccess,
 }: CloseParticipationButtonProps) {
   const { isAnonymous } = useAuth();
@@ -58,8 +60,11 @@ export function CloseParticipationButton({
     setError(null);
 
     try {
+      const familyId = groupId ? getGroupSession(groupId)?.familyId : undefined;
       const response = await fetch(`/api/gifts/${giftId}/close`, {
         method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ familyId }),
       });
 
       const data = await response.json();

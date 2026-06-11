@@ -14,6 +14,7 @@ vi.mock('next/navigation', () => ({
 
 vi.mock('@/lib/auth', () => ({
   useAuth: vi.fn().mockReturnValue({ user: null }),
+  getGroupSession: vi.fn().mockReturnValue(null),
 }))
 
 vi.mock('@/lib/hooks/useIsCoordinator', () => ({

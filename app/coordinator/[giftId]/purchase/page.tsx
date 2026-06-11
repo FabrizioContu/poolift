@@ -14,7 +14,7 @@ import {
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { formatPrice, calculatePricePerFamily } from "@/lib/utils";
-import { useAuth } from "@/lib/auth";
+import { useAuth, getGroupSession } from "@/lib/auth";
 
 const AuthModal = dynamic(() =>
   import("@/components/auth/AuthModal").then((m) => ({ default: m.AuthModal })),
@@ -31,6 +31,7 @@ interface GiftData {
   } | null;
   participants: Array<{ id: string; family_name: string }>;
   party: {
+    group_id: string | null;
     party_celebrants: Array<{
       birthdays: { child_name: string };
     }>;
@@ -127,6 +128,9 @@ export default function PurchasePage({
         receiptImageUrl = await uploadReceipt(receipt, giftId, gift?.share_code)
       }
 
+      const partyObj = Array.isArray(gift?.party) ? gift?.party[0] : gift?.party;
+      const groupId = partyObj?.group_id ?? null;
+      const familyId = groupId ? getGroupSession(groupId)?.familyId : undefined;
       const response = await fetch(`/api/gifts/${giftId}/finalize`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -134,6 +138,7 @@ export default function PurchasePage({
           finalPrice: parseFloat(finalPrice),
           coordinatorComment: comment || null,
           receiptImageUrl,
+          familyId,
         }),
       });
 
