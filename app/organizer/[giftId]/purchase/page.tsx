@@ -146,6 +146,7 @@ export default function DirectGiftPurchasePage({
           finalPrice: parseFloat(finalPrice),
           organizerComment: comment || null,
           receiptImageUrl,
+          shareCode,
         }),
       });
 
