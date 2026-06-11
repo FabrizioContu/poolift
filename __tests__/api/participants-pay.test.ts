@@ -10,6 +10,21 @@ const mockSupabase = {
 }
 vi.mock('@/lib/supabase', () => ({ supabase: mockSupabase }))
 
+// Server client mock — overridden per test for auth scenarios
+const mockServerClient = {
+  ...mockSupabase,
+  auth: {
+    getUser: vi.fn().mockResolvedValue({ data: { user: null }, error: null }),
+  },
+  from: vi.fn(() => mockServerClient),
+  select: vi.fn(() => mockServerClient),
+  eq: vi.fn(() => mockServerClient),
+  single: vi.fn(),
+}
+vi.mock('@/lib/supabase/server', () => ({
+  createClient: vi.fn().mockResolvedValue(mockServerClient),
+}))
+
 function createMockRequest(url: string, body?: unknown): NextRequest {
   return {
     nextUrl: { searchParams: new URLSearchParams(url.split('?')[1] || '') },
@@ -20,10 +35,20 @@ function createMockRequest(url: string, body?: unknown): NextRequest {
   } as unknown as NextRequest
 }
 
+// Shorthand: gift found with coordinator, not yet purchased
+function mockGiftWithCoordinator(coordinatorId = 'family-coord-id') {
+  mockSupabase.single.mockResolvedValueOnce({
+    data: { purchased_at: '2026-05-01T10:00:00Z', party: { coordinator_id: coordinatorId } },
+    error: null,
+  })
+}
+
 describe('PUT /api/gifts/[id]/participants/pay', () => {
   beforeEach(() => {
     vi.clearAllMocks()
     vi.resetModules()
+    // Default: anonymous caller
+    mockServerClient.auth.getUser.mockResolvedValue({ data: { user: null }, error: null })
   })
 
   it('returns 400 when familyName is missing', async () => {
@@ -68,7 +93,7 @@ describe('PUT /api/gifts/[id]/participants/pay', () => {
 
   it('returns 409 when gift purchased_at is null', async () => {
     mockSupabase.single.mockResolvedValueOnce({
-      data: { purchased_at: null },
+      data: { purchased_at: null, party: { coordinator_id: 'family-coord-id' } },
       error: null,
     })
 
@@ -85,9 +110,9 @@ describe('PUT /api/gifts/[id]/participants/pay', () => {
   })
 
   it('returns 404 when participant is not found', async () => {
-    // Gift found with purchased_at set
+    // Gift found with purchased_at set; anonymous caller with matching familyId
     mockSupabase.single.mockResolvedValueOnce({
-      data: { purchased_at: '2026-05-01T10:00:00Z' },
+      data: { purchased_at: '2026-05-01T10:00:00Z', party: { coordinator_id: 'family-coord-id' } },
       error: null,
     })
     // Participant update returns nothing
@@ -97,6 +122,7 @@ describe('PUT /api/gifts/[id]/participants/pay', () => {
     const req = createMockRequest('http://localhost/api/gifts/gift-1/participants/pay', {
       familyName: 'Familia García',
       paid: true,
+      familyId: 'family-coord-id',
     })
     const res = await PUT(req, { params: Promise.resolve({ id: 'gift-1' }) })
 
@@ -113,16 +139,14 @@ describe('PUT /api/gifts/[id]/participants/pay', () => {
       status: 'joined',
       paid: true,
     }
-    mockSupabase.single.mockResolvedValueOnce({
-      data: { purchased_at: '2026-05-01T10:00:00Z' },
-      error: null,
-    })
+    mockGiftWithCoordinator()
     mockSupabase.single.mockResolvedValueOnce({ data: updatedParticipant, error: null })
 
     const { PUT } = await import('@/app/api/gifts/[id]/participants/pay/route')
     const req = createMockRequest('http://localhost/api/gifts/gift-1/participants/pay', {
       familyName: 'Familia García',
       paid: true,
+      familyId: 'family-coord-id',
     })
     const res = await PUT(req, { params: Promise.resolve({ id: 'gift-1' }) })
 
@@ -140,21 +164,110 @@ describe('PUT /api/gifts/[id]/participants/pay', () => {
       status: 'joined',
       paid: false,
     }
-    mockSupabase.single.mockResolvedValueOnce({
-      data: { purchased_at: '2026-05-01T10:00:00Z' },
-      error: null,
-    })
+    mockGiftWithCoordinator()
     mockSupabase.single.mockResolvedValueOnce({ data: updatedParticipant, error: null })
 
     const { PUT } = await import('@/app/api/gifts/[id]/participants/pay/route')
     const req = createMockRequest('http://localhost/api/gifts/gift-1/participants/pay', {
       familyName: 'Familia García',
       paid: false,
+      familyId: 'family-coord-id',
     })
     const res = await PUT(req, { params: Promise.resolve({ id: 'gift-1' }) })
 
     expect(res.status).toBe(200)
     const body = await res.json()
     expect(body.participant.paid).toBe(false)
+  })
+
+  // Authorization tests
+
+  it('returns 403 when anonymous and familyId is missing', async () => {
+    mockGiftWithCoordinator()
+
+    const { PUT } = await import('@/app/api/gifts/[id]/participants/pay/route')
+    const req = createMockRequest('http://localhost/api/gifts/gift-1/participants/pay', {
+      familyName: 'Familia García',
+      paid: true,
+    })
+    const res = await PUT(req, { params: Promise.resolve({ id: 'gift-1' }) })
+
+    expect(res.status).toBe(403)
+    const body = await res.json()
+    expect(body.error).toBe('No autorizado')
+  })
+
+  it('returns 403 when anonymous and familyId does not match coordinator', async () => {
+    mockGiftWithCoordinator('family-coord-id')
+
+    const { PUT } = await import('@/app/api/gifts/[id]/participants/pay/route')
+    const req = createMockRequest('http://localhost/api/gifts/gift-1/participants/pay', {
+      familyName: 'Familia García',
+      paid: true,
+      familyId: 'family-other-id',
+    })
+    const res = await PUT(req, { params: Promise.resolve({ id: 'gift-1' }) })
+
+    expect(res.status).toBe(403)
+    const body = await res.json()
+    expect(body.error).toBe('No autorizado')
+  })
+
+  it('returns 200 when anonymous and familyId matches coordinator', async () => {
+    mockGiftWithCoordinator('family-coord-id')
+    const updatedParticipant = { id: 'p-1', family_name: 'Familia García', paid: true }
+    mockSupabase.single.mockResolvedValueOnce({ data: updatedParticipant, error: null })
+
+    const { PUT } = await import('@/app/api/gifts/[id]/participants/pay/route')
+    const req = createMockRequest('http://localhost/api/gifts/gift-1/participants/pay', {
+      familyName: 'Familia García',
+      paid: true,
+      familyId: 'family-coord-id',
+    })
+    const res = await PUT(req, { params: Promise.resolve({ id: 'gift-1' }) })
+
+    expect(res.status).toBe(200)
+  })
+
+  it('returns 403 when authenticated user is not the coordinator family user_id', async () => {
+    mockServerClient.auth.getUser.mockResolvedValueOnce({
+      data: { user: { id: 'user-other' } },
+      error: null,
+    })
+    mockGiftWithCoordinator('family-coord-id')
+    // coordFamily lookup returns a different user_id
+    mockServerClient.single.mockResolvedValueOnce({ data: { user_id: 'user-coordinator' }, error: null })
+
+    const { PUT } = await import('@/app/api/gifts/[id]/participants/pay/route')
+    const req = createMockRequest('http://localhost/api/gifts/gift-1/participants/pay', {
+      familyName: 'Familia García',
+      paid: true,
+    })
+    const res = await PUT(req, { params: Promise.resolve({ id: 'gift-1' }) })
+
+    expect(res.status).toBe(403)
+    const body = await res.json()
+    expect(body.error).toBe('No autorizado')
+  })
+
+  it('returns 200 when authenticated user matches coordinator family user_id', async () => {
+    mockServerClient.auth.getUser.mockResolvedValueOnce({
+      data: { user: { id: 'user-coordinator' } },
+      error: null,
+    })
+    mockGiftWithCoordinator('family-coord-id')
+    // coordFamily lookup returns matching user_id
+    mockServerClient.single.mockResolvedValueOnce({ data: { user_id: 'user-coordinator' }, error: null })
+    const updatedParticipant = { id: 'p-1', family_name: 'Familia García', paid: true }
+    mockSupabase.single.mockResolvedValueOnce({ data: updatedParticipant, error: null })
+
+    const { PUT } = await import('@/app/api/gifts/[id]/participants/pay/route')
+    const req = createMockRequest('http://localhost/api/gifts/gift-1/participants/pay', {
+      familyName: 'Familia García',
+      paid: true,
+    })
+    const res = await PUT(req, { params: Promise.resolve({ id: 'gift-1' }) })
+
+    expect(res.status).toBe(200)
   })
 })

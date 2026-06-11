@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { CheckCircle2, Clock } from "lucide-react";
 import { useIsCoordinator } from "@/lib/hooks/useIsCoordinator";
+import { getGroupSession } from "@/lib/auth";
 
 interface Participant {
   id: string;
@@ -172,10 +173,11 @@ export function GroupGiftPaymentTracker({
   }));
 
   const handleToggle = async (familyName: string, paid: boolean) => {
+    const familyId = groupId ? getGroupSession(groupId)?.familyId : undefined;
     const res = await fetch(`/api/gifts/${giftId}/participants/pay`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ familyName, paid }),
+      body: JSON.stringify({ familyName, paid, familyId }),
     });
     if (!res.ok) throw new Error("Error al actualizar pago");
   };

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { supabase } from '@/lib/supabase'
+import { createClient } from '@/lib/supabase/server'
 import { notifyParticipantsFinalized } from '@/lib/email'
 
 export async function PUT(
@@ -8,18 +9,28 @@ export async function PUT(
 ) {
   try {
     const { id } = await params
+    const body = (await request.json().catch(() => null)) ?? {}
     const {
       finalPrice,
       receiptImageUrl,
-      coordinatorComment
-    } = await request.json()
+      coordinatorComment,
+      familyId,
+    } = body as {
+      finalPrice?: unknown
+      receiptImageUrl?: string
+      coordinatorComment?: string
+      familyId?: string
+    }
 
-    if (!finalPrice) {
+    if (typeof finalPrice !== 'number' || !Number.isFinite(finalPrice) || finalPrice <= 0) {
       return NextResponse.json(
         { error: 'Precio final requerido' },
         { status: 400 }
       )
     }
+
+    const serverClient = await createClient()
+    const { data: { user } } = await serverClient.auth.getUser()
 
     // Pre-fetch gift context and participant emails for notifications
     const { data: giftContext } = await supabase
@@ -29,12 +40,39 @@ export async function PUT(
         proposal:proposals(name),
         participants(email, status),
         party:parties(
+          coordinator_id,
           party_date,
           party_celebrants(birthday:birthdays(child_name))
         )
       `)
       .eq('id', id)
       .single()
+
+    if (!giftContext) {
+      return NextResponse.json(
+        { error: 'Regalo no encontrado' },
+        { status: 404 }
+      )
+    }
+
+    // Coordinator authorization
+    const party = Array.isArray(giftContext.party) ? giftContext.party[0] : giftContext.party
+    if (party?.coordinator_id) {
+      if (user) {
+        const { data: coordFamily } = await serverClient
+          .from('families')
+          .select('user_id')
+          .eq('id', party.coordinator_id)
+          .single()
+        if (!coordFamily || coordFamily.user_id !== user.id) {
+          return NextResponse.json({ error: 'No autorizado' }, { status: 403 })
+        }
+      } else {
+        if (!familyId || familyId !== party.coordinator_id) {
+          return NextResponse.json({ error: 'No autorizado' }, { status: 403 })
+        }
+      }
+    }
 
     const { data: gift, error } = await supabase
       .from('gifts')
@@ -52,31 +90,28 @@ export async function PUT(
 
     if (error) throw error
 
-    if (giftContext) {
-      const joinedParticipants = giftContext.participants?.filter(
-        (p: { status: string }) => p.status === 'joined'
-      ) ?? []
-      const emails = joinedParticipants
-        .map((p: { email: string | null }) => p.email)
-        .filter(Boolean) as string[]
-      if (emails.length > 0) {
-        const proposal = Array.isArray(giftContext.proposal) ? giftContext.proposal[0] : giftContext.proposal
-        const party = Array.isArray(giftContext.party) ? giftContext.party[0] : giftContext.party
-        const celebrants = party?.party_celebrants?.map(
-          (pc: { birthday: { child_name: string }[] }) =>
-            Array.isArray(pc.birthday) ? pc.birthday[0]?.child_name : (pc.birthday as unknown as { child_name: string } | null)?.child_name
-        ).filter(Boolean) as string[] ?? []
-        const participantCount = joinedParticipants.length
-        void notifyParticipantsFinalized({
-          emails,
-          recipientName: celebrants.length > 0 ? celebrants.join(' y ') : 'los celebrantes',
-          giftIdea: proposal?.name ?? null,
-          finalPrice,
-          pricePerParticipant: participantCount > 0 ? finalPrice / participantCount : 0,
-          organizerComment: coordinatorComment || null,
-          shareCode: giftContext.share_code,
-        })
-      }
+    const joinedParticipants = giftContext.participants?.filter(
+      (p: { status: string }) => p.status === 'joined'
+    ) ?? []
+    const emails = joinedParticipants
+      .map((p: { email: string | null }) => p.email)
+      .filter(Boolean) as string[]
+    if (emails.length > 0) {
+      const proposal = Array.isArray(giftContext.proposal) ? giftContext.proposal[0] : giftContext.proposal
+      const celebrants = party?.party_celebrants?.map(
+        (pc: { birthday: { child_name: string }[] }) =>
+          Array.isArray(pc.birthday) ? pc.birthday[0]?.child_name : (pc.birthday as unknown as { child_name: string } | null)?.child_name
+      ).filter(Boolean) as string[] ?? []
+      const participantCount = joinedParticipants.length
+      void notifyParticipantsFinalized({
+        emails,
+        recipientName: celebrants.length > 0 ? celebrants.join(' y ') : 'los celebrantes',
+        giftIdea: proposal?.name ?? null,
+        finalPrice,
+        pricePerParticipant: participantCount > 0 ? finalPrice / participantCount : 0,
+        organizerComment: coordinatorComment || null,
+        shareCode: giftContext.share_code,
+      })
     }
 
     return NextResponse.json({ gift })
@@ -88,4 +123,3 @@ export async function PUT(
     )
   }
 }
-

@@ -108,6 +108,7 @@ export function CoordinatorActions({
               participantCount={participantCount}
               participantNames={participantNames}
               totalPrice={totalPrice}
+              groupId={groupId}
             />
           ) : (
             <Link href={`/coordinator/${giftId}/purchase`}>
