@@ -30,9 +30,11 @@ interface DashboardTabsProps {
   birthdays: Birthday[]
   groupId: string
   families: { id: string; name: string }[]
+  inviteCode: string
+  groupName: string
 }
 
-export function DashboardTabs({ parties, birthdays, groupId, families }: DashboardTabsProps) {
+export function DashboardTabs({ parties, birthdays, groupId, families, inviteCode, groupName }: DashboardTabsProps) {
   const tabs = [
     {
       id: 'parties',
@@ -77,7 +79,12 @@ export function DashboardTabs({ parties, birthdays, groupId, families }: Dashboa
                 />
               ) : (
                 parties.map((party) => (
-                  <PartyCard key={party.id} party={party} />
+                  <PartyCard
+                    key={party.id}
+                    party={party}
+                    inviteCode={inviteCode}
+                    groupName={groupName}
+                  />
                 ))
               )}
             </div>

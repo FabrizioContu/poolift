@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Calendar, Users, User, Trash2 } from "lucide-react";
 import { formatDate, formatCelebrants } from "@/lib/utils";
 import dynamic from "next/dynamic";
+import { PartyInviteButton } from "@/components/parties/PartyInviteButton";
 
 const ConfirmDeleteModal = dynamic(
   () => import("@/components/modals/ConfirmDeleteModal")
@@ -21,9 +22,11 @@ interface PartyCardProps {
     }>;
     gifts?: Array<{ id: string; share_code: string }>;
   };
+  inviteCode: string;
+  groupName: string;
 }
 
-export function PartyCard({ party }: PartyCardProps) {
+export function PartyCard({ party, inviteCode, groupName }: PartyCardProps) {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const celebrantNames = party.party_celebrants.map(
@@ -103,6 +106,13 @@ export function PartyCard({ party }: PartyCardProps) {
                 <span className="text-yellow-800 text-sm font-medium dark:text-yellow-300">Ideas</span>
               </div>
             )}
+            <PartyInviteButton
+              variant="icon"
+              celebrantNames={celebrantNames}
+              partyDate={formatDate(party.party_date)}
+              groupName={groupName}
+              inviteCode={inviteCode}
+            />
             <button
               onClick={handleDeleteClick}
               className="p-2 text-muted-foreground hover:text-red-500 hover:bg-red-50 rounded-lg transition dark:hover:text-red-400 dark:hover:bg-red-900"

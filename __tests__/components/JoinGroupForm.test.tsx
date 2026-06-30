@@ -185,7 +185,7 @@ describe('JoinGroupForm', () => {
     resolvePromise!({ ok: true, json: () => Promise.resolve({ family: { id: 'f-1' } }) })
   })
 
-  it('muestra mensaje de éxito con redirección', async () => {
+  it('muestra mensaje de éxito con botón explícito para entrar', async () => {
     const user = userEvent.setup()
 
     ;(global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
@@ -203,8 +203,14 @@ describe('JoinGroupForm', () => {
 
     await waitFor(() => {
       expect(screen.getByText('¡Te has unido al grupo!')).toBeInTheDocument()
-      expect(screen.getByText('Redirigiendo al dashboard...')).toBeInTheDocument()
     })
+
+    // Ya no hay auto-redirect: el invitado decide cuándo entrar
+    const enterButton = screen.getByRole('button', { name: /entrar al grupo/i })
+    expect(enterButton).toBeInTheDocument()
+
+    await user.click(enterButton)
+    expect(mockPush).toHaveBeenCalledWith('/dashboard/group-123')
   })
 
   it('muestra el nombre del grupo en el título', () => {

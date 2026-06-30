@@ -10,9 +10,26 @@ Hola! Te invito a unirte a "${groupName}" en Poolift.
 
 Con esta app podemos organizarnos mejor para los regalos de cumpleaños de los niños. Ya no más confusiones sobre quién participa o cuánto poner 😊
 
-👉 Únete aquí: ${APP_URL}/groups/${inviteCode}
+👉 Únete aquí: ${APP_URL}/join/${inviteCode}
 
 ¡Nos vemos dentro!`
+}
+
+export function generatePartyInviteMessage(
+  celebrants: string[],
+  partyDate: string,
+  groupName: string,
+  inviteLink: string
+): string {
+  const names = celebrants.length > 0 ? celebrants.join(' y ') : 'los niños'
+
+  return `🎉 ¡Estás invitado a la fiesta de ${names}!
+
+Fecha: ${partyDate}
+
+Únete al grupo "${groupName}" en Poolift para coordinar el regalo entre todas las familias. Sin registro: tu acceso se guarda con un código de familia 😊
+
+👉 Únete aquí: ${inviteLink}`
 }
 
 export function generateParticipationMessage(

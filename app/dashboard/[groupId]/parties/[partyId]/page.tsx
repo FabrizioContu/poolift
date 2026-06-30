@@ -5,6 +5,7 @@ import Link from "next/link";
 import { PartyDetailTabs } from "./PartyDetailTabs";
 import { AddProposalButton } from "@/components/parties/AddProposalButton";
 import { GiftStatusCard } from "@/components/gifts/GiftStatusCard";
+import { PartyInviteButton } from "@/components/parties/PartyInviteButton";
 
 interface PartyWithRelations {
   id: string;
@@ -59,6 +60,23 @@ async function getParty(partyId: string): Promise<PartyWithRelations | null> {
   }
 
   return data as PartyWithRelations;
+}
+
+async function getGroupInvite(
+  groupId: string,
+): Promise<{ invite_code: string; name: string } | null> {
+  const { data, error } = await supabase
+    .from("groups")
+    .select("invite_code, name")
+    .eq("id", groupId)
+    .single();
+
+  if (error) {
+    console.error("Error fetching group invite:", error);
+    return null;
+  }
+
+  return data;
 }
 
 async function getProposals(partyId: string): Promise<Proposal[]> {
@@ -137,10 +155,11 @@ export default async function PartyDetailPage({
 }) {
   const { groupId, partyId } = await params;
 
-  const [party, proposals, gift] = await Promise.all([
+  const [party, proposals, gift, groupInvite] = await Promise.all([
     getParty(partyId),
     getProposals(partyId),
     getGiftForParty(partyId),
+    getGroupInvite(groupId),
   ]);
 
   if (!party) {
@@ -212,12 +231,21 @@ export default async function PartyDetailPage({
       </header>
 
       {/* Action Buttons */}
-      <div className="flex gap-3 mb-6">
+      <div className="flex flex-wrap gap-3 mb-6">
         <AddProposalButton
           partyId={partyId}
           coordinatorId={coordinatorId}
           groupId={groupId}
         />
+        {groupInvite && (
+          <PartyInviteButton
+            variant="full"
+            celebrantNames={celebrantNames}
+            partyDate={formatDate(party.party_date)}
+            groupName={groupInvite.name}
+            inviteCode={groupInvite.invite_code}
+          />
+        )}
       </div>
 
       {/* Gift Status Card */}

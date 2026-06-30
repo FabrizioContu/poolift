@@ -78,9 +78,6 @@ export function JoinGroupForm({ groupId, groupName, inviteCode }: JoinGroupFormP
 
       setShareCode(responseData.family.share_code ?? null)
       setSuccess(true)
-      setTimeout(() => {
-        router.push(`/dashboard/${groupId}`)
-      }, 4000)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Error al unirse al grupo')
     } finally {
@@ -113,7 +110,7 @@ export function JoinGroupForm({ groupId, groupName, inviteCode }: JoinGroupFormP
               Guarda tu código de familia
             </p>
             <p className="text-xs text-amber-700 mb-3">
-              Con este código puedes volver a acceder al grupo desde cualquier dispositivo sin necesidad de cuenta
+              Con este código puedes volver a acceder al grupo desde cualquier dispositivo sin necesidad de cuenta. Guárdalo antes de continuar.
             </p>
             <div className="flex items-center gap-2 justify-center">
               <span className="font-mono font-bold text-lg tracking-widest text-amber-900">
@@ -130,7 +127,12 @@ export function JoinGroupForm({ groupId, groupName, inviteCode }: JoinGroupFormP
           </div>
         )}
 
-        <p className="text-muted-foreground text-sm">Redirigiendo al dashboard...</p>
+        <Button
+          onClick={() => router.push(`/dashboard/${groupId}`)}
+          className="w-full py-3 mt-2"
+        >
+          Entrar al grupo
+        </Button>
       </div>
     )
   }
@@ -146,6 +148,18 @@ export function JoinGroupForm({ groupId, groupName, inviteCode }: JoinGroupFormP
         </h1>
         <p className="text-muted-foreground mt-2">
           Introduce el nombre de tu familia para unirte
+        </p>
+      </div>
+
+      <div className="mb-6 bg-muted rounded-lg p-4 text-sm text-muted-foreground">
+        <p>
+          <span className="font-medium text-foreground">Poolift</span> ayuda a
+          las familias a coordinar juntas el regalo de cumpleaños: quién
+          participa y cuánto pone cada uno, sin confusiones.
+        </p>
+        <p className="mt-2">
+          No necesitas crear una cuenta. Al unirte recibirás un código de
+          familia que guarda tu acceso desde cualquier dispositivo.
         </p>
       </div>
 
