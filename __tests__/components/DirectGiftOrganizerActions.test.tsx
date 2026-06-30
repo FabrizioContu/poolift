@@ -201,8 +201,29 @@ describe('DirectGiftOrganizerActions', () => {
       await waitFor(() => {
         expect(global.fetch).toHaveBeenCalledWith(
           '/api/gifts/direct/gift-123/close',
-          { method: 'PUT' }
+          expect.objectContaining({ method: 'PUT' })
         )
+      })
+    })
+
+    it('envía shareCode en el body al llamar a API de close', async () => {
+      const user = userEvent.setup()
+      ;(global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve({ pricePerParticipant: 20 }),
+      })
+
+      render(<DirectGiftOrganizerActions {...defaultProps} />)
+
+      await user.click(screen.getByRole('button', { name: /Cerrar Participación/i }))
+
+      const confirmButtons = screen.getAllByRole('button', { name: /Cerrar Participación/i })
+      await user.click(confirmButtons[confirmButtons.length - 1])
+
+      await waitFor(() => {
+        const [, options] = (global.fetch as ReturnType<typeof vi.fn>).mock.calls[0]
+        expect(options.method).toBe('PUT')
+        expect(JSON.parse(options.body)).toMatchObject({ shareCode: defaultProps.shareCode })
       })
     })
 
@@ -281,6 +302,33 @@ describe('DirectGiftOrganizerActions', () => {
 
       await waitFor(() => {
         expect(screen.getByText('Error interno del servidor')).toBeInTheDocument()
+      })
+    })
+  })
+
+  describe('Cancelar regalo', () => {
+    beforeEach(() => {
+      localStorage.setItem('direct_gift_gift-123_organizer', 'true')
+    })
+
+    it('envía shareCode en el body al llamar a API de cancel', async () => {
+      const user = userEvent.setup()
+      ;(global.fetch as ReturnType<typeof vi.fn>).mockResolvedValueOnce({
+        ok: true,
+        json: () => Promise.resolve({}),
+      })
+
+      render(<DirectGiftOrganizerActions {...defaultProps} />)
+
+      await user.click(screen.getByRole('button', { name: /Cancelar Regalo/i }))
+
+      // Click confirm button in modal
+      await user.click(screen.getByRole('button', { name: /Sí, Cancelar Regalo/i }))
+
+      await waitFor(() => {
+        const [, options] = (global.fetch as ReturnType<typeof vi.fn>).mock.calls[0]
+        expect(options.method).toBe('PUT')
+        expect(JSON.parse(options.body)).toMatchObject({ shareCode: defaultProps.shareCode })
       })
     })
   })

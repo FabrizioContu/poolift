@@ -5,7 +5,6 @@ import Link from "next/link";
 import { Calendar, Users, User, Trash2 } from "lucide-react";
 import { formatDate, formatCelebrants } from "@/lib/utils";
 import dynamic from "next/dynamic";
-import { getGroupSession } from "@/lib/auth";
 import { PartyInviteButton } from "@/components/parties/PartyInviteButton";
 
 const ConfirmDeleteModal = dynamic(
@@ -47,11 +46,8 @@ export function PartyCard({ party, inviteCode, groupName }: PartyCardProps) {
 
   const handleConfirmDelete = async (): Promise<{ error?: string } | void> => {
     try {
-      const familyId = getGroupSession(party.group_id)?.familyId ?? null;
       const response = await fetch(`/api/parties/${party.id}`, {
         method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ familyId }),
       });
 
       const data = await response.json();

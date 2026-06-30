@@ -14,6 +14,7 @@ export async function GET(
         *,
         party:parties(
           id,
+          group_id,
           party_date,
           coordinator_id,
           party_celebrants(
