@@ -12,9 +12,6 @@ export async function DELETE(
     // Validate before delete
     const validation = await validateBirthdayDelete(id);
 
-    // Delete associated ideas first (cascade)
-    await supabase.from("ideas").delete().eq("birthday_id", id);
-
     // Delete birthday
     const { error } = await supabase.from("birthdays").delete().eq("id", id);
 

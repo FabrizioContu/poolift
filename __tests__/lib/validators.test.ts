@@ -78,51 +78,18 @@ describe("validators", () => {
     it("bloquea si hay propuestas", async () => {
       const mockSelect = vi.fn();
       const mockEq = vi.fn();
-      const mockIn = vi.fn();
 
       // proposals - has proposals
       mockEq.mockResolvedValueOnce({
         data: [{ id: "prop1" }],
         error: null,
       });
-      // votes on proposals - none
-      mockIn.mockResolvedValueOnce({ data: [], error: null });
 
-      mockSelect.mockReturnValue({
-        eq: mockEq,
-        in: mockIn,
-      });
+      mockSelect.mockReturnValue({ eq: mockEq });
       mockSupabase.from.mockReturnValue({ select: mockSelect });
 
       await expect(validatePartyDelete("party-123")).rejects.toThrow(
         "No se puede eliminar. Esta fiesta tiene 1 propuesta(s)."
-      );
-    });
-
-    it("bloquea si hay votos", async () => {
-      const mockSelect = vi.fn();
-      const mockEq = vi.fn();
-      const mockIn = vi.fn();
-
-      // proposals - has proposals
-      mockEq.mockResolvedValueOnce({
-        data: [{ id: "prop1" }],
-        error: null,
-      });
-      // votes on proposals - has votes
-      mockIn.mockResolvedValueOnce({
-        data: [{ id: "v1" }, { id: "v2" }],
-        error: null,
-      });
-
-      mockSelect.mockReturnValue({
-        eq: mockEq,
-        in: mockIn,
-      });
-      mockSupabase.from.mockReturnValue({ select: mockSelect });
-
-      await expect(validatePartyDelete("party-123")).rejects.toThrow(
-        "No se puede eliminar. Esta fiesta tiene 2 voto(s) registrado(s)."
       );
     });
 
@@ -148,24 +115,12 @@ describe("validators", () => {
   });
 
   describe("validateProposalDelete", () => {
-    it("permite eliminar si no hay votos y no está seleccionada", async () => {
-      const mockSelect = vi.fn();
-      const mockEq = vi.fn();
-      const mockSingle = vi.fn();
-
-      // votes - none
-      mockEq.mockResolvedValueOnce({ data: [], error: null });
-      // proposal - not selected
-      mockSingle.mockResolvedValueOnce({
-        data: { is_selected: false },
-        error: null,
-      });
-
-      mockSelect.mockReturnValue({
-        eq: mockEq,
-        single: mockSingle,
-      });
-      mockEq.mockReturnValue({ single: mockSingle });
+    it("permite eliminar si no está seleccionada", async () => {
+      const mockSingle = vi
+        .fn()
+        .mockResolvedValueOnce({ data: { is_selected: false }, error: null });
+      const mockEq = vi.fn().mockReturnValue({ single: mockSingle });
+      const mockSelect = vi.fn().mockReturnValue({ eq: mockEq });
       mockSupabase.from.mockReturnValue({ select: mockSelect });
 
       const result = await validateProposalDelete("proposal-123");
@@ -173,42 +128,12 @@ describe("validators", () => {
       expect(result.canDelete).toBe(true);
     });
 
-    it("bloquea si hay votos", async () => {
-      const mockSelect = vi.fn();
-      const mockEq = vi.fn();
-
-      // votes - has votes
-      mockEq.mockResolvedValueOnce({
-        data: [{ id: "v1" }, { id: "v2" }, { id: "v3" }],
-        error: null,
-      });
-
-      mockSelect.mockReturnValue({ eq: mockEq });
-      mockSupabase.from.mockReturnValue({ select: mockSelect });
-
-      await expect(validateProposalDelete("proposal-123")).rejects.toThrow(
-        "No se puede eliminar. Esta propuesta tiene 3 voto(s)."
-      );
-    });
-
     it("bloquea si está seleccionada", async () => {
-      const mockSelect = vi.fn();
-      const mockEq = vi.fn();
-      const mockSingle = vi.fn();
-
-      // votes - none
-      mockEq.mockResolvedValueOnce({ data: [], error: null });
-      // proposal - is selected
-      mockSingle.mockResolvedValueOnce({
-        data: { is_selected: true },
-        error: null,
-      });
-
-      mockSelect.mockReturnValue({
-        eq: mockEq,
-        single: mockSingle,
-      });
-      mockEq.mockReturnValue({ single: mockSingle });
+      const mockSingle = vi
+        .fn()
+        .mockResolvedValueOnce({ data: { is_selected: true }, error: null });
+      const mockEq = vi.fn().mockReturnValue({ single: mockSingle });
+      const mockSelect = vi.fn().mockReturnValue({ eq: mockEq });
       mockSupabase.from.mockReturnValue({ select: mockSelect });
 
       await expect(validateProposalDelete("proposal-123")).rejects.toThrow(

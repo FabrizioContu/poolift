@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Modal } from "@/components/ui-custom/Modal";
 import { Button } from "@/components/ui-custom/Button";
 import { Alert } from "@/components/ui-custom/Alert";
-import { DatePickerInput } from "@/components/ui-custom/DatePickerInput";
 import { Plus, Trash2 } from "lucide-react";
 
 interface ProposalItem {
@@ -13,11 +12,26 @@ interface ProposalItem {
   productLink: string;
 }
 
+interface ExistingProposal {
+  id: string;
+  name: string;
+  proposal_items: Array<{
+    item_name: string;
+    item_price: number | null;
+    product_link: string | null;
+  }>;
+}
+
 interface AddProposalModalProps {
   isOpen: boolean;
   onClose: () => void;
   partyId: string;
   onSuccess?: () => void;
+  /** Cuando se pasa, el modal entra en modo edición (PUT en vez de POST). */
+  proposal?: ExistingProposal;
+  /** Familia del usuario actual — requerida en modo edición para la
+   * verificación de coordinador en el servidor. */
+  familyId?: string | null;
 }
 
 export function AddProposalModal({
@@ -25,12 +39,21 @@ export function AddProposalModal({
   onClose,
   partyId,
   onSuccess,
+  proposal,
+  familyId,
 }: AddProposalModalProps) {
-  const [name, setName] = useState("");
-  const [items, setItems] = useState<ProposalItem[]>([
-    { itemName: "", itemPrice: "", productLink: "" },
-  ]);
-  const [votingDeadline, setVotingDeadline] = useState("");
+  const isEditMode = !!proposal;
+
+  const [name, setName] = useState(proposal?.name ?? "");
+  const [items, setItems] = useState<ProposalItem[]>(
+    proposal && proposal.proposal_items.length > 0
+      ? proposal.proposal_items.map((item) => ({
+          itemName: item.item_name,
+          itemPrice: item.item_price != null ? String(item.item_price) : "",
+          productLink: item.product_link ?? "",
+        }))
+      : [{ itemName: "", itemPrice: "", productLink: "" }],
+  );
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -79,14 +102,19 @@ export function AddProposalModal({
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("/api/proposals", {
-        method: "POST",
+      const url = isEditMode
+        ? `/api/proposals/${proposal!.id}`
+        : "/api/proposals";
+      const method = isEditMode ? "PUT" : "POST";
+
+      const response = await fetch(url, {
+        method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           partyId,
+          familyId: familyId ?? undefined,
           name: name.trim(),
           totalPrice: calculateTotal(),
-          votingDeadline: votingDeadline || null,
           items: validItems.map((item) => ({
             itemName: item.itemName.trim(),
             itemPrice: parseFloat(item.itemPrice) || null,
@@ -97,25 +125,27 @@ export function AddProposalModal({
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.error || "Error al crear propuesta");
+        throw new Error(data.error || "Error al guardar la propuesta");
       }
-
-      setName("");
-      setItems([{ itemName: "", itemPrice: "", productLink: "" }]);
-      setVotingDeadline("");
 
       onSuccess?.();
       onClose();
       window.location.reload();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Error al crear propuesta");
+      setError(
+        err instanceof Error ? err.message : "Error al guardar la propuesta",
+      );
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} title="Nueva Propuesta">
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title={isEditMode ? "Editar propuesta de regalo" : "Propuesta de regalo"}
+    >
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-foreground mb-1">
@@ -194,19 +224,6 @@ export function AddProposalModal({
           </button>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-foreground mb-1">
-            Fecha límite de votación
-            <span className="text-muted-foreground font-normal"> (opcional)</span>
-          </label>
-          <DatePickerInput
-            value={votingDeadline}
-            onChange={setVotingDeadline}
-            min={new Date().toISOString().split("T")[0]}
-            placeholder="Seleccionar fecha límite"
-          />
-        </div>
-
         <div className="bg-muted p-3 rounded-lg">
           <div className="flex justify-between items-center">
             <span className="text-sm text-muted-foreground">Total:</span>
@@ -229,7 +246,7 @@ export function AddProposalModal({
             Cancelar
           </Button>
           <Button type="submit" disabled={isSubmitting} className="flex-1">
-            {isSubmitting ? "Creando..." : "Crear Propuesta"}
+            {isSubmitting ? "Guardando..." : "Guardar"}
           </Button>
         </div>
       </form>

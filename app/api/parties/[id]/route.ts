@@ -10,7 +10,7 @@ export async function DELETE(
 
   try {
     // Validation phase: deletion is gated only by validatePartyDelete, which
-    // blocks parties that have gifts, proposals or votes. We intentionally do
+    // blocks parties that have gifts or proposals. We intentionally do
     // NOT check coordinator identity — anonymous users can't prove ownership
     // without a localStorage session (cleared on login), and the valuable
     // parties are already protected by the validation above.

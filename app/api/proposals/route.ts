@@ -11,7 +11,6 @@ export async function POST(request: NextRequest) {
       partyId,
       name,
       totalPrice,
-      votingDeadline,
       items, // Array de { item_name, item_price, product_link }
     } = await request.json()
     
@@ -29,7 +28,6 @@ export async function POST(request: NextRequest) {
         party_id: partyId,
         name,
         total_price: totalPrice,
-        voting_deadline: votingDeadline,
       })
       .select()
       .single()
@@ -76,8 +74,7 @@ export async function GET(request: NextRequest) {
       .from('proposals')
       .select(`
         *,
-        proposal_items(*),
-        votes(id, voter_name)
+        proposal_items(*)
       `)
       .eq('party_id', partyId)
       .order('created_at', { ascending: false })

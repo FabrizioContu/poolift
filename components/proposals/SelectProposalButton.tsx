@@ -18,7 +18,6 @@ interface SelectProposalButtonProps {
   groupId: string;
   isSelected: boolean;
   isCoordinator: boolean;
-  hasOtherSelected: boolean;
   onSuccess?: () => void;
 }
 
@@ -30,7 +29,6 @@ export function SelectProposalButton({
   groupId,
   isSelected,
   isCoordinator,
-  hasOtherSelected,
   onSuccess,
 }: SelectProposalButtonProps) {
   const [loading, setLoading] = useState(false);
@@ -71,7 +69,7 @@ export function SelectProposalButton({
         <div className="flex items-center justify-between">
           <span className="inline-flex items-center gap-1 bg-emerald-100 text-emerald-700 text-sm px-3 py-1.5 rounded-full font-medium">
             <Check size={16} />
-            Propuesta Seleccionada
+            Regalo activo
           </span>
         </div>
 
@@ -89,16 +87,6 @@ export function SelectProposalButton({
     );
   }
 
-  if (hasOtherSelected) {
-    return (
-      <div className="mt-4 pt-4 border-t border-gray-200">
-        <p className="text-sm text-gray-700 italic">
-          Otra propuesta ya ha sido seleccionada
-        </p>
-      </div>
-    );
-  }
-
   return (
     <div className="mt-4 pt-4 border-t border-gray-200">
       {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
@@ -108,7 +96,7 @@ export function SelectProposalButton({
         className="w-full flex justify-center gap-3"
       >
         <CheckCircle size={18} className="mr-2" />
-        {loading ? "Seleccionando..." : "Seleccionar Propuesta"}
+        {loading ? "Activando..." : "Activar regalo"}
       </Button>
 
       {showCreateGift && (

@@ -1,15 +1,19 @@
 "use client";
 
 import { useState } from "react";
-import { ThumbsUp, ExternalLink, Check, Trash2 } from "lucide-react";
-import { Button, Badge, IconButton } from "@/components/ui-custom";
+import { ExternalLink, Check, Trash2, Pencil } from "lucide-react";
+import { Badge, IconButton } from "@/components/ui-custom";
 import { formatPrice } from "@/lib/utils";
 import dynamic from "next/dynamic";
 import { SelectProposalButton } from "@/components/proposals/SelectProposalButton";
-import { anonymousStorage } from "@/lib/storage";
+import { getGroupSession } from "@/lib/auth";
 
 const ConfirmDeleteModal = dynamic(
   () => import("@/components/modals/ConfirmDeleteModal"),
+);
+
+const AddProposalModal = dynamic(
+  () => import("@/components/modals/AddProposalModal"),
 );
 
 interface ProposalItem {
@@ -19,11 +23,6 @@ interface ProposalItem {
   product_link: string | null;
 }
 
-interface Vote {
-  id: string;
-  voter_name: string;
-}
-
 interface ProposalCardProps {
   proposal: {
     id: string;
@@ -31,14 +30,11 @@ interface ProposalCardProps {
     total_price: number;
     is_selected: boolean;
     proposal_items: ProposalItem[];
-    votes: Vote[];
     party_id?: string;
   };
   partyId?: string;
   groupId?: string;
   isCoordinator?: boolean;
-  hasOtherSelected?: boolean;
-  onVoteSuccess?: () => void;
 }
 
 export function ProposalCard({
@@ -46,52 +42,15 @@ export function ProposalCard({
   partyId,
   groupId = "",
   isCoordinator = false,
-  hasOtherSelected = false,
-  onVoteSuccess,
 }: ProposalCardProps) {
   const effectivePartyId = partyId || proposal.party_id || "";
-  const [isVoting, setIsVoting] = useState(false);
-  const [voterName, setVoterName] = useState("");
-  const [showVoteForm, setShowVoteForm] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const familyId = getGroupSession(groupId)?.familyId ?? null;
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
-
-  const handleVote = async () => {
-    if (!voterName.trim()) {
-      setError("Ingresa tu nombre");
-      return;
-    }
-
-    setIsVoting(true);
-    setError(null);
-
-    try {
-      const response = await fetch(`/api/proposals/${proposal.id}/vote`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ voterName: voterName.trim() }),
-      });
-
-      if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || "Error al votar");
-      }
-
-      setShowVoteForm(false);
-      setVoterName("");
-      onVoteSuccess?.();
-      window.location.reload();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Error al votar");
-    } finally {
-      setIsVoting(false);
-    }
-  };
 
   const handleConfirmDelete = async () => {
     try {
-      const familyId = anonymousStorage.getFamilyId();
       const response = await fetch(`/api/proposals/${proposal.id}`, {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
@@ -112,7 +71,8 @@ export function ProposalCard({
     }
   };
 
-  const canDelete = !proposal.is_selected && proposal.votes.length === 0;
+  const canEdit = isCoordinator && !proposal.is_selected;
+  const canDelete = !proposal.is_selected;
 
   return (
     <>
@@ -130,7 +90,7 @@ export function ProposalCard({
               {proposal.is_selected && (
                 <Badge variant="green" size="sm" className="bg-emerald-400 text-white">
                   <Check size={12} className="mr-1" />
-                  Seleccionada
+                  Regalo activo
                 </Badge>
               )}
             </h3>
@@ -139,12 +99,13 @@ export function ProposalCard({
             </p>
           </div>
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1 text-muted-foreground">
-              <ThumbsUp size={16} />
-              <span className="text-sm font-medium">
-                {proposal.votes.length}
-              </span>
-            </div>
+            {canEdit && (
+              <IconButton
+                icon={Pencil}
+                label="Editar propuesta"
+                onClick={() => setShowEditModal(true)}
+              />
+            )}
             {canDelete && (
               <IconButton
                 icon={Trash2}
@@ -192,64 +153,6 @@ export function ProposalCard({
           </div>
         )}
 
-        {proposal.votes.length > 0 && (
-          <div className="mb-4">
-            <p className="text-xs text-muted-foreground mb-1 ">Votos:</p>
-            <div className="flex flex-wrap gap-1">
-              {proposal.votes.map((vote) => (
-                <Badge key={vote.id} variant="gray" size="sm">
-                  {vote.voter_name}
-                </Badge>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {!proposal.is_selected && !hasOtherSelected && (
-          <div>
-            {showVoteForm ? (
-              <div className="space-y-2">
-                <input
-                  type="text"
-                  placeholder="Tu nombre"
-                  value={voterName}
-                  onChange={(e) => setVoterName(e.target.value)}
-                  className="w-full px-3 py-2 border border-input rounded-lg text-sm focus:ring-2 focus:ring-ring focus:border-transparent bg-background text-foreground placeholder:text-muted-foreground"
-                />
-                {error && <p className="text-red-500 text-xs">{error}</p>}
-                <div className="flex gap-4">
-                  <Button
-                    onClick={handleVote}
-                    disabled={isVoting}
-                    className="flex-1 text-sm"
-                  >
-                    {isVoting ? "Votando..." : "Confirmar"}
-                  </Button>
-                  <Button
-                    variant="secondary"
-                    onClick={() => {
-                      setShowVoteForm(false);
-                      setError(null);
-                    }}
-                    className="text-sm"
-                  >
-                    Cancelar
-                  </Button>
-                </div>
-              </div>
-            ) : (
-              <Button
-                variant="secondary"
-                onClick={() => setShowVoteForm(true)}
-                className="w-full flex justify-center gap-2 items-center"
-              >
-                <ThumbsUp size={14} className="mr-2" />
-                Votar
-              </Button>
-            )}
-          </div>
-        )}
-
         {/* Coordinator Actions */}
         <SelectProposalButton
           proposalId={proposal.id}
@@ -259,9 +162,22 @@ export function ProposalCard({
           groupId={groupId}
           isSelected={proposal.is_selected}
           isCoordinator={isCoordinator}
-          hasOtherSelected={hasOtherSelected}
         />
       </div>
+
+      {showEditModal && (
+        <AddProposalModal
+          isOpen={showEditModal}
+          onClose={() => setShowEditModal(false)}
+          partyId={effectivePartyId}
+          familyId={familyId}
+          proposal={{
+            id: proposal.id,
+            name: proposal.name,
+            proposal_items: proposal.proposal_items,
+          }}
+        />
+      )}
 
       {showDeleteModal && (
         <ConfirmDeleteModal

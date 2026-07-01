@@ -65,7 +65,7 @@ export function OnboardingGuide({
     {
       number: 3,
       title: "Coordina el regalo",
-      description: "Propón regalos, vota y coordina la compra entre familias.",
+      description: "Crea la propuesta de regalo y coordina la compra entre familias.",
       icon: Gift,
       status: partyCount === 0 ? "locked" : "active",
     },

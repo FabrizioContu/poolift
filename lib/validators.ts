@@ -41,23 +41,6 @@ export async function validatePartyDelete(
   }
 
   if (proposals && proposals.length > 0) {
-    // Check if any proposal has votes
-    const proposalIds = proposals.map((p) => p.id);
-    const { data: votes, error: votesError } = await supabase
-      .from("votes")
-      .select("id")
-      .in("proposal_id", proposalIds);
-
-    if (votesError) {
-      throw new Error("Error al verificar votos");
-    }
-
-    if (votes && votes.length > 0) {
-      throw new Error(
-        `No se puede eliminar. Esta fiesta tiene ${votes.length} voto(s) registrado(s).`
-      );
-    }
-
     throw new Error(
       `No se puede eliminar. Esta fiesta tiene ${proposals.length} propuesta(s).`
     );
@@ -97,22 +80,6 @@ export async function validatePartyDelete(
 export async function validateProposalDelete(
   proposalId: string
 ): Promise<ValidationResult> {
-  // Check if proposal has votes
-  const { data: votes, error: votesError } = await supabase
-    .from("votes")
-    .select("id")
-    .eq("proposal_id", proposalId);
-
-  if (votesError) {
-    throw new Error("Error al verificar votos");
-  }
-
-  if (votes && votes.length > 0) {
-    throw new Error(
-      `No se puede eliminar. Esta propuesta tiene ${votes.length} voto(s).`
-    );
-  }
-
   // Check if proposal is selected
   const { data: proposal, error: proposalError } = await supabase
     .from("proposals")

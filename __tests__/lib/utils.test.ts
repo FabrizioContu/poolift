@@ -45,11 +45,11 @@ describe('Utils', () => {
       expect(result.label).toBe('Pendiente')
     })
 
-    it('retorna votacion cuando hay propuestas sin seleccionar', () => {
+    it('retorna propuesta cuando hay propuestas sin seleccionar', () => {
       const proposals = [{ is_selected: false }, { is_selected: false }]
       const result = getPartyStatus(proposals)
-      expect(result.status).toBe('votacion')
-      expect(result.label).toBe('Votación')
+      expect(result.status).toBe('propuesta')
+      expect(result.label).toBe('Propuesta')
     })
 
     it('retorna decidido cuando una propuesta está seleccionada', () => {

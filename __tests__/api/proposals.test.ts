@@ -146,7 +146,7 @@ describe('DELETE /api/proposals/[id]', () => {
     it('returns 400 when validateProposalDelete throws', async () => {
       mockServerClient.auth.getUser.mockResolvedValueOnce({ data: { user: null }, error: null })
       setupAnonProposalChain()
-      vi.mocked(validateProposalDelete).mockRejectedValueOnce(new Error('Tiene votos registrados'))
+      vi.mocked(validateProposalDelete).mockRejectedValueOnce(new Error('Es la propuesta seleccionada'))
 
       const { DELETE } = await import('@/app/api/proposals/[id]/route')
       const request = createMockRequest('http://localhost/api/proposals/prop-1', {
@@ -156,7 +156,7 @@ describe('DELETE /api/proposals/[id]', () => {
 
       expect(response.status).toBe(400)
       const data = await response.json()
-      expect(data.error).toBe('Tiene votos registrados')
+      expect(data.error).toBe('Es la propuesta seleccionada')
     })
   })
 })
@@ -239,5 +239,71 @@ describe('PUT /api/proposals/[id]/select', () => {
 
       expect(response.status).toBe(200)
     })
+  })
+})
+
+describe('PUT /api/proposals/[id] (editar)', () => {
+  const validBody = {
+    name: 'Nuevo nombre',
+    totalPrice: 30,
+    items: [{ itemName: 'LEGO', itemPrice: 30, productLink: null }],
+    familyId: 'family-coord',
+  }
+
+  beforeEach(() => {
+    vi.clearAllMocks()
+    vi.resetModules()
+    mockServerClient.auth.getUser.mockResolvedValue({ data: { user: null }, error: null })
+  })
+
+  it('returns 400 when required fields are missing', async () => {
+    const { PUT } = await import('@/app/api/proposals/[id]/route')
+    const request = createMockRequest('http://localhost/api/proposals/prop-1', {
+      body: { name: '', items: [] },
+    })
+    const response = await PUT(request, { params: Promise.resolve({ id: 'prop-1' }) })
+
+    expect(response.status).toBe(400)
+  })
+
+  it('returns 409 when the proposal is already active (is_selected)', async () => {
+    mockServerClient.single.mockResolvedValueOnce({
+      data: { party_id: 'party-111', is_selected: true },
+      error: null,
+    })
+
+    const { PUT } = await import('@/app/api/proposals/[id]/route')
+    const request = createMockRequest('http://localhost/api/proposals/prop-1', { body: validBody })
+    const response = await PUT(request, { params: Promise.resolve({ id: 'prop-1' }) })
+
+    expect(response.status).toBe(409)
+  })
+
+  it('returns 403 (anon) when familyId does not match coordinator', async () => {
+    mockServerClient.single
+      .mockResolvedValueOnce({ data: { party_id: 'party-111', is_selected: false }, error: null })
+      .mockResolvedValueOnce({ data: { coordinator_id: 'family-coord' }, error: null })
+
+    const { PUT } = await import('@/app/api/proposals/[id]/route')
+    const request = createMockRequest('http://localhost/api/proposals/prop-1', {
+      body: { ...validBody, familyId: 'family-WRONG' },
+    })
+    const response = await PUT(request, { params: Promise.resolve({ id: 'prop-1' }) })
+
+    expect(response.status).toBe(403)
+  })
+
+  it('returns 200 (anon) when familyId matches and proposal is not active', async () => {
+    mockServerClient.single
+      .mockResolvedValueOnce({ data: { party_id: 'party-111', is_selected: false }, error: null })
+      .mockResolvedValueOnce({ data: { coordinator_id: 'family-coord' }, error: null })
+
+    const { PUT } = await import('@/app/api/proposals/[id]/route')
+    const request = createMockRequest('http://localhost/api/proposals/prop-1', { body: validBody })
+    const response = await PUT(request, { params: Promise.resolve({ id: 'prop-1' }) })
+
+    expect(response.status).toBe(200)
+    const data = await response.json()
+    expect(data.success).toBe(true)
   })
 })

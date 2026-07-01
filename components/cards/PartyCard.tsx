@@ -100,7 +100,7 @@ export function PartyCard({ party }: PartyCardProps) {
               </div>
             ) : (
               <div className="bg-yellow-100 px-3 py-1 rounded-full dark:bg-yellow-900">
-                <span className="text-yellow-800 text-sm font-medium dark:text-yellow-300">Ideas</span>
+                <span className="text-yellow-800 text-sm font-medium dark:text-yellow-300">Sin regalo</span>
               </div>
             )}
             <button

@@ -95,7 +95,6 @@ export interface Proposal {
   party_id: string
   name: string
   total_price: number
-  voting_deadline: string | null
   is_selected: boolean
   created_at: string
   updated_at: string
@@ -107,13 +106,6 @@ export interface ProposalItem {
   item_name: string
   item_price: number | null
   product_link: string | null
-}
-
-export interface Vote {
-  id: string
-  proposal_id: string
-  voter_name: string
-  created_at: string
 }
 
 export interface Gift {

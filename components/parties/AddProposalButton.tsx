@@ -13,23 +13,27 @@ interface AddProposalButtonProps {
   partyId: string;
   coordinatorId: string | null;
   groupId: string;
+  /** Cuando ya existe una propuesta para la fiesta, el botón no se muestra
+   * (una sola propuesta de regalo por fiesta). */
+  hasProposal?: boolean;
 }
 
 export function AddProposalButton({
   partyId,
   coordinatorId,
   groupId,
+  hasProposal = false,
 }: AddProposalButtonProps) {
   const [showModal, setShowModal] = useState(false);
   const isCoordinator = useIsCoordinator(coordinatorId, groupId);
 
-  if (!isCoordinator) {
+  if (!isCoordinator || hasProposal) {
     return null;
   }
 
   return (
     <>
-      <Button onClick={() => setShowModal(true)}>Añadir Propuesta</Button>
+      <Button onClick={() => setShowModal(true)}>Crear propuesta de regalo</Button>
 
       {showModal && (
         <AddProposalModal

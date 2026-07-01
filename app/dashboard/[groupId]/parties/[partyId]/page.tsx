@@ -31,10 +31,6 @@ interface Proposal {
     item_price: number | null;
     product_link: string | null;
   }>;
-  votes: Array<{
-    id: string;
-    voter_name: string;
-  }>;
 }
 
 async function getParty(partyId: string): Promise<PartyWithRelations | null> {
@@ -67,8 +63,7 @@ async function getProposals(partyId: string): Promise<Proposal[]> {
     .select(
       `
       *,
-      proposal_items(*),
-      votes(id, voter_name)
+      proposal_items(*)
     `
     )
     .eq("party_id", partyId)
@@ -217,6 +212,7 @@ export default async function PartyDetailPage({
           partyId={partyId}
           coordinatorId={coordinatorId}
           groupId={groupId}
+          hasProposal={proposals.length > 0}
         />
       </div>
 

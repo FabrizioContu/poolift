@@ -15,10 +15,6 @@ interface Proposal {
     item_price: number | null;
     product_link: string | null;
   }>;
-  votes: Array<{
-    id: string;
-    voter_name: string;
-  }>;
 }
 
 interface PartyDetailTabsProps {
@@ -35,32 +31,28 @@ export function PartyDetailTabs({
   groupId,
 }: PartyDetailTabsProps) {
   const isCoordinator = useIsCoordinator(coordinatorId, groupId);
-  const hasAnySelected = proposals.some((p) => p.is_selected);
+  const proposal = proposals[0] ?? null;
 
   return (
     <div>
-      <h2 className="text-lg font-semibold text-gray-900 mb-4">Propuestas</h2>
-      {proposals.length === 0 ? (
+      <h2 className="text-lg font-semibold text-gray-900 mb-4">
+        Propuesta de regalo
+      </h2>
+      {!proposal ? (
         <div className="text-center py-8 text-gray-700">
           <FileText size={48} className="mx-auto mb-3 opacity-50" />
-          <p>No hay propuestas todavia.</p>
+          <p>No hay propuesta todavia.</p>
           <p className="text-sm mt-1">
-            El coordinador puede crear propuestas de regalo.
+            El coordinador puede crear la propuesta de regalo.
           </p>
         </div>
       ) : (
-        <div className="grid gap-4 md:grid-cols-2">
-          {proposals.map((proposal) => (
-            <ProposalCard
-              key={proposal.id}
-              proposal={proposal}
-              partyId={partyId}
-              groupId={groupId}
-              isCoordinator={isCoordinator}
-              hasOtherSelected={hasAnySelected && !proposal.is_selected}
-            />
-          ))}
-        </div>
+        <ProposalCard
+          proposal={proposal}
+          partyId={partyId}
+          groupId={groupId}
+          isCoordinator={isCoordinator}
+        />
       )}
     </div>
   );
