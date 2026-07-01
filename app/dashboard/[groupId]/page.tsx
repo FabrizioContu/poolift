@@ -4,7 +4,7 @@ import { AddBirthdayButton } from "@/components/AddBirthdayButton";
 import { GroupHeader } from "@/components/groups/GroupHeader";
 import { DashboardTabs } from "@/components/dashboard/DashboardTabs";
 import { OnboardingGuide } from "@/components/dashboard/OnboardingGuide";
-import { AccessGuard } from "@/components/auth";
+import { AccessGuard, SaveAccessBanner } from "@/components/auth";
 
 interface Party {
   id: string;
@@ -161,6 +161,7 @@ export default async function DashboardPage({
   return (
     <AccessGuard groupId={groupId}>
       <div className="container mx-auto px-4 py-8">
+        <SaveAccessBanner />
         <GroupHeader
           groupName={group.name}
           inviteCode={group.invite_code}
@@ -190,6 +191,8 @@ export default async function DashboardPage({
               birthdays={birthdays}
               groupId={groupId}
               families={families}
+              inviteCode={group.invite_code}
+              groupName={group.name}
             />
           </>
         )}

@@ -2,3 +2,4 @@
 export { AccessGuard } from './AccessGuard'
 export { AuthModal } from './AuthModal'
 export { UserMenu } from './UserMenu'
+export { SaveAccessBanner } from './SaveAccessBanner'
